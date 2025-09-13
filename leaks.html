@@ -1,33 +1,18 @@
-<!-- Save this as leaks.php -->
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>GTA 6 Leaks</title>
+  <title>GTA 6 Drive Leaks</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap');
 
-    /* Lucia background */
-    :root{
-      --accent:#ffffff;
-    }
-    body{
-      position: relative;
-      background: url('https://i.redd.it/w1u74qaho25c1.png') center/cover no-repeat fixed;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-    }
-    
     *{box-sizing:border-box;margin:0;padding:0}
     html,body{height:100%}
 
     body{
       cursor: url('lucia-cursor.png') 16 16, auto;
       font-family: 'Orbitron', sans-serif;
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
       position: relative;
       background: url('lucia-bg.jpg') center/cover no-repeat fixed;
       display:flex;
@@ -74,7 +59,7 @@
     }
     .nav-btn:hover{background:rgba(255,255,255,0.1)}
 
-    .leaks-page{
+    .page{
       position:relative;
       z-index:1;
       width:90%;
@@ -83,7 +68,7 @@
       margin-top:60px;
     }
 
-    .leaks-page h1{
+    .page h1{
       font-size:48px;
       font-weight:900;
       margin-bottom:30px;
@@ -101,36 +86,34 @@
     }
     .upload-box input, .upload-box button{
       margin-top:10px;
+      padding:8px;
     }
 
-    .leaks-grid{
+    .grid{
       display:grid;
       grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
       gap:20px;
       padding-bottom:60px;
     }
 
-    .leak-item{
+    .item{
       background:rgba(0,0,0,0.5);
       padding:12px;
       border-radius:16px;
       box-shadow:0 8px 24px rgba(0,0,0,0.7);
     }
 
-    .leak-item video, .leak-item img{
+    .item iframe{
       width:100%;
+      height:200px;
+      border:none;
       border-radius:12px;
     }
 
-    .leak-item h2{
+    .item h2{
       font-size:18px;
       margin-top:8px;
       color:#fff;
-    }
-
-    @media(max-width:480px){
-      .leaks-page h1{font-size:32px}
-      .leak-item h2{font-size:16px}
     }
   </style>
 </head>
@@ -141,37 +124,37 @@
     <a href="map.html" class="nav-btn">Map</a>
     <a href="trailers.html" class="nav-btn">Trailers</a>
     <a href="characters.html" class="nav-btn">Characters</a>
-    <a href="leaks.php" class="nav-btn">Leaks</a>
+    <a href="drive-leaks.php" class="nav-btn">Leaks</a>
   </header>
 
-  <div class="leaks-page">
-    <h1>GTA 6 Leaks</h1>
+  <div class="page">
+    <h1>GTA 6 Leaks (Google Drive)</h1>
 
     <!-- Upload Form -->
     <div class="upload-box">
-      <form action="upload.php" method="post" enctype="multipart/form-data">
-        <label for="file">Upload new leak (video/image):</label><br><br>
-        <input type="file" name="file" id="file" accept="video/mp4,image/*"><br><br>
-        <button type="submit">Upload</button>
+      <form action="save-link.php" method="post">
+        <label for="link">Paste Google Drive Video Link:</label><br><br>
+        <input type="url" name="link" id="link" placeholder="https://drive.google.com/file/d/..." required size="60"><br><br>
+        <button type="submit">Add Leak</button>
       </form>
     </div>
 
-    <!-- Leaks Grid -->
-    <div class="leaks-grid">
+    <!-- Display Leaks -->
+    <div class="grid">
       <?php
-        $files = glob("uploads/leaks/*.{mp4,jpg,jpeg,png,gif}", GLOB_BRACE);
+        $links = file("links.txt", FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
         $i = 1;
-        foreach($files as $file){
-          $name = basename($file);
-          echo "<div class='leak-item'>";
-          if(preg_match('/\\.(mp4)$/i', $file)){
-            echo "<video controls><source src='$file' type='video/mp4'></video>";
-          } else {
-            echo "<img src='$file' alt='Leak Image'>";
+        foreach(array_reverse($links) as $link){
+          // Convert normal Drive link to embeddable
+          if(preg_match("/\/d\/(.*?)\//", $link, $match)){
+            $id = $match[1];
+            $embed = "https://drive.google.com/file/d/$id/preview";
+            echo "<div class='item'>";
+            echo "<iframe src='$embed' allow='autoplay'></iframe>";
+            echo "<h2>Leak #$i</h2>";
+            echo "</div>";
+            $i++;
           }
-          echo "<h2>Leak #$i - $name</h2>";
-          echo "</div>";
-          $i++;
         }
       ?>
     </div>
