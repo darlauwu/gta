@@ -1,0 +1,86 @@
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>GTA 6 Error</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap');
+
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+
+    body{
+      cursor: url('lucia-cursor.png') 16 16, auto;
+      font-family: 'Orbitron', sans-serif;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      position: relative;
+      background: url('lucia-bg.jpg') center/cover no-repeat fixed;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+
+    body::after{
+      content: "";
+      position: absolute;
+      top:0;left:0;right:0;bottom:0;
+      background: rgba(0,0,0,0.6);
+      pointer-events:none;
+      z-index:0;
+    }
+
+    .error-page{
+      position: relative;
+      z-index:1;
+      text-align:center;
+      color: #fff;
+      padding: 40px 20px;
+      background: rgba(0,0,0,0.5);
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+      max-width: 600px;
+    }
+
+    .error-page h1{
+      font-size: 64px;
+      font-weight:900;
+      margin-bottom: 20px;
+      letter-spacing:2px;
+    }
+
+    .error-page p{
+      font-size: 20px;
+      margin-bottom: 30px;
+      color: rgba(255,255,255,0.85);
+    }
+
+    .error-page a{
+      display:inline-block;
+      padding:12px 24px;
+      font-weight:700;
+      color:#fff;
+      text-decoration:none;
+      border:2px solid #fff;
+      border-radius:12px;
+      transition:0.3s;
+    }
+
+    .error-page a:hover{
+      background: rgba(255,255,255,0.1);
+    }
+
+    @media (max-width:480px){
+      .error-page h1{font-size:48px}
+      .error-page p{font-size:16px}
+    }
+  </style>
+</head>
+<body>
+  <div class="error-page">
+    <h1>404</h1>
+    <p>Grand Theft Auto VI is not found here!<br>Looks like you took a wrong turn in Vice City...</p>
+    <a href="/">Return Home</a>
+  </div>
+</body>
+</html>
