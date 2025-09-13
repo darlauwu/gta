@@ -133,6 +133,11 @@ Instructions:
 
     <audio id="bgMusic" src="https://youtu.be/hH2gvfKZbL0?si=bLWuI3A0g7C3pm33" autoplay loop></audio>
 
+// Optional: attempt to autoplay on user interaction for better browser support
+document.body.addEventListener('click', () => {
+const music = document.getElementById('bgMusic');
+if (music.paused) music.play();
+    
     <main>
       <section class="countdown-wrap" aria-labelledby="gta6-title">
         <h1 id="gta6-title" class="title">Grand Theft Auto VI</h1>
