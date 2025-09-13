@@ -1,3 +1,4 @@
+<!-- Save this as leaks.php -->
 <!doctype html>
 <html lang="en">
 <head>
@@ -6,75 +7,158 @@
   <title>GTA 6 Leaks</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap');
+
     *{box-sizing:border-box;margin:0;padding:0}
     html,body{height:100%}
+
     body{
-      font-family: 'Orbitron', sans-serif;
-      background: url('lucia-bg.jpg') center/cover no-repeat fixed;
       cursor: url('lucia-cursor.png') 16 16, auto;
-      display:flex;flex-direction:column;align-items:center;padding-top:80px;
-      position:relative;
+      font-family: 'Orbitron', sans-serif;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      position: relative;
+      background: url('lucia-bg.jpg') center/cover no-repeat fixed;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:flex-start;
+      padding-top:80px;
     }
+
     body::after{
-      content:\"\";position:absolute;top:0;left:0;right:0;bottom:0;
-      background:rgba(0,0,0,0.6);z-index:0;
+      content:"";
+      position:absolute;
+      top:0;left:0;right:0;bottom:0;
+      background:rgba(0,0,0,0.6);
+      pointer-events:none;
+      z-index:0;
     }
+
     header{
-      position:fixed;top:20px;left:50%;transform:translateX(-50%);
-      display:flex;gap:12px;z-index:50;
+      position:fixed;
+      top:20px;
+      left:50%;
+      transform:translateX(-50%);
+      display:flex;
+      gap:12px;
+      z-index:50;
       backdrop-filter: blur(6px) saturate(0.9);
-      padding:8px 16px;border-radius:999px;
+      padding:8px 16px;
+      border-radius:999px;
       box-shadow:0 6px 18px rgba(0,0,0,0.3);
     }
+
     .nav-btn{
-      display:inline-flex;align-items:center;
-      padding:8px 14px;border-radius:999px;text-decoration:none;
-      color:#fff;font-weight:700;
-      background:rgba(0,0,0,0.4);border:1px solid rgba(255,255,255,0.1);
+      display:inline-flex;
+      align-items:center;
+      padding:8px 14px;
+      border-radius:999px;
+      text-decoration:none;
+      color:#fff;
+      font-weight:700;
+      background:rgba(0,0,0,0.4);
+      border:1px solid rgba(255,255,255,0.1);
       transition:0.3s;
     }
     .nav-btn:hover{background:rgba(255,255,255,0.1)}
-    .leaks-page{position:relative;z-index:1;width:90%;max-width:1200px;margin-top:60px;text-align:center}
-    .leaks-page h1{font-size:48px;font-weight:900;color:#fff;margin-bottom:30px;text-shadow:0 2px 8px rgba(0,0,0,0.7)}
-    .upload-box{margin-bottom:30px;background:rgba(0,0,0,0.5);padding:16px;border-radius:16px;color:#fff}
-    .leaks-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:20px}
-    .leak-item{background:rgba(0,0,0,0.5);padding:12px;border-radius:16px;box-shadow:0 8px 24px rgba(0,0,0,0.7)}
-    .leak-item video{width:100%;border-radius:12px}
-    .leak-item h2{font-size:18px;margin-top:8px;color:#fff}
+
+    .leaks-page{
+      position:relative;
+      z-index:1;
+      width:90%;
+      max-width:1200px;
+      text-align:center;
+      margin-top:60px;
+    }
+
+    .leaks-page h1{
+      font-size:48px;
+      font-weight:900;
+      margin-bottom:30px;
+      color:#fff;
+      text-shadow:0 2px 8px rgba(0,0,0,0.7);
+    }
+
+    .upload-box{
+      margin-bottom:30px;
+      background:rgba(0,0,0,0.5);
+      padding:20px;
+      border-radius:16px;
+      box-shadow:0 8px 24px rgba(0,0,0,0.7);
+      color:#fff;
+    }
+    .upload-box input, .upload-box button{
+      margin-top:10px;
+    }
+
+    .leaks-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
+      gap:20px;
+      padding-bottom:60px;
+    }
+
+    .leak-item{
+      background:rgba(0,0,0,0.5);
+      padding:12px;
+      border-radius:16px;
+      box-shadow:0 8px 24px rgba(0,0,0,0.7);
+    }
+
+    .leak-item video, .leak-item img{
+      width:100%;
+      border-radius:12px;
+    }
+
+    .leak-item h2{
+      font-size:18px;
+      margin-top:8px;
+      color:#fff;
+    }
+
+    @media(max-width:480px){
+      .leaks-page h1{font-size:32px}
+      .leak-item h2{font-size:16px}
+    }
   </style>
 </head>
 <body>
   <header>
-    <a href=\"/\" class=\"nav-btn\">Home</a>
-    <a href=\"#\" class=\"nav-btn\">Countdown</a>
-    <a href=\"#\" class=\"nav-btn\">Map</a>
-    <a href=\"#\" class=\"nav-btn\">Trailers</a>
-    <a href=\"#\" class=\"nav-btn\">Characters</a>
+    <a href="index.html" class="nav-btn">Home</a>
+    <a href="countdown.html" class="nav-btn">Countdown</a>
+    <a href="map.html" class="nav-btn">Map</a>
+    <a href="trailers.html" class="nav-btn">Trailers</a>
+    <a href="characters.html" class="nav-btn">Characters</a>
+    <a href="leaks.php" class="nav-btn">Leaks</a>
   </header>
 
-  <div class=\"leaks-page\">
+  <div class="leaks-page">
     <h1>GTA 6 Leaks</h1>
 
     <!-- Upload Form -->
-    <div class=\"upload-box\">
-      <form action=\"upload.php\" method=\"post\" enctype=\"multipart/form-data\">
-        <label for=\"file\">Upload new leak video:</label><br><br>
-        <input type=\"file\" name=\"file\" id=\"file\" accept=\"video/mp4\"><br><br>
-        <button type=\"submit\">Upload</button>
+    <div class="upload-box">
+      <form action="upload.php" method="post" enctype="multipart/form-data">
+        <label for="file">Upload new leak (video/image):</label><br><br>
+        <input type="file" name="file" id="file" accept="video/mp4,image/*"><br><br>
+        <button type="submit">Upload</button>
       </form>
     </div>
 
-    <!-- List all uploaded leaks -->
-    <div class=\"leaks-grid\">
+    <!-- Leaks Grid -->
+    <div class="leaks-grid">
       <?php
-        $files = glob(\"uploads/leaks/*.mp4\");
+        $files = glob("uploads/leaks/*.{mp4,jpg,jpeg,png,gif}", GLOB_BRACE);
         $i = 1;
         foreach($files as $file){
           $name = basename($file);
-          echo \"<div class='leak-item'>\";
-          echo \"<video controls><source src='$file' type='video/mp4'></video>\";
-          echo \"<h2>Leak #$i - $name</h2>\";
-          echo \"</div>\";
+          echo "<div class='leak-item'>";
+          if(preg_match('/\\.(mp4)$/i', $file)){
+            echo "<video controls><source src='$file' type='video/mp4'></video>";
+          } else {
+            echo "<img src='$file' alt='Leak Image'>";
+          }
+          echo "<h2>Leak #$i - $name</h2>";
+          echo "</div>";
           $i++;
         }
       ?>
@@ -82,3 +166,4 @@
   </div>
 </body>
 </html>
+
