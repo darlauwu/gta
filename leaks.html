@@ -1,0 +1,159 @@
+<!--
+GTA 6 Leaks Upload Page - single-file HTML
+Instructions:
+- Replace `lucia-bg.jpg` with your Lucia background image in the same folder.
+- Replace `lucia-cursor.png` with your custom cursor image.
+- Open this file in a browser to preview.
+- Note: Uploading files requires a backend/server; this demo only shows client-side preview.
+-->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>GTA 6 Leaks Upload</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap');
+
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+
+    body{
+      cursor: url('lucia-cursor.png') 16 16, auto;
+      font-family: 'Orbitron', sans-serif;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      position: relative;
+      background: url('lucia-bg.jpg') center/cover no-repeat fixed;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:40px;
+    }
+
+    body::after{
+      content: "";
+      position: absolute;
+      top:0;left:0;right:0;bottom:0;
+      background: rgba(0,0,0,0.55);
+      pointer-events:none;
+      z-index:0;
+    }
+
+    .leaks-page{
+      position: relative;
+      z-index:1;
+      max-width: 800px;
+      width: 100%;
+      color: #fff;
+      text-align:center;
+    }
+
+    .leaks-page h1{
+      font-size: 48px;
+      font-weight:900;
+      margin-bottom:20px;
+    }
+
+    .upload-form{
+      background: rgba(0,0,0,0.5);
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+      margin-bottom: 30px;
+    }
+
+    .upload-form input[type="file"]{
+      display:block;
+      margin: 0 auto 20px;
+      color: #fff;
+    }
+
+    .upload-form button{
+      padding: 12px 24px;
+      font-weight:700;
+      color:#fff;
+      background: rgba(255,0,0,0.8);
+      border:none;
+      border-radius:12px;
+      cursor:pointer;
+      transition:0.3s;
+    }
+
+    .upload-form button:hover{
+      background: rgba(255,0,0,1);
+    }
+
+    .leak-list{
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+    }
+
+    .leak-item{
+      background: rgba(0,0,0,0.5);
+      padding:12px;
+      border-radius:12px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+      text-align:left;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="leaks-page">
+    <h1>GTA 6 Leaks Upload</h1>
+    <form class="upload-form" id="uploadForm">
+      <input type="file" id="leakFile" accept="image/*,video/*" />
+      <button type="submit">Upload Leak</button>
+    </form>
+
+    <div class="leak-list" id="leakList">
+      <!-- Uploaded leaks will appear here -->
+    </div>
+  </div>
+
+  <script>
+    const uploadForm = document.getElementById('uploadForm');
+    const leakFile = document.getElementById('leakFile');
+    const leakList = document.getElementById('leakList');
+
+    uploadForm.addEventListener('submit', e => {
+      e.preventDefault();
+      const file = leakFile.files[0];
+      if(!file){
+        alert('Please select a file to upload.');
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = function(e){
+        const url = e.target.result;
+        const item = document.createElement('div');
+        item.className = 'leak-item';
+
+        if(file.type.startsWith('image/')){
+          const img = document.createElement('img');
+          img.src = url;
+          img.style.maxWidth = '100%';
+          img.style.borderRadius = '8px';
+          item.appendChild(img);
+        } else if(file.type.startsWith('video/')){
+          const vid = document.createElement('video');
+          vid.src = url;
+          vid.controls = true;
+          vid.style.maxWidth = '100%';
+          vid.style.borderRadius = '8px';
+          item.appendChild(vid);
+        } else {
+          item.textContent = file.name;
+        }
+
+        leakList.prepend(item);
+      };
+      reader.readAsDataURL(file);
+      uploadForm.reset();
+    });
+  </script>
+</body>
+</html>
