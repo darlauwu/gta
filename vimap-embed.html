@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>VIMAP Embed — GTA 6</title>
+
+  <!-- Orbitron font like your site -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+
+  <style>
+    /* Basic reset */
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{
+      font-family:'Orbitron',sans-serif;
+      background:
+        linear-gradient(135deg, rgba(255,77,210,0.15), rgba(0,255,224,0.08)),
+        url('lucia-bg.jpg') center/cover no-repeat fixed;
+      background-blend-mode: overlay;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:#fff;
+    }
+
+    /* dark overlay so embedded page stands out */
+    body::after{
+      content:"";
+      position:fixed;inset:0;
+      background:rgba(0,0,0,0.45);
+      pointer-events:none;
+      z-index:0;
+    }
+
+    /* Header (same style as your home) */
+    header{
+      position:fixed;
+      top:18px;
+      left:50%;
+      transform:translateX(-50%);
+      z-index:50;
+      display:flex;
+      gap:12px;
+      padding:8px 14px;
+      border-radius:999px;
+      backdrop-filter: blur(6px) saturate(0.9);
+      box-shadow:0 6px 18px rgba(0,0,0,0.35);
+    }
+    .nav-btn{
+      padding:8px 12px;border-radius:999px;text-decoration:none;color:#fff;
+      background:linear-gradient(90deg,rgba(255,255,255,0.03),rgba(255,255,255,0.01));
+      border:1px solid rgba(255,255,255,0.06);font-weight:700;
+    }
+    .nav-btn:hover{box-shadow:0 0 10px rgba(255,77,210,0.18)}
+
+    /* Page container like your main layout */
+    .page{
+      position:relative;
+      z-index:10;
+      width:clamp(900px,88vw,1400px);
+      height:calc(100vh - 140px);
+      display:flex;
+      flex-direction:column;
+      gap:16px;
+      align-items:stretch;
+      justify-content:flex-start;
+    }
+
+    /* Card for embed */
+    .embed-card{
+      flex:1;
+      border-radius:20px;
+      overflow:hidden;
+      background:linear-gradient(180deg, rgba(0,0,0,0.28), rgba(0,0,0,0.22));
+      border:1px solid rgba(255,255,255,0.04);
+      box-shadow:0 30px 80px rgba(0,0,0,0.5);
+      display:flex;
+      flex-direction:column;
+    }
+
+    .embed-header{
+      padding:18px 22px;
+      display:flex;
+      align-items:center;
+      gap:12px;
+      background:transparent;
+    }
+    .embed-title{font-size:20px;font-weight:900;color:rgba(255,255,255,0.95);}
+
+    /* Responsive iframe (takes remaining space) */
+    .embed-frame{
+      flex:1;
+      border:0;
+      width:100%;
+      height:100%;
+      background:#111;
+    }
+
+    /* Fallback notice if embedding blocked */
+    .fallback {
+      position:absolute;
+      left:50%; top:50%;
+      transform:translate(-50%,-50%);
+      text-align:center;
+      background:rgba(0,0,0,0.6);
+      padding:18px 24px;
+      border-radius:12px;
+      display:none; /* shown only if script detects embed failure */
+      z-index:60;
+    }
+    .fallback a { color:#ffb3e6; font-weight:700; text-decoration:none; }
+
+    @media(max-width:760px){
+      .page{width:96vw;height:calc(100vh - 100px);}
+      .embed-header{padding:14px}
+      .embed-title{font-size:16px}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a class="nav-btn" href="index.html">Home</a>
+    <a class="nav-btn" href="countdown.html">Countdown</a>
+    <a class="nav-btn" href="map.html">Map</a>
+    <a class="nav-btn" href="characters.html">Characters</a>
+    <a class="nav-btn" href="drive-leaks.html">Leaks</a>
+  </header>
+
+  <div class="page" role="main" aria-live="polite">
+    <div class="embed-card" id="embedCard">
+      <div class="embed-header">
+        <div class="embed-title">VIMAP — Embedded View</div>
+      </div>
+
+      <!-- iframe: set src to the site you want to embed -->
+      <iframe id="embedFrame" class="embed-frame"
+        src="https://vimap.saamexe.com/"
+        allowfullscreen
+        sandbox="allow-same-origin allow-scripts allow-forms allow-popups"
+      ></iframe>
+
+      <!-- fallback if iframe blocked -->
+      <div class="fallback" id="fallback">
+        <p style="margin-bottom:8px">This site prevented embedding.</p>
+        <p><a id="openLink" href="https://vimap.saamexe.com/" target="_blank" rel="noopener">Open VIMAP in a new tab</a></p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Detect if iframe blocked (simple heuristic)
+    const iframe = document.getElementById('embedFrame');
+    const fallback = document.getElementById('fallback');
+
+    // After load, try to access iframe's document — if cross-origin or blocked this will throw.
+    iframe.addEventListener('load', () => {
+      // small delay to allow navigation
+      setTimeout(()=> {
+        let blocked = false;
+        try {
+          const doc = iframe.contentDocument || iframe.contentWindow.document;
+          // if document is null or empty, it might be blocked
+          if(!doc || doc.documentElement.innerHTML.length < 50) blocked = true;
+        } catch (err) {
+          blocked = true; // cross-origin or denied
+        }
+        if(blocked){
+          fallback.style.display = 'block';
+        } else {
+          // If embedding works, hide fallback
+          fallback.style.display = 'none';
+        }
+      }, 300);
+    });
+
+    // Improve UX: if user clicks fallback link, open in new tab (already set)
+  </script>
+</body>
+</html>
