@@ -16,21 +16,13 @@
       align-items: center;
       justify-content: center;
       flex-direction: column;
-
-      /* Background with gradient + Lucia image fallback */
-      background: 
-        linear-gradient(135deg, #ff4dd2, #ff99e6, #00ffe0),
-        url('https://i.redd.it/w1u74qaho25c1.png') center/cover no-repeat fixed;
-      background-blend-mode: overlay;
-      background-size: cover;
-      animation: gradientMove 15s ease infinite;
-
+      background: url('lucia-bg.jpg') center/cover no-repeat fixed;
       position: relative;
       overflow: hidden;
       color: #fff;
     }
 
-    /* Dark overlay for readability */
+    /* dark overlay */
     body::after {
       content: "";
       position: absolute;
@@ -39,43 +31,11 @@
       z-index: 0;
     }
 
-    header {
-      position: fixed;
-      top: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      display:flex;
-      gap:12px;
-      z-index: 100;
-      backdrop-filter: blur(6px) saturate(0.9);
-      padding:8px 16px;
-      border-radius:999px;
-      box-shadow:0 6px 18px rgba(0,0,0,0.3);
-    }
-
-    .nav-btn {
-      display:inline-flex;
-      align-items:center;
-      padding:8px 14px;
-      border-radius:999px;
-      text-decoration:none;
-      color:#fff;
-      font-weight:700;
-      background: rgba(0,0,0,0.4);
-      border:1px solid rgba(255,255,255,0.1);
-      transition:0.3s;
-    }
-    .nav-btn:hover {
-      background: rgba(255,255,255,0.1);
-      box-shadow: 0 0 10px #ff4dd2, 0 0 20px #ff99e6;
-    }
-
     .content {
       position: relative;
       z-index: 1;
       text-align: center;
       padding: 20px;
-      margin-top: 100px;
     }
 
     h1 {
@@ -96,6 +56,7 @@
       to { text-shadow: 0 0 20px #ff4dd2, 0 0 40px #ff99e6; }
     }
 
+    /* optional animated bar at bottom */
     .progress-bar {
       margin-top: 40px;
       width: 300px;
@@ -104,8 +65,6 @@
       border-radius: 999px;
       overflow: hidden;
       position: relative;
-      margin-left: auto;
-      margin-right: auto;
     }
 
     .progress-fill {
@@ -122,23 +81,9 @@
       50% { transform: translateX(0%); }
       100% { transform: translateX(100%); }
     }
-
-    @keyframes gradientMove {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
   </style>
 </head>
 <body>
-  <header>
-    <a href="index.html" class="nav-btn">Home</a>
-    <a href="countdown.html" class="nav-btn">Countdown</a>
-    <a href="map.html" class="nav-btn">Map</a>
-    <a href="characters.html" class="nav-btn">Characters</a>
-    <a href="leaks.html" class="nav-btn">Leaks</a>
-  </header>
-
   <div class="content">
     <h1>🚧 Under Construction 🚧</h1>
     <p>This page is currently being built.<br>Check back soon for GTA 6 updates!</p>
