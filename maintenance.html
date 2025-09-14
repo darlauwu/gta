@@ -10,18 +10,6 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html, body { height: 100%; }
 
-/* Lucia background */
-    :root{
-      --accent:#ffffff;
-    }
-    body{
-      position: relative;
-      background: url('https://i.redd.it/w1u74qaho25c1.png') center/cover no-repeat fixed;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-    }
-    
     body {
       font-family: 'Orbitron', sans-serif;
       display: flex;
@@ -43,11 +31,43 @@
       z-index: 0;
     }
 
+    header {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display:flex;
+      gap:12px;
+      z-index: 100;
+      backdrop-filter: blur(6px) saturate(0.9);
+      padding:8px 16px;
+      border-radius:999px;
+      box-shadow:0 6px 18px rgba(0,0,0,0.3);
+    }
+
+    .nav-btn {
+      display:inline-flex;
+      align-items:center;
+      padding:8px 14px;
+      border-radius:999px;
+      text-decoration:none;
+      color:#fff;
+      font-weight:700;
+      background: rgba(0,0,0,0.4);
+      border:1px solid rgba(255,255,255,0.1);
+      transition:0.3s;
+    }
+    .nav-btn:hover {
+      background: rgba(255,255,255,0.1);
+      box-shadow: 0 0 10px #ff4dd2, 0 0 20px #ff99e6;
+    }
+
     .content {
       position: relative;
       z-index: 1;
       text-align: center;
       padding: 20px;
+      margin-top: 100px; /* pushes below nav */
     }
 
     h1 {
@@ -68,7 +88,6 @@
       to { text-shadow: 0 0 20px #ff4dd2, 0 0 40px #ff99e6; }
     }
 
-    /* optional animated bar at bottom */
     .progress-bar {
       margin-top: 40px;
       width: 300px;
@@ -77,6 +96,8 @@
       border-radius: 999px;
       overflow: hidden;
       position: relative;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     .progress-fill {
@@ -96,6 +117,14 @@
   </style>
 </head>
 <body>
+  <header>
+    <a href="index.html" class="nav-btn">Home</a>
+    <a href="countdown.html" class="nav-btn">Countdown</a>
+    <a href="map.html" class="nav-btn">Map</a>
+    <a href="characters.html" class="nav-btn">Characters</a>
+    <a href="leaks.html" class="nav-btn">Leaks</a>
+  </header>
+
   <div class="content">
     <h1>🚧 Under Construction 🚧</h1>
     <p>This page is currently being built.<br>Check back soon for GTA 6 updates!</p>
