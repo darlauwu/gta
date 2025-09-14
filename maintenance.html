@@ -57,16 +57,31 @@
     }
 
     /* optional animated bar at bottom */
-    .progress-bar {
-      margin-top: 40px;
-      width: 300px;
-      height: 8px;
-      background: rgba(255,255,255,0.1);
-      border-radius: 999px;
-      overflow: hidden;
-      position: relative;
+   .progress-bar {
+    margin: 24px auto 0 auto; /* centers it horizontally */
+    width: 300px;
+    height: 10px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 999px;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     }
 
+    .content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* centers children like the progress bar */
+    justify-content: center;
+    }
+
+    
     .progress-fill {
       position: absolute;
       top:0; left:0;
