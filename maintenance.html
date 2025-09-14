@@ -10,6 +10,14 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html, body { height: 100%; }
 
+background: url('lucia-bg.jpg') center/cover no-repeat fixed;
+
+    
+background: linear-gradient(135deg, #ff4dd2, #ff99e6, #00ffe0);
+background-size: 400% 400%;
+animation: gradientMove 15s ease infinite;
+
+    
     body {
       font-family: 'Orbitron', sans-serif;
       display: flex;
@@ -114,6 +122,14 @@
       50% { transform: translateX(0%); }
       100% { transform: translateX(100%); }
     }
+
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+    
   </style>
 </head>
 <body>
