@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>GTA 6 Characters</title>
+
+  <!-- Orbitron font -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    html,body{height:100%}
+
+    body{
+      font-family:'Orbitron',sans-serif;
+      background:
+        linear-gradient(135deg, rgba(255,77,210,0.15), rgba(0,255,224,0.08)),
+        url('lucia-bg.jpg') center/cover no-repeat fixed;
+      background-blend-mode: overlay;
+      color:#fff;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+    }
+
+    body::after{
+      content:"";
+      position:fixed;inset:0;
+      background:rgba(0,0,0,0.55);
+      z-index:0;
+    }
+
+    /* Header nav */
+    header{
+      position:fixed;
+      top:18px;
+      left:50%;
+      transform:translateX(-50%);
+      z-index:50;
+      display:flex;
+      gap:12px;
+      padding:8px 14px;
+      border-radius:999px;
+      backdrop-filter: blur(6px) saturate(0.9);
+      box-shadow:0 6px 18px rgba(0,0,0,0.35);
+    }
+    .nav-btn{
+      padding:8px 12px;
+      border-radius:999px;
+      text-decoration:none;
+      color:#fff;
+      background:rgba(0,0,0,0.4);
+      border:1px solid rgba(255,255,255,0.08);
+      font-weight:700;
+      transition:0.3s;
+    }
+    .nav-btn:hover{background:rgba(255,255,255,0.1)}
+
+    /* Characters page */
+    .page{
+      position:relative;
+      z-index:10;
+      width:clamp(900px,90vw,1300px);
+      margin-top:120px;
+      margin-bottom:60px;
+    }
+
+    h1{
+      text-align:center;
+      font-size:48px;
+      font-weight:900;
+      margin-bottom:40px;
+      text-shadow:0 2px 8px rgba(0,0,0,0.7);
+    }
+
+    .character-list{
+      display:grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px,1fr));
+      gap:24px;
+    }
+
+    .character-item{
+      background:rgba(0,0,0,0.45);
+      border:1px solid rgba(255,255,255,0.05);
+      border-radius:18px;
+      padding:16px;
+      box-shadow:0 12px 28px rgba(0,0,0,0.6);
+      transition:transform 0.2s;
+    }
+    .character-item:hover{transform:translateY(-6px)}
+
+    .character-item img{
+      width:100%;
+      border-radius:14px;
+      margin-bottom:12px;
+    }
+
+    .character-item h2{
+      font-size:22px;
+      margin-bottom:8px;
+    }
+
+    .character-item p{
+      font-size:15px;
+      line-height:1.5;
+      color:rgba(255,255,255,0.85);
+    }
+
+    @media(max-width:480px){
+      h1{font-size:34px}
+      .character-item h2{font-size:18px}
+      .character-item p{font-size:14px}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a class="nav-btn" href="index.html">Home</a>
+    <a class="nav-btn" href="map.html">Map</a>
+  </header>
+
+  <main class="page">
+    <h1>GTA 6 Characters</h1>
+    <div class="character-list">
+      <div class="character-item">
+        <img src="https://assetsio.gnwcdn.com/Lucia-Caminos-in-a-GTA-6-nightclub.jpg?width=1200&height=1200&fit=crop&quality=100&format=png&enable=upscale&auto=webp" alt="Lucia">
+        <h2>Lucia</h2>
+        <p>The main protagonist of GTA 6. Smart, bold, and determined to make her mark on Vice City.</p>
+      </div>
+      <div class="character-item">
+        <img src="jaime.jpg" alt="Jaime">
+        <h2>Jaime</h2>
+        <p>A loyal ally with a mysterious past, helping Lucia through dangerous missions.</p>
+      </div>
+      <div class="character-item">
+        <img src="rico.jpg" alt="Rico">
+        <h2>Rico</h2>
+        <p>An unpredictable antagonist, known for his ruthless strategy and criminal empire.</p>
+      </div>
+      <div class="character-item">
+        <img src="sofia.jpg" alt="Sofia">
+        <h2>Sofia</h2>
+        <p>A powerful figure in Vice City’s underworld, feared and respected in equal measure.</p>
+      </div>
+      <!-- Add more characters here -->
+    </div>
+  </main>
+</body>
+</html>
