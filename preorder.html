@@ -7,6 +7,8 @@
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+  <!-- Font Awesome for Icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 
   <style>
     * { margin:0; padding:0; box-sizing:border-box; }
@@ -16,7 +18,7 @@
       font-family: 'Orbitron', sans-serif;
       background:
         linear-gradient(135deg, rgba(255,77,210,0.15), rgba(0,255,224,0.08)),
-        url('https://i.redd.it/w1u74qaho25c1.png') center/cover no-repeat fixed;
+        url('lucia-bg.jpg') center/cover no-repeat fixed;
       background-blend-mode: overlay;
       color: #fff;
       display: flex;
@@ -81,6 +83,9 @@
     }
 
     .preorder-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
       padding: 16px 32px;
       border-radius: 999px;
       text-decoration: none;
@@ -100,26 +105,33 @@
                   0 0 32px rgba(125,42,255,0.7);
     }
 
+    .preorder-btn i {
+      font-size: 24px;
+    }
+
     @media(max-width:480px) {
       h1 { font-size:34px; }
       .preorder-btn { font-size:18px; padding:14px 26px; }
+      .preorder-btn i { font-size:20px; }
     }
   </style>
 </head>
 <body>
   <header>
     <a class="nav-btn" href="index.html">Home</a>
+    <a class="nav-btn" href="countdown.html">Countdown</a>
     <a class="nav-btn" href="map.html">Map</a>
     <a class="nav-btn" href="characters.html">Characters</a>
     <a class="nav-btn" href="places.html">Places</a>
     <a class="nav-btn" href="trailers.html">Trailers</a>
+    <a class="nav-btn" href="preorder.html">Pre-Order</a>
   </header>
 
   <main>
     <h1>Pre-Order GTA VI</h1>
     <div class="btn-group">
-      <a href="https://www.xbox.com/en-US/games/store/grand-theft-auto-vi/9NL3WWNZLZZN" class="preorder-btn">Xbox Series X|S</a>
-      <a href="https://www.playstation.com/en-us/games/grand-theft-auto-vi/" class="preorder-btn">PlayStation 5</a>
+      <a href="#" class="preorder-btn"><i class="fa-brands fa-xbox"></i> Xbox Series X | S</a>
+      <a href="#" class="preorder-btn"><i class="fa-brands fa-playstation"></i> PlayStation 5</a>
     </div>
   </main>
 </body>
