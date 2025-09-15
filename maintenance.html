@@ -107,43 +107,6 @@
       <div class="progress-fill"></div>
     </div>
   </div>
-<!-- Hidden Autoplayer -->
-<audio id="gtaAutoPlayer" autoplay loop style="display:none">
-    Your browser does not support the audio element.
-</audio>
-
-<script>
-// Add your music links here
-const tracks = [
-    {title:"Hot Together", src:"https://on.soundcloud.com/ueUIdqpz6nS6jl8Nur"},
-];
-
-let currentTrackIndex = 0;
-const gtaAutoPlayer = document.getElementById("gtaAutoPlayer");
-
-// Load track by URL
-function loadTrack(index){
-    gtaAutoPlayer.src = tracks[index].src;
-    gtaAutoPlayer.play().catch(()=>{}); // handle autoplay restrictions
-}
-
-// Auto switch to next track when one ends
-gtaAutoPlayer.addEventListener("ended", ()=>{
-    currentTrackIndex++;
-    if(currentTrackIndex >= tracks.length) currentTrackIndex = 0;
-    loadTrack(currentTrackIndex);
-});
-
-// Prevent user from pausing
-gtaAutoPlayer.addEventListener("pause", ()=>{
-    gtaAutoPlayer.play().catch(()=>{});
-});
-
-// Start first track on page load
-window.addEventListener("load", ()=>{
-    loadTrack(currentTrackIndex);
-});
-</script>
 
 
   
