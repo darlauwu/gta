@@ -231,5 +231,60 @@ Instructions:
     update();
     setInterval(update, 1000);
   </script>
+
+<!-- GTA 6 Loading Screen -->
+<div id="gta6Loading" style="
+    position: fixed; top:0; left:0; width:100%; height:100%;
+    background: url('https://media.discordapp.net/attachments/1414343219059097731/1417290689338802268/gta-6-official-artwork-no-logo-1600.png?ex=68c9f250&is=68c8a0d0&hm=6882084e984f40d3b7fc03a0def2d67aa55035496e8c0ba514a8a87c18bf2fc8&=&format=webp&quality=lossless&width=1440&height=902') no-repeat center center;
+    background-size: cover;
+    z-index:99999; color:#fff; font-family: 'Orbitron', sans-serif;
+">
+    <!-- Loading Container in Bottom Right -->
+    <div style="
+        position: absolute; bottom: 20px; right: 20px;
+        display: flex; flex-direction: column; align-items: flex-end;
+        gap: 10px;
+    ">
+        <div id="gta6LoadingText" style="font-size:18px; color:#ff69b4;">Loading... 0%</div>
+        <div style="width:200px; height:10px; border:2px solid #ff69b4; border-radius:5px; overflow:hidden;">
+            <div id="gta6LoadingBar" style="width:0%; height:100%; background:#ff69b4; border-radius:5px;"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+// GTA 6 Loading Script
+const loadingBar = document.getElementById("gta6LoadingBar");
+const loadingText = document.getElementById("gta6LoadingText");
+const gta6Loading = document.getElementById("gta6Loading");
+
+let totalDuration = 45000; // 45 seconds
+let elapsed = 0;
+const intervalTime = 50; // 50ms update
+
+const loadingInterval = setInterval(()=>{
+    elapsed += intervalTime;
+    let progress = Math.min((elapsed / totalDuration) * 100, 100);
+    loadingBar.style.width = progress + "%";
+    loadingText.textContent = "Loading... " + Math.floor(progress) + "%";
+
+    if(elapsed >= totalDuration){
+        clearInterval(loadingInterval);
+        // Fade out loading screen
+        gta6Loading.style.transition = "opacity 1s";
+        gta6Loading.style.opacity = 0;
+        setTimeout(()=>{ gta6Loading.style.display = "none"; startSite(); },1000);
+    }
+}, intervalTime);
+
+// Placeholder function after loading completes
+function startSite(){
+    console.log("GTA 6 site starts here!");
+}
+</script>
+
+
+
+  
 </body>
 </html>
