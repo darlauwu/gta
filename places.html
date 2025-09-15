@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>GTA 6 Places</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html, body { height:100%; }
+
+    body {
+      font-family: 'Orbitron', sans-serif;
+      background:
+        linear-gradient(135deg, rgba(255,77,210,0.15), rgba(0,255,224,0.08)),
+        url('lucia-bg.jpg') center/cover no-repeat fixed;
+      background-blend-mode: overlay;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    body::after {
+      content:"";
+      position: fixed;
+      inset:0;
+      background: rgba(0,0,0,0.55);
+      z-index:0;
+    }
+
+    header {
+      position: fixed;
+      top:18px;
+      left:50%;
+      transform: translateX(-50%);
+      z-index:50;
+      display: flex;
+      gap:12px;
+      padding:8px 14px;
+      border-radius:999px;
+      backdrop-filter: blur(6px) saturate(0.9);
+      box-shadow:0 6px 18px rgba(0,0,0,0.35);
+    }
+
+    .nav-btn {
+      padding:8px 12px;
+      border-radius:999px;
+      text-decoration:none;
+      color:#fff;
+      background:rgba(0,0,0,0.4);
+      border:1px solid rgba(255,255,255,0.08);
+      font-weight:700;
+      transition:0.3s;
+    }
+    .nav-btn:hover {
+      background:rgba(255,255,255,0.1);
+    }
+
+    .page {
+      position: relative;
+      z-index:10;
+      width: clamp(900px,90vw,1300px);
+      margin-top:120px;
+      margin-bottom:60px;
+    }
+
+    h1 {
+      text-align: center;
+      font-size:48px;
+      font-weight:900;
+      margin-bottom:40px;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.7);
+    }
+
+    .places-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px,1fr));
+      gap:24px;
+    }
+
+    .place-card {
+      background: rgba(0,0,0,0.45);
+      border:1px solid rgba(255,255,255,0.05);
+      border-radius:18px;
+      padding:12px;
+      box-shadow: 0 12px 28px rgba(0,0,0,0.6);
+      transition: transform 0.2s;
+      overflow: hidden;
+    }
+    .place-card:hover {
+      transform: translateY(-6px);
+    }
+
+    .place-card img {
+      width:100%;
+      height:180px;
+      object-fit: cover;
+      border-radius:12px;
+    }
+
+    .place-card h2 {
+      font-size:20px;
+      margin-top:12px;
+      color:#fff;
+    }
+
+    .place-card p {
+      font-size:14px;
+      margin-top:6px;
+      color: #ddd;
+      line-height:1.4;
+    }
+
+    @media(max-width:480px) {
+      h1 { font-size:34px; }
+      .place-card h2 { font-size:18px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a class="nav-btn" href="index.html">Home</a>
+    <a class="nav-btn" href="countdown.html">Countdown</a>
+    <a class="nav-btn" href="map.html">Map</a>
+    <a class="nav-btn" href="characters.html">Characters</a>
+    <a class="nav-btn" href="places.html">Places</a>
+  </header>
+
+  <main class="page">
+    <h1>GTA 6 Locations</h1>
+    <div class="places-grid">
+
+      <!-- Example Locations -->
+      <div class="place-card">
+        <img src="miami-beach.jpg" alt="Vice City Beach">
+        <h2>Vice City Beach</h2>
+        <p>The iconic beachfront filled with neon lights, palm trees, and endless nightlife.</p>
+      </div>
+
+      <div class="place-card">
+        <img src="downtown.jpg" alt="Downtown Vice City">
+        <h2>Downtown Vice City</h2>
+        <p>Skyscrapers, luxury shops, and bustling streets form the core of Vice City’s economy.</p>
+      </div>
+
+      <div class="place-card">
+        <img src="swamps.jpg" alt="Florida Swamps">
+        <h2>Florida Swamps</h2>
+        <p>Mysterious marshes and bayous — dangerous and full of secrets.</p>
+      </div>
+
+      <div class="place-card">
+        <img src="keys.jpg" alt="The Keys">
+        <h2>The Keys</h2>
+        <p>Tropical islands connected by bridges, perfect for high-speed chases.</p>
+      </div>
+
+    </div>
+  </main>
+</body>
+</html>
+
