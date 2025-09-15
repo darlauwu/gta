@@ -44,31 +44,11 @@
 
 <!-- Loading Screen -->
 <div id="gtaLoading">
-    <img src="https://i.imgur.com/8nXJj7c.png" alt="GTA Logo" style="width:300px; margin-bottom:30px;">
+    <img src="https://cdn.discordapp.com/attachments/1414343219059097731/1417290689338802268/gta-6-official-artwork-no-logo-1600.png?ex=68c9f250&is=68c8a0d0&hm=6882084e984f40d3b7fc03a0def2d67aa55035496e8c0ba514a8a87c18bf2fc8&" alt="GTA Logo" style="width:300px; margin-bottom:30px;">
     <div id="gtaLoadingText" style="font-size:24px; text-align:center;">Loading...</div>
     <div id="gtaLoadingBarContainer">
         <div id="gtaLoadingBar"></div>
     </div>
-</div>
-
-<!-- Radio Button -->
-<button id="gtaRadioBtn">📻 Radio</button>
-
-<!-- Radio Popup -->
-<div id="gtaRadioPopup">
-    <img id="stationLogo" src="" alt="Station Logo">
-    <div id="trackInfoContainer">
-        <div id="trackInfo"></div>
-    </div>
-    <div style="display:flex;justify-content:center;gap:15px;">
-        <button id="prevTrack" style="padding:5px 10px;border:none;border-radius:5px;background:#ff69b4;color:#000;cursor:pointer;">⏮️</button>
-        <button id="playPause" style="padding:5px 10px;border:none;border-radius:5px;background:#ff69b4;color:#000;cursor:pointer;">▶️</button>
-        <button id="nextTrack" style="padding:5px 10px;border:none;border-radius:5px;background:#ff69b4;color:#000;cursor:pointer;">⏭️</button>
-    </div>
-    <select id="stationSelect" style="background: rgba(0,0,0,0.5); color:#ff69b4; border: 1px solid #ff69b4; border-radius:5px; padding:5px;">
-        <option value="station1">Los Santos Rock Radio</option>
-        <option value="station2">Non Stop Pop FM</option>
-    </select>
 </div>
 
 <script>
@@ -89,96 +69,4 @@ let loadingInterval = setInterval(()=>{
         setTimeout(()=>{ gtaLoading.style.display="none"; startMusic(); },1000);
     }
 },100);
-
-// -------------------- RADIO + AUTOPLAY --------------------
-const gtaRadioBtn = document.getElementById('gtaRadioBtn');
-const gtaRadioPopup = document.getElementById('gtaRadioPopup');
-const radioAudio = new Audio();
-radioAudio.loop = false;
-radioAudio.volume = 0.7;
-let isPlaying = true;
-let currentStation = "station1";
-let currentTrackIndex = 0;
-let scrollInterval;
-
-// Stations with tracks and logos
-const stations = {
-    "station1": {
-        logo: "https://i.imgur.com/5Q3GmHh.png",
-        tracks:[
-            {title:"Hot Together", src:"HOT_TOGETHER_URL.mp3"},
-            {title:"Love Is a Long Road", src:"LOVE_IS_A_LONG_ROAD_URL.mp3"}
-        ]
-    },
-    "station2": {
-        logo:"https://i.imgur.com/BxVlxHk.png",
-        tracks:[
-            {title:"Hot Together", src:"HOT_TOGETHER_URL.mp3"},
-            {title:"Love Is a Long Road", src:"LOVE_IS_A_LONG_ROAD_URL.mp3"}
-        ]
-    }
-};
-const trackInfo = document.getElementById("trackInfo");
-const stationLogo = document.getElementById("stationLogo");
-
-// Load track
-function loadTrack(index){
-    radioAudio.src = stations[currentStation].tracks[index].src;
-    radioAudio.play().catch(()=>{});
-    stationLogo.src = stations[currentStation].logo;
-    trackInfo.textContent = `${stations[currentStation].tracks[index].title}`;
-    startScroll();
-}
-
-// Auto next track
-radioAudio.addEventListener("ended", ()=>{
-    currentTrackIndex++;
-    if(currentTrackIndex>=stations[currentStation].tracks.length) currentTrackIndex=0;
-    loadTrack(currentTrackIndex);
-});
-
-// Prevent pause
-radioAudio.addEventListener("pause", ()=>{
-    if(isPlaying) radioAudio.play().catch(()=>{});
-});
-
-// Start scrolling track info
-function startScroll(){
-    clearInterval(scrollInterval);
-    let left = gtaRadioPopup.offsetWidth;
-    scrollInterval = setInterval(()=>{
-        left -= 1;
-        if(left < -trackInfo.offsetWidth) left = gtaRadioPopup.offsetWidth;
-        trackInfo.style.left = left + "px";
-    },20);
-}
-
-// Show/Hide Radio
-gtaRadioBtn.addEventListener('click', ()=>{
-    gtaRadioPopup.style.display = gtaRadioPopup.style.display==="none" ? "flex" : "none";
-});
-
-// Station change
-document.getElementById('stationSelect').addEventListener('change',(e)=>{
-    currentStation = e.target.value;
-    currentTrackIndex = 0;
-    loadTrack(currentTrackIndex);
-});
-
-// Next/Prev buttons
-document.getElementById('nextTrack').addEventListener('click', ()=>{
-    currentTrackIndex++;
-    if(currentTrackIndex>=stations[currentStation].tracks.length) currentTrackIndex=0;
-    loadTrack(currentTrackIndex);
-});
-document.getElementById('prevTrack').addEventListener('click', ()=>{
-    currentTrackIndex--;
-    if(currentTrackIndex<0) currentTrackIndex=stations[currentStation].tracks.length-1;
-    loadTrack(currentTrackIndex);
-});
-
-// Start music after loading screen
-function startMusic(){
-    loadTrack(currentTrackIndex);
-}
 </script>
