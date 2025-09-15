@@ -1,117 +1,184 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>GTA 6 Fan Uploads</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GTA Styled Site</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap');
-
-* {margin:0; padding:0; box-sizing:border-box;}
-body {
-  font-family: 'Orbitron', sans-serif;
-  background: url('pause-menu-bg.jpg') center/cover no-repeat fixed;
-  color: white;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  padding: 40px 20px;
-}
-
-/* Overlay for pause menu vibe */
-body::after {
-  content: "";
-  position: absolute;
-  top:0;left:0;right:0;bottom:0;
-  background: rgba(0,0,0,0.7);
-  z-index:0;
-}
-
-.container {
-  position: relative;
-  z-index:1;
-  max-width: 1000px;
-  width: 100%;
-  text-align: center;
-}
-
-h1 {
-  font-size: 40px;
-  margin-bottom: 20px;
-  text-shadow: 0 2px 8px rgba(0,0,0,0.8);
-}
-
-.upload-box {
-  margin-bottom: 30px;
-}
-.upload-box input {
-  background: rgba(0,0,0,0.6);
-  color: white;
-  padding: 12px;
-  border: 2px solid rgba(255,255,255,0.3);
-  border-radius: 8px;
-  font-family: inherit;
-  cursor: pointer;
-}
-.upload-box input:hover {
-  background: rgba(255,105,180,0.3);
-}
-
-.gallery {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px,1fr));
-  gap: 20px;
-}
-
-.gallery-item {
-  background: rgba(0,0,0,0.6);
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.5);
-  transition: transform 0.2s;
-}
-.gallery-item:hover {
-  transform: scale(1.05);
-}
-.gallery-item img {
-  width: 100%;
-  height: auto;
-  display: block;
-}
+    body { margin:0; font-family:'Orbitron', sans-serif; background:#111; color:#fff; overflow:hidden; }
+    /* GTA Loading Screen */
+    #gtaLoading {
+        position: fixed; top:0; left:0; width:100%; height:100%;
+        background:#111; display:flex; flex-direction:column; justify-content:center; align-items:center;
+        z-index:99999; color:#fff;
+    }
+    #gtaLoadingBarContainer {
+        width:300px; height:20px; border:2px solid #ff69b4; border-radius:10px; overflow:hidden; margin-top:20px;
+    }
+    #gtaLoadingBar {
+        width:0%; height:100%; background:#ff69b4; border-radius:8px;
+    }
+    /* Radio Popup */
+    #gtaRadioBtn {
+        position: fixed; bottom:20px; right:20px;
+        background: rgba(255,255,255,0.05);
+        border: 2px solid #ff69b4; border-radius:50px;
+        padding:12px 24px; color:#ff69b4;
+        cursor:pointer; font-size:16px; z-index:9999;
+        backdrop-filter: blur(5px);
+    }
+    #gtaRadioPopup {
+        display:none;
+        position: fixed; bottom:70px; right:20px; width:350px; height:140px;
+        background: rgba(0,0,0,0.9); color:#ff69b4; border:3px solid #ff69b4; border-radius:20px;
+        display:flex; flex-direction: column; justify-content: space-between; align-items:center;
+        padding:10px; box-sizing:border-box; z-index:10000; box-shadow:0 0 20px #ff69b4,0 0 40px #ff69b4;
+        overflow:hidden;
+    }
+    #trackInfoContainer { overflow:hidden; width:100%; height:40px; position: relative; margin:5px 0; }
+    #trackInfo { white-space: nowrap; position: absolute; left:100%; font-size:16px; font-weight:bold; }
+    #stationLogo { width:80px; height:40px; object-fit:contain; filter:drop-shadow(0 0 5px #ff69b4); }
 </style>
 </head>
 <body>
-  <div class="container">
-    <h1>📸 GTA 6 Fan Uploads</h1>
 
-    <div class="upload-box">
-      <input type="file" id="fileUpload" accept="image/*">
+<!-- Loading Screen -->
+<div id="gtaLoading">
+    <img src="https://i.imgur.com/8nXJj7c.png" alt="GTA Logo" style="width:300px; margin-bottom:30px;">
+    <div id="gtaLoadingText" style="font-size:24px; text-align:center;">Loading...</div>
+    <div id="gtaLoadingBarContainer">
+        <div id="gtaLoadingBar"></div>
     </div>
+</div>
 
-    <div class="gallery" id="gallery"></div>
-  </div>
+<!-- Radio Button -->
+<button id="gtaRadioBtn">📻 Radio</button>
+
+<!-- Radio Popup -->
+<div id="gtaRadioPopup">
+    <img id="stationLogo" src="" alt="Station Logo">
+    <div id="trackInfoContainer">
+        <div id="trackInfo"></div>
+    </div>
+    <div style="display:flex;justify-content:center;gap:15px;">
+        <button id="prevTrack" style="padding:5px 10px;border:none;border-radius:5px;background:#ff69b4;color:#000;cursor:pointer;">⏮️</button>
+        <button id="playPause" style="padding:5px 10px;border:none;border-radius:5px;background:#ff69b4;color:#000;cursor:pointer;">▶️</button>
+        <button id="nextTrack" style="padding:5px 10px;border:none;border-radius:5px;background:#ff69b4;color:#000;cursor:pointer;">⏭️</button>
+    </div>
+    <select id="stationSelect" style="background: rgba(0,0,0,0.5); color:#ff69b4; border: 1px solid #ff69b4; border-radius:5px; padding:5px;">
+        <option value="station1">Los Santos Rock Radio</option>
+        <option value="station2">Non Stop Pop FM</option>
+    </select>
+</div>
 
 <script>
-const fileInput = document.getElementById("fileUpload");
-const gallery = document.getElementById("gallery");
+// -------------------- LOADING SCREEN --------------------
+let loadingBar = document.getElementById("gtaLoadingBar");
+let loadingText = document.getElementById("gtaLoadingText");
+let progress = 0;
+let loadingInterval = setInterval(()=>{
+    progress += Math.random()*5;
+    if(progress>100) progress=100;
+    loadingBar.style.width = progress + "%";
+    loadingText.textContent = "Loading... " + Math.floor(progress) + "%";
+    if(progress>=100){
+        clearInterval(loadingInterval);
+        let gtaLoading = document.getElementById("gtaLoading");
+        gtaLoading.style.transition = "opacity 1s";
+        gtaLoading.style.opacity = 0;
+        setTimeout(()=>{ gtaLoading.style.display="none"; startMusic(); },1000);
+    }
+},100);
 
-fileInput.addEventListener("change", e => {
-  const file = e.target.files[0];
-  if (!file) return;
+// -------------------- RADIO + AUTOPLAY --------------------
+const gtaRadioBtn = document.getElementById('gtaRadioBtn');
+const gtaRadioPopup = document.getElementById('gtaRadioPopup');
+const radioAudio = new Audio();
+radioAudio.loop = false;
+radioAudio.volume = 0.7;
+let isPlaying = true;
+let currentStation = "station1";
+let currentTrackIndex = 0;
+let scrollInterval;
 
-  const reader = new FileReader();
-  reader.onload = function(ev) {
-    const img = document.createElement("img");
-    img.src = ev.target.result;
-    const item = document.createElement("div");
-    item.className = "gallery-item";
-    item.appendChild(img);
-    gallery.appendChild(item);
-  }
-  reader.readAsDataURL(file);
+// Stations with tracks and logos
+const stations = {
+    "station1": {
+        logo: "https://i.imgur.com/5Q3GmHh.png",
+        tracks:[
+            {title:"Hot Together", src:"HOT_TOGETHER_URL.mp3"},
+            {title:"Love Is a Long Road", src:"LOVE_IS_A_LONG_ROAD_URL.mp3"}
+        ]
+    },
+    "station2": {
+        logo:"https://i.imgur.com/BxVlxHk.png",
+        tracks:[
+            {title:"Hot Together", src:"HOT_TOGETHER_URL.mp3"},
+            {title:"Love Is a Long Road", src:"LOVE_IS_A_LONG_ROAD_URL.mp3"}
+        ]
+    }
+};
+const trackInfo = document.getElementById("trackInfo");
+const stationLogo = document.getElementById("stationLogo");
+
+// Load track
+function loadTrack(index){
+    radioAudio.src = stations[currentStation].tracks[index].src;
+    radioAudio.play().catch(()=>{});
+    stationLogo.src = stations[currentStation].logo;
+    trackInfo.textContent = `${stations[currentStation].tracks[index].title}`;
+    startScroll();
+}
+
+// Auto next track
+radioAudio.addEventListener("ended", ()=>{
+    currentTrackIndex++;
+    if(currentTrackIndex>=stations[currentStation].tracks.length) currentTrackIndex=0;
+    loadTrack(currentTrackIndex);
 });
+
+// Prevent pause
+radioAudio.addEventListener("pause", ()=>{
+    if(isPlaying) radioAudio.play().catch(()=>{});
+});
+
+// Start scrolling track info
+function startScroll(){
+    clearInterval(scrollInterval);
+    let left = gtaRadioPopup.offsetWidth;
+    scrollInterval = setInterval(()=>{
+        left -= 1;
+        if(left < -trackInfo.offsetWidth) left = gtaRadioPopup.offsetWidth;
+        trackInfo.style.left = left + "px";
+    },20);
+}
+
+// Show/Hide Radio
+gtaRadioBtn.addEventListener('click', ()=>{
+    gtaRadioPopup.style.display = gtaRadioPopup.style.display==="none" ? "flex" : "none";
+});
+
+// Station change
+document.getElementById('stationSelect').addEventListener('change',(e)=>{
+    currentStation = e.target.value;
+    currentTrackIndex = 0;
+    loadTrack(currentTrackIndex);
+});
+
+// Next/Prev buttons
+document.getElementById('nextTrack').addEventListener('click', ()=>{
+    currentTrackIndex++;
+    if(currentTrackIndex>=stations[currentStation].tracks.length) currentTrackIndex=0;
+    loadTrack(currentTrackIndex);
+});
+document.getElementById('prevTrack').addEventListener('click', ()=>{
+    currentTrackIndex--;
+    if(currentTrackIndex<0) currentTrackIndex=stations[currentStation].tracks.length-1;
+    loadTrack(currentTrackIndex);
+});
+
+// Start music after loading screen
+function startMusic(){
+    loadTrack(currentTrackIndex);
+}
 </script>
-</body>
-</html>
