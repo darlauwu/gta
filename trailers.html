@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>GTA 6 Trailers</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html, body { height:100%; }
+
+    body {
+      font-family: 'Orbitron', sans-serif;
+      background:
+        linear-gradient(135deg, rgba(255,77,210,0.15), rgba(0,255,224,0.08)),
+        url('lucia-bg.jpg') center/cover no-repeat fixed;
+      background-blend-mode: overlay;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    body::after {
+      content:"";
+      position: fixed;
+      inset:0;
+      background: rgba(0,0,0,0.55);
+      z-index:0;
+    }
+
+    header {
+      position: fixed;
+      top:18px;
+      left:50%;
+      transform: translateX(-50%);
+      z-index:50;
+      display: flex;
+      gap:12px;
+      padding:8px 14px;
+      border-radius:999px;
+      backdrop-filter: blur(6px) saturate(0.9);
+      box-shadow:0 6px 18px rgba(0,0,0,0.35);
+    }
+
+    .nav-btn {
+      padding:8px 12px;
+      border-radius:999px;
+      text-decoration:none;
+      color:#fff;
+      background:rgba(0,0,0,0.4);
+      border:1px solid rgba(255,255,255,0.08);
+      font-weight:700;
+      transition:0.3s;
+    }
+    .nav-btn:hover {
+      background:rgba(255,255,255,0.1);
+    }
+
+    .page {
+      position: relative;
+      z-index:10;
+      width: clamp(900px,90vw,1300px);
+      margin-top:120px;
+      margin-bottom:60px;
+    }
+
+    h1 {
+      text-align: center;
+      font-size:48px;
+      font-weight:900;
+      margin-bottom:40px;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.7);
+    }
+
+    .trailers-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px,1fr));
+      gap:24px;
+    }
+
+    .trailer-card {
+      background: rgba(0,0,0,0.45);
+      border:1px solid rgba(255,255,255,0.05);
+      border-radius:18px;
+      padding:12px;
+      box-shadow: 0 12px 28px rgba(0,0,0,0.6);
+      transition: transform 0.2s;
+      overflow: hidden;
+    }
+    .trailer-card:hover {
+      transform: translateY(-6px);
+    }
+
+    .trailer-card iframe {
+      width:100%;
+      height:200px;
+      border:none;
+      border-radius:12px;
+    }
+
+    .trailer-card h2 {
+      font-size:20px;
+      margin-top:12px;
+      color:#fff;
+      text-align: center;
+    }
+
+    @media(max-width:480px) {
+      h1 { font-size:34px; }
+      .trailer-card h2 { font-size:18px; }
+      .trailer-card iframe { height:180px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a class="nav-btn" href="index.html">Home</a>
+    <a class="nav-btn" href="countdown.html">Countdown</a>
+    <a class="nav-btn" href="map.html">Map</a>
+    <a class="nav-btn" href="characters.html">Characters</a>
+    <a class="nav-btn" href="places.html">Places</a>
+    <a class="nav-btn" href="trailers.html">Trailers</a>
+  </header>
+
+  <main class="page">
+    <h1>GTA 6 Trailers</h1>
+    <div class="trailers-grid">
+
+      <!-- Trailer Example -->
+      <div class="trailer-card">
+        <iframe src="https://www.youtube.com/embed/QdBZY2fkU-0" allowfullscreen></iframe>
+        <h2>Trailer 1</h2>
+      </div>
+
+      <div class="trailer-card">
+        <iframe src="https://www.youtube.com/embed/VIDEO_ID" allowfullscreen></iframe>
+        <h2>Trailer 2</h2>
+      </div>
+
+      <div class="trailer-card">
+        <iframe src="https://www.youtube.com/embed/VIDEO_ID" allowfullscreen></iframe>
+        <h2>Trailer 3</h2>
+      </div>
+
+    </div>
+  </main>
+</body>
+</html>
