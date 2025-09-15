@@ -145,24 +145,31 @@ Instructions:
   box-shadow: 0 0 10px #ff4dd2, 0 0 20px #ff99e6;
 }
 
+.preorder-buttons {
+  margin-top: 24px; /* space between countdown and buttons */
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center;
+}
+
 .preorder-btn {
-  padding: 12px 26px;
+  padding: 12px 22px;
   border-radius: 999px;
   text-decoration: none;
   color: #fff;
   font-weight: 700;
-  background: linear-gradient(135deg, #ff2ad4, #7d2aff);
-  border: none;
-  box-shadow: 0 0 12px rgba(255,42,212,0.7),
-              0 0 24px rgba(125,42,255,0.5);
-  transition: 0.3s ease-in-out;
+  background: rgba(0,0,0,0.45);
+  border: 1px solid rgba(255,255,255,0.15);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.4);
+  transition: 0.3s;
 }
 
 .preorder-btn:hover {
-  transform: translateY(-4px) scale(1.05);
-  box-shadow: 0 0 16px rgba(255,42,212,0.9),
-              0 0 32px rgba(125,42,255,0.7);
+  background: rgba(255,255,255,0.1);
+  transform: translateY(-3px);
 }
+
 
 
     
