@@ -45,8 +45,7 @@
 <!-- GTA V Loading Screen -->
 <div id="gtaLoading" style="
     position: fixed; top:0; left:0; width:100%; height:100%;
-    background: url('https://cdn.discordapp.com/attachments/1414343219059097731/1417290689338802268/gta-6-official-artwork-no-logo-1600.png?ex=68c9f250&is=68c8a0d0&hm=6882084e984f40d3b7fc03a0def2d67aa55035496e8c0ba514a8a87c18bf2fc8&') no-repeat center center;
-    background-size: cover;
+    background-size: cover; background-position: center;
     display:flex; flex-direction: column; justify-content:flex-end; align-items:center;
     z-index:99999; color:#fff;
 ">
@@ -56,23 +55,59 @@
     </div>
 </div>
 
-
 <script>
-// -------------------- LOADING SCREEN --------------------
-let loadingBar = document.getElementById("gtaLoadingBar");
-let loadingText = document.getElementById("gtaLoadingText");
-let progress = 0;
-let loadingInterval = setInterval(()=>{
-    progress += Math.random()*5;
-    if(progress>100) progress=100;
-    loadingBar.style.width = progress + "%";
-    loadingText.textContent = "Loading... " + Math.floor(progress) + "%";
-    if(progress>=100){
-        clearInterval(loadingInterval);
-        let gtaLoading = document.getElementById("gtaLoading");
+// Array of images to cycle through
+const loadingImages = [
+    "https://cdn.discordapp.com/attachments/1414343219059097731/1417290689338802268/gta-6-official-artwork-no-logo-1600.png?ex=68c9f250&is=68c8a0d0&hm=6882084e984f40d3b7fc03a0def2d67aa55035496e8c0ba514a8a87c18bf2fc8&",
+    "https://media.discordapp.net/attachments/1414343219059097731/1417292315382382724/Cal_Hampton_03.jpg?ex=68c9f3d4&is=68c8a254&hm=cad446fdf3b97f9c5a632f293da91c0166f26963a230afda70765b2bb9338b76&=&format=webp&width=1603&height=902",
+    "https://media.discordapp.net/attachments/1414343219059097731/1417292314694389782/Real_Dimez_03.jpg?ex=68c9f3d3&is=68c8a253&hm=afb3872070105ef7b4122f415d76e5e135a49f04e1ff00cd20260ab5366f1897&=&format=webp&width=1603&height=902",
+    "https://media.discordapp.net/attachments/1414343219059097731/1417292315873120286/Jason_Duval_02.jpg?ex=68c9f3d4&is=68c8a254&hm=877041991933a680bdfd58a1a972b9d07bc12bb18bf5d7e0a4287bddffa9206b&=&format=webp&width=1603&height=902"
+    "https://media.discordapp.net/attachments/1414343219059097731/1417292313969037413/Brian_Heder_03.jpg?ex=68c9f3d3&is=68c8a253&hm=0f5383a7005d3c99ab473dbd22a5de45ddf096c5cc1e3550b1fd54c7b3a14557&=&format=webp&width=1603&height=902"
+];
+
+let gtaLoading = document.getElementById("gtaLoading");
+let gtaLoadingBar = document.getElementById("gtaLoadingBar");
+let gtaLoadingText = document.getElementById("gtaLoadingText");
+
+let totalDuration = 45000; // 45 seconds
+let elapsed = 0;
+let imageIndex = 0;
+
+// Show first image initially
+gtaLoading.style.backgroundImage = `url(${loadingImages[0]})`;
+
+// Change image every (totalDuration / number of images)
+let imageChangeInterval = totalDuration / loadingImages.length;
+
+// Interval for progress and image cycling
+let interval = 50; // update every 50ms
+let timer = setInterval(()=>{
+    elapsed += interval;
+
+    // Update progress bar
+    let progressPercent = (elapsed / totalDuration) * 100;
+    gtaLoadingBar.style.width = progressPercent + "%";
+    gtaLoadingText.textContent = "Loading... " + Math.floor(progressPercent) + "%";
+
+    // Change images
+    if(elapsed >= (imageIndex + 1) * imageChangeInterval && imageIndex < loadingImages.length - 1){
+        imageIndex++;
+        gtaLoading.style.backgroundImage = `url(${loadingImages[imageIndex]})`;
+    }
+
+    // End loading
+    if(elapsed >= totalDuration){
+        clearInterval(timer);
         gtaLoading.style.transition = "opacity 1s";
         gtaLoading.style.opacity = 0;
         setTimeout(()=>{ gtaLoading.style.display="none"; startMusic(); },1000);
     }
-},100);
+
+}, interval);
+
+// Placeholder startMusic function (replace with your GTA radio/music start)
+function startMusic(){
+    console.log("Music starts here!");
+}
 </script>
+
