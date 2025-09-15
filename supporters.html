@@ -42,14 +42,20 @@
 </head>
 <body>
 
-<!-- Loading Screen -->
-<div id="gtaLoading">
-    <img src="https://cdn.discordapp.com/attachments/1414343219059097731/1417290689338802268/gta-6-official-artwork-no-logo-1600.png?ex=68c9f250&is=68c8a0d0&hm=6882084e984f40d3b7fc03a0def2d67aa55035496e8c0ba514a8a87c18bf2fc8&" alt="GTA Logo" style="width:300px; margin-bottom:30px;">
-    <div id="gtaLoadingText" style="font-size:24px; text-align:center;">Loading...</div>
-    <div id="gtaLoadingBarContainer">
-        <div id="gtaLoadingBar"></div>
+<!-- GTA V Loading Screen -->
+<div id="gtaLoading" style="
+    position: fixed; top:0; left:0; width:100%; height:100%;
+    background: url('https://cdn.discordapp.com/attachments/1414343219059097731/1417290689338802268/gta-6-official-artwork-no-logo-1600.png?ex=68c9f250&is=68c8a0d0&hm=6882084e984f40d3b7fc03a0def2d67aa55035496e8c0ba514a8a87c18bf2fc8&') no-repeat center center;
+    background-size: cover;
+    display:flex; flex-direction: column; justify-content:flex-end; align-items:center;
+    z-index:99999; color:#fff;
+">
+    <div id="gtaLoadingText" style="font-size:24px; text-align:center; margin-bottom:150px;">Loading...</div>
+    <div id="gtaLoadingBarContainer" style="width:300px; height:20px; border:2px solid #ff69b4; border-radius:10px; overflow:hidden; margin-bottom:100px;">
+        <div id="gtaLoadingBar" style="width:0%; height:100%; background:#ff69b4; border-radius:8px;"></div>
     </div>
 </div>
+
 
 <script>
 // -------------------- LOADING SCREEN --------------------
