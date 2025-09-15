@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GTA 6 Fan Uploads</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap');
+
+* {margin:0; padding:0; box-sizing:border-box;}
+body {
+  font-family: 'Orbitron', sans-serif;
+  background: url('pause-menu-bg.jpg') center/cover no-repeat fixed;
+  color: white;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 40px 20px;
+}
+
+/* Overlay for pause menu vibe */
+body::after {
+  content: "";
+  position: absolute;
+  top:0;left:0;right:0;bottom:0;
+  background: rgba(0,0,0,0.7);
+  z-index:0;
+}
+
+.container {
+  position: relative;
+  z-index:1;
+  max-width: 1000px;
+  width: 100%;
+  text-align: center;
+}
+
+h1 {
+  font-size: 40px;
+  margin-bottom: 20px;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+}
+
+.upload-box {
+  margin-bottom: 30px;
+}
+.upload-box input {
+  background: rgba(0,0,0,0.6);
+  color: white;
+  padding: 12px;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-radius: 8px;
+  font-family: inherit;
+  cursor: pointer;
+}
+.upload-box input:hover {
+  background: rgba(255,105,180,0.3);
+}
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px,1fr));
+  gap: 20px;
+}
+
+.gallery-item {
+  background: rgba(0,0,0,0.6);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.5);
+  transition: transform 0.2s;
+}
+.gallery-item:hover {
+  transform: scale(1.05);
+}
+.gallery-item img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+</style>
+</head>
+<body>
+  <div class="container">
+    <h1>📸 GTA 6 Fan Uploads</h1>
+
+    <div class="upload-box">
+      <input type="file" id="fileUpload" accept="image/*">
+    </div>
+
+    <div class="gallery" id="gallery"></div>
+  </div>
+
+<script>
+const fileInput = document.getElementById("fileUpload");
+const gallery = document.getElementById("gallery");
+
+fileInput.addEventListener("change", e => {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = function(ev) {
+    const img = document.createElement("img");
+    img.src = ev.target.result;
+    const item = document.createElement("div");
+    item.className = "gallery-item";
+    item.appendChild(img);
+    gallery.appendChild(item);
+  }
+  reader.readAsDataURL(file);
+});
+</script>
+</body>
+</html>
