@@ -145,31 +145,36 @@ Instructions:
   box-shadow: 0 0 10px #ff4dd2, 0 0 20px #ff99e6;
 }
 
-.preorder-buttons {
-  margin-top: 20px;
+/* Right Side Buttons */
+.right-side {
+  position: fixed;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   gap: 15px;
+  z-index: 1000;
 }
 
-.preorder-btn {
-  padding: 12px 26px;
-  border-radius: 999px;
+.right-side a {
+  display: block;
+  padding: 10px 20px;
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 20px;
   text-decoration: none;
-  color: #fff;
-  font-weight: 700;
-  background: linear-gradient(135deg, #ff2ad4, #7d2aff);
-  border: none;
-  box-shadow: 0 0 12px rgba(255,42,212,0.7),
-              0 0 24px rgba(125,42,255,0.5);
-  transition: 0.3s ease-in-out;
+  color: white;
+  font-weight: bold;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+  transition: all 0.3s ease;
+  text-align: center;
 }
 
-.preorder-btn:hover {
-  transform: translateY(-4px) scale(1.05);
-  box-shadow: 0 0 16px rgba(255,42,212,0.9),
-              0 0 32px rgba(125,42,255,0.7);
+.right-side a:hover {
+  background: rgba(255, 105, 180, 0.8);
+  transform: scale(1.05);
 }
+
 
     @media (max-width:640px){
       header{left:12px;transform:none;right:12px;top:12px;justify-content:flex-start}
@@ -187,7 +192,7 @@ Instructions:
       <a class="trailer-btn" href="https://darlauwu.github.io/gta6/error" target="_blank" rel="noopener noreferrer"><span class="dot"></span>Gameplay</a>
     </header>
 
-<div class="preorder-buttons">
+<div class="side-buttons right-side">
   <a href="https://www.playstation.com/en-us/games/grand-theft-auto-vi/" class="preorder-btn">Pre-Order for PlayStation 5</a>
   <a href="https://www.xbox.com/en-US/games/store/grand-theft-auto-vi/9NL3WWNZLZZN" class="preorder-btn">Pre-Order for Xbox Series X|S</a>
 </div>
