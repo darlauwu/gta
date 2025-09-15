@@ -108,6 +108,161 @@
     </div>
   </div>
 
+<!-- GTA 5 Radio Button -->
+<button id="gtaRadioBtn" style="
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: rgba(255,255,255,0.05);
+    border: 2px solid #0ff;
+    border-radius: 50px;
+    padding: 12px 24px;
+    color: #0ff;
+    cursor: pointer;
+    font-size: 16px;
+    z-index: 9999;
+    backdrop-filter: blur(5px);
+">📻 Radio</button>
+
+<!-- Radio Popup -->
+<div id="gtaRadioPopup" style="
+    display:none;
+    position: fixed;
+    bottom: 70px;
+    right: 20px;
+    width: 300px;
+    height: 150px;
+    background: rgba(0,0,0,0.9);
+    color: #0ff;
+    font-family: 'Orbitron', sans-serif;
+    border: 3px solid #0ff;
+    border-radius: 20px;
+    display:flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    box-sizing: border-box;
+    z-index:10000;
+    box-shadow: 0 0 20px #0ff, 0 0 40px #0ff;
+">
+
+    <!-- Track Info -->
+    <div id="trackInfo" style="text-align:center;font-size:14px;">
+        <div id="trackTitle">Select a station</div>
+        <div id="trackArtist">—</div>
+    </div>
+
+    <!-- Controls -->
+    <div style="display:flex;justify-content:center;gap:15px;">
+        <button id="prevTrack" style="padding:5px 10px;border:none;border-radius:5px;background:#0ff;color:#000;cursor:pointer;">⏮️</button>
+        <button id="playPause" style="padding:5px 10px;border:none;border-radius:5px;background:#0ff;color:#000;cursor:pointer;">▶️</button>
+        <button id="nextTrack" style="padding:5px 10px;border:none;border-radius:5px;background:#0ff;color:#000;cursor:pointer;">⏭️</button>
+    </div>
+
+    <!-- Station Selection -->
+    <select id="stationSelect" style="background: rgba(0,0,0,0.5); color:#0ff; border: 1px solid #0ff; border-radius:5px; padding:5px;">
+        <option value="station1">Los Santos Rock Radio</option>
+        <option value="station2">Non Stop Pop FM</option>
+        <option value="station3">Radio Los Santos</option>
+        <option value="station4">Worldwide FM</option>
+    </select>
+
+    <!-- Audio Element -->
+    <audio id="radioAudio"></audio>
+</div>
+
+<script>
+// Elements
+const gtaRadioBtn = document.getElementById('gtaRadioBtn');
+const gtaRadioPopup = document.getElementById('gtaRadioPopup');
+const radioAudio = document.getElementById('radioAudio');
+const playPause = document.getElementById('playPause');
+const nextTrack = document.getElementById('nextTrack');
+const prevTrack = document.getElementById('prevTrack');
+const stationSelect = document.getElementById('stationSelect');
+const trackTitle = document.getElementById('trackTitle');
+const trackArtist = document.getElementById('trackArtist');
+
+// GTA 5-style track lists
+const stations = {
+    "station1":[
+        {title:"Welcome to Los Santos", artist:"Radio DJ", src:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"},
+        {title:"Rock Anthem", artist:"GTA Band", src:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3"}
+    ],
+    "station2":[
+        {title:"Pop Hit", artist:"Pop Artist", src:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3"},
+        {title:"Dance Beat", artist:"DJ Spin", src:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3"}
+    ],
+    "station3":[
+        {title:"Gangsta Life", artist:"Radio Crew", src:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3"}
+    ],
+    "station4":[
+        {title:"Worldwide Groove", artist:"International DJ", src:"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3"}
+    ]
+};
+
+let currentStation = "station1";
+let currentTrackIndex = 0;
+let isPlaying = false;
+
+// Toggle popup
+gtaRadioBtn.addEventListener('click', () => {
+    gtaRadioPopup.style.display = gtaRadioPopup.style.display === 'none' ? 'flex' : 'none';
+});
+
+// Load track
+function loadTrack() {
+    const track = stations[currentStation][currentTrackIndex];
+    if(!track) return;
+    radioAudio.src = track.src;
+    trackTitle.textContent = track.title;
+    trackArtist.textContent = track.artist;
+    if(isPlaying) radioAudio.play();
+}
+
+// Play/Pause
+playPause.addEventListener('click', ()=>{
+    if(isPlaying){
+        radioAudio.pause();
+        playPause.textContent="▶️";
+        isPlaying=false;
+    } else {
+        radioAudio.play();
+        playPause.textContent="⏸️";
+        isPlaying=true;
+    }
+});
+
+// Next/Prev
+nextTrack.addEventListener('click', ()=>{
+    currentTrackIndex++;
+    if(currentTrackIndex >= stations[currentStation].length) currentTrackIndex=0;
+    loadTrack();
+});
+
+prevTrack.addEventListener('click', ()=>{
+    currentTrackIndex--;
+    if(currentTrackIndex<0) currentTrackIndex = stations[currentStation].length-1;
+    loadTrack();
+});
+
+// Change Station
+stationSelect.addEventListener('change',(e)=>{
+    currentStation = e.target.value;
+    currentTrackIndex = 0;
+    loadTrack();
+});
+
+// Auto next track
+radioAudio.addEventListener('ended',()=>{
+    currentTrackIndex++;
+    if(currentTrackIndex >= stations[currentStation].length) currentTrackIndex=0;
+    loadTrack();
+});
+
+loadTrack();
+</script>
 
   
 </body>
