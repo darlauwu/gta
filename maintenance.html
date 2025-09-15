@@ -107,104 +107,143 @@
       <div class="progress-fill"></div>
     </div>
   </div>
+<!-- Add this button where your other nav buttons are -->
+<a href="#" class="nav-btn" onclick="toggleGame()">🎮 Game</a>
 
-<!-- Mini GTA1-style game popup -->
-<div id="gta1-popup">
-  <canvas id="gta1-game" width="300" height="300"></canvas>
-  <button id="close-game">✖</button>
+<!-- Game popup -->
+<div id="gamePopup">
+  <canvas id="gtaGame" width="300" height="400"></canvas>
+  <button id="closeGame" onclick="toggleGame()">✖ Close</button>
 </div>
 
-<button id="open-game" class="nav-btn" style="position:fixed;bottom:20px;right:20px;z-index:999;">
-  Play GTA 1 Mini
-</button>
-
 <style>
-  #gta1-popup {
+  /* Popup styling */
+  #gamePopup {
     position: fixed;
     bottom: 20px;
     right: 20px;
     width: 320px;
-    height: 340px;
-    background: rgba(0,0,0,0.9);
-    border: 2px solid rgba(255,255,255,0.2);
-    border-radius: 12px;
-    box-shadow: 0 0 20px rgba(255,42,212,0.6);
+    height: 460px;
+    background: rgba(0,0,0,0.85);
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.8);
     display: none;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    z-index: 1000;
+    padding: 10px;
+    z-index: 9999;
   }
-
-  #gta1-game {
-    background: #2b2b2b;
-    border-radius: 8px;
+  #gamePopup canvas {
+    background: #222;
+    border-radius: 12px;
+  }
+  #closeGame {
     margin-top: 10px;
-  }
-
-  #close-game {
-    position: absolute;
-    top: 5px;
-    right: 5px;
-    border: none;
-    background: transparent;
+    background: rgba(255,255,255,0.2);
     color: #fff;
-    font-size: 18px;
+    border: none;
+    border-radius: 12px;
+    padding: 6px 12px;
     cursor: pointer;
+    font-weight: bold;
+  }
+  #closeGame:hover {
+    background: rgba(255,255,255,0.4);
   }
 </style>
 
 <script>
-  const popup = document.getElementById("gta1-popup");
-  const openBtn = document.getElementById("open-game");
-  const closeBtn = document.getElementById("close-game");
-  const canvas = document.getElementById("gta1-game");
-  const ctx = canvas.getContext("2d");
-
-  let car = { x: 140, y: 140, w: 20, h: 30, speed: 2 };
-
-  function drawCar() {
-    ctx.fillStyle = "red";
-    ctx.fillRect(car.x, car.y, car.w, car.h);
+  const popup = document.getElementById("gamePopup");
+  function toggleGame() {
+    popup.style.display = popup.style.display === "flex" ? "none" : "flex";
   }
 
-  function drawMap() {
-    ctx.fillStyle = "#444";
-    ctx.fillRect(0,0,canvas.width,canvas.height);
-    ctx.fillStyle = "#222";
-    for(let i=0;i<canvas.width;i+=40){
-      ctx.fillRect(i,0,2,canvas.height);
-      ctx.fillRect(0,i,canvas.width,2);
+  // Simple mini-game
+  const canvas = document.getElementById("gtaGame");
+  const ctx = canvas.getContext("2d");
+
+  let car = { x: 140, y: 350, width: 20, height: 40 };
+  let obstacles = [];
+  let score = 0;
+  let gameOver = false;
+
+  function drawCar() {
+    ctx.fillStyle = "lime";
+    ctx.fillRect(car.x, car.y, car.width, car.height);
+  }
+
+  function drawObstacles() {
+    ctx.fillStyle = "red";
+    for (let obs of obstacles) {
+      ctx.fillRect(obs.x, obs.y, obs.width, obs.height);
     }
   }
 
-  function gameLoop() {
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-    drawMap();
+  function updateObstacles() {
+    for (let obs of obstacles) {
+      obs.y += 4;
+      if (obs.y > canvas.height) {
+        obstacles.splice(obstacles.indexOf(obs), 1);
+        score++;
+      }
+      if (
+        obs.x < car.x + car.width &&
+        obs.x + obs.width > car.x &&
+        obs.y < car.y + car.height &&
+        obs.y + obs.height > car.y
+      ) {
+        gameOver = true;
+      }
+    }
+    if (Math.random() < 0.03) {
+      obstacles.push({ x: Math.random() * 260, y: -40, width: 40, height: 40 });
+    }
+  }
+
+  function drawScore() {
+    ctx.fillStyle = "white";
+    ctx.font = "16px Orbitron";
+    ctx.fillText("Score: " + score, 10, 20);
+  }
+
+  function loop() {
+    if (!popup.style.display.includes("flex")) return; // Pause when closed
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawCar();
-    requestAnimationFrame(gameLoop);
+    updateObstacles();
+    drawObstacles();
+    drawScore();
+
+    if (!gameOver) {
+      requestAnimationFrame(loop);
+    } else {
+      ctx.fillStyle = "yellow";
+      ctx.font = "24px Orbitron";
+      ctx.fillText("Game Over!", 80, 200);
+    }
   }
 
-  let keys = {};
-  window.addEventListener("keydown", e => keys[e.key] = true);
-  window.addEventListener("keyup", e => keys[e.key] = false);
+  document.addEventListener("keydown", (e) => {
+    if (popup.style.display.includes("flex")) {
+      if (e.key === "ArrowLeft" && car.x > 0) car.x -= 20;
+      if (e.key === "ArrowRight" && car.x < canvas.width - car.width) car.x += 20;
+    }
+  });
 
-  function moveCar() {
-    if(keys["ArrowUp"]) car.y -= car.speed;
-    if(keys["ArrowDown"]) car.y += car.speed;
-    if(keys["ArrowLeft"]) car.x -= car.speed;
-    if(keys["ArrowRight"]) car.x += car.speed;
-    requestAnimationFrame(moveCar);
-  }
-
-  // Popup controls
-  openBtn.onclick = () => {
-    popup.style.display = "flex";
-    gameLoop();
-    moveCar();
-  };
-  closeBtn.onclick = () => popup.style.display = "none";
+  popup.addEventListener("transitionend", () => {
+    if (popup.style.display.includes("flex")) {
+      // Reset game when opened
+      car.x = 140;
+      car.y = 350;
+      obstacles = [];
+      score = 0;
+      gameOver = false;
+      loop();
+    }
+  });
 </script>
+
 
   
 </body>
