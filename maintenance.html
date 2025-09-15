@@ -184,31 +184,34 @@
         box-sizing: border-box;
         overflow-y:auto;
     ">
-        <!-- Snapmatic -->
+        <!-- Snapmatic App -->
         <div class="appIcon" style="
-            width:60px;height:60px;background:#000;border-radius:15px;
-            display:flex;justify-content:center;align-items:center;color:#fff;font-size:24px;cursor:pointer;
-        ">📸</div>
-        <!-- Messages -->
+            width:60px;height:60px;background:url('https://i.imgur.com/hqAptQ9.png') center/cover no-repeat;border-radius:15px;cursor:pointer;
+        " title="Snapmatic"></div>
+
+        <!-- Messages App -->
         <div class="appIcon" style="
-            width:60px;height:60px;background:#0af;border-radius:15px;cursor:pointer;
-        ">💬</div>
-        <!-- Contacts -->
+            width:60px;height:60px;background:url('https://i.imgur.com/ptXrJHa.png') center/cover no-repeat;border-radius:15px;cursor:pointer;
+        " title="Messages"></div>
+
+        <!-- Contacts App -->
         <div class="appIcon" style="
-            width:60px;height:60px;background:#fa0;border-radius:15px;cursor:pointer;
-        ">📇</div>
-        <!-- Music -->
+            width:60px;height:60px;background:url('https://i.imgur.com/XtqGf2O.png') center/cover no-repeat;border-radius:15px;cursor:pointer;
+        " title="Contacts"></div>
+
+        <!-- Music App -->
         <div class="appIcon" style="
-            width:60px;height:60px;background:#f0a;border-radius:15px;cursor:pointer;
-        ">🎵</div>
-        <!-- Browser -->
+            width:60px;height:60px;background:url('https://i.imgur.com/9U4lR8A.png') center/cover no-repeat;border-radius:15px;cursor:pointer;
+        " title="Music"></div>
+
+        <!-- Browser App -->
         <div class="appIcon" style="
-            width:60px;height:60px;background:#0f0;border-radius:15px;cursor:pointer;
-        ">🌐</div>
-        <!-- Additional dummy apps -->
+            width:60px;height:60px;background:url('https://i.imgur.com/6mZThh0.png') center/cover no-repeat;border-radius:15px;cursor:pointer;
+        " title="Browser"></div>
+
+        <!-- Additional Dummy Apps -->
         <div class="appIcon" style="width:60px;height:60px;background:#444;border-radius:15px;"></div>
         <div class="appIcon" style="width:60px;height:60px;background:#555;border-radius:15px;"></div>
-        <div class="appIcon" style="width:60px;height:60px;background:#666;border-radius:15px;"></div>
     </div>
 
     <!-- Snapmatic Camera Overlay -->
@@ -288,20 +291,20 @@
 <audio id="shutterSound" src="https://freesound.org/data/previews/66/66717_931655-lq.mp3" preload="auto"></audio>
 
 <script>
-const snapBtn = document.getElementById('snapBtn');
-const gtaPhone = document.getElementById('gtaPhone');
-const closePhone = document.getElementById('closePhone');
-const appGrid = document.getElementById('appGrid');
-const snapmaticOverlay = document.getElementById('snapmaticOverlay');
-const takePhoto = document.getElementById('takePhoto');
-const cameraFeed = document.getElementById('cameraFeed');
-const photoCanvas = document.getElementById('photoCanvas');
-const photoGallery = document.getElementById('photoGallery');
-const flash = document.getElementById('flash');
-const fullscreenOverlay = document.getElementById('fullscreenOverlay');
-const fullscreenImg = document.getElementById('fullscreenImg');
-const shutterSound = document.getElementById('shutterSound');
-const timeStatus = document.getElementById('timeStatus');
+const snapBtn=document.getElementById('snapBtn');
+const gtaPhone=document.getElementById('gtaPhone');
+const closePhone=document.getElementById('closePhone');
+const appGrid=document.getElementById('appGrid');
+const snapmaticOverlay=document.getElementById('snapmaticOverlay');
+const takePhoto=document.getElementById('takePhoto');
+const cameraFeed=document.getElementById('cameraFeed');
+const photoCanvas=document.getElementById('photoCanvas');
+const photoGallery=document.getElementById('photoGallery');
+const flash=document.getElementById('flash');
+const fullscreenOverlay=document.getElementById('fullscreenOverlay');
+const fullscreenImg=document.getElementById('fullscreenImg');
+const shutterSound=document.getElementById('shutterSound');
+const timeStatus=document.getElementById('timeStatus');
 
 let stream;
 
@@ -325,7 +328,7 @@ closePhone.addEventListener('click',()=>{
 });
 
 // Open Snapmatic
-appGrid.querySelector('.appIcon').addEventListener('click',()=>{
+appGrid.querySelectorAll('.appIcon')[0].addEventListener('click',()=>{
     snapmaticOverlay.style.display='block';
     startCamera();
 });
