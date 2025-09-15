@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Maintenance | GTA 6</title>
+  <link rel="icon" href="https://media.discordapp.net/attachments/1414343219059097732/1416467427600109769/IMG_3235.jpg?ex=68c6f397&is=68c5a217&hm=88925fd90bf0f428c981fdb9039e3e6e25e0a9b4c2d37ab651bb695cb331534f&=&format=webp&width=754&height=1006" type="image/png">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { height: 100%; }
+
+    body {
+      font-family: 'Orbitron', sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      background: url('https://i.redd.it/w1u74qaho25c1.png') center/cover no-repeat fixed;
+      position: relative;
+      overflow: hidden;
+      color: #fff;
+    }
+
+    /* dark overlay */
+    body::after {
+      content: "";
+      position: absolute;
+      top:0; left:0; right:0; bottom:0;
+      background: rgba(0,0,0,0.7);
+      z-index: 0;
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 20px;
+    }
+
+    h1 {
+      font-size: 60px;
+      font-weight: 900;
+      text-shadow: 0 0 10px #ff4dd2, 0 0 20px #ff99e6;
+      animation: glow 2s infinite alternate;
+    }
+
+    p {
+      font-size: 22px;
+      margin-top: 16px;
+      color: rgba(255,255,255,0.9);
+    }
+
+    @keyframes glow {
+      from { text-shadow: 0 0 10px #ff4dd2; }
+      to { text-shadow: 0 0 20px #ff4dd2, 0 0 40px #ff99e6; }
+    }
+
+    /* optional animated bar at bottom */
+   .progress-bar {
+    margin: 24px auto 0 auto; /* centers it horizontally */
+    width: 300px;
+    height: 10px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 999px;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    }
+
+    .content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* centers children like the progress bar */
+    justify-content: center;
+    }
+
+    
+    .progress-fill {
+      position: absolute;
+      top:0; left:0;
+      height: 100%;
+      width: 60%;
+      background: linear-gradient(90deg, #ff4dd2, #ff99e6);
+      animation: loading 2s infinite;
+    }
+
+    @keyframes loading {
+      0% { transform: translateX(-100%); }
+      50% { transform: translateX(0%); }
+      100% { transform: translateX(100%); }
+    }
+  </style>
+</head>
+<body>
+  <div class="content">
+    <h1>🚨 Pre Orders are not Avaliable 🚨</h1>
+    <p>Wait for Pre orders.<br>Then you will be able to purchase Grand Theft Auto VI</p>
+    <div class="progress-bar">
+      <div class="progress-fill"></div>
+    </div>
+  </div>
+
+
+  
+</body>
+</html>
