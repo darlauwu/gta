@@ -107,7 +107,7 @@
       <div class="progress-fill"></div>
     </div>
   </div>
-<!-- Snapmatic Button -->
+<!-- GTA-style Phone Button -->
 <button id="snapBtn" style="
     position: fixed;
     bottom: 20px;
@@ -120,18 +120,18 @@
     cursor: pointer;
     font-size: 16px;
     z-index: 9999;
-">📸 Snap</button>
+">📱 Open Phone</button>
 
-<!-- Snapmatic Phone Overlay -->
-<div id="snapPhone" style="
-    display: none;
+<!-- GTA Phone Overlay -->
+<div id="gtaPhone" style="
+    display:none;
     position: fixed;
     bottom: 80px;
     right: 20px;
-    width: 320px;
-    height: 520px;
-    background: #111;
-    border: 6px solid #333;
+    width: 360px;
+    height: 640px;
+    background: url('https://i.imgur.com/RfOUPjN.png') center/cover no-repeat;
+    border: 6px solid #222;
     border-radius: 40px;
     z-index: 10000;
     overflow: hidden;
@@ -142,7 +142,7 @@
     <div style="
         width: 100%;
         height: 30px;
-        background: #222;
+        background: rgba(0,0,0,0.6);
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -156,7 +156,7 @@
     </div>
 
     <!-- Close Button -->
-    <button id="closeSnap" style="
+    <button id="closePhone" style="
         position: absolute;
         top: 35px;
         right: 10px;
@@ -170,82 +170,103 @@
         z-index: 10;
     ">X</button>
 
-    <!-- Camera Feed -->
-    <video id="cameraFeed" autoplay style="
-        width: 100%;
-        height: 50%;
-        background: #222;
-        object-fit: cover;
-        margin-top: 5px;
-    "></video>
-
-    <!-- Flash overlay -->
-    <div id="flash" style="
-        position: absolute;
-        top: 35px;
-        left: 0;
-        width: 100%;
-        height: 50%;
-        background: white;
-        opacity: 0;
-        pointer-events: none;
-        transition: opacity 0.2s ease;
-    "></div>
-
-    <!-- Capture Button -->
-    <button id="takePhoto" style="
-        position: absolute;
-        bottom: 90px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 60px;
-        height: 60px;
-        border-radius: 50%;
-        background: #00ff00;
-        border: 3px solid #fff;
-        font-size: 24px;
-        cursor: pointer;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    ">📸</button>
-
-    <!-- Switch Camera Button -->
-    <button id="switchCamera" style="
-        position: absolute;
-        bottom: 90px;
-        right: 20px;
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        background: #888;
-        border: 2px solid #fff;
-        font-size: 18px;
-        cursor: pointer;
-    ">🔄</button>
-
-    <!-- Zoom Slider -->
-    <input type="range" id="zoomSlider" min="1" max="3" step="0.1" value="1" style="
-        position: absolute;
-        bottom: 20px;
-        width: 80%;
-        left: 10%;
-    ">
-
-    <!-- Scrollable Gallery -->
-    <div id="photoGallery" style="
-        position: absolute;
-        bottom: 130px;
-        width: 100%;
-        height: 70px;
-        display: flex;
-        overflow-x: auto;
-        gap: 5px;
-        padding: 0 5px;
+    <!-- App Grid -->
+    <div id="appGrid" style="
+        position:absolute;
+        top:50px;
+        width:100%;
+        height:100%;
+        display:flex;
+        flex-wrap:wrap;
+        justify-content:center;
+        padding: 20px;
+        gap: 15px;
         box-sizing: border-box;
-    "></div>
+        overflow-y:auto;
+    ">
+        <!-- Snapmatic -->
+        <div class="appIcon" style="
+            width:60px;height:60px;background:#000;border-radius:15px;
+            display:flex;justify-content:center;align-items:center;color:#fff;font-size:24px;cursor:pointer;
+        ">📸</div>
+        <!-- Messages -->
+        <div class="appIcon" style="
+            width:60px;height:60px;background:#0af;border-radius:15px;cursor:pointer;
+        ">💬</div>
+        <!-- Contacts -->
+        <div class="appIcon" style="
+            width:60px;height:60px;background:#fa0;border-radius:15px;cursor:pointer;
+        ">📇</div>
+        <!-- Music -->
+        <div class="appIcon" style="
+            width:60px;height:60px;background:#f0a;border-radius:15px;cursor:pointer;
+        ">🎵</div>
+        <!-- Browser -->
+        <div class="appIcon" style="
+            width:60px;height:60px;background:#0f0;border-radius:15px;cursor:pointer;
+        ">🌐</div>
+        <!-- Additional dummy apps -->
+        <div class="appIcon" style="width:60px;height:60px;background:#444;border-radius:15px;"></div>
+        <div class="appIcon" style="width:60px;height:60px;background:#555;border-radius:15px;"></div>
+        <div class="appIcon" style="width:60px;height:60px;background:#666;border-radius:15px;"></div>
+    </div>
 
-    <canvas id="photoCanvas" style="display:none;"></canvas>
+    <!-- Snapmatic Camera Overlay -->
+    <div id="snapmaticOverlay" style="
+        display:none;
+        position:absolute;
+        top:50px;
+        left:0;
+        width:100%;
+        height:100%;
+        background:#111;
+        z-index:20;
+        padding-top:10px;
+        box-sizing:border-box;
+    ">
+        <video id="cameraFeed" autoplay style="width:100%;height:50%;object-fit:cover;"></video>
+        <div id="flash" style="
+            position:absolute;
+            top:50px;
+            left:0;
+            width:100%;
+            height:50%;
+            background:white;
+            opacity:0;
+            pointer-events:none;
+            transition:opacity 0.2s;
+        "></div>
+
+        <button id="takePhoto" style="
+            position:absolute;
+            bottom:120px;
+            left:50%;
+            transform:translateX(-50%);
+            width:60px;
+            height:60px;
+            border-radius:50%;
+            background:#00ff00;
+            border:3px solid #fff;
+            font-size:24px;
+            cursor:pointer;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+        ">📸</button>
+
+        <div id="photoGallery" style="
+            position:absolute;
+            bottom:30px;
+            width:100%;
+            height:80px;
+            display:flex;
+            overflow-x:auto;
+            gap:5px;
+            padding:0 5px;
+            box-sizing:border-box;
+        "></div>
+        <canvas id="photoCanvas" style="display:none;"></canvas>
+    </div>
 </div>
 
 <!-- Fullscreen Overlay -->
@@ -261,19 +282,18 @@
     align-items:center;
     z-index:100000;
 ">
-    <img id="fullscreenImg" style="max-width:90%; max-height:90%; border:4px solid #fff; border-radius:15px;" />
+    <img id="fullscreenImg" style="max-width:90%;max-height:90%;border:4px solid #fff;border-radius:15px;">
 </div>
 
-<!-- Shutter sound -->
 <audio id="shutterSound" src="https://freesound.org/data/previews/66/66717_931655-lq.mp3" preload="auto"></audio>
 
 <script>
 const snapBtn = document.getElementById('snapBtn');
-const snapPhone = document.getElementById('snapPhone');
-const closeSnap = document.getElementById('closeSnap');
+const gtaPhone = document.getElementById('gtaPhone');
+const closePhone = document.getElementById('closePhone');
+const appGrid = document.getElementById('appGrid');
+const snapmaticOverlay = document.getElementById('snapmaticOverlay');
 const takePhoto = document.getElementById('takePhoto');
-const switchCamera = document.getElementById('switchCamera');
-const zoomSlider = document.getElementById('zoomSlider');
 const cameraFeed = document.getElementById('cameraFeed');
 const photoCanvas = document.getElementById('photoCanvas');
 const photoGallery = document.getElementById('photoGallery');
@@ -284,97 +304,75 @@ const shutterSound = document.getElementById('shutterSound');
 const timeStatus = document.getElementById('timeStatus');
 
 let stream;
-let useFrontCamera = false;
 
 // Clock
-setInterval(() => {
-    const now = new Date();
-    let hours = now.getHours();
-    let minutes = now.getMinutes();
-    if(minutes < 10) minutes = '0'+minutes;
-    timeStatus.textContent = `${hours}:${minutes}`;
-}, 1000);
+setInterval(()=>{
+    const now=new Date();
+    let h=now.getHours();
+    let m=now.getMinutes();
+    if(m<10) m='0'+m;
+    timeStatus.textContent=`${h}:${m}`;
+},1000);
+
+// Open GTA phone
+snapBtn.addEventListener('click',()=>gtaPhone.style.display='block');
+
+// Close phone
+closePhone.addEventListener('click',()=>{
+    gtaPhone.style.display='none';
+    stopCamera();
+    snapmaticOverlay.style.display='none';
+});
 
 // Open Snapmatic
-snapBtn.addEventListener('click', () => {
-    snapPhone.style.display = 'block';
-    startCamera();
-});
-
-// Close Snapmatic
-closeSnap.addEventListener('click', () => {
-    snapPhone.style.display = 'none';
-    stopCamera();
-});
-
-// Switch Camera
-switchCamera.addEventListener('click', () => {
-    useFrontCamera = !useFrontCamera;
+appGrid.querySelector('.appIcon').addEventListener('click',()=>{
+    snapmaticOverlay.style.display='block';
     startCamera();
 });
 
 // Camera
-async function startCamera() {
-    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+async function startCamera(){
+    if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia){
         if(stream) stopCamera();
-        try {
-            stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: useFrontCamera ? 'user' : 'environment' } });
-            cameraFeed.srcObject = stream;
-        } catch (err) {
-            alert('Camera access denied or unavailable.');
-        }
+        try{
+            stream=await navigator.mediaDevices.getUserMedia({video:true});
+            cameraFeed.srcObject=stream;
+        }catch(e){alert('Camera access denied');}
     }
 }
-
-// Stop camera
-function stopCamera() {
-    if (stream) stream.getTracks().forEach(track => track.stop());
-}
-
-// Zoom
-zoomSlider.addEventListener('input', () => {
-    cameraFeed.style.transform = `scale(${zoomSlider.value})`;
-});
+function stopCamera(){if(stream) stream.getTracks().forEach(t=>t.stop());}
 
 // Take photo
-takePhoto.addEventListener('click', () => {
+takePhoto.addEventListener('click',()=>{
     shutterSound.play();
-    flash.style.opacity = '0.8';
-    setTimeout(() => flash.style.opacity = '0', 200);
+    flash.style.opacity='0.8';
+    setTimeout(()=>flash.style.opacity='0',200);
 
-    photoCanvas.width = cameraFeed.videoWidth;
-    photoCanvas.height = cameraFeed.videoHeight;
-    const ctx = photoCanvas.getContext('2d');
-    ctx.drawImage(cameraFeed, 0, 0, photoCanvas.width, photoCanvas.height);
+    photoCanvas.width=cameraFeed.videoWidth;
+    photoCanvas.height=cameraFeed.videoHeight;
+    const ctx=photoCanvas.getContext('2d');
+    ctx.drawImage(cameraFeed,0,0,photoCanvas.width,photoCanvas.height);
 
-    const img = new Image();
-    img.src = photoCanvas.toDataURL('image/png');
-    img.style.width = '60px';
-    img.style.height = '60px';
-    img.style.border = '2px solid #fff';
-    img.style.borderRadius = '10px';
-    img.style.objectFit = 'cover';
-    img.style.cursor = 'pointer';
-    img.style.transform = 'rotate(-10deg)';
-    img.style.transition = 'transform 0.3s ease';
+    const img=new Image();
+    img.src=photoCanvas.toDataURL('image/png');
+    img.style.width='60px';
+    img.style.height='60px';
+    img.style.border='2px solid #fff';
+    img.style.borderRadius='10px';
+    img.style.objectFit='cover';
+    img.style.cursor='pointer';
+    img.style.transform='rotate(-10deg)';
+    img.style.transition='transform 0.3s ease';
+    setTimeout(()=>img.style.transform='rotate(0deg)',100);
 
-    // Polaroid animation
-    setTimeout(() => img.style.transform = 'rotate(0deg)', 100);
-
-    // Fullscreen preview
-    img.addEventListener('click', () => {
-        fullscreenImg.src = img.src;
-        fullscreenOverlay.style.display = 'flex';
-    });
-
+    img.addEventListener('click',()=>{fullscreenImg.src=img.src;fullscreenOverlay.style.display='flex';});
     photoGallery.prepend(img);
 });
 
-// Fullscreen overlay close
-fullscreenOverlay.addEventListener('click', () => {
-    fullscreenOverlay.style.display = 'none';
-});
+// Fullscreen close
+fullscreenOverlay.addEventListener('click',()=>fullscreenOverlay.style.display='none');
 </script>
+
 
 
 
