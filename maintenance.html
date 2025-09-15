@@ -107,7 +107,7 @@
       <div class="progress-fill"></div>
     </div>
   </div>
-<!-- Add this button where your other nav buttons are -->
+<!-- Add this button in your header nav -->
 <a href="#" class="nav-btn" onclick="toggleGame()">🎮 Game</a>
 
 <!-- Game popup -->
@@ -134,22 +134,44 @@
     padding: 10px;
     z-index: 9999;
   }
+
   #gamePopup canvas {
     background: #222;
     border-radius: 12px;
   }
+
   #closeGame {
     margin-top: 10px;
     background: rgba(255,255,255,0.2);
     color: #fff;
     border: none;
-    border-radius: 12px;
-    padding: 6px 12px;
+    border-radius: 999px;
+    padding: 8px 16px;
     cursor: pointer;
     font-weight: bold;
+    transition: 0.3s;
   }
+
   #closeGame:hover {
     background: rgba(255,255,255,0.4);
+  }
+
+  /* Match Game button to nav buttons */
+  .nav-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 14px;
+    border-radius: 999px;
+    text-decoration: none;
+    color: #fff;
+    font-weight: 700;
+    background: rgba(0,0,0,0.4);
+    border: 1px solid rgba(255,255,255,0.1);
+    transition: 0.3s;
+  }
+
+  .nav-btn:hover {
+    background: rgba(255,255,255,0.1);
   }
 </style>
 
@@ -157,16 +179,21 @@
   const popup = document.getElementById("gamePopup");
   function toggleGame() {
     popup.style.display = popup.style.display === "flex" ? "none" : "flex";
+    if (popup.style.display === "flex") startGame();
   }
 
   // Simple mini-game
   const canvas = document.getElementById("gtaGame");
   const ctx = canvas.getContext("2d");
 
-  let car = { x: 140, y: 350, width: 20, height: 40 };
-  let obstacles = [];
-  let score = 0;
-  let gameOver = false;
+  let car, obstacles, score, gameOver;
+
+  function resetGame() {
+    car = { x: 140, y: 350, width: 20, height: 40 };
+    obstacles = [];
+    score = 0;
+    gameOver = false;
+  }
 
   function drawCar() {
     ctx.fillStyle = "lime";
@@ -224,22 +251,15 @@
     }
   }
 
+  function startGame() {
+    resetGame();
+    loop();
+  }
+
   document.addEventListener("keydown", (e) => {
     if (popup.style.display.includes("flex")) {
       if (e.key === "ArrowLeft" && car.x > 0) car.x -= 20;
       if (e.key === "ArrowRight" && car.x < canvas.width - car.width) car.x += 20;
-    }
-  });
-
-  popup.addEventListener("transitionend", () => {
-    if (popup.style.display.includes("flex")) {
-      // Reset game when opened
-      car.x = 140;
-      car.y = 350;
-      obstacles = [];
-      score = 0;
-      gameOver = false;
-      loop();
     }
   });
 </script>
