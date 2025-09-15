@@ -107,162 +107,107 @@
       <div class="progress-fill"></div>
     </div>
   </div>
-<!-- Add this button in your header nav -->
-<a href="#" class="nav-btn" onclick="toggleGame()">🎮 Game</a>
-
-<!-- Game popup -->
-<div id="gamePopup">
-  <canvas id="gtaGame" width="300" height="400"></canvas>
-  <button id="closeGame" onclick="toggleGame()">✖ Close</button>
-</div>
-
-<style>
-  /* Popup styling */
-  #gamePopup {
+<!-- Pill Button -->
+<button id="gameBtn" style="
     position: fixed;
     bottom: 20px;
     right: 20px;
-    width: 320px;
-    height: 460px;
-    background: rgba(0,0,0,0.85);
-    border-radius: 16px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.8);
-    display: none;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 10px;
-    z-index: 9999;
-  }
-
-  #gamePopup canvas {
-    background: #222;
-    border-radius: 12px;
-  }
-
-  #closeGame {
-    margin-top: 10px;
-    background: rgba(255,255,255,0.2);
+    background-color: rgba(255,255,255,0.2);
+    border: 2px solid #fff;
+    border-radius: 50px;
+    padding: 12px 24px;
     color: #fff;
-    border: none;
-    border-radius: 999px;
-    padding: 8px 16px;
     cursor: pointer;
-    font-weight: bold;
-    transition: 0.3s;
-  }
+    font-size: 16px;
+    z-index: 9999;
+">Play Game</button>
 
-  #closeGame:hover {
-    background: rgba(255,255,255,0.4);
-  }
-
-  /* Match Game button to nav buttons */
-  .nav-btn {
-    display: inline-flex;
-    align-items: center;
-    padding: 8px 14px;
-    border-radius: 999px;
-    text-decoration: none;
+<!-- Pop-up Game -->
+<div id="gamePopup" style="
+    display: none;
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    width: 300px;
+    height: 400px;
+    background: #222;
+    border: 2px solid #fff;
+    border-radius: 10px;
+    padding: 15px;
+    z-index: 10000;
     color: #fff;
-    font-weight: 700;
-    background: rgba(0,0,0,0.4);
-    border: 1px solid rgba(255,255,255,0.1);
-    transition: 0.3s;
-  }
-
-  .nav-btn:hover {
-    background: rgba(255,255,255,0.1);
-  }
-</style>
+">
+  <button id="closeBtn" style="
+      position: absolute;
+      top: 5px;
+      right: 10px;
+      background: red;
+      border: none;
+      color: white;
+      padding: 5px 10px;
+      cursor: pointer;
+      border-radius: 5px;
+  ">X</button>
+  <h3>Click the Box!</h3>
+  <canvas id="gameCanvas" style="background-color:#333;width:100%;height:80%;border-radius:5px;"></canvas>
+  <p>Score: <span id="score">0</span></p>
+</div>
 
 <script>
-  const popup = document.getElementById("gamePopup");
-  function toggleGame() {
-    popup.style.display = popup.style.display === "flex" ? "none" : "flex";
-    if (popup.style.display === "flex") startGame();
+  const gameBtn = document.getElementById('gameBtn');
+  const gamePopup = document.getElementById('gamePopup');
+  const closeBtn = document.getElementById('closeBtn');
+  const canvas = document.getElementById('gameCanvas');
+  const ctx = canvas.getContext('2d');
+  const scoreDisplay = document.getElementById('score');
+
+  let score = 0;
+  let box = { x: 50, y: 50, size: 50 };
+
+  // Show pop-up
+  gameBtn.addEventListener('click', () => {
+    gamePopup.style.display = 'block';
+    drawBox();
+  });
+
+  // Close pop-up
+  closeBtn.addEventListener('click', () => {
+    gamePopup.style.display = 'none';
+  });
+
+  // Canvas resize
+  function resizeCanvas() {
+    canvas.width = canvas.clientWidth;
+    canvas.height = canvas.clientHeight;
   }
+  window.addEventListener('resize', resizeCanvas);
+  resizeCanvas();
 
-  // Simple mini-game
-  const canvas = document.getElementById("gtaGame");
-  const ctx = canvas.getContext("2d");
-
-  let car, obstacles, score, gameOver;
-
-  function resetGame() {
-    car = { x: 140, y: 350, width: 20, height: 40 };
-    obstacles = [];
-    score = 0;
-    gameOver = false;
-  }
-
-  function drawCar() {
-    ctx.fillStyle = "lime";
-    ctx.fillRect(car.x, car.y, car.width, car.height);
-  }
-
-  function drawObstacles() {
-    ctx.fillStyle = "red";
-    for (let obs of obstacles) {
-      ctx.fillRect(obs.x, obs.y, obs.width, obs.height);
-    }
-  }
-
-  function updateObstacles() {
-    for (let obs of obstacles) {
-      obs.y += 4;
-      if (obs.y > canvas.height) {
-        obstacles.splice(obstacles.indexOf(obs), 1);
-        score++;
-      }
-      if (
-        obs.x < car.x + car.width &&
-        obs.x + obs.width > car.x &&
-        obs.y < car.y + car.height &&
-        obs.y + obs.height > car.y
-      ) {
-        gameOver = true;
-      }
-    }
-    if (Math.random() < 0.03) {
-      obstacles.push({ x: Math.random() * 260, y: -40, width: 40, height: 40 });
-    }
-  }
-
-  function drawScore() {
-    ctx.fillStyle = "white";
-    ctx.font = "16px Orbitron";
-    ctx.fillText("Score: " + score, 10, 20);
-  }
-
-  function loop() {
-    if (!popup.style.display.includes("flex")) return; // Pause when closed
+  // Draw box
+  function drawBox() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    drawCar();
-    updateObstacles();
-    drawObstacles();
-    drawScore();
-
-    if (!gameOver) {
-      requestAnimationFrame(loop);
-    } else {
-      ctx.fillStyle = "yellow";
-      ctx.font = "24px Orbitron";
-      ctx.fillText("Game Over!", 80, 200);
-    }
+    ctx.fillStyle = '#00ff00';
+    ctx.fillRect(box.x, box.y, box.size, box.size);
   }
 
-  function startGame() {
-    resetGame();
-    loop();
-  }
+  // Handle click
+  canvas.addEventListener('click', (e) => {
+    const rect = canvas.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
 
-  document.addEventListener("keydown", (e) => {
-    if (popup.style.display.includes("flex")) {
-      if (e.key === "ArrowLeft" && car.x > 0) car.x -= 20;
-      if (e.key === "ArrowRight" && car.x < canvas.width - car.width) car.x += 20;
+    if (x >= box.x && x <= box.x + box.size && y >= box.y && y <= box.y + box.size) {
+      score++;
+      scoreDisplay.textContent = score;
+      box.x = Math.random() * (canvas.width - box.size);
+      box.y = Math.random() * (canvas.height - box.size);
+      drawBox();
     }
   });
+
+  drawBox();
 </script>
+
 
 
   
