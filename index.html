@@ -231,48 +231,6 @@ Instructions:
     update();
     setInterval(update, 1000);
   </script>
-
-<!-- Autoplayer -->
-<audio id="autoPlayer" autoplay loop style="display:none" muted>
-    <source src="music/HotTogether.mp3" type="audio/mpeg">
-</audio>
-
-<script>
-// Playlist: local MP3s in your repo
-const tracks = [
-    {title: "Hot Together", src: "music/HotTogether.mp3"},
-    {title: "Love Is a Long Road", src: "music/love-is-a-long-road.mp3"}
-];
-
-let currentTrackIndex = 0;
-const autoPlayer = document.getElementById("autoPlayer");
-
-// Load a track
-function loadTrack(index){
-    autoPlayer.src = tracks[index].src;
-    autoPlayer.play().catch(()=>{});
-    autoPlayer.muted = false; // unmute after play starts
-}
-
-// Auto next track
-autoPlayer.addEventListener("ended", ()=>{
-    currentTrackIndex++;
-    if(currentTrackIndex >= tracks.length) currentTrackIndex = 0;
-    loadTrack(currentTrackIndex);
-});
-
-// Prevent user from pausing
-autoPlayer.addEventListener("pause", ()=>{
-    autoPlayer.play().catch(()=>{});
-});
-
-// Start first track automatically
-window.addEventListener("load", ()=>{
-    loadTrack(currentTrackIndex);
-});
-</script>
-
-
   
 </body>
 </html>
