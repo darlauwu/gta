@@ -1,1 +1,110 @@
+<!-- Newsfeed Panel Button and Panel -->
+<div id="newsFeedButton">📰 News</div>
+<div id="newsFeedPanel">
+  <h3>Latest Rockstar News</h3>
+  <ul id="newsList"></ul>
+  <button id="closeNewsFeed">Close</button>
+</div>
 
+<style>
+#newsFeedButton {
+  position: fixed;
+  bottom: 20px;
+  right: 100px;
+  background: rgba(0,0,0,0.6);
+  color: white;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-family: 'Orbitron', sans-serif;
+  font-weight: bold;
+  z-index: 1000;
+}
+#newsFeedButton:hover {
+  background: rgba(255,105,180,0.8);
+}
+
+#newsFeedPanel {
+  position: fixed;
+  bottom: 70px;
+  right: 20px;
+  width: 320px;
+  max-height: 400px;
+  background: rgba(0,0,0,0.9);
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.8);
+  display: none;
+  flex-direction: column;
+  color: white;
+  padding: 12px;
+  overflow-y: auto;
+  font-family: 'Orbitron', sans-serif;
+  z-index: 1000;
+}
+#newsFeedPanel h3 {
+  margin-top:0;
+  margin-bottom:8px;
+  text-align:center;
+}
+#newsFeedPanel ul {
+  list-style: none;
+  padding:0;
+  margin:0;
+}
+#newsFeedPanel li {
+  margin-bottom:12px;
+}
+#newsFeedPanel a {
+  text-decoration: none;
+  color: #ff99e6;
+}
+#newsFeedPanel button {
+  margin-top: 10px;
+  background: rgba(255,255,255,0.1);
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+#newsFeedPanel button:hover {
+  background: rgba(255,255,255,0.3);
+}
+
+</style>
+
+<script>
+const btn = document.getElementById('newsFeedButton');
+const panel = document.getElementById('newsFeedPanel');
+const closeBtn = document.getElementById('closeNewsFeed');
+const list = document.getElementById('newsList');
+
+btn.onclick = () => {
+  panel.style.display = 'flex';
+  fetchNews();
+};
+closeBtn.onclick = () => panel.style.display = 'none';
+
+async function fetchNews() {
+  try {
+    const response = await fetch('/api/news'); // your backend endpoint
+    const data = await response.json();
+    list.innerHTML = '';
+    data.items.forEach(item => {
+      const li = document.createElement('li');
+      const a = document.createElement('a');
+      a.href = item.link;
+      a.target = '_blank';
+      a.innerText = item.title;
+      const p = document.createElement('p');
+      p.innerText = item.summary;
+      li.appendChild(a);
+      li.appendChild(p);
+      list.appendChild(li);
+    });
+  } catch(err) {
+    list.innerHTML = '<li>Unable to load news.</li>';
+  }
+}
+</script>
