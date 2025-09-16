@@ -233,22 +233,25 @@ Instructions:
   </script>
 
 <!-- Autoplayer -->
-<audio id="autoPlayer" autoplay style="display:none"></audio>
+<audio id="autoPlayer" autoplay loop style="display:none" muted>
+    <source src="music/HotTogether.mp3" type="audio/mpeg">
+</audio>
 
 <script>
-// Playlist: use local MP3 files uploaded to your GitHub repo
+// Playlist: local MP3s in your repo
 const tracks = [
-    {title: "Hot Together", src: "/music/HotTogether.mp3"},
+    {title: "Hot Together", src: "music/HotTogether.mp3"},
     {title: "Love Is a Long Road", src: "music/love-is-a-long-road.mp3"}
 ];
 
 let currentTrackIndex = 0;
 const autoPlayer = document.getElementById("autoPlayer");
 
-// Load track
+// Load a track
 function loadTrack(index){
     autoPlayer.src = tracks[index].src;
-    autoPlayer.play().catch(()=>{}); // handles autoplay restrictions
+    autoPlayer.play().catch(()=>{});
+    autoPlayer.muted = false; // unmute after play starts
 }
 
 // Auto next track
@@ -263,18 +266,11 @@ autoPlayer.addEventListener("pause", ()=>{
     autoPlayer.play().catch(()=>{});
 });
 
-// Start after first click (required by browsers)
-function startAutoPlayer(){
+// Start first track automatically
+window.addEventListener("load", ()=>{
     loadTrack(currentTrackIndex);
-    document.body.removeEventListener("click", startAutoPlayer);
-}
-
-// Wait for first click anywhere
-document.body.addEventListener("click", startAutoPlayer);
+});
 </script>
-
-</body>
-</html>
 
 
   
