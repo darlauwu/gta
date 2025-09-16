@@ -232,55 +232,46 @@ Instructions:
     setInterval(update, 1000);
   </script>
 
-
-<!-- Background Music -->
-<audio id="gta6Music" autoplay loop style="display:none">
-    <source src="HotTogether.mp3" type="audio/mpeg">
-    Your browser does not support the audio element.
-</audio>
+<!-- Autoplayer -->
+<audio id="autoPlayer" autoplay style="display:none"></audio>
 
 <script>
-// GTA 6 Loading Script
-const loadingBar = document.getElementById("gta6LoadingBar");
-const loadingText = document.getElementById("gta6LoadingText");
-const gta6Loading = document.getElementById("gta6Loading");
-const gta6Music = document.getElementById("gta6Music");
+// Playlist: use local MP3 files placed in the same folder or a subfolder
+const tracks = [
+    {title: "Hot Together", src: "HotTogether.mp3"},
+];
 
-let totalDuration = 45000; // 45 seconds
-let elapsed = 0;
-const intervalTime = 50; // 50ms update
+let currentTrackIndex = 0;
+const autoPlayer = document.getElementById("autoPlayer");
 
-// Prevent pausing
-gta6Music.addEventListener("pause", ()=>{
-    gta6Music.play().catch(()=>{});
+// Load track by index
+function loadTrack(index){
+    autoPlayer.src = tracks[index].src;
+    autoPlayer.play().catch(()=>{}); // play after first interaction if needed
+}
+
+// Automatically go to next track when one ends
+autoPlayer.addEventListener("ended", ()=>{
+    currentTrackIndex++;
+    if(currentTrackIndex >= tracks.length) currentTrackIndex = 0;
+    loadTrack(currentTrackIndex);
 });
 
-// Loading interval
-const loadingInterval = setInterval(()=>{
-    elapsed += intervalTime;
-    let progress = Math.min((elapsed / totalDuration) * 100, 100);
-    loadingBar.style.width = progress + "%";
-    loadingText.textContent = "Loading... " + Math.floor(progress) + "%";
+// Prevent user from pausing
+autoPlayer.addEventListener("pause", ()=>{
+    autoPlayer.play().catch(()=>{});
+});
 
-    if(elapsed >= totalDuration){
-        clearInterval(loadingInterval);
-        // Fade out loading screen
-        gta6Loading.style.transition = "opacity 1s";
-        gta6Loading.style.opacity = 0;
-        setTimeout(()=>{
-            gta6Loading.style.display = "none";
-            startSite();
-        },1000);
-    }
-}, intervalTime);
-
-// Start site function after loading
-function startSite(){
-    console.log("GTA 6 site starts here!");
-    // Music can continue playing after loading if desired
-    gta6Music.play().catch(()=>{});
+// Start first track after first user interaction (required by most browsers)
+function startAutoPlayer(){
+    loadTrack(currentTrackIndex);
+    document.body.removeEventListener("click", startAutoPlayer);
 }
+
+// Wait for first click to enable autoplay
+document.body.addEventListener("click", startAutoPlayer);
 </script>
+
   
 </body>
 </html>
