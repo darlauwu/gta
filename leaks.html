@@ -41,43 +41,6 @@
 <body>
 
 
-<style>
-  body { font-family: Arial, sans-serif; background: #111; color: #fff; display: flex; justify-content: center; align-items: center; height: 100vh; }
-  #content { display: none; }
-  input[type="password"] { padding: 10px; margin-bottom: 10px; width: 200px; }
-  input[type="button"] { padding: 10px; width: 220px; background: #ff0055; border: none; color: white; cursor: pointer; }
-</style>
-</head>
-<body>
-
-<div id="login">
-  <h2>Enter Password to Access Leaks</h2>
-  <input type="password" id="password" placeholder="Password">
-  <input type="button" value="Submit" onclick="checkPassword()">
-  <p id="error" style="color:red;"></p>
-</div>
-
-<div id="content">
-  <h1>Welcome to the Admin Page!</h1>
-  <p>Here is your secret content...</p>
-</div>
-
-<script>
-  const correctPassword = "supersecretadmin"; // change this to your password
-
-  function checkPassword() {
-    const input = document.getElementById("password").value;
-    if (input === correctPassword) {
-      document.getElementById("login").style.display = "none";
-      document.getElementById("content").style.display = "block";
-    } else {
-      document.getElementById("error").innerText = "Incorrect password!";
-    }
-  }
-</script>
-
-
-  
   <div class="overlay">
     <h1>🔥 GTA 6 Leaks 🔥</h1>
     <div class="gallery">
