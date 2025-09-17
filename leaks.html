@@ -13,19 +13,19 @@
             font-family: Arial, sans-serif;
             color: white;
             text-align: center;
-            /* This is the key line that blurs the entire body content */
-            filter: blur(10px);
-            transition: filter 0.5s ease-in-out; /* Smooth transition for the blur removal */
             height: 100vh;
             overflow: hidden;
         }
 
-        /* Styles for the content section, which will appear once unblurred */
-        .content-container {
+        /* The container for the content that will be blurred */
+        #blurred-content {
             padding: 40px;
             background: rgba(0, 0, 0, 0.65);
             min-height: 100vh;
             box-sizing: border-box;
+            /* Apply the blur only to this container */
+            filter: blur(10px);
+            transition: filter 0.5s ease-in-out;
         }
 
         h1 {
@@ -61,7 +61,7 @@
             z-index: 9999;
             flex-direction: column;
             text-align: center;
-            transition: opacity 0.5s ease-in-out; /* Smooth transition for overlay fade */
+            transition: opacity 0.5s ease-in-out;
         }
 
         #overlay-box {
@@ -102,16 +102,7 @@
 </head>
 <body>
 
-    <div id="overlay">
-        <div id="overlay-box">
-            <p>Enter Password to Access:</p>
-            <input type="password" id="passInput" placeholder="Password">
-            <button onclick="checkPassword()">Submit</button>
-            <div id="error"></div>
-        </div>
-    </div>
-
-    <div class="content-container">
+    <div id="blurred-content">
         <h1>🔥 GTA 6 Leaks 🔥</h1>
         <p>This is secret content that is blurred until the correct password is entered.</p>
         
@@ -122,8 +113,17 @@
         </div>
     </div>
 
+    <div id="overlay">
+        <div id="overlay-box">
+            <p>Enter Password to Access:</p>
+            <input type="password" id="passInput" placeholder="Password">
+            <button onclick="checkPassword()">Submit</button>
+            <div id="error"></div>
+        </div>
+    </div>
+
     <script>
-        const correctPassword = "darlasecretleaks"; // Change this to your desired password
+        const correctPassword = "darlasecretleaks";
 
         function checkPassword() {
             const input = document.getElementById("passInput").value;
@@ -131,8 +131,8 @@
 
             if (input === correctPassword) {
                 // Correct password:
-                // 1. Remove the blur from the body
-                document.body.style.filter = "none";
+                // 1. Remove the blur from the specific content container
+                document.getElementById("blurred-content").style.filter = "none";
                 // 2. Hide the overlay by fading it out
                 document.getElementById("overlay").style.opacity = "0";
                 setTimeout(() => {
