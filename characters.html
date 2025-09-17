@@ -143,6 +143,28 @@
     .trailer-btn .dot{
       width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,0.9);
     }
+    /* Header (same style as your home) */
+    header{
+      position:fixed;
+      top:18px;
+      left:50%;
+      transform:translateX(-50%);
+      z-index:50;
+      display:flex;
+      gap:12px;
+      padding:8px 14px;
+      border-radius:999px;
+      backdrop-filter: blur(6px) saturate(0.9);
+      box-shadow:0 6px 18px rgba(0,0,0,0.35);
+    }
+    .nav-btn{
+      padding:8px 12px;border-radius:999px;text-decoration:none;color:#fff;
+      background:linear-gradient(90deg,rgba(255,255,255,0.03),rgba(255,255,255,0.01));
+      border:1px solid rgba(255,255,255,0.06);font-weight:700;
+    }
+    .nav-btn:hover{box-shadow:0 0 10px rgba(255,77,210,0.18)}
+
+    
   </style>
 </head>
 <body>
