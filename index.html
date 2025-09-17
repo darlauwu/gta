@@ -48,39 +48,6 @@ Instructions:
       z-index:1;
     }
 
-        .trailers-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(360px,1fr));
-      gap:24px;
-    }
-
-    .trailer-card {
-      background: rgba(0,0,0,0.45);
-      border:1px solid rgba(255,255,255,0.05);
-      border-radius:18px;
-      padding:12px;
-      box-shadow: 0 12px 28px rgba(0,0,0,0.6);
-      transition: transform 0.2s;
-      overflow: hidden;
-    }
-    .trailer-card:hover {
-      transform: translateY(-6px);
-    }
-
-    .trailer-card iframe {
-      width:100%;
-      height:200px;
-      border:none;
-      border-radius:12px;
-    }
-
-    .trailer-card h2 {
-      font-size:20px;
-      margin-top:12px;
-      color:#fff;
-      text-align: center;
-    }
-
     @media(max-width:480px) {
       h1 { font-size:34px; }
       .trailer-card h2 { font-size:18px; }
@@ -159,17 +126,12 @@ Instructions:
   </style>
 </head>
 <body>
- 
-  <header>
-    <a class="nav-btn" href="index.html">Home</a>
-    <a class="nav-btn" href="vimap.html">Map</a>
-    <a class="nav-btn" href="characters.html">Characters</a>
-  </header>
     
 <div class="side-buttons">
   <a href="characters.html" class="side-btn">Characters</a>
   <a href="vimap.html" class="side-btn">Map</a>
   <a href="places.html" class="side-btn">Places</a>
+  <a href="trailers.html" class="side-btn">Trailers</a>
   <a href="preorder.html" class="side-btn">Whishlist</a>
 </div>
     
