@@ -112,6 +112,37 @@
       .character-item h2{font-size:18px}
       .character-item p{font-size:14px}
     }
+     header{
+      position:fixed;
+      top:18px;
+      left:50%;
+      transform:translateX(-50%);
+      display:flex;
+      gap:12px;
+      z-index:50;
+      backdrop-filter: blur(6px) saturate(0.9);
+      padding:8px 12px;
+      border-radius:999px;
+      box-shadow:0 6px 18px rgba(0,0,0,0.3);
+    }
+
+    .trailer-btn{
+      display:inline-flex;
+      gap:8px;
+      align-items:center;
+      padding:8px 12px;
+      border-radius:999px;
+      text-decoration:none;
+      color:var(--accent);
+      font-weight:600;
+      font-size:14px;
+      background:rgba(0,0,0,0.4);
+      border:1px solid rgba(255,255,255,0.1);
+    }
+
+    .trailer-btn .dot{
+      width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,0.9);
+    }
   </style>
 </head>
 <body>
