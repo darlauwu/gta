@@ -1,121 +1,149 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Darlas Secret Leaks</title>
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      background: url('https://i.redd.it/w1u74qaho25c1.png') no-repeat center center fixed;
-      background-size: cover;
-      font-family: Arial, sans-serif;
-      color: white;
-      text-align: center;
-    }
-    .overlay {
-      background: rgba(0,0,0,0.65);
-      position: fixed;
-      top:0; left:0; right:0; bottom:0;
-      overflow-y: auto;
-      padding: 40px;
-    }
-    h1 {
-      font-size: 2.5rem;
-      margin-bottom: 20px;
-      color: #ff99e6;
-      text-shadow: 0 4px 12px rgba(0,0,0,0.8);
-    }
-    .gallery {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 20px;
-    }
-    .gallery video, .gallery img {
-      width: 100%;
-      border-radius: 12px;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.9);
-    }
-      /* Full-page blur initially */
-    body {
-      margin: 0;
-      height: 100vh;
-      overflow: hidden;
-      filter: blur(10px);
-      transition: filter 0.5s ease;
-      font-family: sans-serif;
-    }
+    <meta charset="UTF-8">
+    <title>Darlas Secret Leaks</title>
+    <style>
+        /* Base styles for the entire page */
+        body {
+            margin: 0;
+            padding: 0;
+            background: url('https://i.redd.it/w1u74qaho25c1.png') no-repeat center center fixed;
+            background-size: cover;
+            font-family: Arial, sans-serif;
+            color: white;
+            text-align: center;
+            /* This is the key line that blurs the entire body content */
+            filter: blur(10px);
+            transition: filter 0.5s ease-in-out; /* Smooth transition for the blur removal */
+            height: 100vh;
+            overflow: hidden;
+        }
 
-    /* Overlay to hold password input */
-    #overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(255, 255, 255, 0.7);
-      display: flex;
-      justify-content: center;  /* horizontal center */
-      align-items: center;      /* vertical center */
-      z-index: 9999;
-      flex-direction: column;
-      text-align: center;
-    }
+        /* Styles for the content section, which will appear once unblurred */
+        .content-container {
+            padding: 40px;
+            background: rgba(0, 0, 0, 0.65);
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
 
-    #overlay input {
-      padding: 10px;
-      font-size: 16px;
-      margin-top: 10px;
-      width: 200px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-    }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #ff99e6;
+            text-shadow: 0 4px 12px rgba(0, 0, 0, 0.8);
+        }
 
-    #overlay button {
-      padding: 10px 20px;
-      font-size: 16px;
-      margin-top: 10px;
-      cursor: pointer;
-      border-radius: 5px;
-      border: none;
-      background-color: #333;
-      color: #fff;
-    }
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
 
-    #error {
-      color: red;
-      margin-top: 10px;
-      font-size: 14px;
-    }
-  </style>
+        .gallery video, .gallery img {
+            width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.9);
+        }
+
+        /* Styles for the overlay and password input */
+        #overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            flex-direction: column;
+            text-align: center;
+            transition: opacity 0.5s ease-in-out; /* Smooth transition for overlay fade */
+        }
+
+        #overlay-box {
+            background-color: #333;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        #overlay input {
+            padding: 12px;
+            font-size: 16px;
+            margin: 15px 0 10px;
+            width: 250px;
+            border: 1px solid #555;
+            border-radius: 5px;
+            background-color: #444;
+            color: white;
+        }
+
+        #overlay button {
+            padding: 12px 25px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            border: none;
+            background-color: #ff99e6;
+            color: #333;
+            font-weight: bold;
+        }
+
+        #error {
+            color: #ff4d4d;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+    </style>
 </head>
 <body>
 
- <div id="overlay">
-    <div>Enter Password to Access:</div>
-    <input type="password" id="passInput" placeholder="Password">
-    <button onclick="checkPassword()">Submit</button>
-    <div id="error" style="color:red; margin-top:10px;"></div>
-  </div>
+    <div id="overlay">
+        <div id="overlay-box">
+            <p>Enter Password to Access:</p>
+            <input type="password" id="passInput" placeholder="Password">
+            <button onclick="checkPassword()">Submit</button>
+            <div id="error"></div>
+        </div>
+    </div>
 
-  <h1>🔥 GTA 6 Leaks 🔥</h1>
-  <p>This is secret content that is blurred until the correct password is entered.</p>
+    <div class="content-container">
+        <h1>🔥 GTA 6 Leaks 🔥</h1>
+        <p>This is secret content that is blurred until the correct password is entered.</p>
+        
+        <div class="gallery">
+            <img src="https://i.imgur.com/your-image-1.jpg" alt="GTA 6 Leak 1">
+            <img src="https://i.imgur.com/your-image-2.jpg" alt="GTA 6 Leak 2">
+            <img src="https://i.imgur.com/your-image-3.jpg" alt="GTA 6 Leak 3">
+        </div>
+    </div>
 
-  <script>
-    const correctPassword = "darlasecretleaks"; // change this to your password
+    <script>
+        const correctPassword = "darlasecretleaks"; // Change this to your desired password
 
-    function checkPassword() {
-      const input = document.getElementById("passInput").value;
-      if (input === correctPassword) {
-        // Remove blur
-        document.body.style.filter = "none";
-        // Hide overlay
-        document.getElementById("overlay").style.display = "none";
-      } else {
-        document.getElementById("error").innerText = "Incorrect password!";
-      }
-    }
-  </script>
+        function checkPassword() {
+            const input = document.getElementById("passInput").value;
+            const errorElement = document.getElementById("error");
+
+            if (input === correctPassword) {
+                // Correct password:
+                // 1. Remove the blur from the body
+                document.body.style.filter = "none";
+                // 2. Hide the overlay by fading it out
+                document.getElementById("overlay").style.opacity = "0";
+                setTimeout(() => {
+                    document.getElementById("overlay").style.display = "none";
+                }, 500); // Wait for the transition to finish
+            } else {
+                // Incorrect password
+                errorElement.innerText = "Incorrect password!";
+            }
+        }
+    </script>
   
   <div class="overlay">
     <h1></h1>
