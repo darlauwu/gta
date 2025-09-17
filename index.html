@@ -25,14 +25,16 @@ Instructions:
     body{
       position: relative;
       background: url('https://i.redd.it/w1u74qaho25c1.png') center/cover no-repeat fixed;
-        font-family: 'Arial', sans-serif;
-        color: white;
-        text-align: center;
-        height: 100vh;
-        display: flex; /* Use flexbox to center content */
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
+           background-size: cover;
+          font-family: 'Roboto', sans-serif;
+            color: #fff;
+            text-align: center;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
     }
 
       h1 {
@@ -200,55 +202,55 @@ Instructions:
       text-align: center;
     }
 
-         h1 {
-            font-size: 4rem; /* Increased size for the main heading */
-            margin-bottom: 10px;
-            color: #fff; /* Changed to pure white for better visibility */
-            text-shadow: none; /* Removed shadow */
+        h1 {
+            font-size: 5rem;
+            font-weight: 700;
+            letter-spacing: 5px;
+            margin: 0 0 20px 0;
+            color: #ff00ff; /* Vibrant pink color */
+            text-shadow: none;
         }
 
-        .release-date {
-            font-size: 2rem; /* Increased font size for better visibility */
-            color: #FF1493; /* More vibrant pink color */
-            margin-bottom: 40px;
-            text-shadow: none; /* Removed shadow */
-        }
-
+        /* Container for the countdown numbers and labels */
         .countdown-container {
             display: flex;
-            gap: 20px;
+            gap: 0; /* Remove gap between items */
+            margin-top: 20px;
         }
 
         .countdown-item {
-            background: rgba(0, 0, 0, 0.7);
-            border-radius: 15px;
+            background-color: transparent; /* Transparent background */
+            border: 2px solid #ff00ff; /* Vibrant pink border */
+            border-radius: 0; /* Sharp corners */
             padding: 20px 30px;
             min-width: 120px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 15px rgba(255, 0, 255, 0.5); /* A subtle glow effect on the box */
+            text-align: center;
+            margin: 0 5px; /* Add small space between boxes */
         }
 
         .countdown-value {
-            font-size: 5rem; /* Increased size for the countdown numbers */
+            font-size: 5rem;
             font-weight: bold;
             line-height: 1;
             margin-bottom: 10px;
-            color: #fff;
-            text-shadow: 
-    0 0 8px #ff00ff,   /* Bright pink glow */
-    0 0 16px #8a2be2,  /* Violet/Purple glow */
-    0 0 24px #ff00ff,
-    0 0 32px #8a2be2;
+            color: #ff00ff; /* Vibrant pink color for numbers */
+            text-shadow: none;
         }
 
         .countdown-label {
-            font-size: 1.5rem; /* Increased size for the labels */
+            font-size: 1.5rem;
             text-transform: uppercase;
             letter-spacing: 2px;
-            color: #fff;
-            text-shadow: none; /* Removed shadow */
+            color: #ff00ff; /* Vibrant pink color for labels */
+            text-shadow: none;
         }
 
+        .release-date-info {
+            font-size: 1.5rem;
+            color: #ff00ff; /* Pink text for consistency */
+            margin-top: 10px;
+        }
     
   </style>
 </head>
@@ -279,8 +281,7 @@ Instructions:
   }, { once: true });
 </script>
     
-   <h1>Grand Theft Auto VI</h1>
-    <p class="release-date">Release countdown — May 26, 2026</p>
+    <h1>GRAND THEFT AUTO VI</h1>
 
     <div class="countdown-container">
         <div class="countdown-item">
@@ -299,6 +300,10 @@ Instructions:
             <div class="countdown-value" id="seconds">00</div>
             <div class="countdown-label">Seconds</div>
         </div>
+    </div>
+    
+    <div class="release-date-info">
+        <p>May 26, 2026</p>
     </div>
 
     <script>
@@ -321,11 +326,11 @@ Instructions:
             if (distance < 0) {
                 clearInterval(countdownInterval);
                 document.querySelector('.countdown-container').innerHTML = "<div class='countdown-item'><div class='countdown-value'>RELEASED!</div></div>";
-                document.querySelector('.release-date').innerText = "";
+                document.querySelector('.release-date-info').innerText = "";
             }
         }
 
-        updateCountdown(); // Initial call to display immediately
+        updateCountdown();
         const countdownInterval = setInterval(updateCountdown, 1000);
     </script>
   
