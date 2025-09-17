@@ -25,11 +25,23 @@ Instructions:
     body{
       position: relative;
       background: url('https://i.redd.it/w1u74qaho25c1.png') center/cover no-repeat fixed;
-      display:flex;
-      align-items:center;
-      justify-content:center;
+        font-family: 'Arial', sans-serif;
+        color: white;
+        text-align: center;
+        height: 100vh;
+        display: flex; /* Use flexbox to center content */
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
     }
 
+      h1 {
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+            color: #ccc;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+        }
+    
     body::after{
       content: "";
       position: absolute;
