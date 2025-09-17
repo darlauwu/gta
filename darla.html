@@ -102,19 +102,20 @@
             margin-top: 10px;
             font-size: 14px;
         }
-         header{
-      position:fixed;
-      top:18px;
-      left:50%;
-      transform:translateX(-50%);
-      display:flex;
-      gap:12px;
-      z-index:50;
-      backdrop-filter: blur(6px) saturate(0.9);
-      padding:8px 12px;
-      border-radius:999px;
-      box-shadow:0 6px 18px rgba(0,0,0,0.3);
-    }
+      header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    backdrop-filter: blur(6px) saturate(0.9);
+    padding: 8px 12px;
+    border-radius: 999px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+    margin: 20px auto;
+    width: fit-content;
+}
 
     .trailer-btn{
       display:inline-flex;
