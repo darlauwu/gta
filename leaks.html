@@ -36,35 +36,56 @@
       border-radius: 12px;
       box-shadow: 0 6px 18px rgba(0,0,0,0.9);
     }
-   /* Make the page blurred initially */
+      /* Full-page blur initially */
     body {
+      margin: 0;
+      height: 100vh;
+      overflow: hidden;
       filter: blur(10px);
       transition: filter 0.5s ease;
+      font-family: sans-serif;
     }
-    /* Optional: hide content completely until password correct */
+
+    /* Overlay to hold password input */
     #overlay {
       position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(255,255,255,0.8);
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.7);
       display: flex;
-      justify-content: center;
-      align-items: center;
+      justify-content: center;  /* horizontal center */
+      align-items: center;      /* vertical center */
       z-index: 9999;
-      font-family: sans-serif;
-      font-size: 24px;
       flex-direction: column;
+      text-align: center;
     }
-    input {
+
+    #overlay input {
       padding: 10px;
       font-size: 16px;
       margin-top: 10px;
+      width: 200px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
     }
-    button {
+
+    #overlay button {
       padding: 10px 20px;
       font-size: 16px;
       margin-top: 10px;
       cursor: pointer;
+      border-radius: 5px;
+      border: none;
+      background-color: #333;
+      color: #fff;
+    }
+
+    #error {
+      color: red;
+      margin-top: 10px;
+      font-size: 14px;
     }
   </style>
 </head>
