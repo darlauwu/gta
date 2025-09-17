@@ -2,35 +2,40 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>GTA 6 Live News Feed</title>
+  <title>X News Feed Test</title>
   <style>
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background: url('https://i.redd.it/w1u74qaho25c1.png') center/cover no-repeat fixed;
-      color: white;
-      text-align: center;
-    }
-    header {
       padding: 20px;
-      font-size: 2rem;
-      font-weight: bold;
-      text-transform: uppercase;
+      background: #111;
+      color: white;
+      font-family: Arial, sans-serif;
     }
-    .feed {
-      display: flex;
-      justify-content: center;
-      margin-top: 20px;
+    .feed-container {
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto;
+      background: rgba(0,0,0,0.6);
+      border-radius: 12px;
+      overflow: hidden;
+      padding: 10px;
     }
   </style>
 </head>
 <body>
-  <header>📰 Rockstar Games Updates</header>
-  <div class="feed">
-    <a class="twitter-timeline" data-theme="dark" data-width="800" data-height="600" href="https://x.com/RockstarGames">
-      Tweets by RockstarGames
+  <h2>X Feed Test</h2>
+  <div class="feed-container">
+    <a class="twitter-timeline"
+       href="https://x.com/i/lists/1921224041009930457?ref_src=twsrc%5Etfw"
+       data-theme="dark"
+       data-chrome="transparent noheader nofooter noborders"
+       data-width="100%"
+       data-height="400">
+      Tweets from List
     </a>
-    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
   </div>
+
+  <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 </body>
 </html>
+
