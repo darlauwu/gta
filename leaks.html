@@ -105,46 +105,7 @@
     <div id="blurred-content">
         <h1>🔥 GTA 6 Leaks 🔥</h1>
         <p>This is secret content that is blurred until the correct password is entered.</p>
-        
-        <div class="gallery">
-            <img src="https://i.imgur.com/your-image-1.jpg" alt="GTA 6 Leak 1">
-            <img src="https://i.imgur.com/your-image-2.jpg" alt="GTA 6 Leak 2">
-            <img src="https://i.imgur.com/your-image-3.jpg" alt="GTA 6 Leak 3">
-        </div>
-    </div>
 
-    <div id="overlay">
-        <div id="overlay-box">
-            <p>Enter Password to Access:</p>
-            <input type="password" id="passInput" placeholder="Password">
-            <button onclick="checkPassword()">Submit</button>
-            <div id="error"></div>
-        </div>
-    </div>
-
-    <script>
-        const correctPassword = "darlasecretleaks";
-
-        function checkPassword() {
-            const input = document.getElementById("passInput").value;
-            const errorElement = document.getElementById("error");
-
-            if (input === correctPassword) {
-                // Correct password:
-                // 1. Remove the blur from the specific content container
-                document.getElementById("blurred-content").style.filter = "none";
-                // 2. Hide the overlay by fading it out
-                document.getElementById("overlay").style.opacity = "0";
-                setTimeout(() => {
-                    document.getElementById("overlay").style.display = "none";
-                }, 500); // Wait for the transition to finish
-            } else {
-                // Incorrect password
-                errorElement.innerText = "Incorrect password!";
-            }
-        }
-    </script>
-  
   <div class="overlay">
     <h1></h1>
     <div class="gallery">
@@ -250,5 +211,39 @@
         <video src="leaks/GTA6Leaks (93).mp4" controls></video>
     </div>
   </div>
+        
+    <div id="overlay">
+        <div id="overlay-box">
+            <p>Enter Password to Access:</p>
+            <input type="password" id="passInput" placeholder="Password">
+            <button onclick="checkPassword()">Submit</button>
+            <div id="error"></div>
+        </div>
+    </div>
+
+    <script>
+        const correctPassword = "darlasecretleaks";
+
+        function checkPassword() {
+            const input = document.getElementById("passInput").value;
+            const errorElement = document.getElementById("error");
+
+            if (input === correctPassword) {
+                // Correct password:
+                // 1. Remove the blur from the specific content container
+                document.getElementById("blurred-content").style.filter = "none";
+                // 2. Hide the overlay by fading it out
+                document.getElementById("overlay").style.opacity = "0";
+                setTimeout(() => {
+                    document.getElementById("overlay").style.display = "none";
+                }, 500); // Wait for the transition to finish
+            } else {
+                // Incorrect password
+                errorElement.innerText = "Incorrect password!";
+            }
+        }
+    </script>
+  
+
 </body>
 </html>
