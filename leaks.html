@@ -36,10 +36,73 @@
       border-radius: 12px;
       box-shadow: 0 6px 18px rgba(0,0,0,0.9);
     }
+        /* Lock screen */
+    #lock-screen {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.95);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      z-index: 9999;
+    }
+
+    #lock-screen h1 {
+      color: #ff99e6;
+      margin-bottom: 10px;
+    }
+
+    #lock-screen input {
+      padding: 10px;
+      border-radius: 6px;
+      border: none;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    #lock-screen button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      background: #ff99e6;
+      color: black;
+      transition: 0.3s;
+    }
+
+    #lock-screen button:hover {
+      background: #ff66cc;
+    }
   </style>
 </head>
 <body>
 
+<!-- Lock screen -->
+  <div id="lock-screen">
+    <h1>🔒 Restricted Access</h1>
+    <p>Enter the password to view GTA 6 Trailers</p>
+    <input type="password" id="password" placeholder="Password">
+    <button onclick="unlock()">Unlock</button>
+  </div>
+
+  <script>
+    function unlock() {
+      const input = document.getElementById("password").value;
+
+      if (input === "gta6rocks") { // change this password
+        // Redirect to your real trailers page
+        window.location.href = "trailers.html";
+      } else {
+        alert("❌ Wrong password. Access denied.");
+        // Optional: redirect them somewhere else
+        // window.location.href = "denied.html";
+      }
+    }
+  </script>
+  
   <div class="overlay">
     <h1>🔥 GTA 6 Leaks 🔥</h1>
     <div class="gallery">
