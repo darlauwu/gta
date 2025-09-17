@@ -76,6 +76,13 @@
     #lock-screen button:hover {
       background: #ff66cc;
     }
+    /* Page content */
+    #content {
+      filter: blur(20px); /* blurred until unlocked */
+      pointer-events: none; /* disable interaction */
+      user-select: none;
+      transition: filter 0.5s ease;
+    }
   </style>
 </head>
 <body>
@@ -88,6 +95,17 @@
     <button onclick="unlock()">Unlock</button>
   </div>
 
+
+  <!-- Blurred page content -->
+  <div id="content">
+    <h1 style="text-align:center; padding-top:50px;">Darlas Secret Gallery</h1>
+    <div style="display:flex; justify-content:center; margin-top:20px;">
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/QdBZY2fkU-0" 
+              title="YouTube video player" frameborder="0" allowfullscreen></iframe>
+    </div>
+  </div>
+
+  
   <script>
     function unlock() {
       const input = document.getElementById("password").value;
