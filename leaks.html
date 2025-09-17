@@ -36,42 +36,9 @@
       border-radius: 12px;
       box-shadow: 0 6px 18px rgba(0,0,0,0.9);
     }
-        body { font-family: Arial, sans-serif; background: #111; color: #fff; display: flex; justify-content: center; align-items: center; height: 100vh; }
-  #content { display: none; }
-  #login { text-align: center; }
-  input[type="password"] { padding: 10px; margin-bottom: 10px; width: 200px; border-radius: 8px; border: none; }
-  input[type="button"] { padding: 10px; width: 220px; background: #ff0055; border: none; border-radius: 8px; color: white; cursor: pointer; }
-  input[type="button"]:hover { background: #ff3366; }
   </style>
 </head>
 <body>
-
-  <div id="login">
-  <h2>Enter Password to Access Leaks</h2>
-  <input type="password" id="password" placeholder="Password">
-  <input type="button" value="Submit" onclick="checkPassword()">
-  <p id="error" style="color:red;"></p>
-</div>
-
-<script>
-  // SHA-256 hash of the correct password "supersecret"
-  // You can generate new ones at: https://emn178.github.io/online-tools/sha256.html
-  const correctHash = "f75778f7425be4db0369d09af37a6c2b9a83dea0e53e7bd57412e4b060e607f7";
-
-  async function checkPassword() {
-    const input = document.getElementById("password").value;
-    const hashBuffer = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(input));
-    const hashArray = Array.from(new Uint8Array(hashBuffer));
-    const hashHex = hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
-
-    if (hashHex === correctHash) {
-      document.getElementById("login").style.display = "none";
-      document.getElementById("content").style.display = "block";
-    } else {
-      document.getElementById("error").innerText = "❌ Incorrect password!";
-    }
-  }
-</script>
 
   <div class="overlay">
     <h1>🔥 GTA 6 Leaks 🔥</h1>
