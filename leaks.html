@@ -17,15 +17,14 @@
             overflow: hidden;
         }
 
-        /* The container for the content that will be blurred */
-        #blurred-content {
+        /* The container for the content that will be revealed */
+        #revealed-content { /* Renamed from #blurred-content for clarity */
             padding: 40px;
             background: rgba(0, 0, 0, 0.65);
             min-height: 100vh;
             box-sizing: border-box;
-            /* Apply the blur only to this container */
-            filter: blur(15px);
-            transition: filter 0.5s ease-in-out;
+            /* No blur here anymore */
+            transition: opacity 0.5s ease-in-out; /* Added for smoother reveal if needed */
         }
 
         h1 {
@@ -47,14 +46,17 @@
             box-shadow: 0 6px 18px rgba(0, 0, 0, 0.9);
         }
 
-        /* Styles for the overlay and password input */
+        /* Styles for the overlay (now with an image) and password input */
         #overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.8);
+            /* This is where we add the new overlay image */
+            background: url('https://i.imgur.com/K3VwJ9j.jpeg') no-repeat center center fixed; /* **REPLACE THIS URL** */
+            background-size: cover;
+            
             display: flex;
             justify-content: center;
             align-items: center;
@@ -65,10 +67,11 @@
         }
 
         #overlay-box {
-            background-color: #333;
+            background-color: rgba(0, 0, 0, 0.7); /* Slightly transparent dark background for the box */
             padding: 30px;
             border-radius: 10px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            color: white; 
         }
 
         #overlay input {
@@ -102,11 +105,16 @@
 </head>
 <body>
 
-    <div id="blurred-content">
-        <h1>🔥 GTA 6 Leaks 🔥</h1>
-        <p>This is secret content that is blurred until the correct password is entered.</p>
-
+    <div id="revealed-content"> <h1>🔥 GTA 6 Leaks 🔥</h1>
+        <p>This is secret content that will be revealed when the correct password is entered.</p>
         
+        <div class="gallery">
+            <img src="https://i.imgur.com/your-image-1.jpg" alt="GTA 6 Leak 1">
+            <img src="https://i.imgur.com/your-image-2.jpg" alt="GTA 6 Leak 2">
+            <img src="https://i.imgur.com/your-image-3.jpg" alt="GTA 6 Leak 3">
+        </div>
+    </div>
+
     <div id="overlay">
         <div id="overlay-box">
             <p>Enter Password to Access:</p>
@@ -125,9 +133,7 @@
 
             if (input === correctPassword) {
                 // Correct password:
-                // 1. Remove the blur from the specific content container
-                document.getElementById("blurred-content").style.filter = "none";
-                // 2. Hide the overlay by fading it out
+                // Hide the overlay by fading it out
                 document.getElementById("overlay").style.opacity = "0";
                 setTimeout(() => {
                     document.getElementById("overlay").style.display = "none";
