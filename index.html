@@ -70,19 +70,20 @@ Instructions:
     text-decoration: none;
     color: #fff;
     font-weight: 700;
-    background: rgba(255,105,180,0.4); /* pink transparent */
+    background: rgba(255,105,180,0.4);
     border: 1px solid rgba(255,105,180,0.5);
     transition: 0.3s;
   }
-
   .nav-btn:hover {
     background: rgba(255,105,180,0.6);
   }
 
-  /* Dropdown */
-  .dropdown {
-    position: relative;
-    display: inline-block;
+  /* Pages Dropdown fixed top-right */
+  .top-pages {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 100;
   }
 
   .dropbtn {
@@ -95,7 +96,6 @@ Instructions:
     cursor: pointer;
     transition: 0.3s;
   }
-
   .dropbtn:hover {
     background: rgba(255,105,180,0.6);
   }
@@ -104,14 +104,13 @@ Instructions:
     display: none;
     position: absolute;
     top: 100%;
-    left: 0;
+    right: 0;
     background: rgba(0,0,0,0.85);
     border: 1px solid rgba(255,105,180,0.5);
     border-radius: 12px;
     box-shadow: 0 6px 18px rgba(0,0,0,0.6);
     min-width: 180px;
     overflow: hidden;
-    z-index: 1000;
   }
 
   .dropdown-content a {
@@ -121,7 +120,6 @@ Instructions:
     display: block;
     transition: background 0.3s;
   }
-
   .dropdown-content a:hover {
     background: rgba(255,105,180,0.4);
   }
@@ -129,7 +127,6 @@ Instructions:
   .dropdown:hover .dropdown-content {
     display: block;
   }
-
     main{
       flex:1;display:flex;align-items:center;justify-content:center;padding:120px 24px 48px;
     }
