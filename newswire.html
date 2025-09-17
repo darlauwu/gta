@@ -17,18 +17,20 @@
       font-weight: bold;
       text-transform: uppercase;
     }
-    iframe {
-      width: 90%;
-      height: 80vh;
-      border: none;
-      border-radius: 15px;
-      background: rgba(0, 0, 0, 0.6);
-      box-shadow: 0 0 20px rgba(0,0,0,0.7);
+    .feed {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
     }
   </style>
 </head>
 <body>
-  <header>📰 Rockstar Newswire</header>
-  <iframe src="https://www.rockstargames.com/newswire"></iframe>
+  <header>📰 Rockstar Games Updates</header>
+  <div class="feed">
+    <a class="twitter-timeline" data-theme="dark" data-width="800" data-height="600" href="https://twitter.com/RockstarGames">
+      Tweets by RockstarGames
+    </a>
+    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+  </div>
 </body>
 </html>
