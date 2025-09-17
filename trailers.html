@@ -114,9 +114,53 @@
       .trailer-card h2 { font-size:18px; }
       .trailer-card iframe { height:180px; }
     }
+      /* Invisible button in bottom-right */
+  #secretButton {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    background: transparent; /* fully invisible */
+    border: none;
+    cursor: pointer;
+    z-index: 9999;
+  }
   </style>
 </head>
 <body>
+
+  /* Uncomment for testing */
+  /* #secretButton { background: rgba(255,0,0,0.3); } */
+</style>
+</head>
+<body>
+
+<!-- Invisible button -->
+<button id="secretButton" onclick="askPassword()"></button>
+
+<script>
+  // SHA-256 hash of password "supersecret"
+  const correctHash = "f75778f7425be4db0369d09af37a6c2b9a83dea0e53e7bd57412e4b060e607f7";
+
+  async function askPassword() {
+    const input = prompt("Enter the secret password:");
+    if (!input) return;
+
+    // Hash the input
+    const hashBuffer = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(input));
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    const hashHex = hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
+
+    // Compare with stored hash
+    if (hashHex === correctHash) {
+      window.location.href = "leaks.html"; // redirect to your secret page
+    } else {
+      alert("❌ Incorrect password!");
+    }
+  }
+</script>
+  
   <header>
     <a class="nav-btn" href="index.html">Home</a>
     <a class="nav-btn" href="vimap.html">Map</a>
