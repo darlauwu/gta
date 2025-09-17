@@ -48,27 +48,46 @@ Instructions:
       z-index:1;
     }
 
-    header{
-      position:fixed;
-      top:18px;
-      left:50%;
-      transform:translateX(-50%);
-      display:flex;
-      gap:12px;
-      z-index:50;
-      backdrop-filter: blur(6px) saturate(0.9);
-      padding:8px 12px;
-      border-radius:999px;
-      box-shadow:0 6px 18px rgba(0,0,0,0.3);
-    }
+     header {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 12px;
+    z-index: 50;
+    backdrop-filter: blur(6px) saturate(0.9);
+    padding: 8px 16px;
+    border-radius: 999px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.3);
+  }
+
+  .nav-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 14px;
+    border-radius: 999px;
+    text-decoration: none;
+    color: #fff;
+    font-weight: 700;
+    background: rgba(255,105,180,0.4); /* pink transparent */
+    border: 1px solid rgba(255,105,180,0.5);
+    transition: 0.3s;
+  }
+
+  .nav-btn:hover {
+    background: rgba(255,105,180,0.6);
+  }
+
+  /* Dropdown */
   .dropdown {
     position: relative;
     display: inline-block;
   }
 
   .dropbtn {
-    background: rgba(0,0,0,0.4);
-    border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(255,105,180,0.4);
+    border: 1px solid rgba(255,105,180,0.5);
     padding: 8px 14px;
     border-radius: 999px;
     font-weight: 700;
@@ -78,7 +97,7 @@ Instructions:
   }
 
   .dropbtn:hover {
-    background: rgba(255,255,255,0.1);
+    background: rgba(255,105,180,0.6);
   }
 
   .dropdown-content {
@@ -86,10 +105,12 @@ Instructions:
     position: absolute;
     top: 100%;
     left: 0;
-    background: rgba(0,0,0,0.8);
-    min-width: 160px;
+    background: rgba(0,0,0,0.85);
+    border: 1px solid rgba(255,105,180,0.5);
     border-radius: 12px;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.5);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.6);
+    min-width: 180px;
+    overflow: hidden;
     z-index: 1000;
   }
 
@@ -102,7 +123,7 @@ Instructions:
   }
 
   .dropdown-content a:hover {
-    background: rgba(255,255,255,0.1);
+    background: rgba(255,105,180,0.4);
   }
 
   .dropdown:hover .dropdown-content {
