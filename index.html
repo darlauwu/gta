@@ -214,6 +214,64 @@ Instructions:
       color:#fff;
       text-align: center;
     }
+
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+            color: #ccc;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+        }
+
+        .release-date {
+            font-size: 1.5rem;
+            color: #ff99e6; /* Original pink color for the date text */
+            margin-bottom: 40px;
+            text-shadow: 
+                0 0 5px #ff99e6,
+                0 0 10px #ff99e6,
+                0 0 15px #ff99e6; /* subtle glow for the date */
+        }
+
+        .countdown-container {
+            display: flex;
+            gap: 20px;
+        }
+
+        .countdown-item {
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 15px;
+            padding: 20px 30px;
+            min-width: 120px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .countdown-value {
+            font-size: 4.5rem;
+            font-weight: bold;
+            line-height: 1;
+            margin-bottom: 10px;
+            /* Pink and Purple Glow for numbers */
+            color: #fff; /* Base color for the numbers */
+            text-shadow: 
+                0 0 8px #ff00ff,   /* Bright pink glow */
+                0 0 16px #8a2be2,  /* Violet/Purple glow */
+                0 0 24px #ff00ff,
+                0 0 32px #8a2be2;
+        }
+
+        .countdown-label {
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            /* Pink and Purple Glow for labels */
+            color: #fff; /* Base color for the labels */
+            text-shadow: 
+                0 0 6px #ff00ff,  /* Bright pink glow */
+                0 0 10px #8a2be2; /* Violet/Purple glow */
+        }
+
+
     
   </style>
 </head>
@@ -244,59 +302,55 @@ Instructions:
   }, { once: true });
 </script>
     
-    <main>
-      <section class="countdown-wrap" aria-labelledby="gta6-title">
-        <h1 id="gta6-title" class="title">Grand Theft Auto VI</h1>
-        <div class="subtitle">Release countdown — May 26, 2026</div>
+   <h1>Grand Theft Auto VI</h1>
+    <p class="release-date">Release countdown — May 26, 2026</p>
 
-        <div class="clock" role="timer" aria-live="polite" aria-atomic="true">
-          <div class="unit">
-            <div id="days" class="num">0</div>
-            <div class="label">Days</div>
-          </div>
-          <div class="unit">
-            <div id="hours" class="num">0</div>
-            <div class="label">Hours</div>
-          </div>
-          <div class="unit">
-            <div id="minutes" class="num">0</div>
-            <div class="label">Minutes</div>
-          </div>
-          <div class="unit">
-            <div id="seconds" class="num">0</div>
-            <div class="label">Seconds</div>
-          </div>
+    <div class="countdown-container">
+        <div class="countdown-item">
+            <div class="countdown-value" id="days">00</div>
+            <div class="countdown-label">Days</div>
         </div>
-      </section>
-    </main>
-  </div>
-  
-  <script>
-    const target = new Date('2026-05-26T00:00:00');
+        <div class="countdown-item">
+            <div class="countdown-value" id="hours">00</div>
+            <div class="countdown-label">Hours</div>
+        </div>
+        <div class="countdown-item">
+            <div class="countdown-value" id="minutes">00</div>
+            <div class="countdown-label">Minutes</div>
+        </div>
+        <div class="countdown-item">
+            <div class="countdown-value" id="seconds">00</div>
+            <div class="countdown-label">Seconds</div>
+        </div>
+    </div>
 
-    function pad(n){return String(n).padStart(2,'0');}
+    <script>
+        const releaseDate = new Date('May 26, 2026 00:00:00').getTime();
 
-    function update(){
-      const now = new Date();
-      let diff = Math.floor((target - now) / 1000);
-      if (diff < 0) diff = 0;
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = releaseDate - now;
 
-      const days = Math.floor(diff / 86400);
-      diff -= days * 86400;
-      const hours = Math.floor(diff / 3600);
-      diff -= hours * 3600;
-      const minutes = Math.floor(diff / 60);
-      const seconds = diff - minutes * 60;
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-      document.getElementById('days').textContent = days;
-      document.getElementById('hours').textContent = pad(hours);
-      document.getElementById('minutes').textContent = pad(minutes);
-      document.getElementById('seconds').textContent = pad(seconds);
-    }
+            document.getElementById('days').innerText = String(days).padStart(2, '0');
+            document.getElementById('hours').innerText = String(hours).padStart(2, '0');
+            document.getElementById('minutes').innerText = String(minutes).padStart(2, '0');
+            document.getElementById('seconds').innerText = String(seconds).padStart(2, '0');
 
-    update();
-    setInterval(update, 1000);
-  </script>
+            if (distance < 0) {
+                clearInterval(countdownInterval);
+                document.querySelector('.countdown-container').innerHTML = "<div class='countdown-item'><div class='countdown-value'>RELEASED!</div></div>";
+                document.querySelector('.release-date').innerText = "";
+            }
+        }
+
+        updateCountdown(); // Initial call to display immediately
+        const countdownInterval = setInterval(updateCountdown, 1000);
+    </script>
   
 </body>
 </html>
