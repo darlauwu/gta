@@ -1,228 +1,164 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>GTA 6 Countdown</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GTA 6 Loading Screen</title>
   <style>
-    body,html {
-      margin:0;
-      padding:0;
-      height:100%;
-      overflow:hidden;
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: hidden;
       font-family: 'Orbitron', sans-serif;
-      background:#000;
-      color:#fff;
-    }
+      color: #fff;
 
-        .page{
-      width:100%;
-      min-height:100vh;
-      display:flex;
-      flex-direction:column;
-      position: relative;
-      z-index:1;
-    }
-
-    .trailer-btn{
-      display:inline-flex;
-      gap:8px;
-      align-items:center;
-      padding:8px 12px;
-      border-radius:999px;
-      text-decoration:none;
-      color:var(--accent);
-      font-weight:600;
-      font-size:14px;
-      background:rgba(0,0,0,0.4);
-      border:1px solid rgba(255,255,255,0.1);
-    }
-
-    .trailer-btn .dot{
-      width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,0.9);
-    }
-
-    main{
-      flex:1;display:flex;align-items:center;justify-content:center;padding:120px 24px 48px;
-    }
-
-    .countdown-wrap{
-      backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blur(6px);
-      border-radius:24px;
-      padding:40px 48px;
-      text-align:center;
-      box-shadow:0 20px 60px rgba(0,0,0,0.8);
-      border:1px solid rgba(255,255,255,0.06);
-      background:rgba(0,0,0,0.3);
-      min-width:320px;
-      max-width:980px;
-      width:clamp(320px,70vw,980px);
-    }
-
-/* Header (same style as your home) */
-    header{
-      position:fixed;
-      top:18px;
-      left:50%;
-      transform:translateX(-50%);
-      z-index:50;
-      display:flex;
-      gap:12px;
-      padding:8px 14px;
-      border-radius:999px;
-      backdrop-filter: blur(6px) saturate(0.9);
-      box-shadow:0 6px 18px rgba(0,0,0,0.35);
-    }
-    .nav-btn{
-      padding:8px 12px;border-radius:999px;text-decoration:none;color:#fff;
-      background:linear-gradient(90deg,rgba(255,255,255,0.03),rgba(255,255,255,0.01));
-      border:1px solid rgba(255,255,255,0.06);font-weight:700;
-    }
-    .nav-btn:hover{box-shadow:0 0 10px rgba(255,77,210,0.18)}
-
-    
-    .title{font-size:50px;color:rgba(255, 255, 255);font-weight:800;margin-bottom:8px}
-    .subtitle{color:rgba(255,255,255,0.85);margin-bottom:22px}
-
-    .clock{
-      display:flex;gap:18px;justify-content:center;align-items:stretch;margin-top:8px;flex-wrap:wrap;
-    }
-
-    .unit{
-      min-width:88px;padding:18px 16px;border-radius:14px;background:rgba(0,0,0,0.5);border:1px solid rgba(255, 255, 255);
-      display:flex;flex-direction:column;align-items:center;justify-content:center;
-    }
-
-    .num{font-size:45px;font-weight:900;color:var(--accent);text-shadow:0 2px 6px rgba(255, 255, 255)}
-    .label{font-size:20px;color:rgba(255,255,255,0.85);margin-top:6px;text-transform:uppercase;text-shadow:0 1px 3px rgba(255, 255, 255)}
-
-    .footnote{margin-top:18px;color:rgba(255,255,255,0.8);font-size:30px;text-shadow:0 1px 3px rgba(255, 255, 255}
-
-    @media (max-width:640px){
-      header{left:12px;transform:none;right:12px;top:12px;justify-content:flex-start}
-      .countdown-wrap{padding:28px}
-      .num{font-size:28px}
-    }
-
-
-    /* Lucia background */
-    :root{
-      --accent:#ffffff;
-    }
-    body{
-      position: relative;
+      /* fallback background (always visible) */
       background: url('https://i.redd.it/w1u74qaho25c1.png') center/cover no-repeat fixed;
-      display:flex;
-      align-items:center;
-      justify-content:center;
     }
 
-    
-    /* ===== Slideshow stays as background ===== */
+    /* NAVBAR */
+    nav {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 15px;
+      padding: 10px 20px;
+      background: rgba(0,0,0,0.3);
+      border-radius: 20px;
+      z-index: 1000;
+    }
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+      padding: 6px 12px;
+      border-radius: 12px;
+      transition: background 0.3s;
+    }
+    nav a:hover {
+      background: rgba(255,255,255,0.2);
+    }
+
+    /* SLIDESHOW */
     .slideshow {
-      position:fixed;
-      inset:0;
-      z-index:-2;
-      overflow:hidden;
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      overflow: hidden;
     }
     .slideshow img {
-      position:absolute;
-      inset:0;
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      opacity:0;
-      transition:opacity 1s ease-in-out;
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
     }
-    .slideshow img.active { opacity:1 }
+    .slideshow img.active {
+      opacity: 1;
+    }
 
-    /* ===== Loading overlay ===== */
+    /* LOADING SCREEN */
     #loading-screen {
-      position:fixed;
-      inset:0;
-      background:rgba(0,0,0,0.85);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      flex-direction:column;
-      z-index:9999;
-      transition:opacity 1s ease;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      transition: opacity 1s ease;
     }
     #loading-screen.hidden {
-      opacity:0;
-      pointer-events:none;
+      opacity: 0;
+      pointer-events: none;
     }
-
     .circle-container {
-      display:flex;
-      align-items:center;
-      gap:12px;
+      position: relative;
+      width: 120px;
+      height: 120px;
     }
     .circle {
-      width:60px;
-      height:60px;
-      border-radius:50%;
-      border:6px solid rgba(255,255,255,0.2);
-      border-top:6px solid #ff69b4;
-      animation: spin 1.5s linear infinite;
+      width: 100%;
+      height: 100%;
+      border: 8px solid rgba(255,255,255,0.3);
+      border-top: 8px solid #fff;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
     }
     @keyframes spin {
-      0% { transform:rotate(0deg); }
-      100% { transform:rotate(360deg); }
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
     }
     .progress-text {
-      font-size:18px;
-      font-weight:bold;
-      color:#ff69b4;
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
     }
 
-    /* ===== Main content ===== */
-    #main-content {
-      display:none;
-      height:100%;
-      text-align:center;
-      padding:60px;
+    /* COUNTDOWN */
+    .countdown-container {
+      position: relative;
+      top: 50%;
+      transform: translateY(-50%);
+      text-align: center;
+      background: rgba(0,0,0,0.5);
+      padding: 30px;
+      border-radius: 20px;
+      max-width: 700px;
+      margin: 0 auto;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+      backdrop-filter: blur(6px);
     }
-
-    /* Clock in top right */
-    #clock {
-      position:fixed;
-      top:10px;
-      right:20px;
-      font-size:14px;
-      color:#fff;
+    .countdown-container h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
     }
-
-    /* Countdown */
     .countdown {
-      margin-top:120px;
-      display:inline-block;
-      padding:20px 40px;
-      background:rgba(0,0,0,0.6);
-      border-radius:16px;
-      box-shadow:0 0 20px rgba(0,0,0,0.5);
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 20px;
     }
-    .time {
-      display:inline-block;
-      margin:10px;
-      padding:10px 20px;
-      border:1px solid rgba(255,255,255,0.2);
-      border-radius:12px;
-      font-size:28px;
-      font-weight:bold;
+    .countdown div {
+      background: rgba(0,0,0,0.6);
+      padding: 20px;
+      border-radius: 12px;
+      min-width: 90px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
     }
-    .label {
-      display:block;
-      font-size:14px;
-      margin-top:6px;
-      color:#ccc;
+    .countdown span {
+      display: block;
+      font-size: 1.8rem;
+      font-weight: bold;
+    }
+    .countdown small {
+      font-size: 0.8rem;
+      text-transform: uppercase;
     }
   </style>
 </head>
 <body>
+  <!-- NAV -->
+  <nav>
+    <a href="#">Home</a>
+    <a href="#">Map</a>
+    <a href="#">Characters</a>
+    <a href="#">Places</a>
+    <a href="#">Wishlist</a>
+    <a href="#">Trailers</a>
+  </nav>
 
-  <!-- Background slideshow -->
+  <!-- SLIDESHOW -->
   <div class="slideshow">
     <img src="gta/slide/lucia.png" class="active" alt="Lucia artwork">
     <img src="gta/slide/dimez.png" alt="Character Dimez">
@@ -232,7 +168,7 @@
     <img src="gta/slide/cal.png" alt="Cal artwork">
   </div>
 
-  <!-- Loading screen overlay -->
+  <!-- LOADING SCREEN -->
   <div id="loading-screen">
     <div class="circle-container" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
       <div class="circle"></div>
@@ -240,86 +176,62 @@
     </div>
   </div>
 
-  <!-- Clock -->
-  <div id="clock"></div>
-
-  <!-- Main content (after loading) -->
-  <div id="main-content">
+  <!-- COUNTDOWN -->
+  <div class="countdown-container">
     <h1>Grand Theft Auto VI</h1>
     <p>Release countdown — May 26, 2026</p>
-    <div class="countdown">
-      <div class="time"><span id="days">0</span><span class="label">DAYS</span></div>
-      <div class="time"><span id="hours">0</span><span class="label">HOURS</span></div>
-      <div class="time"><span id="minutes">0</span><span class="label">MINUTES</span></div>
-      <div class="time"><span id="seconds">0</span><span class="label">SECONDS</span></div>
+    <div class="countdown" id="countdown">
+      <div><span id="days">0</span><small>Days</small></div>
+      <div><span id="hours">0</span><small>Hours</small></div>
+      <div><span id="minutes">0</span><small>Minutes</small></div>
+      <div><span id="seconds">0</span><small>Seconds</small></div>
     </div>
   </div>
 
   <script>
-    // ===== Slideshow =====
-    let slides = document.querySelectorAll(".slideshow img");
+    // Countdown
+    const targetDate = new Date("May 26, 2026 00:00:00").getTime();
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const distance = targetDate - now;
+
+      if (distance <= 0) {
+        document.getElementById("countdown").innerHTML = "Game Released!";
+        return;
+      }
+      document.getElementById("days").innerText = Math.floor(distance / (1000*60*60*24));
+      document.getElementById("hours").innerText = Math.floor((distance % (1000*60*60*24)) / (1000*60*60));
+      document.getElementById("minutes").innerText = Math.floor((distance % (1000*60*60)) / (1000*60));
+      document.getElementById("seconds").innerText = Math.floor((distance % (1000*60)) / 1000);
+    }
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+
+    // Slideshow
+    const slides = document.querySelectorAll(".slideshow img");
     let currentSlide = 0;
     setInterval(() => {
       slides[currentSlide].classList.remove("active");
       currentSlide = (currentSlide + 1) % slides.length;
       slides[currentSlide].classList.add("active");
-    }, 4000);
+    }, 5000);
 
-    // ===== Progress counter =====
-    let progressEl = document.getElementById("progress");
-    let duration = 10000; // 10s load
-    let interval = 100;
-    let step = 100 / (duration / interval);
+    // Loader progress
     let progress = 0;
-    let progressTimer = setInterval(() => {
-      progress += step;
+    const progressText = document.getElementById("progress");
+    const loadingScreen = document.getElementById("loading-screen");
+
+    const loadingInterval = setInterval(() => {
+      progress += 2;
+      progressText.innerText = progress + "%";
       if (progress >= 100) {
-        progress = 100;
-        clearInterval(progressTimer);
+        clearInterval(loadingInterval);
+        loadingScreen.classList.add("hidden");
       }
-      progressEl.textContent = Math.floor(progress) + "%";
-    }, interval);
-
-    // ===== Fade out loading screen =====
-    setTimeout(() => {
-      let loading = document.getElementById("loading-screen");
-      loading.classList.add("hidden");
-      setTimeout(() => loading.style.display = "none", 1000);
-      document.getElementById("main-content").style.display = "block";
-      document.body.style.overflow = "auto";
-    }, duration);
-
-    // ===== Live clock =====
-    function updateClock() {
-      let now = new Date();
-      let hrs = String(now.getHours()).padStart(2, "0");
-      let mins = String(now.getMinutes()).padStart(2, "0");
-      let secs = String(now.getSeconds()).padStart(2, "0");
-      document.getElementById("clock").textContent = `${hrs}:${mins}:${secs}`;
-    }
-    setInterval(updateClock, 1000);
-    updateClock();
-
-    // ===== Countdown =====
-    const releaseDate = new Date("May 26, 2026 00:00:00").getTime();
-    function updateCountdown() {
-      let now = new Date().getTime();
-      let diff = releaseDate - now;
-
-      let days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      let hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      let minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-      let seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-      document.getElementById("days").textContent = days;
-      document.getElementById("hours").textContent = hours;
-      document.getElementById("minutes").textContent = minutes;
-      document.getElementById("seconds").textContent = seconds;
-    }
-    setInterval(updateCountdown, 1000);
-    updateCountdown();
+    }, 80);
   </script>
 </body>
 </html>
+
 
 
