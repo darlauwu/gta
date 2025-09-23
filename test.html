@@ -15,7 +15,7 @@
       font-family: 'Orbitron', sans-serif;
       color: #fff;
 
-      /* fallback background (always visible) */
+      /* fallback background (stays after slideshow fades) */
       background: url('https://i.redd.it/w1u74qaho25c1.png') center/cover no-repeat fixed;
     }
 
@@ -50,6 +50,11 @@
       inset: 0;
       z-index: -1;
       overflow: hidden;
+      transition: opacity 2s ease-in-out; /* fade out */
+    }
+    .slideshow.fade-out {
+      opacity: 0;
+      pointer-events: none;
     }
     .slideshow img {
       position: absolute;
@@ -159,7 +164,7 @@
   </nav>
 
   <!-- SLIDESHOW -->
-  <div class="slideshow">
+  <div class="slideshow" id="slideshow">
     <img src="gta/slide/lucia.png" class="active" alt="Lucia artwork">
     <img src="gta/slide/dimez.png" alt="Character Dimez">
     <img src="gta/slide/boobie.jpg" alt="Boobie scene">
@@ -207,31 +212,32 @@
     setInterval(updateCountdown, 1000);
     updateCountdown();
 
-    // Slideshow
+    // Slideshow (runs only during loading)
     const slides = document.querySelectorAll(".slideshow img");
     let currentSlide = 0;
-    setInterval(() => {
+    let slideInterval = setInterval(() => {
       slides[currentSlide].classList.remove("active");
       currentSlide = (currentSlide + 1) % slides.length;
       slides[currentSlide].classList.add("active");
-    }, 5000);
+    }, 3000);
 
     // Loader progress
     let progress = 0;
     const progressText = document.getElementById("progress");
     const loadingScreen = document.getElementById("loading-screen");
+    const slideshow = document.getElementById("slideshow");
 
     const loadingInterval = setInterval(() => {
       progress += 2;
       progressText.innerText = progress + "%";
       if (progress >= 100) {
         clearInterval(loadingInterval);
+        clearInterval(slideInterval); // stop slideshow
         loadingScreen.classList.add("hidden");
+        slideshow.classList.add("fade-out"); // fade slideshow away
       }
     }, 80);
   </script>
 </body>
 </html>
-
-
 
