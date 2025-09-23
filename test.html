@@ -120,6 +120,24 @@
       document.getElementById("main-content").style.display = "block";
       document.body.style.overflow = "auto";
     }, 24000);
+
+    // Fade out music helper
+    function fadeOutMusic(audio) {
+      let fade = setInterval(() => {
+        if (audio.volume > 0.05) {
+          audio.volume -= 0.05;
+        } else {
+          audio.volume = 0;
+          audio.pause();
+          clearInterval(fade);
+        }
+      }, 200); // reduces every 200ms
+    }
+
+      // fade music
+      let bgMusic = document.getElementById("bg-music");
+      fadeOutMusic(bgMusic);
+    }, 15000);
   </script>
 </body>
 </html>
