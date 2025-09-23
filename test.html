@@ -1,130 +1,101 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GTA VI Loading Screen</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>GTA 6 Loading Screen</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: "Arial Black", sans-serif;
+    body,html {
+      margin:0;
+      padding:0;
+      height:100%;
+      overflow:hidden;
+      font-family: 'Orbitron', sans-serif;
+      background:#000;
     }
 
-    body {
-      background: linear-gradient(135deg, #ff00cc, #3333ff);
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      overflow: hidden;
-      color: white;
+    /* LOADING SCREEN */
+    #loading-screen {
+      position:fixed;
+      top:0; left:0; right:0; bottom:0;
+      background:linear-gradient(135deg, #ff69b4, #8a2be2);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      flex-direction:column;
+      z-index:9999;
+      animation: flicker 0.15s infinite alternate;
     }
 
-    .loading-container {
-      text-align: center;
-      animation: fadeIn 2s ease-in-out;
+    #loading-screen h1 {
+      font-size:60px;
+      color:white;
+      text-shadow: 0 0 15px rgba(255,255,255,0.8);
+      margin-bottom:20px;
     }
 
-    .logo {
-      font-size: 5em;
-      font-weight: bold;
-      letter-spacing: 4px;
-      color: #fff;
-      text-shadow: 0px 0px 20px rgba(255, 0, 150, 0.8),
-                   0px 0px 40px rgba(0, 200, 255, 0.8);
-      animation: glow 2s infinite alternate;
+    .progress-bar {
+      width:60%;
+      max-width:400px;
+      height:20px;
+      border:2px solid #fff;
+      border-radius:10px;
+      overflow:hidden;
+      background:rgba(0,0,0,0.3);
     }
 
-    .tagline {
-      font-size: 1.5em;
-      margin-top: 10px;
-      opacity: 0.8;
-      animation: slideUp 2s ease-in-out;
+    .progress-bar-fill {
+      height:100%;
+      width:0%;
+      background:linear-gradient(90deg, #ff69b4, #8a2be2);
+      animation: loading 10s linear forwards;
     }
 
-    .loading-bar {
-      margin: 30px auto;
-      width: 300px;
-      height: 20px;
-      border: 2px solid white;
-      border-radius: 50px;
-      overflow: hidden;
-      position: relative;
+    /* Flicker effect like GTA V */
+    @keyframes flicker {
+      from { opacity:1; filter:brightness(1); }
+      to   { opacity:0.85; filter:brightness(1.3); }
     }
 
-    .loading-fill {
-      height: 100%;
-      width: 0;
-      background: linear-gradient(90deg, #ff00cc, #3333ff);
-      animation: load 10s forwards;
+    /* Progress bar animation */
+    @keyframes loading {
+      from { width:0%; }
+      to   { width:100%; }
     }
 
-    .tips {
-      margin-top: 20px;
-      font-size: 1.1em;
-      font-style: italic;
-      opacity: 0.9;
-      animation: fadeTips 15s infinite;
-    }
-
-    @keyframes glow {
-      from { text-shadow: 0px 0px 15px #ff00cc; }
-      to { text-shadow: 0px 0px 35px #00ffff; }
-    }
-
-    @keyframes load {
-      from { width: 0%; }
-      to { width: 100%; }
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: scale(0.9); }
-      to { opacity: 1; transform: scale(1); }
-    }
-
-    @keyframes slideUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes fadeTips {
-      0%, 20% { opacity: 1; content: "Tip: Use cover to survive longer shootouts!"; }
-      40% { opacity: 0; }
-      60% { opacity: 1; content: "Tip: Explore Vice City for hidden secrets."; }
-      80% { opacity: 0; }
-      100% { opacity: 1; }
+    /* CONTENT (hidden until loading ends) */
+    #main-content {
+      display:none;
+      height:100%;
+      background:url('lucia-bg.jpg') center/cover no-repeat;
+      color:white;
+      padding:50px;
+      text-align:center;
     }
   </style>
 </head>
 <body>
-  <div class="loading-container">
-    <div class="logo">GTA VI</div>
-    <div class="tagline">Welcome to Vice City</div>
-
-    <div class="loading-bar">
-      <div class="loading-fill"></div>
+  <!-- LOADING SCREEN -->
+  <div id="loading-screen">
+    <h1>GTA VI</h1>
+    <div class="progress-bar">
+      <div class="progress-bar-fill"></div>
     </div>
+  </div>
 
-    <div class="tips" id="tips">Tip: Drive carefully — cops are smarter now.</div>
+  <!-- MAIN CONTENT -->
+  <div id="main-content">
+    <h1>Welcome to the GTA 6 Site 🚀</h1>
+    <p>Your site content goes here...</p>
   </div>
 
   <script>
-    // Rotating GTA VI style tips
-    const tips = [
-      "Tip: Drive carefully — cops are smarter now.",
-      "Tip: Explore Vice City for hidden secrets.",
-      "Tip: Customize your ride at new garages.",
-      "Tip: Online heists give huge payouts.",
-      "Tip: Use cover to survive longer shootouts!"
-    ];
-    let index = 0;
-    setInterval(() => {
-      document.getElementById("tips").textContent = tips[index];
-      index = (index + 1) % tips.length;
-    }, 4000);
+    // Wait 10s then hide loading screen
+    setTimeout(() => {
+      document.getElementById("loading-screen").style.display = "none";
+      document.getElementById("main-content").style.display = "block";
+      document.body.style.overflow = "auto"; // allow scroll after load
+    }, 10000);
   </script>
 </body>
 </html>
-
