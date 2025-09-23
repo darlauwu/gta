@@ -48,11 +48,6 @@
       opacity:1;
     }
 
-    @keyframes flicker {
-      from { opacity:1; filter:brightness(1); }
-      to   { opacity:0.9; filter:brightness(1.2); }
-    }
-
     /* SMALL CIRCLE LOADER (GTA V style) */
     .circle-container {
       position:absolute;
@@ -103,12 +98,13 @@
     </div>
   </div>
 
-  <!-- MAIN CONTENT -->
-  <div id="main-content">
-    <h1>Welcome to the GTA 6 Site 🚀</h1>
-    <p>Your main site goes here...</p>
+  <!-- Background Music -->
+    <audio id="bg-music" autoplay loop>
+      <source src="gta/sounds/gta6music.mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
   </div>
-
+  
   <script>
     // IMAGE SLIDESHOW (every 3 seconds)
     let slides = document.querySelectorAll(".slideshow img");
@@ -124,7 +120,7 @@
       document.getElementById("loading-screen").style.display = "none";
       document.getElementById("main-content").style.display = "block";
       document.body.style.overflow = "auto";
-    }, 15000);
+    }, 18000);
   </script>
 </body>
 </html>
