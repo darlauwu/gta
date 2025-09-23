@@ -108,12 +108,45 @@
       <div class="progress-text" id="progress">0%</div>
     </div>
 
-    <!-- Background Music -->
-    <audio id="bg-music" autoplay loop>
-        <source src="gta/sounds/gta6music.mp3" type="audio/mpeg">
-      Your browser does not support the audio element.
-    </audio>
-  </div>
+  <!-- Background Music -->
+<audio id="bg-music" loop>
+  <source src="gta/sounds/gta6music.mp3" type="audio/mpeg">
+  Your browser does not support the audio element.
+</audio>
+
+<!-- Overlay asking to start -->
+<div id="music-overlay" style="
+  position:fixed;
+  top:0;left:0;right:0;bottom:0;
+  background:rgba(0,0,0,0.85);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  color:#fff;
+  font-family:'Orbitron',sans-serif;
+  z-index:10000;">
+  <h2>Click to Start GTA VI Experience</h2>
+  <button onclick="startMusic()" style="
+    margin-top:20px;
+    padding:12px 30px;
+    border-radius:8px;
+    border:none;
+    background:#ff69b4;
+    color:#fff;
+    font-size:18px;
+    cursor:pointer;">Start</button>
+</div>
+
+<script>
+  function startMusic() {
+    let overlay = document.getElementById("music-overlay");
+    let bgMusic = document.getElementById("bg-music");
+    overlay.style.display = "none";
+    bgMusic.volume = 0.6; // start softer
+    bgMusic.play().catch(err => console.log("Autoplay blocked:", err));
+  }
+</script>
 
   <!-- MAIN CONTENT -->
   <div id="main-content">
