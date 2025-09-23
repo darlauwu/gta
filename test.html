@@ -162,7 +162,7 @@
       slides[currentSlide].classList.remove("active");
       currentSlide = (currentSlide + 1) % slides.length;
       slides[currentSlide].classList.add("active");
-    }, 3000);
+    }, 4000);
 
     // Fade out music helper
     function fadeOutMusic(audio) {
@@ -179,7 +179,7 @@
 
     // PROGRESS COUNTER (15 seconds to 100%)
     let progressEl = document.getElementById("progress");
-    let duration = 15000; // 15s
+    let duration = 24000; // 24s
     let interval = 100; // update every 100ms
     let step = 100 / (duration / interval);
     let progress = 0;
