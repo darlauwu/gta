@@ -12,20 +12,21 @@
       overflow:hidden;
       font-family: 'Orbitron', sans-serif;
       color:#fff;
-      background: url('https://i.redd.it/w1u74qaho25c1.png') center/cover no-repeat fixed;
+      background:#000;
     }
 
-    /* SLIDESHOW */
+    /* SLIDESHOW COVER */
     .slideshow {
       position: fixed;
       inset: 0;
-      z-index: 1;
+      z-index: 9998;
       overflow: hidden;
-      transition: opacity 2s ease-in-out;
+      background:#000;
+      transition: opacity 2s ease-in-out, visibility 2s ease-in-out;
     }
-    .slideshow.fade-out {
+    .slideshow.hidden {
       opacity: 0;
-      pointer-events: none;
+      visibility: hidden;
     }
     .slideshow img {
       position: absolute;
@@ -123,7 +124,7 @@
       backdrop-filter:blur(10px);
       text-align:center;
       box-shadow:0 0 20px rgba(0,0,0,0.6);
-      z-index:100;
+      z-index:10;
     }
     .countdown {
       display:flex;
@@ -202,14 +203,11 @@
     </div>
   </div>
 
-  <!-- Slideshow -->
+  <!-- Slideshow (only shows once, then removed) -->
   <div class="slideshow" id="slideshow">
-   <img src="gta/slide/lucia.png" class="active" alt="Slide 1"> 
-    <img src="gta/slide/dimez.png" alt="Slide 2"> 
-    <img src="gta/slide/boobie.jpg" alt="Slide 3"> 
-    <img src="gta/slide/dre.jpg" alt="Slide 4"> 
-    <img src="gta/slide/brian.jpg" alt="Slide 5"> 
-    <img src="gta/slide/cal.png" alt="Slide 6">
+    <img src="https://i.redd.it/w1u74qaho25c1.png" class="active">
+    <img src="https://i.imgur.com/3ZQ3Z7U.jpeg">
+    <img src="https://i.imgur.com/0Z8F3Jk.jpeg">
   </div>
 
   <!-- Navigation -->
@@ -240,14 +238,15 @@
       let overlay = document.getElementById("music-overlay");
       let bgMusic = document.getElementById("bg-music");
       overlay.style.display = "none";
-      bgMusic.volume = 0.6; // start softer
+      bgMusic.volume = 0.6;
       bgMusic.play().catch(err => console.log("Autoplay blocked:", err));
     }
 
     // Slideshow Logic
     const slides = document.querySelectorAll('.slideshow img');
+    const slideshow = document.getElementById('slideshow');
     let current = 0;
-    setInterval(() => {
+    const slideInterval = setInterval(() => {
       slides[current].classList.remove('active');
       current = (current + 1) % slides.length;
       slides[current].classList.add('active');
@@ -261,8 +260,14 @@
       progressText.textContent = progress + '%';
       if(progress >= 100){
         clearInterval(loadingInterval);
+        clearInterval(slideInterval);
+
+        // Fade out loader + slideshow
         document.getElementById('loading-screen').classList.add('hidden');
-        document.getElementById('slideshow').classList.add('fade-out');
+        slideshow.classList.add('hidden');
+
+        // Remove slideshow completely after fade
+        setTimeout(() => slideshow.remove(), 2000);
       }
     }, 80);
 
