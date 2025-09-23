@@ -23,7 +23,7 @@
       align-items:center;
       justify-content:center;
       z-index:9999;
-      animation:flicker 0.15s infinite alternate;
+      background:#000;
     }
 
     /* FULLSCREEN SLIDESHOW */
@@ -48,11 +48,14 @@
       opacity:1;
     }
 
-    /* SMALL CIRCLE LOADER (GTA V style) */
+    /* LOADER + PROGRESS */
     .circle-container {
       position:absolute;
       bottom:30px;
       right:30px;
+      display:flex;
+      align-items:center;
+      gap:12px;
     }
 
     .circle {
@@ -67,6 +70,13 @@
     @keyframes spin {
       0% { transform:rotate(0deg); }
       100% { transform:rotate(360deg); }
+    }
+
+    .progress-text {
+      font-size:18px;
+      font-weight:bold;
+      color:#ff69b4;
+      font-family:'Orbitron', sans-serif;
     }
 
     /* MAIN CONTENT */
@@ -84,7 +94,7 @@
   <div id="loading-screen">
     <!-- Fullscreen Slideshow -->
     <div class="slideshow">
-      <img src="gta/slide/lucia.png" class="active" alt="Slide 1">
+        <img src="gta/slide/lucia.png" class="active" alt="Slide 1">
       <img src="gta/slide/dimez.png" alt="Slide 2">
       <img src="gta/slide/boobie.jpg" alt="Slide 3">
       <img src="gta/slide/dre.jpg" alt="Slide 4">
@@ -92,18 +102,25 @@
       <img src="gta/slide/cal.png" alt="Slide 6">
     </div>
 
-    <!-- Circle Loader -->
+    <!-- Circle Loader + Progress -->
     <div class="circle-container">
       <div class="circle"></div>
+      <div class="progress-text" id="progress">0%</div>
     </div>
-  </div>
 
-  <!-- Background Music -->
+    <!-- Background Music -->
     <audio id="bg-music" autoplay loop>
-      <source src="gta/sounds/gta6music.mp3" type="audio/mpeg">
+        <source src="gta/sounds/gta6music.mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
     </audio>
   </div>
-  
+
+  <!-- MAIN CONTENT -->
+  <div id="main-content">
+    <h1>Welcome to the GTA 6 Site 🚀</h1>
+    <p>Your main site goes here...</p>
+  </div>
+
   <script>
     // IMAGE SLIDESHOW (every 3 seconds)
     let slides = document.querySelectorAll(".slideshow img");
@@ -112,14 +129,7 @@
       slides[currentSlide].classList.remove("active");
       currentSlide = (currentSlide + 1) % slides.length;
       slides[currentSlide].classList.add("active");
-    }, 4000);
-
-    // LOADING TIME (15 seconds)
-    setTimeout(() => {
-      document.getElementById("loading-screen").style.display = "none";
-      document.getElementById("main-content").style.display = "block";
-      document.body.style.overflow = "auto";
-    }, 24000);
+    }, 3000);
 
     // Fade out music helper
     function fadeOutMusic(audio) {
@@ -131,14 +141,37 @@
           audio.pause();
           clearInterval(fade);
         }
-      }, 200); // reduces every 200ms
+      }, 200);
     }
+
+    // PROGRESS COUNTER (15 seconds to 100%)
+    let progressEl = document.getElementById("progress");
+    let duration = 15000; // 15s
+    let interval = 100; // update every 100ms
+    let step = 100 / (duration / interval);
+    let progress = 0;
+
+    let progressTimer = setInterval(() => {
+      progress += step;
+      if (progress >= 100) {
+        progress = 100;
+        clearInterval(progressTimer);
+      }
+      progressEl.textContent = Math.floor(progress) + "%";
+    }, interval);
+
+    // LOADING TIME (15 seconds)
+    setTimeout(() => {
+      document.getElementById("loading-screen").style.display = "none";
+      document.getElementById("main-content").style.display = "block";
+      document.body.style.overflow = "auto";
 
       // fade music
       let bgMusic = document.getElementById("bg-music");
       fadeOutMusic(bgMusic);
-    }, 15000);
+    }, duration);
   </script>
 </body>
 </html>
+
 
