@@ -164,6 +164,52 @@ Instructions:
       z-index: 1000;
       font-weight: bold;
     }
+
+
+ /* RADIO DOCK */
+    .radio-dock {
+      position:fixed;
+      bottom:0;
+      left:0;
+      right:0;
+      background:rgba(20,20,20,0.95);
+      backdrop-filter: blur(6px);
+      border-top:2px solid #ff69b4;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:10px 20px;
+      z-index:10000;
+      box-shadow:0 -4px 20px rgba(255,105,180,0.5);
+    }
+
+    .station-buttons {
+      display:flex;
+      gap:10px;
+    }
+
+    .station-btn {
+      padding:8px 14px;
+      border:none;
+      border-radius:6px;
+      background:rgba(255,105,180,0.15);
+      color:#fff;
+      font-size:14px;
+      cursor:pointer;
+      transition:0.3s;
+    }
+    .station-btn:hover {
+      background:rgba(255,105,180,0.4);
+    }
+
+    .player {
+      width:300px;
+      height:80px;
+      border-radius:8px;
+      overflow:hidden;
+    }
+
+    
   </style>
 </head>
 <body>
@@ -282,6 +328,38 @@ Instructions:
     update();
     setInterval(update, 1000);
 
+ <h1 style="padding:40px;">Scroll down to see radio dock stay in place 🎶</h1>
+
+  <!-- RADIO DOCK -->
+  <div class="radio-dock">
+    <div class="station-buttons">
+      <button class="station-btn" onclick="switchStation('station1')">Vice City Vibes</button>
+      <button class="station-btn" onclick="switchStation('station2')">Night Drive</button>
+      <button class="station-btn" onclick="switchStation('station3')">Retro Wave</button>
+    </div>
+
+    <div class="player">
+      <iframe id="spotify-player" 
+        src="https://open.spotify.com/embed/playlist/37i9dQZF1DXcBWIGoYBM5M"
+        width="100%" height="100%" frameBorder="0" allowfullscreen=""
+        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+        loading="lazy"></iframe>
+    </div>
+  </div>
+
+  <script>
+    function switchStation(station) {
+      let player = document.getElementById("spotify-player");
+      if (station === "station1") {
+        player.src = "https://open.spotify.com/embed/playlist/37i9dQZF1DXcBWIGoYBM5M"; // Vice City vibes
+      } else if (station === "station2") {
+        player.src = "https://open.spotify.com/embed/playlist/37i9dQZF1DX4dyzvuaRJ0n"; // Night Drive
+      } else if (station === "station3") {
+        player.src = "https://open.spotify.com/embed/playlist/37i9dQZF1DX8FwnYE6PRvL"; // Retro Wave
+      }
+    }
+
+    
   </script>
 </body>
 </html>
