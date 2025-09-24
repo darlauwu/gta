@@ -164,13 +164,62 @@ Instructions:
       z-index: 1000;
       font-weight: bold;
     }
-
-
-    
   </style>
 </head>
 <body>
 
+
+<!-- DISCLAIMER MODAL -->
+<div id="disclaimer-modal" style="
+  position:fixed;
+  top:0;left:0;right:0;bottom:0;
+  background:rgba(0,0,0,0.9);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:20000;
+  font-family:'Orbitron',sans-serif;
+  color:#fff;
+  text-align:center;
+  padding:20px;">
+  <div style="
+    background:rgba(20,20,20,0.95);
+    padding:30px;
+    border-radius:16px;
+    max-width:600px;
+    box-shadow:0 0 30px rgba(255,105,180,0.8);">
+    
+    <h2 style="color:#ff69b4;margin-bottom:15px;">Disclaimer</h2>
+    <p style="font-size:16px;line-height:1.6;margin-bottom:20px;">
+      This website is a <strong>fan-made project</strong> dedicated to Grand Theft Auto VI.  
+      We are <strong>not affiliated with Rockstar Games, Take-Two Interactive, or any of their subsidiaries</strong>.  
+      All trademarks, logos, and game content belong to their respective owners.  
+      This site is for <strong>entertainment, news, and community purposes only</strong>.  
+    </p>
+    <p style="font-size:14px;opacity:0.8;margin-bottom:25px;">
+      By continuing, you acknowledge that this site is <strong>unofficial</strong> and provided “as-is” with no guarantees.  
+      Please support Rockstar Games by purchasing official titles and content.  
+    </p>
+    
+    <button onclick="closeDisclaimer()" style="
+      padding:12px 30px;
+      border:none;
+      border-radius:8px;
+      background:#ff69b4;
+      color:#fff;
+      font-size:16px;
+      cursor:pointer;">
+      I Understand
+    </button>
+  </div>
+</div>
+
+<script>
+  function closeDisclaimer() {
+    document.getElementById("disclaimer-modal").style.display = "none";
+  }
+</script>
+  
   <header>
     <a href="index.html" class="nav-btn">Home</a>
     <a href="vimap.html" class="nav-btn">Map</a>
