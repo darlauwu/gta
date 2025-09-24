@@ -165,62 +165,100 @@ Instructions:
       font-weight: bold;
     }
 
-    
+     /* Floating radio button */
+    .radio-btn {
+      position:fixed;
+      bottom:20px;
+      right:20px;
+      width:60px;
+      height:60px;
+      border-radius:50%;
+      background:linear-gradient(135deg,#ff69b4,#8a2be2);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:#fff;
+      font-size:24px;
+      cursor:pointer;
+      box-shadow:0 4px 20px rgba(0,0,0,0.4);
+      z-index:9999;
+      transition:0.3s;
+    }
+    .radio-btn:hover {
+      transform:scale(1.1);
+    }
+
+    /* Popup player */
+    .radio-popup {
+      position:fixed;
+      bottom:90px;
+      right:20px;
+      width:320px;
+      height:140px;
+      background:rgba(20,20,20,0.95);
+      border:2px solid #ff69b4;
+      border-radius:12px;
+      display:none;
+      flex-direction:column;
+      justify-content:space-between;
+      padding:10px;
+      box-shadow:0 6px 30px rgba(255,105,180,0.4);
+      z-index:10000;
+    }
+
+    .radio-popup iframe {
+      width:100%;
+      height:80px;
+      border:none;
+      border-radius:8px;
+    }
+
+    .volume-control {
+      margin-top:8px;
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+    .volume-control input[type=range] {
+      width:100%;
+    }
   </style>
 </head>
 <body>
 
+   <h1 style="padding:40px;">Scroll and check bottom-right 🎶</h1>
 
-<!-- DISCLAIMER MODAL -->
-<div id="disclaimer-modal" style="
-  position:fixed;
-  top:0;left:0;right:0;bottom:0;
-  background:rgba(0,0,0,0.9);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  z-index:20000;
-  font-family:'Orbitron',sans-serif;
-  color:#fff;
-  text-align:center;
-  padding:20px;">
-  <div style="
-    background:rgba(20,20,20,0.95);
-    padding:30px;
-    border-radius:16px;
-    max-width:600px;
-    box-shadow:0 0 30px rgba(255,105,180,0.8);">
-    
-    <h2 style="color:#ff69b4;margin-bottom:15px;">Disclaimer</h2>
-    <p style="font-size:16px;line-height:1.6;margin-bottom:20px;">
-      This website is a <strong>fan-made project</strong> dedicated to Grand Theft Auto VI.  
-      We are <strong>not affiliated with Rockstar Games, Take-Two Interactive, or any of their subsidiaries</strong>.  
-      All trademarks, logos, and game content belong to their respective owners.  
-      This site is for <strong>entertainment, news, and community purposes only</strong>.  
-    </p>
-    <p style="font-size:14px;opacity:0.8;margin-bottom:25px;">
-      By continuing, you acknowledge that this site is <strong>unofficial</strong> and provided “as-is” with no guarantees.  
-      Please support Rockstar Games by purchasing official titles and content.  
-    </p>
-    
-    <button onclick="closeDisclaimer()" style="
-      padding:12px 30px;
-      border:none;
-      border-radius:8px;
-      background:#ff69b4;
-      color:#fff;
-      font-size:16px;
-      cursor:pointer;">
-      I Understand
-    </button>
+  <!-- Floating button -->
+  <div class="radio-btn" onclick="toggleRadio()">🎵</div>
+
+  <!-- Popup -->
+  <div class="radio-popup" id="radioPopup">
+    <iframe id="spotify-player"
+      src="https://open.spotify.com/embed/playlist/11b8uutmmcY9Kad689IFJ1"
+      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture">
+    </iframe>
+    <div class="volume-control">
+      <label>🔊</label>
+      <input type="range" min="0" max="100" value="100" id="volumeSlider">
+    </div>
   </div>
-</div>
 
-<script>
-  function closeDisclaimer() {
-    document.getElementById("disclaimer-modal").style.display = "none";
-  }
-</script>
+  <script>
+    const popup = document.getElementById("radioPopup");
+    const volumeSlider = document.getElementById("volumeSlider");
+
+    function toggleRadio() {
+      popup.style.display = (popup.style.display === "flex") ? "none" : "flex";
+    }
+
+    // Volume control (affects iframe with postMessage if supported)
+    volumeSlider.addEventListener("input", function() {
+      const volume = volumeSlider.value / 100;
+      const iframe = document.getElementById("spotify-player");
+      // Spotify embed doesn’t support direct JS volume control,
+      // but this slider can be hooked if you replace iframe with <audio>.
+      console.log("Volume slider at:", volume);
+    });
   
   <header>
     <a href="index.html" class="nav-btn">Home</a>
