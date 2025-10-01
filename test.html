@@ -1,82 +1,59 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>GTA 6 Countdown</title>
-  <link rel="icon" href="https://media.discordapp.net/attachments/1414343219059097732/1416467427600109769/IMG_3235.jpg?ex=68c6f397&is=68c5a217&hm=88925fd90bf0f428c981fdb9039e3e6e25e0a9b4c2d37ab651bb695cb331534f&=&format=webp&width=754&height=1006" type="image/png">
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GTA 6 Fan Site</title>
   <style>
-    *{box-sizing:border-box;margin:0;padding:0}
-    html,body{height:100%}
-
-    body{
-      font-family:'Orbitron',sans-serif;
-      background: url('https://i.redd.it/w1u74qaho25c1.png') center/cover no-repeat fixed;
-      display:flex;
-      align-items:center;
-      justify-content:center;
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: url('background.jpg') no-repeat center center/cover;
+      height: 100vh;
+      overflow: hidden;
       position: relative;
-      color:#fff;
     }
 
-    .page{width:100%;min-height:100vh;display:flex;flex-direction:column;position: relative;z-index:1;}
-
-    main{flex:1;display:flex;align-items:center;justify-content:center;padding:120px 24px 48px;}
-
-    .countdown-wrap{
-      backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blur(6px);
-      border-radius:24px;
-      padding:40px 48px;
-      text-align:center;
-      box-shadow:0 20px 60px rgba(0,0,0,0.8);
-      border:1px solid rgba(255,255,255,0.06);
-      background:rgba(0,0,0,0.3);
-      min-width:320px;
-      max-width:980px;
-      width:clamp(320px,70vw,980px);
+    /* 🔮 Global Blur Overlay */
+    .global-blur {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      background: rgba(0,0,0,0.25);
+      z-index: 0;
     }
 
-    header{
-      position:fixed;
-      top:18px;
-      left:50%;
-      transform:translateX(-50%);
-      z-index:50;
-      display:flex;
-      gap:12px;
-      padding:8px 14px;
-      border-radius:999px;
-      backdrop-filter: blur(6px) saturate(0.9);
-      box-shadow:0 6px 18px rgba(0,0,0,0.35);
-    }
-    .nav-btn{
-      padding:8px 12px;border-radius:999px;text-decoration:none;color:#fff;
-      background:linear-gradient(90deg,rgba(255,255,255,0.03),rgba(255,255,255,0.01));
-      border:1px solid rgba(255,255,255,0.06);font-weight:700;
-    }
-    .nav-btn:hover{box-shadow:0 0 10px rgba(255,77,210,0.18)}
-
-    .title{font-size:50px;font-weight:800;margin-bottom:8px}
-    .subtitle{margin-bottom:22px;color:#ddd}
-
-    .clock{display:flex;gap:18px;justify-content:center;align-items:stretch;margin-top:8px;flex-wrap:wrap;}
-    .unit{
-      min-width:88px;padding:18px 16px;border-radius:14px;
-      background:rgba(0,0,0,0.5);border:1px solid rgba(255,255,255,0.2);
-      display:flex;flex-direction:column;align-items:center;justify-content:center;
-    }
-    .num{font-size:45px;font-weight:900;text-shadow:0 2px 6px rgba(0,0,0,0.4)}
-    .label{font-size:20px;margin-top:6px;text-transform:uppercase}
-
-    @media (max-width:640px){
-      header{left:12px;transform:none;right:12px;top:12px;justify-content:flex-start}
-      .countdown-wrap{padding:28px}
-      .num{font-size:28px}
+    header, main, .settings-btn, .settings-overlay, .radio-player {
+      position: relative;
+      z-index: 1;
     }
 
-    /* SETTINGS BUTTON */
+    header {
+      text-align: center;
+      padding: 20px;
+      color: white;
+      font-size: 2rem;
+      font-weight: bold;
+      text-shadow: 0 0 10px black;
+    }
+
+    /* Countdown */
+    .countdown-wrap {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 40vh;
+      color: white;
+      font-size: 3rem;
+      font-weight: bold;
+      text-shadow: 0 0 15px black;
+    }
+
+    /* Settings Button */
     .settings-btn {
       position: fixed;
       bottom: 20px;
@@ -84,143 +61,159 @@
       background: violet;
       color: white;
       border: none;
-      border-radius: 50%;
-      width: 50px;
-      height: 50px;
-      font-size: 20px;
-      font-weight: bold;
+      padding: 12px 20px;
+      border-radius: 10px;
+      font-size: 16px;
       cursor: pointer;
-      z-index: 1000;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      z-index: 2;
     }
 
-    /* SETTINGS OVERLAY */
+    /* Settings Overlay */
     .settings-overlay {
       display: none;
       position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.6);
-      z-index: 2000;
-      display: flex;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 10;
       justify-content: center;
       align-items: center;
     }
 
     .settings-box {
-      background: rgba(20,20,20,0.95);
-      padding: 24px;
-      border-radius: 16px;
+      background: #222;
+      color: white;
+      padding: 30px;
+      border-radius: 12px;
+      width: 320px;
       text-align: center;
-      max-width: 400px;
-      width: 90%;
-      color: #fff;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.6);
-    }
-    .settings-box h2{margin-bottom:20px}
-    .settings-box button{
-      margin:8px 4px;
-      padding:10px 16px;
-      border:none;
-      border-radius:8px;
-      cursor:pointer;
-      font-weight:bold;
+      box-shadow: 0 0 15px rgba(0,0,0,0.7);
     }
 
-    /* BACKGROUND OVERLAYS */
+    .settings-box h2 {
+      margin-bottom: 20px;
+    }
+
+    .settings-option {
+      margin: 15px 0;
+    }
+
+    .settings-option button {
+      margin: 5px;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
     .dark-overlay {
-      position: fixed;
-      top:0;left:0;width:100%;height:100%;
-      background: rgba(0,0,0,0.5);
-      backdrop-filter: blur(8px);
-      z-index: 500;
-      pointer-events: none;
-      display:none;
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
     }
+
     .light-overlay {
-      position: fixed;
-      top:0;left:0;width:100%;height:100%;
-      background: rgba(255,255,255,0.2);
-      z-index: 500;
-      pointer-events: none;
-      display:none;
+      background: rgba(255,255,255,0.3);
     }
+
+    /* Spotify Radio */
+    .radio-player {
+      position: fixed;
+      bottom: 80px;
+      right: 20px;
+      width: 300px;
+      height: 80px;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 0 15px rgba(0,0,0,0.7);
+    }
+
   </style>
 </head>
 <body>
-  
-  <header>
-    <a href="index.html" class="nav-btn">Home</a>
-    <a href="vimap.html" class="nav-btn">Map</a>
-    <a href="characters.html" class="nav-btn">Characters</a>
-    <a href="places.html" class="nav-btn">Places</a>
-    <a href="preorder.html" class="nav-btn">Wishlist</a>
-    <a href="trailers.html" class="nav-btn">Trailers</a>
-  </header>
-  
-  <!-- COUNTDOWN -->
+  <!-- 🔮 Global Blur -->
+  <div class="global-blur"></div>
+
+  <header>GTA 6 Update Tracker</header>
+
   <main>
-    <section class="countdown-wrap" aria-labelledby="gta6-title">
-      <h1 id="gta6-title" class="title">Grand Theft Auto VI</h1>
-      <div class="subtitle">Release countdown — May 26, 2026</div>
-      <div class="clock" role="timer" aria-live="polite" aria-atomic="true">
-        <div class="unit"><div id="days" class="num">0</div><div class="label">Days</div></div>
-        <div class="unit"><div id="hours" class="num">0</div><div class="label">Hours</div></div>
-        <div class="unit"><div id="minutes" class="num">0</div><div class="label">Minutes</div></div>
-        <div class="unit"><div id="seconds" class="num">0</div><div class="label">Seconds</div></div>
-      </div>
-    </section>
+    <div class="countdown-wrap" id="countdown">Loading...</div>
   </main>
 
-  <!-- SETTINGS BUTTON -->
-  <button class="settings-btn" onclick="toggleSettings()">⚙</button>
+  <!-- 🎶 Spotify Radio -->
+  <div class="radio-player">
+    <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/11b8uutmmcY9Kad689IFJ1?utm_source=generator" width="100%" height="100%" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+  </div>
 
-  <!-- SETTINGS OVERLAY -->
+  <!-- ⚙️ Settings Button -->
+  <button class="settings-btn" onclick="toggleSettings()">⚙️ Settings</button>
+
+  <!-- ⚙️ Settings Overlay -->
   <div class="settings-overlay" id="settingsOverlay">
     <div class="settings-box">
       <h2>Site Settings</h2>
-      <button onclick="toggleDarkOverlay()">Dark Mode Overlay</button>
-      <button onclick="toggleLightOverlay()">Light Mode Overlay</button>
-      <button onclick="closeSettings()">Close</button>
+      <div class="settings-option">
+        <p>Overlay Mode:</p>
+        <button onclick="setOverlay('dark')">Dark</button>
+        <button onclick="setOverlay('light')">Light</button>
+      </div>
+      <div class="settings-option">
+        <p>Global Blur:</p>
+        <button onclick="toggleGlobalBlur(true)">On</button>
+        <button onclick="toggleGlobalBlur(false)">Off</button>
+      </div>
+      <button onclick="toggleSettings()">Close</button>
     </div>
   </div>
 
-  <!-- BACKGROUND OVERLAYS -->
-  <div class="dark-overlay" id="darkOverlay"></div>
-  <div class="light-overlay" id="lightOverlay"></div>
-
   <script>
-    const target = new Date('2026-05-26T00:00:00');
-    function pad(n){return String(n).padStart(2,'0');}
-    function update(){
-      const now = new Date();
-      let diff = Math.floor((target - now) / 1000);
-      if (diff < 0) diff = 0;
-      const days = Math.floor(diff / 86400);
-      diff -= days * 86400;
-      const hours = Math.floor(diff / 3600);
-      diff -= hours * 3600;
-      const minutes = Math.floor(diff / 60);
-      const seconds = diff - minutes * 60;
-      document.getElementById('days').textContent = days;
-      document.getElementById('hours').textContent = pad(hours);
-      document.getElementById('minutes').textContent = pad(minutes);
-      document.getElementById('seconds').textContent = pad(seconds);
-    }
-    update(); setInterval(update, 1000);
+    // Countdown
+    const releaseDate = new Date("2025-09-17T00:00:00").getTime();
+    const countdownEl = document.getElementById("countdown");
 
-    // SETTINGS LOGIC
-    function toggleSettings(){document.getElementById('settingsOverlay').style.display="flex";}
-    function closeSettings(){document.getElementById('settingsOverlay').style.display="none";}
-    function toggleDarkOverlay(){
-      const dark = document.getElementById('darkOverlay');
-      dark.style.display = dark.style.display==="block"?"none":"block";
-      document.getElementById('lightOverlay').style.display="none";
+    setInterval(() => {
+      const now = new Date().getTime();
+      const distance = releaseDate - now;
+      if (distance < 0) {
+        countdownEl.innerHTML = "GTA 6 Released!";
+        return;
+      }
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      countdownEl.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+    }, 1000);
+
+    // Settings overlay toggle
+    function toggleSettings() {
+      const overlay = document.getElementById("settingsOverlay");
+      overlay.style.display = (overlay.style.display === "flex") ? "none" : "flex";
+      overlay.style.justifyContent = "center";
+      overlay.style.alignItems = "center";
     }
-    function toggleLightOverlay(){
-      const light = document.getElementById('lightOverlay');
-      light.style.display = light.style.display==="block"?"none":"block";
-      document.getElementById('darkOverlay').style.display="none";
+
+    // Overlay mode
+    function setOverlay(mode) {
+      const globalBlur = document.querySelector(".global-blur");
+      if (mode === "dark") {
+        globalBlur.classList.add("dark-overlay");
+        globalBlur.classList.remove("light-overlay");
+      } else {
+        globalBlur.classList.add("light-overlay");
+        globalBlur.classList.remove("dark-overlay");
+      }
+    }
+
+    // Global Blur toggle
+    function toggleGlobalBlur(state) {
+      const globalBlur = document.querySelector(".global-blur");
+      globalBlur.style.display = state ? "block" : "none";
     }
   </script>
 </body>
