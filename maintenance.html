@@ -97,6 +97,87 @@
       50% { transform: translateX(0%); }
       100% { transform: translateX(100%); }
     }
+    /* Floating violet settings button */
+    .settings-btn {
+      position:fixed;
+      bottom:20px;
+      right:20px;
+      width:60px;
+      height:60px;
+      border-radius:50%;
+      background:linear-gradient(135deg,#8a2be2,#ff69b4);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:24px;
+      cursor:pointer;
+      color:#fff;
+      box-shadow:0 6px 20px rgba(0,0,0,0.5);
+      z-index:1000;
+      transition:0.3s;
+    }
+    .settings-btn:hover { transform:scale(1.1); }
+
+    /* Popup overlay */
+    .popup-overlay {
+      position:fixed;
+      top:0;left:0;right:0;bottom:0;
+      background:rgba(0,0,0,0.7);
+      backdrop-filter:blur(6px);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      z-index:2000;
+    }
+
+    /* Popup window */
+    .popup {
+      background:rgba(20,20,20,0.95);
+      border-radius:16px;
+      width:400px;
+      max-width:90%;
+      padding:20px;
+      text-align:center;
+      box-shadow:0 8px 30px rgba(0,0,0,0.7);
+      border:2px solid #8a2be2;
+      animation:fadeIn 0.3s ease;
+    }
+    .popup h2 { margin-bottom:15px;font-size:22px;color:#ff69b4; }
+
+    .popup .option {
+      margin:10px 0;
+      padding:10px;
+      border-radius:8px;
+      background:rgba(255,255,255,0.05);
+      cursor:pointer;
+      transition:0.3s;
+    }
+    .popup .option:hover { background:rgba(255,255,255,0.15); }
+
+    /* Close button */
+    .close-btn {
+      margin-top:20px;
+      padding:8px 18px;
+      border:none;
+      border-radius:8px;
+      background:#ff69b4;
+      color:#fff;
+      font-weight:bold;
+      cursor:pointer;
+      transition:0.3s;
+    }
+    .close-btn:hover { background:#8a2be2; }
+
+    /* Light mode */
+    body.light {
+      background:#f5f5f5 url('lucia-bg-light.jpg') center/cover no-repeat fixed;
+      color:#111;
+    }
+
+    @keyframes fadeIn {
+      from {opacity:0;transform:scale(0.9);}
+      to {opacity:1;transform:scale(1);}
+    }
   </style>
 </head>
 <body>
@@ -110,102 +191,87 @@
 </head>
 <body>
 
-<!-- Notifications Container -->
-<div id="notifications"></div>
+   /* Floating violet settings button */
+    .settings-btn {
+      position:fixed;
+      bottom:20px;
+      right:20px;
+      width:60px;
+      height:60px;
+      border-radius:50%;
+      background:linear-gradient(135deg,#8a2be2,#ff69b4);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:24px;
+      cursor:pointer;
+      color:#fff;
+      box-shadow:0 6px 20px rgba(0,0,0,0.5);
+      z-index:1000;
+      transition:0.3s;
+    }
+    .settings-btn:hover { transform:scale(1.1); }
 
-<!-- Button to Trigger -->
-<button id="notifyBtn">🔔 Trigger Notification</button>
+    /* Popup overlay */
+    .popup-overlay {
+      position:fixed;
+      top:0;left:0;right:0;bottom:0;
+      background:rgba(0,0,0,0.7);
+      backdrop-filter:blur(6px);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      z-index:2000;
+    }
 
-<script>
-function showNotification(message, delay = 0) {
-  setTimeout(() => {
-    const container = document.getElementById("notifications");
-    const note = document.createElement("div");
-    note.className = "notification";
-    note.innerText = message;
-    container.appendChild(note);
+    /* Popup window */
+    .popup {
+      background:rgba(20,20,20,0.95);
+      border-radius:16px;
+      width:400px;
+      max-width:90%;
+      padding:20px;
+      text-align:center;
+      box-shadow:0 8px 30px rgba(0,0,0,0.7);
+      border:2px solid #8a2be2;
+      animation:fadeIn 0.3s ease;
+    }
+    .popup h2 { margin-bottom:15px;font-size:22px;color:#ff69b4; }
 
-    // Auto remove after 4 seconds
-    setTimeout(() => {
-      note.classList.add("hide");
-      setTimeout(() => note.remove(), 500);
-    }, 4000);
-  }, delay);
-}
+    .popup .option {
+      margin:10px 0;
+      padding:10px;
+      border-radius:8px;
+      background:rgba(255,255,255,0.05);
+      cursor:pointer;
+      transition:0.3s;
+    }
+    .popup .option:hover { background:rgba(255,255,255,0.15); }
 
-// Example sequence (auto show)
-showNotification("🚨 New GTA 6 Update!", 2000);
-showNotification("📺 Trailer 3 Released!", 6000);
-showNotification("🗺️ Vice City Map Expanded!", 10000);
-showNotification("🎮 Pre-Orders Now Open!", 14000);
+    /* Close button */
+    .close-btn {
+      margin-top:20px;
+      padding:8px 18px;
+      border:none;
+      border-radius:8px;
+      background:#ff69b4;
+      color:#fff;
+      font-weight:bold;
+      cursor:pointer;
+      transition:0.3s;
+    }
+    .close-btn:hover { background:#8a2be2; }
 
-// Button trigger
-document.getElementById("notifyBtn").addEventListener("click", () => {
-  const randomNotes = [
-    "💥 Lucia spotted in a new leak!",
-    "🚗 New vehicle customization revealed!",
-    "🏝️ Vice City expansion incoming?",
-    "🎵 Radio stations leaked!",
-    "🎮 Collector’s Edition pre-order now!"
-  ];
-  const note = randomNotes[Math.floor(Math.random() * randomNotes.length)];
-  showNotification(note);
-});
-</script>
+    /* Light mode */
+    body.light {
+      background:#f5f5f5 url('lucia-bg-light.jpg') center/cover no-repeat fixed;
+      color:#111;
+    }
 
-<style>
-#notifications {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  z-index: 2000;
-}
-
-.notification {
-  background: rgba(0,0,0,0.7);
-  color: #fff;
-  padding: 12px 20px;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
-  font-weight: bold;
-  font-family: 'Orbitron', sans-serif;
-  animation: slideIn 0.5s ease;
-  transition: opacity 0.5s ease;
-}
-
-.notification.hide {
-  opacity: 0;
-}
-
-@keyframes slideIn {
-  from { transform: translateX(100%); opacity: 0; }
-  to { transform: translateX(0); opacity: 1; }
-}
-
-/* Button Style */
-#notifyBtn {
-  position: fixed;
-  bottom: 20px;
-  left: 20px;
-  background: rgba(0,0,0,0.6);
-  color: white;
-  border: none;
-  padding: 10px 16px;
-  border-radius: 12px;
-  cursor: pointer;
-  font-family: 'Orbitron', sans-serif;
-  font-weight: bold;
-  transition: 0.3s;
-  z-index: 2000;
-}
-#notifyBtn:hover {
-  background: rgba(255,105,180,0.8);
-}
-</style>
-
+    @keyframes fadeIn {
+      from {opacity:0;transform:scale(0.9);}
+      to {opacity:1;transform:scale(1);}
+    }
   
 </body>
 </html>
