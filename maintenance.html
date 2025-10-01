@@ -97,6 +97,22 @@
       50% { transform: translateX(0%); }
       100% { transform: translateX(100%); }
     }
+
+    /* Dark overlay effect */
+    .overlay-bg {
+      position:fixed;
+      top:0;left:0;right:0;bottom:0;
+      background:rgba(0,0,0,0.7);
+      backdrop-filter:blur(6px);
+      z-index:0;
+      transition:opacity 0.5s;
+    }
+
+    /* Hidden overlay (Light Mode = no effect) */
+    .overlay-bg.hidden {
+      display:none;
+    }
+
     /* Floating violet settings button */
     .settings-btn {
       position:fixed;
@@ -168,12 +184,6 @@
     }
     .close-btn:hover { background:#8a2be2; }
 
-    /* Light mode */
-    body.light {
-      background:#f5f5f5 url('lucia-bg-light.jpg') center/cover no-repeat fixed;
-      color:#111;
-    }
-
     @keyframes fadeIn {
       from {opacity:0;transform:scale(0.9);}
       to {opacity:1;transform:scale(1);}
@@ -191,6 +201,9 @@
 </head>
 <body>
 
+  <!-- Dark/Light overlay -->
+  <div class="overlay-bg" id="bgOverlay"></div>
+
   <!-- Floating button -->
   <div class="settings-btn" onclick="togglePopup()">⚙</div>
 
@@ -199,7 +212,7 @@
     <div class="popup">
       <h2>Site Settings</h2>
       <div class="option" onclick="toggleMusic()">🔊 Toggle Music</div>
-      <div class="option" onclick="toggleMode()">🌗 Dark / Light Mode</div>
+      <div class="option" onclick="toggleMode()">🌗 Dark / Light Overlay</div>
       <button class="close-btn" onclick="togglePopup()">Close</button>
     </div>
   </div>
@@ -211,8 +224,10 @@
 
   <script>
     const overlay = document.getElementById("popupOverlay");
+    const bgOverlay = document.getElementById("bgOverlay");
     const bgMusic = document.getElementById("bgMusic");
     let isPlaying = false;
+    let darkMode = true;
 
     function togglePopup() {
       overlay.style.display = (overlay.style.display === "flex") ? "none" : "flex";
@@ -229,7 +244,12 @@
     }
 
     function toggleMode() {
-      document.body.classList.toggle("light");
+      darkMode = !darkMode;
+      if (darkMode) {
+        bgOverlay.classList.remove("hidden"); // Dark mode overlay on
+      } else {
+        bgOverlay.classList.add("hidden"); // Light mode = no overlay
+      }
     }
   </script>
   
