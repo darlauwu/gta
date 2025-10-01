@@ -329,32 +329,6 @@ Instructions:
     update();
     setInterval(update, 1000);
 
-    
-  </script>
-
-
-  <!-- Dark/Light overlay -->
-  <div class="overlay-bg" id="bgOverlay"></div>
-
-  <!-- Floating button -->
-  <div class="settings-btn" onclick="togglePopup()">⚙</div>
-
-  <!-- Popup overlay -->
-  <div class="popup-overlay" id="popupOverlay">
-    <div class="popup">
-      <h2>Site Settings</h2>
-      <div class="option" onclick="toggleMusic()">🔊 Toggle Music</div>
-      <div class="option" onclick="toggleMode()">🌗 Dark / Light Overlay</div>
-      <button class="close-btn" onclick="togglePopup()">Close</button>
-    </div>
-  </div>
-
-  <!-- Background Music -->
-  <audio id="bgMusic" loop>
-    <source src="music.mp3" type="audio/mpeg">
-  </audio>
-
-  <script>
     const overlay = document.getElementById("popupOverlay");
     const bgOverlay = document.getElementById("bgOverlay");
     const bgMusic = document.getElementById("bgMusic");
@@ -383,7 +357,30 @@ Instructions:
         bgOverlay.classList.add("hidden"); // Light mode = no overlay
       }
     }
+    
   </script>
+
+
+  <!-- Dark/Light overlay -->
+  <div class="overlay-bg" id="bgOverlay"></div>
+
+  <!-- Floating button -->
+  <div class="settings-btn" onclick="togglePopup()">⚙</div>
+
+  <!-- Popup overlay -->
+  <div class="popup-overlay" id="popupOverlay">
+    <div class="popup">
+      <h2>Site Settings</h2>
+      <div class="option" onclick="toggleMusic()">🔊 Toggle Music</div>
+      <div class="option" onclick="toggleMode()">🌗 Dark / Light Overlay</div>
+      <button class="close-btn" onclick="togglePopup()">Close</button>
+    </div>
+  </div>
+
+  <!-- Background Music -->
+  <audio id="bgMusic" loop>
+    <source src="music.mp3" type="audio/mpeg">
+  </audio>
   
 </body>
 </html>
