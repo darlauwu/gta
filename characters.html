@@ -3,7 +3,18 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>GTA 6 Characters</title>
+  <script>
+  const titleText = "Darla | Characters";
+  let index = 0;
+
+  function animateTitle() {
+    document.title = titleText.substring(index) + titleText.substring(0, index);
+    index = (index + 1) % titleText.length;
+    setTimeout(animateTitle, 200); // Adjust speed by changing the delay (in milliseconds)
+  }
+
+  animateTitle();
+</script>
 <link rel="icon" href="gta/npc/lucia.jpg" type="image/jpg">
   <!-- Orbitron font -->
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
