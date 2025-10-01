@@ -191,87 +191,47 @@
 </head>
 <body>
 
-   /* Floating violet settings button */
-    .settings-btn {
-      position:fixed;
-      bottom:20px;
-      right:20px;
-      width:60px;
-      height:60px;
-      border-radius:50%;
-      background:linear-gradient(135deg,#8a2be2,#ff69b4);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-size:24px;
-      cursor:pointer;
-      color:#fff;
-      box-shadow:0 6px 20px rgba(0,0,0,0.5);
-      z-index:1000;
-      transition:0.3s;
-    }
-    .settings-btn:hover { transform:scale(1.1); }
+  <!-- Floating button -->
+  <div class="settings-btn" onclick="togglePopup()">⚙</div>
 
-    /* Popup overlay */
-    .popup-overlay {
-      position:fixed;
-      top:0;left:0;right:0;bottom:0;
-      background:rgba(0,0,0,0.7);
-      backdrop-filter:blur(6px);
-      display:none;
-      align-items:center;
-      justify-content:center;
-      z-index:2000;
+  <!-- Popup overlay -->
+  <div class="popup-overlay" id="popupOverlay">
+    <div class="popup">
+      <h2>Site Settings</h2>
+      <div class="option" onclick="toggleMusic()">🔊 Toggle Music</div>
+      <div class="option" onclick="toggleMode()">🌗 Dark / Light Mode</div>
+      <button class="close-btn" onclick="togglePopup()">Close</button>
+    </div>
+  </div>
+
+  <!-- Background Music -->
+  <audio id="bgMusic" loop>
+    <source src="music.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    const overlay = document.getElementById("popupOverlay");
+    const bgMusic = document.getElementById("bgMusic");
+    let isPlaying = false;
+
+    function togglePopup() {
+      overlay.style.display = (overlay.style.display === "flex") ? "none" : "flex";
     }
 
-    /* Popup window */
-    .popup {
-      background:rgba(20,20,20,0.95);
-      border-radius:16px;
-      width:400px;
-      max-width:90%;
-      padding:20px;
-      text-align:center;
-      box-shadow:0 8px 30px rgba(0,0,0,0.7);
-      border:2px solid #8a2be2;
-      animation:fadeIn 0.3s ease;
-    }
-    .popup h2 { margin-bottom:15px;font-size:22px;color:#ff69b4; }
-
-    .popup .option {
-      margin:10px 0;
-      padding:10px;
-      border-radius:8px;
-      background:rgba(255,255,255,0.05);
-      cursor:pointer;
-      transition:0.3s;
-    }
-    .popup .option:hover { background:rgba(255,255,255,0.15); }
-
-    /* Close button */
-    .close-btn {
-      margin-top:20px;
-      padding:8px 18px;
-      border:none;
-      border-radius:8px;
-      background:#ff69b4;
-      color:#fff;
-      font-weight:bold;
-      cursor:pointer;
-      transition:0.3s;
-    }
-    .close-btn:hover { background:#8a2be2; }
-
-    /* Light mode */
-    body.light {
-      background:#f5f5f5 url('lucia-bg-light.jpg') center/cover no-repeat fixed;
-      color:#111;
+    function toggleMusic() {
+      if (!isPlaying) {
+        bgMusic.play();
+        isPlaying = true;
+      } else {
+        bgMusic.pause();
+        isPlaying = false;
+      }
     }
 
-    @keyframes fadeIn {
-      from {opacity:0;transform:scale(0.9);}
-      to {opacity:1;transform:scale(1);}
+    function toggleMode() {
+      document.body.classList.toggle("light");
     }
+  </script>
   
 </body>
 </html>
