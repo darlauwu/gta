@@ -1,67 +1,28 @@
-<!--
-GTA 6 Countdown - single-file HTML
-Instructions:
-- Replace `lucia-bg.jpg` with your Lucia background image in the same folder.
-- Replace `lucia-cursor.png` with your custom cursor image.
-- Replace trailer links in the header anchors with the real trailer URLs.
-- Open this file in a browser to preview.
--->
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>GTA 6 Countdown</title>
-   <link rel="icon" href="https://media.discordapp.net/attachments/1414343219059097732/1416467427600109769/IMG_3235.jpg?ex=68c6f397&is=68c5a217&hm=88925fd90bf0f428c981fdb9039e3e6e25e0a9b4c2d37ab651bb695cb331534f&=&format=webp&width=754&height=1006" type="image/png">
-    <!-- Orbitron font like your site -->
+  <link rel="icon" href="https://media.discordapp.net/attachments/1414343219059097732/1416467427600109769/IMG_3235.jpg?ex=68c6f397&is=68c5a217&hm=88925fd90bf0f428c981fdb9039e3e6e25e0a9b4c2d37ab651bb695cb331534f&=&format=webp&width=754&height=1006" type="image/png">
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
   <style>
     *{box-sizing:border-box;margin:0;padding:0}
     html,body{height:100%}
 
-    /* Lucia background */
-    :root{
-      --accent:#ffffff;
-    }
     body{
-      position: relative;
       font-family:'Orbitron',sans-serif;
       background: url('https://i.redd.it/w1u74qaho25c1.png') center/cover no-repeat fixed;
       display:flex;
       align-items:center;
       justify-content:center;
-    }
-
-    .page{
-      width:100%;
-      min-height:100vh;
-      display:flex;
-      flex-direction:column;
       position: relative;
-      z-index:1;
+      color:#fff;
     }
 
-    .trailer-btn{
-      display:inline-flex;
-      gap:8px;
-      align-items:center;
-      padding:8px 12px;
-      border-radius:999px;
-      text-decoration:none;
-      color:var(--accent);
-      font-weight:600;
-      font-size:14px;
-      background:rgba(0,0,0,0.4);
-      border:1px solid rgba(255,255,255,0.1);
-    }
+    .page{width:100%;min-height:100vh;display:flex;flex-direction:column;position: relative;z-index:1;}
 
-    .trailer-btn .dot{
-      width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,0.9);
-    }
-
-    main{
-      flex:1;display:flex;align-items:center;justify-content:center;padding:120px 24px 48px;
-    }
+    main{flex:1;display:flex;align-items:center;justify-content:center;padding:120px 24px 48px;}
 
     .countdown-wrap{
       backdrop-filter: blur(6px);
@@ -77,7 +38,6 @@ Instructions:
       width:clamp(320px,70vw,980px);
     }
 
-/* Header (same style as your home) */
     header{
       position:fixed;
       top:18px;
@@ -98,171 +58,92 @@ Instructions:
     }
     .nav-btn:hover{box-shadow:0 0 10px rgba(255,77,210,0.18)}
 
-    
-    .title{font-size:50px;color:rgba(255, 255, 255);font-weight:800;margin-bottom:8px}
-    .subtitle{color:rgba(255,255,255,0.85);margin-bottom:22px}
+    .title{font-size:50px;font-weight:800;margin-bottom:8px}
+    .subtitle{margin-bottom:22px;color:#ddd}
 
-    .clock{
-      display:flex;gap:18px;justify-content:center;align-items:stretch;margin-top:8px;flex-wrap:wrap;
-    }
-
+    .clock{display:flex;gap:18px;justify-content:center;align-items:stretch;margin-top:8px;flex-wrap:wrap;}
     .unit{
-      min-width:88px;padding:18px 16px;border-radius:14px;background:rgba(0,0,0,0.5);border:1px solid rgba(255, 255, 255);
+      min-width:88px;padding:18px 16px;border-radius:14px;
+      background:rgba(0,0,0,0.5);border:1px solid rgba(255,255,255,0.2);
       display:flex;flex-direction:column;align-items:center;justify-content:center;
     }
-
-    .num{font-size:45px;font-weight:900;color:var(--accent);text-shadow:0 2px 6px rgba(255, 255, 255)}
-    .label{font-size:20px;color:rgba(255,255,255,0.85);margin-top:6px;text-transform:uppercase;text-shadow:0 1px 3px rgba(255, 255, 255)}
-
-    .footnote{margin-top:18px;color:rgba(255,255,255,0.8);font-size:30px;text-shadow:0 1px 3px rgba(255, 255, 255}
+    .num{font-size:45px;font-weight:900;text-shadow:0 2px 6px rgba(0,0,0,0.4)}
+    .label{font-size:20px;margin-top:6px;text-transform:uppercase}
 
     @media (max-width:640px){
       header{left:12px;transform:none;right:12px;top:12px;justify-content:flex-start}
       .countdown-wrap{padding:28px}
       .num{font-size:28px}
     }
-    .side-buttons {
-  position: fixed;
-  top: 50%;
-  left: 20px; /* change to right:20px for right side */
-  transform: translateY(-50%);
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  z-index: 100;
-}
 
-.side-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 10px 16px;
-  border-radius: 999px;
-  background: rgba(0,0,0,0.4);
-  border: 1px solid rgba(255,255,255,0.2);
-  color: #fff;
-  font-weight: 700;
-  text-decoration: none;
-  transition: 0.3s;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-}
-
-.side-btn:hover {
-  background: rgba(255,255,255,0.1);
-  box-shadow: 0 0 10px #ff4dd2, 0 0 20px #ff99e6;
-}
-    
-    #clock {
-      position: fixed;
-      top: 10px;
-      right: 10px;
-      font-size: 14px;
-      padding: 5px 8px;
-      background: rgba(0, 0, 0, 0.4); /* transparent background */
-      border-radius: 6px;
-      color: #fff;
-      z-index: 1000;
-      font-weight: bold;
-    }
-
-   >
-    body {
-      margin:0;
-      padding:0;
-      font-family:'Orbitron',sans-serif;
-      background:#111;
-      color:#fff;
-      min-height:200vh;
-    }
-      /* Dark overlay effect */
-    .overlay-bg {
-      position:fixed;
-      top:0;left:0;right:0;bottom:0;
-      background:rgba(0,0,0,0.7);
-      backdrop-filter:blur(6px);
-      z-index:0;
-      transition:opacity 0.5s;
-    }
-
-    /* Hidden overlay (Light Mode = no effect) */
-    .overlay-bg.hidden {
-      display:none;
-    }
-
-    /* Floating violet settings button */
+    /* SETTINGS BUTTON */
     .settings-btn {
-      position:fixed;
-      bottom:20px;
-      right:20px;
-      width:60px;
-      height:60px;
-      border-radius:50%;
-      background:linear-gradient(135deg,#8a2be2,#ff69b4);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-size:24px;
-      cursor:pointer;
-      color:#fff;
-      box-shadow:0 6px 20px rgba(0,0,0,0.5);
-      z-index:1000;
-      transition:0.3s;
-    }
-    .settings-btn:hover { transform:scale(1.1); }
-
-    /* Popup overlay */
-    .popup-overlay {
-      position:fixed;
-      top:0;left:0;right:0;bottom:0;
-      background:rgba(0,0,0,0.7);
-      backdrop-filter:blur(6px);
-      display:none;
-      align-items:center;
-      justify-content:center;
-      z-index:2000;
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: violet;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      font-size: 20px;
+      font-weight: bold;
+      cursor: pointer;
+      z-index: 1000;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
     }
 
-    /* Popup window */
-    .popup {
-      background:rgba(20,20,20,0.95);
-      border-radius:16px;
-      width:400px;
-      max-width:90%;
-      padding:20px;
-      text-align:center;
-      box-shadow:0 8px 30px rgba(0,0,0,0.7);
-      border:2px solid #8a2be2;
-      animation:fadeIn 0.3s ease;
+    /* SETTINGS OVERLAY */
+    .settings-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.6);
+      z-index: 2000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
-    .popup h2 { margin-bottom:15px;font-size:22px;color:#ff69b4; }
 
-    .popup .option {
-      margin:10px 0;
-      padding:10px;
-      border-radius:8px;
-      background:rgba(255,255,255,0.05);
-      cursor:pointer;
-      transition:0.3s;
+    .settings-box {
+      background: rgba(20,20,20,0.95);
+      padding: 24px;
+      border-radius: 16px;
+      text-align: center;
+      max-width: 400px;
+      width: 90%;
+      color: #fff;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.6);
     }
-    .popup .option:hover { background:rgba(255,255,255,0.15); }
-
-    /* Close button */
-    .close-btn {
-      margin-top:20px;
-      padding:8px 18px;
+    .settings-box h2{margin-bottom:20px}
+    .settings-box button{
+      margin:8px 4px;
+      padding:10px 16px;
       border:none;
       border-radius:8px;
-      background:#ff69b4;
-      color:#fff;
-      font-weight:bold;
       cursor:pointer;
-      transition:0.3s;
+      font-weight:bold;
     }
-    .close-btn:hover { background:#8a2be2; }
 
-    @keyframes fadeIn {
-      from {opacity:0;transform:scale(0.9);}
-      to {opacity:1;transform:scale(1);}
+    /* BACKGROUND OVERLAYS */
+    .dark-overlay {
+      position: fixed;
+      top:0;left:0;width:100%;height:100%;
+      background: rgba(0,0,0,0.5);
+      backdrop-filter: blur(8px);
+      z-index: 500;
+      pointer-events: none;
+      display:none;
+    }
+    .light-overlay {
+      position: fixed;
+      top:0;left:0;width:100%;height:100%;
+      background: rgba(255,255,255,0.2);
+      z-index: 500;
+      pointer-events: none;
+      display:none;
     }
   </style>
 </head>
@@ -277,110 +158,70 @@ Instructions:
     <a href="trailers.html" class="nav-btn">Trailers</a>
   </header>
   
-    <main>
-      <section class="countdown-wrap" aria-labelledby="gta6-title">
-        <h1 id="gta6-title" class="title">Grand Theft Auto VI</h1>
-        <div class="subtitle">Release countdown — May 26, 2026</div>
+  <!-- COUNTDOWN -->
+  <main>
+    <section class="countdown-wrap" aria-labelledby="gta6-title">
+      <h1 id="gta6-title" class="title">Grand Theft Auto VI</h1>
+      <div class="subtitle">Release countdown — May 26, 2026</div>
+      <div class="clock" role="timer" aria-live="polite" aria-atomic="true">
+        <div class="unit"><div id="days" class="num">0</div><div class="label">Days</div></div>
+        <div class="unit"><div id="hours" class="num">0</div><div class="label">Hours</div></div>
+        <div class="unit"><div id="minutes" class="num">0</div><div class="label">Minutes</div></div>
+        <div class="unit"><div id="seconds" class="num">0</div><div class="label">Seconds</div></div>
+      </div>
+    </section>
+  </main>
 
-        <div class="clock" role="timer" aria-live="polite" aria-atomic="true">
-          <div class="unit">
-            <div id="days" class="num">0</div>
-            <div class="label">Days</div>
-          </div>
-          <div class="unit">
-            <div id="hours" class="num">0</div>
-            <div class="label">Hours</div>
-          </div>
-          <div class="unit">
-            <div id="minutes" class="num">0</div>
-            <div class="label">Minutes</div>
-          </div>
-          <div class="unit">
-            <div id="seconds" class="num">0</div>
-            <div class="label">Seconds</div>
-          </div>
-        </div>
-      </section>
-    </main>
+  <!-- SETTINGS BUTTON -->
+  <button class="settings-btn" onclick="toggleSettings()">⚙</button>
+
+  <!-- SETTINGS OVERLAY -->
+  <div class="settings-overlay" id="settingsOverlay">
+    <div class="settings-box">
+      <h2>Site Settings</h2>
+      <button onclick="toggleDarkOverlay()">Dark Mode Overlay</button>
+      <button onclick="toggleLightOverlay()">Light Mode Overlay</button>
+      <button onclick="closeSettings()">Close</button>
+    </div>
   </div>
+
+  <!-- BACKGROUND OVERLAYS -->
+  <div class="dark-overlay" id="darkOverlay"></div>
+  <div class="light-overlay" id="lightOverlay"></div>
+
   <script>
     const target = new Date('2026-05-26T00:00:00');
-
     function pad(n){return String(n).padStart(2,'0');}
-
     function update(){
       const now = new Date();
       let diff = Math.floor((target - now) / 1000);
       if (diff < 0) diff = 0;
-
       const days = Math.floor(diff / 86400);
       diff -= days * 86400;
       const hours = Math.floor(diff / 3600);
       diff -= hours * 3600;
       const minutes = Math.floor(diff / 60);
       const seconds = diff - minutes * 60;
-
       document.getElementById('days').textContent = days;
       document.getElementById('hours').textContent = pad(hours);
       document.getElementById('minutes').textContent = pad(minutes);
       document.getElementById('seconds').textContent = pad(seconds);
     }
+    update(); setInterval(update, 1000);
 
-    update();
-    setInterval(update, 1000);
-
-    const overlay = document.getElementById("popupOverlay");
-    const bgOverlay = document.getElementById("bgOverlay");
-    const bgMusic = document.getElementById("bgMusic");
-    let isPlaying = false;
-    let darkMode = true;
-
-    function togglePopup() {
-      overlay.style.display = (overlay.style.display === "flex") ? "none" : "flex";
+    // SETTINGS LOGIC
+    function toggleSettings(){document.getElementById('settingsOverlay').style.display="flex";}
+    function closeSettings(){document.getElementById('settingsOverlay').style.display="none";}
+    function toggleDarkOverlay(){
+      const dark = document.getElementById('darkOverlay');
+      dark.style.display = dark.style.display==="block"?"none":"block";
+      document.getElementById('lightOverlay').style.display="none";
     }
-
-    function toggleMusic() {
-      if (!isPlaying) {
-        bgMusic.play();
-        isPlaying = true;
-      } else {
-        bgMusic.pause();
-        isPlaying = false;
-      }
+    function toggleLightOverlay(){
+      const light = document.getElementById('lightOverlay');
+      light.style.display = light.style.display==="block"?"none":"block";
+      document.getElementById('darkOverlay').style.display="none";
     }
-
-    function toggleMode() {
-      darkMode = !darkMode;
-      if (darkMode) {
-        bgOverlay.classList.remove("hidden"); // Dark mode overlay on
-      } else {
-        bgOverlay.classList.add("hidden"); // Light mode = no overlay
-      }
-    }
-    
   </script>
-
-
-  <!-- Dark/Light overlay -->
-  <div class="overlay-bg" id="bgOverlay"></div>
-
-  <!-- Floating button -->
-  <div class="settings-btn" onclick="togglePopup()">⚙</div>
-
-  <!-- Popup overlay -->
-  <div class="popup-overlay" id="popupOverlay">
-    <div class="popup">
-      <h2>Site Settings</h2>
-      <div class="option" onclick="toggleMusic()">🔊 Toggle Music</div>
-      <div class="option" onclick="toggleMode()">🌗 Dark / Light Overlay</div>
-      <button class="close-btn" onclick="togglePopup()">Close</button>
-    </div>
-  </div>
-
-  <!-- Background Music -->
-  <audio id="bgMusic" loop>
-    <source src="music.mp3" type="audio/mpeg">
-  </audio>
-  
 </body>
 </html>
