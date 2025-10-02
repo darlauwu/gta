@@ -174,6 +174,25 @@ Instructions:
       color:#fff;
       min-height:200vh;
     }
+    .donate-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 80px; /* keeps it left of your settings button */
+  background: #ff4dd2;
+  color: white;
+  font-weight: bold;
+  font-family: 'Orbitron', sans-serif;
+  padding: 12px 18px;
+  border-radius: 999px;
+  text-decoration: none;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  transition: 0.3s;
+  z-index: 1001;
+}
+.donate-btn:hover {
+  background: #ff1ab3;
+  box-shadow: 0 0 15px #ff4dd2, 0 0 30px #ff99e6;
+}
   </style>
 </head>
 <body>
@@ -186,6 +205,12 @@ Instructions:
     <a href="preorder.html" class="nav-btn">Wishlist</a>
     <a href="trailers.html" class="nav-btn">Trailers</a>
   </header>
+
+<a href="https://www.paypal.com/donate?hosted_button_id=YOUR_BUTTON_ID" 
+   target="_blank" 
+   class="donate-btn">
+   💖 Donate
+</a>
   
     <main>
       <section class="countdown-wrap" aria-labelledby="gta6-title">
