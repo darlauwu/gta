@@ -201,57 +201,10 @@
 </head>
 <body>
 
-  <!-- Dark/Light overlay -->
-  <div class="overlay-bg" id="bgOverlay"></div>
-
-  <!-- Floating button -->
-  <div class="settings-btn" onclick="togglePopup()">⚙</div>
-
-  <!-- Popup overlay -->
-  <div class="popup-overlay" id="popupOverlay">
-    <div class="popup">
-      <h2>Site Settings</h2>
-      <div class="option" onclick="toggleMusic()">🔊 Toggle Music</div>
-      <div class="option" onclick="toggleMode()">🌗 Dark / Light Overlay</div>
-      <button class="close-btn" onclick="togglePopup()">Close</button>
-    </div>
-  </div>
-
-  <!-- Background Music -->
-  <audio id="bgMusic" loop>
-    <source src="music.mp3" type="audio/mpeg">
-  </audio>
-
-  <script>
-    const overlay = document.getElementById("popupOverlay");
-    const bgOverlay = document.getElementById("bgOverlay");
-    const bgMusic = document.getElementById("bgMusic");
-    let isPlaying = false;
-    let darkMode = true;
-
-    function togglePopup() {
-      overlay.style.display = (overlay.style.display === "flex") ? "none" : "flex";
-    }
-
-    function toggleMusic() {
-      if (!isPlaying) {
-        bgMusic.play();
-        isPlaying = true;
-      } else {
-        bgMusic.pause();
-        isPlaying = false;
-      }
-    }
-
-    function toggleMode() {
-      darkMode = !darkMode;
-      if (darkMode) {
-        bgOverlay.classList.remove("hidden"); // Dark mode overlay on
-      } else {
-        bgOverlay.classList.add("hidden"); // Light mode = no overlay
-      }
-    }
-  </script>
+<footer style="text-align: center; padding: 20px; font-size: 14px; color: #bbb; background: rgba(0,0,0,0.6); backdrop-filter: blur(10px); position: relative; bottom: 0; width: 100%;">
+    © 2025 Exelzx Fan Site. All rights reserved. <br>
+    <span style="font-size:12px;">This is a fan-made project and not affiliated with Rockstar Games.</span>
+</footer>
   
 </body>
 </html>
