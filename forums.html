@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>GTA 6 Forums</title>
+<title>GTA 6 Live Forum</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&display=swap" rel="stylesheet">
 <style>
   *{margin:0;padding:0;box-sizing:border-box}
@@ -34,10 +34,6 @@
     border-radius: 18px;
     padding: 20px;
     box-shadow: 0 0 30px rgba(255,0,255,0.2);
-  }
-
-  .new-post {
-    margin-bottom: 20px;
   }
 
   textarea {
@@ -74,6 +70,7 @@
     display: flex;
     flex-direction: column;
     gap: 15px;
+    margin-top: 20px;
   }
 
   .post {
@@ -104,43 +101,66 @@
 </head>
 <body>
 
-<h1>GTA 6 Fan Forums</h1>
+<h1>GTA 6 Live Forum</h1>
 
 <div class="forum-container">
-  <div class="new-post">
-    <textarea id="postInput" placeholder="Share your thoughts about GTA 6..."></textarea>
-    <button id="postBtn">Post</button>
-  </div>
-
+  <textarea id="postInput" placeholder="Share your thoughts about GTA 6..."></textarea>
+  <button id="postBtn">Post</button>
   <div class="posts" id="posts"></div>
 </div>
 
-<footer>Fan-made GTA 6 Forums — Not affiliated with Rockstar Games</footer>
+<footer>Fan-made GTA 6 Forum — Not affiliated with Rockstar Games</footer>
+
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/11.0.1/firebase-database.js"></script>
 
 <script>
+  // 🔧 Step 1 — Replace this with your own Firebase config from console.firebase.google.com
+  const firebaseConfig = {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+    databaseURL: "https://YOUR_PROJECT_ID-default-rtdb.firebaseio.com/",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_PROJECT_ID.appspot.com",
+    messagingSenderId: "YOUR_SENDER_ID",
+    appId: "YOUR_APP_ID"
+  };
+
+  // 🔥 Initialize Firebase
+  const app = firebase.initializeApp(firebaseConfig);
+  const db = firebase.database();
+
   const postBtn = document.getElementById('postBtn');
   const postInput = document.getElementById('postInput');
   const postsDiv = document.getElementById('posts');
 
-  function addPost(text) {
-    const post = document.createElement('div');
-    post.classList.add('post');
-    const now = new Date().toLocaleTimeString();
-    post.innerHTML = `
-      <div class="post-time">Posted at ${now}</div>
-      <div class="post-text">${text}</div>
-    `;
-    postsDiv.prepend(post);
-  }
-
+  // 💬 Add new post
   postBtn.addEventListener('click', () => {
     const text = postInput.value.trim();
     if (text) {
-      addPost(text);
+      const postRef = db.ref('posts').push();
+      postRef.set({
+        text,
+        time: new Date().toLocaleString()
+      });
       postInput.value = '';
     }
+  });
+
+  // 👀 Listen for new posts in real time
+  db.ref('posts').on('child_added', (snapshot) => {
+    const data = snapshot.val();
+    const post = document.createElement('div');
+    post.classList.add('post');
+    post.innerHTML = `
+      <div class="post-time">Posted at ${data.time}</div>
+      <div class="post-text">${data.text}</div>
+    `;
+    postsDiv.prepend(post);
   });
 </script>
 
 </body>
 </html>
+
