@@ -2,229 +2,172 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>GTA 6 Admin Dashboard</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard - GTA 6 Portal</title>
 <style>
-  *{box-sizing:border-box;margin:0;padding:0;font-family:'Orbitron',sans-serif;}
-  body{
-    background:linear-gradient(135deg,#0a0014,#240038);
-    color:white;overflow-x:hidden;transition:0.4s;
-  }
-
-  /* Login overlay */
-  #loginOverlay{
-    position:fixed;inset:0;background:rgba(0,0,0,0.9);
-    display:flex;align-items:center;justify-content:center;
-    flex-direction:column;z-index:1000;
-    backdrop-filter:blur(8px);
-  }
-  #loginBox{
-    background:rgba(255,255,255,0.1);
-    border:1px solid rgba(255,255,255,0.2);
-    border-radius:16px;
-    padding:40px;
-    text-align:center;
-    box-shadow:0 0 20px rgba(192,132,252,0.5);
-  }
-  #loginBox h2{color:#c084fc;margin-bottom:20px;}
-  #adminPass{
-    padding:10px;
-    width:220px;
-    border:none;
-    border-radius:8px;
-    outline:none;
-    background:rgba(255,255,255,0.2);
-    color:#fff;
-    text-align:center;
-  }
-  #loginBtn{
-    margin-top:14px;
-    background:#c084fc;
-    border:none;
-    padding:10px 20px;
-    border-radius:8px;
-    cursor:pointer;
-    font-weight:bold;
-  }
-
-  /* Sidebar */
-  #sidebar{
-    position:fixed;top:0;left:-280px;width:260px;height:100%;
-    background:rgba(40,0,70,0.8);
-    backdrop-filter:blur(12px);
-    box-shadow:4px 0 20px rgba(0,0,0,0.5);
-    padding:20px;
-    overflow-y:auto;
-    transition:0.4s;
-    z-index:900;
-  }
-  #sidebar.active{left:0;}
-  #sidebar h2{text-align:center;margin-bottom:20px;color:#c084fc;text-shadow:0 0 10px #c084fc;}
-  #sidebar ul{list-style:none;padding:0;}
-  #sidebar ul li{margin:12px 0;}
-  #sidebar ul li button{
-    width:100%;
-    background:rgba(255,255,255,0.1);
-    border:none;color:white;
-    padding:10px;border-radius:10px;text-align:left;
-    cursor:pointer;transition:0.3s;
-  }
-  #sidebar ul li button:hover{background:#c084fc;color:#000;}
-
-  /* Toggle Button */
-  #toggleBtn{
-    position:fixed;top:20px;left:20px;
-    background:#c084fc;color:#000;border:none;
-    padding:10px 14px;border-radius:8px;
-    cursor:pointer;font-weight:bold;z-index:950;
-  }
-
-  /* Main */
-  .main{padding:80px 40px;transition:0.4s;}
-  #sidebar.active ~ .main{margin-left:280px;}
-  .card{
-    background:rgba(255,255,255,0.1);
-    backdrop-filter:blur(12px);
-    padding:20px;border-radius:16px;margin-bottom:20px;
-    box-shadow:0 0 10px rgba(192,132,252,0.3);
-  }
-  .card h3{color:#c084fc;margin-bottom:10px;}
-  .card p{font-size:14px;color:#ccc;}
-
-  /* Notification */
-  #notifBox{
-    position:fixed;top:20px;right:20px;
-    background:rgba(100,0,150,0.9);
-    color:white;padding:12px 20px;
-    border-radius:12px;opacity:0;
-    transition:0.4s;box-shadow:0 0 20px rgba(192,132,252,0.5);
-  }
-  #notifBox.show{opacity:1;}
-
-  /* Donate button */
-  #donateBtn{
-    position:fixed;bottom:20px;right:20px;
-    background:#c084fc;color:black;border:none;
-    border-radius:10px;padding:12px 18px;
-    cursor:pointer;font-weight:bold;
-    box-shadow:0 0 20px rgba(192,132,252,0.5);
-  }
-
-  /* Light mode */
-  body.light{background:#f0eaff;color:#000;}
-  body.light .card{background:rgba(255,255,255,0.8);color:#000;}
-  body.light #sidebar{background:rgba(200,150,255,0.3);}
+    body {
+        margin: 0;
+        font-family: "Poppins", sans-serif;
+        background: #0a0a0a;
+        color: #fff;
+        overflow-x: hidden;
+    }
+    .sidebar {
+        position: fixed;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 70px;
+        background: rgba(255, 20, 147, 0.2);
+        backdrop-filter: blur(12px);
+        transition: width 0.3s;
+        overflow: hidden;
+    }
+    .sidebar:hover {
+        width: 230px;
+    }
+    .sidebar h2 {
+        text-align: center;
+        padding: 15px;
+        font-size: 18px;
+        color: violet;
+    }
+    .sidebar a {
+        display: block;
+        color: white;
+        padding: 12px 15px;
+        text-decoration: none;
+        transition: background 0.3s;
+    }
+    .sidebar a:hover {
+        background: rgba(255, 20, 147, 0.4);
+    }
+    .content {
+        margin-left: 80px;
+        padding: 20px;
+        transition: margin-left 0.3s;
+    }
+    .sidebar:hover + .content {
+        margin-left: 240px;
+    }
+    .card {
+        background: rgba(255,255,255,0.1);
+        border-radius: 15px;
+        padding: 20px;
+        margin-bottom: 20px;
+        backdrop-filter: blur(8px);
+    }
+    .btn {
+        background: violet;
+        color: black;
+        border: none;
+        border-radius: 8px;
+        padding: 10px 15px;
+        cursor: pointer;
+        font-weight: 600;
+    }
+    .btn:hover {
+        background: #ff69b4;
+    }
+    .user-list div {
+        display: flex;
+        justify-content: space-between;
+        padding: 8px;
+        background: rgba(255,255,255,0.05);
+        margin: 5px 0;
+        border-radius: 5px;
+    }
 </style>
 </head>
 <body>
 
-<!-- LOGIN OVERLAY -->
-<div id="loginOverlay">
-  <div id="loginBox">
-    <h2>Admin Access</h2>
-    <input type="password" id="adminPass" placeholder="Enter password">
-    <br>
-    <button id="loginBtn">Login</button>
-    <p id="errorMsg" style="color:red;margin-top:8px;display:none;">Incorrect password!</p>
-  </div>
+<div class="sidebar">
+    <h2>⚙️ Admin</h2>
+    <a href="#stats">📊 Real-Time Stats</a>
+    <a href="#users">👥 User Management</a>
+    <a href="#feedback">💬 Feedback</a>
+    <a href="#settings">🎨 Settings</a>
+    <a href="#pages">📂 Manage Pages</a>
+    <a href="#announce">📢 Announcements</a>
 </div>
 
-<!-- SIDEBAR -->
-<div id="sidebar">
-  <h2>Admin Dashboard</h2>
-  <ul>
-    <li><button onclick="showPanel('analytics')">📊 Analytics</button></li>
-    <li><button onclick="showPanel('feedback')">💬 Feedback</button></li>
-    <li><button onclick="showPanel('notifications')">🔔 Notifications</button></li>
-    <li><button onclick="showPanel('themes')">🎨 Theme</button></li>
-    <li><button onclick="showPanel('monetization')">💰 Monetization</button></li>
-  </ul>
+<div class="content">
+    <section id="stats" class="card">
+        <h2>📊 Real-Time Site Stats</h2>
+        <p>👁️ Views: <span id="views">0</span></p>
+        <p>🖱️ Clicks: <span id="clicks">0</span></p>
+        <button class="btn" onclick="simulateViews()">Simulate Activity</button>
+    </section>
+
+    <section id="users" class="card">
+        <h2>👥 User Management</h2>
+        <div class="user-list" id="userList"></div>
+    </section>
+
+    <section id="feedback" class="card">
+        <h2>💬 Site Feedback</h2>
+        <p>No feedback yet.</p>
+    </section>
+
+    <section id="settings" class="card">
+        <h2>🎨 Settings</h2>
+        <button class="btn" onclick="toggleTheme()">Toggle Dark/Light Mode</button>
+    </section>
+
+    <section id="pages" class="card">
+        <h2>📂 Manage Pages</h2>
+        <ul>
+            <li>News Page</li>
+            <li>Facts Page</li>
+            <li>Forums</li>
+            <li>Wishlist</li>
+            <li>GTA 6 Countdown</li>
+        </ul>
+    </section>
+
+    <section id="announce" class="card">
+        <h2>📢 Announcements</h2>
+        <textarea id="announcementText" placeholder="Write announcement..." rows="3" style="width:100%;border-radius:8px;"></textarea>
+        <button class="btn" onclick="sendAnnouncement()">Send</button>
+    </section>
 </div>
-
-<button id="toggleBtn">☰ Admin Menu</button>
-
-<div class="main" id="mainContent">
-  <div class="card">
-    <h3>Welcome Admin</h3>
-    <p>Manage GTA 6 site data, feedback, themes, and performance stats.</p>
-  </div>
-</div>
-
-<div id="notifBox"></div>
-<button id="donateBtn">💜 Donate</button>
 
 <script>
-  // --- LOGIN ---
-  const loginOverlay = document.getElementById('loginOverlay');
-  const loginBtn = document.getElementById('loginBtn');
-  const errorMsg = document.getElementById('errorMsg');
-  const correctPass = "exelz"; // <— change this password
+let views = 0, clicks = 0;
+function simulateViews() {
+    views += Math.floor(Math.random() * 50);
+    clicks += Math.floor(Math.random() * 20);
+    document.getElementById('views').innerText = views;
+    document.getElementById('clicks').innerText = clicks;
+}
 
-  loginBtn.addEventListener('click', () => {
-    const input = document.getElementById('adminPass').value;
-    if (input === correctPass) {
-      loginOverlay.style.display = 'none';
-    } else {
-      errorMsg.style.display = 'block';
-    }
-  });
+const users = ["PlayerOne", "Exlusx", "GTAFan", "LuciaLover", "ViceCityGuy"];
+const userList = document.getElementById("userList");
 
-  // --- Dashboard functionality ---
-  const sidebar = document.getElementById('sidebar');
-  const toggleBtn = document.getElementById('toggleBtn');
-  const main = document.getElementById('mainContent');
-  const notifBox = document.getElementById('notifBox');
-  const donateBtn = document.getElementById('donateBtn');
+users.forEach(user => {
+    const div = document.createElement("div");
+    div.innerHTML = `<span>${user}</span><button class='btn' onclick='banUser(this)'>Ban</button>`;
+    userList.appendChild(div);
+});
 
-  toggleBtn.onclick = () => sidebar.classList.toggle('active');
+function banUser(btn) {
+    btn.innerText = btn.innerText === "Ban" ? "Unban" : "Ban";
+    btn.style.background = btn.innerText === "Ban" ? "violet" : "red";
+}
 
-  let visitors = Math.floor(Math.random() * 300) + 100;
-  setInterval(() => {
-    visitors += Math.floor(Math.random() * 5) - 2;
-    if (document.getElementById("visitorCount"))
-      document.getElementById("visitorCount").innerText = visitors;
-  }, 2000);
+function toggleTheme() {
+    document.body.style.background = document.body.style.background === "white" ? "#0a0a0a" : "white";
+    document.body.style.color = document.body.style.color === "black" ? "white" : "black";
+}
 
-  function showPanel(panel) {
-    if (panel === "analytics") {
-      main.innerHTML = `<div class="card">
-        <h3>📊 Live Analytics</h3>
-        <p>Active Visitors: <strong id="visitorCount">${visitors}</strong></p>
-        <p>Total Clicks: <strong>${Math.floor(Math.random()*10000)}</strong></p>
-        <p>Average Session Time: <strong>${(Math.random()*5+2).toFixed(1)} mins</strong></p>
-      </div>`;
-    } else if (panel === "feedback") {
-      main.innerHTML = `<div class="card">
-        <h3>💬 Feedback</h3>
-        <p>"Love the Vice City setting!" — Player001</p>
-        <p>"Add more radio channels!" — LuciaFan</p>
-      </div>`;
-    } else if (panel === "notifications") {
-      notifBox.textContent = "🚨 New event detected on your site!";
-      notifBox.classList.add("show");
-      setTimeout(()=>notifBox.classList.remove("show"),4000);
-    } else if (panel === "themes") {
-      main.innerHTML = `<div class="card">
-        <h3>🎨 Theme Settings</h3>
-        <button onclick="toggleTheme()" style="background:#c084fc;border:none;padding:10px 20px;border-radius:10px;cursor:pointer;">Toggle Light / Dark</button>
-      </div>`;
-    } else if (panel === "monetization") {
-      main.innerHTML = `<div class="card">
-        <h3>💰 Monetization</h3>
-        <p>Ad Revenue: <strong>$${(Math.random()*500).toFixed(2)}</strong></p>
-        <p>Donations: <strong>$${(Math.random()*300).toFixed(2)}</strong></p>
-      </div>`;
-    }
-  }
-
-  function toggleTheme(){document.body.classList.toggle('light');}
-
-  donateBtn.onclick = () => {
-    notifBox.textContent = "💜 Thanks for supporting the GTA 6 site!";
-    notifBox.classList.add("show");
-    setTimeout(()=>notifBox.classList.remove("show"),4000);
-  };
+function sendAnnouncement() {
+    const text = document.getElementById("announcementText").value;
+    if (text.trim()) alert(`Announcement sent:\n\n${text}`);
+    else alert("Please write something first!");
+}
 </script>
+
 </body>
 </html>
+
 
