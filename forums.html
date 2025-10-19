@@ -1,165 +1,136 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>GTA 6 Live Forum</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GTA 6 Search Engine</title>
 <style>
-  *{margin:0;padding:0;box-sizing:border-box}
   body {
-    font-family: 'Orbitron', sans-serif;
-    background: radial-gradient(circle at center, #2a003d 0%, #000 100%);
-    color: #fff;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 40px 16px;
+    background: radial-gradient(circle at center, #2a003d, #000);
+    font-family: 'Poppins', sans-serif;
+    color: white;
+    margin: 0;
+    overflow-x: hidden;
+  }
+
+  header {
+    text-align: center;
+    margin-top: 100px;
   }
 
   h1 {
-    font-size: 40px;
-    color: #ffb3ff;
-    text-shadow: 0 0 20px #d26fff;
-    margin-bottom: 20px;
+    font-size: 3em;
+    color: violet;
+    letter-spacing: 2px;
+    text-shadow: 0 0 20px violet;
   }
 
-  .forum-container {
-    width: 100%;
-    max-width: 900px;
-    backdrop-filter: blur(8px);
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 18px;
-    padding: 20px;
-    box-shadow: 0 0 30px rgba(255,0,255,0.2);
+  #searchBox {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
   }
 
-  textarea {
-    width: 100%;
-    height: 80px;
-    padding: 12px;
-    border-radius: 12px;
+  input {
+    width: 60%;
+    padding: 15px;
+    border-radius: 30px;
     border: none;
     outline: none;
-    resize: none;
-    font-family: 'Orbitron', sans-serif;
-    background: rgba(255,255,255,0.1);
-    color: #fff;
+    font-size: 1.2em;
   }
 
   button {
-    margin-top: 10px;
-    padding: 10px 20px;
+    background-color: violet;
+    color: white;
     border: none;
-    background: linear-gradient(90deg,#ff00cc,#9900ff);
-    border-radius: 999px;
-    color: #fff;
-    font-weight: 700;
+    border-radius: 30px;
+    padding: 15px 25px;
+    margin-left: 10px;
     cursor: pointer;
-    transition: 0.3s;
+    font-size: 1em;
   }
 
   button:hover {
-    background: linear-gradient(90deg,#ff4dd2,#c266ff);
-    box-shadow: 0 0 20px #ff4dd2;
+    background-color: #b300b3;
   }
 
-  .posts {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    margin-top: 20px;
+  #results {
+    margin: 50px auto;
+    width: 80%;
+    max-width: 900px;
   }
 
-  .post {
-    background: rgba(153, 0, 255, 0.25);
-    border-radius: 14px;
-    padding: 15px;
-    border: 1px solid rgba(255,255,255,0.1);
-    box-shadow: 0 0 15px rgba(255,0,255,0.2);
+  .popup {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 20px;
+    padding: 20px;
+    margin: 20px 0;
+    box-shadow: 0 0 20px rgba(255, 0, 255, 0.25);
+    animation: fadeIn 0.6s ease;
   }
 
-  .post-time {
-    font-size: 12px;
-    color: rgba(255,255,255,0.6);
-    margin-bottom: 8px;
+  .popup h3 {
+    color: violet;
   }
 
-  .post-text {
-    font-size: 15px;
-    color: #fff;
+  .popup p {
+    color: #ccc;
   }
 
-  footer {
-    margin-top: 40px;
-    opacity: 0.7;
-    font-size: 14px;
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
   }
 </style>
 </head>
 <body>
 
-<h1>GTA 6 Live Forum</h1>
+<header>
+  <h1>GTA 6 Search</h1>
+</header>
 
-<div class="forum-container">
-  <textarea id="postInput" placeholder="Share your thoughts about GTA 6..."></textarea>
-  <button id="postBtn">Post</button>
-  <div class="posts" id="posts"></div>
+<div id="searchBox">
+  <input type="text" id="searchInput" placeholder="Search GTA 6 leaks, updates, or facts...">
+  <button onclick="search()">Search</button>
 </div>
 
-<footer>Fan-made GTA 6 Forum — Not affiliated with Rockstar Games</footer>
-
-<!-- Firebase SDK -->
-<script src="https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/11.0.1/firebase-database.js"></script>
+<div id="results"></div>
 
 <script>
-  // 🔧 Step 1 — Replace this with your own Firebase config from console.firebase.google.com
-const firebaseConfig = {
-  apiKey: "AIzaSyDjJzdfOdWK3jaRUiu9CUb3EOLf1Ce9Ayw",
-  authDomain: "gta-6-forums.firebaseapp.com",
-  databaseURL: "https://gta-6-forums-default-rtdb.firebaseio.com",
-  projectId: "gta-6-forums",
-  storageBucket: "gta-6-forums.firebasestorage.app",
-  messagingSenderId: "1083714143625",
-  appId: "1:1083714143625:web:bbb209e7858ec3d6b0cd58",
-  measurementId: "G-EN7EC16QEK"
-};
+const gta6Data = [
+  { title: "Vice City Returns", text: "GTA 6 takes place in a modernized Vice City, with massive map expansions planned." },
+  { title: "Characters", text: "You’ll play as Lucia and Jason — a Bonnie and Clyde-style duo with dynamic heist missions." },
+  { title: "Release Window", text: "Expected release: May 26 2026 (according to early leaks and fan speculation)." },
+  { title: "Map Size", text: "The map is rumored to be twice as large as GTA V with real-time weather and wildlife systems." },
+  { title: "Trailer 1 Highlights", text: "Over 100 million views within 24 hours — the most-viewed game trailer in history." },
+  { title: "Music", text: "Soundtrack features synthwave, Latin trap, and classic 80s hits for a true Miami vibe." },
+  { title: "Police AI", text: "Improved police chases with smarter patrols, car radios, and AI communication systems." },
+  { title: "Economy", text: "Dynamic economy where prices change based on your in-game reputation and location." }
+];
 
-  // 🔥 Initialize Firebase
-  const app = firebase.initializeApp(firebaseConfig);
-  const db = firebase.database();
+function search() {
+  const query = document.getElementById('searchInput').value.toLowerCase();
+  const resultsDiv = document.getElementById('results');
+  resultsDiv.innerHTML = '';
 
-  const postBtn = document.getElementById('postBtn');
-  const postInput = document.getElementById('postInput');
-  const postsDiv = document.getElementById('posts');
+  const filtered = gta6Data.filter(item =>
+    item.title.toLowerCase().includes(query) ||
+    item.text.toLowerCase().includes(query)
+  );
 
-  // 💬 Add new post
-  postBtn.addEventListener('click', () => {
-    const text = postInput.value.trim();
-    if (text) {
-      const postRef = db.ref('posts').push();
-      postRef.set({
-        text,
-        time: new Date().toLocaleString()
-      });
-      postInput.value = '';
-    }
-  });
-
-  // 👀 Listen for new posts in real time
-  db.ref('posts').on('child_added', (snapshot) => {
-    const data = snapshot.val();
-    const post = document.createElement('div');
-    post.classList.add('post');
-    post.innerHTML = `
-      <div class="post-time">Posted at ${data.time}</div>
-      <div class="post-text">${data.text}</div>
-    `;
-    postsDiv.prepend(post);
-  });
+  if (filtered.length === 0) {
+    resultsDiv.innerHTML = `<div class="popup"><h3>No Results Found</h3><p>Try searching something like <b>map</b>, <b>characters</b>, or <b>release</b>.</p></div>`;
+  } else {
+    filtered.forEach(item => {
+      const div = document.createElement('div');
+      div.className = 'popup';
+      div.innerHTML = `<h3>${item.title}</h3><p>${item.text}</p>`;
+      resultsDiv.appendChild(div);
+    });
+  }
+}
 </script>
 
 </body>
