@@ -2,137 +2,229 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GTA 6 Search Engine</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>GTA 6 Admin Dashboard</title>
 <style>
-  body {
-    background: radial-gradient(circle at center, #2a003d, #000);
-    font-family: 'Poppins', sans-serif;
-    color: white;
-    margin: 0;
-    overflow-x: hidden;
+  *{box-sizing:border-box;margin:0;padding:0;font-family:'Orbitron',sans-serif;}
+  body{
+    background:linear-gradient(135deg,#0a0014,#240038);
+    color:white;overflow-x:hidden;transition:0.4s;
   }
 
-  header {
-    text-align: center;
-    margin-top: 100px;
+  /* Login overlay */
+  #loginOverlay{
+    position:fixed;inset:0;background:rgba(0,0,0,0.9);
+    display:flex;align-items:center;justify-content:center;
+    flex-direction:column;z-index:1000;
+    backdrop-filter:blur(8px);
+  }
+  #loginBox{
+    background:rgba(255,255,255,0.1);
+    border:1px solid rgba(255,255,255,0.2);
+    border-radius:16px;
+    padding:40px;
+    text-align:center;
+    box-shadow:0 0 20px rgba(192,132,252,0.5);
+  }
+  #loginBox h2{color:#c084fc;margin-bottom:20px;}
+  #adminPass{
+    padding:10px;
+    width:220px;
+    border:none;
+    border-radius:8px;
+    outline:none;
+    background:rgba(255,255,255,0.2);
+    color:#fff;
+    text-align:center;
+  }
+  #loginBtn{
+    margin-top:14px;
+    background:#c084fc;
+    border:none;
+    padding:10px 20px;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:bold;
   }
 
-  h1 {
-    font-size: 3em;
-    color: violet;
-    letter-spacing: 2px;
-    text-shadow: 0 0 20px violet;
+  /* Sidebar */
+  #sidebar{
+    position:fixed;top:0;left:-280px;width:260px;height:100%;
+    background:rgba(40,0,70,0.8);
+    backdrop-filter:blur(12px);
+    box-shadow:4px 0 20px rgba(0,0,0,0.5);
+    padding:20px;
+    overflow-y:auto;
+    transition:0.4s;
+    z-index:900;
+  }
+  #sidebar.active{left:0;}
+  #sidebar h2{text-align:center;margin-bottom:20px;color:#c084fc;text-shadow:0 0 10px #c084fc;}
+  #sidebar ul{list-style:none;padding:0;}
+  #sidebar ul li{margin:12px 0;}
+  #sidebar ul li button{
+    width:100%;
+    background:rgba(255,255,255,0.1);
+    border:none;color:white;
+    padding:10px;border-radius:10px;text-align:left;
+    cursor:pointer;transition:0.3s;
+  }
+  #sidebar ul li button:hover{background:#c084fc;color:#000;}
+
+  /* Toggle Button */
+  #toggleBtn{
+    position:fixed;top:20px;left:20px;
+    background:#c084fc;color:#000;border:none;
+    padding:10px 14px;border-radius:8px;
+    cursor:pointer;font-weight:bold;z-index:950;
   }
 
-  #searchBox {
-    display: flex;
-    justify-content: center;
-    margin-top: 30px;
+  /* Main */
+  .main{padding:80px 40px;transition:0.4s;}
+  #sidebar.active ~ .main{margin-left:280px;}
+  .card{
+    background:rgba(255,255,255,0.1);
+    backdrop-filter:blur(12px);
+    padding:20px;border-radius:16px;margin-bottom:20px;
+    box-shadow:0 0 10px rgba(192,132,252,0.3);
+  }
+  .card h3{color:#c084fc;margin-bottom:10px;}
+  .card p{font-size:14px;color:#ccc;}
+
+  /* Notification */
+  #notifBox{
+    position:fixed;top:20px;right:20px;
+    background:rgba(100,0,150,0.9);
+    color:white;padding:12px 20px;
+    border-radius:12px;opacity:0;
+    transition:0.4s;box-shadow:0 0 20px rgba(192,132,252,0.5);
+  }
+  #notifBox.show{opacity:1;}
+
+  /* Donate button */
+  #donateBtn{
+    position:fixed;bottom:20px;right:20px;
+    background:#c084fc;color:black;border:none;
+    border-radius:10px;padding:12px 18px;
+    cursor:pointer;font-weight:bold;
+    box-shadow:0 0 20px rgba(192,132,252,0.5);
   }
 
-  input {
-    width: 60%;
-    padding: 15px;
-    border-radius: 30px;
-    border: none;
-    outline: none;
-    font-size: 1.2em;
-  }
-
-  button {
-    background-color: violet;
-    color: white;
-    border: none;
-    border-radius: 30px;
-    padding: 15px 25px;
-    margin-left: 10px;
-    cursor: pointer;
-    font-size: 1em;
-  }
-
-  button:hover {
-    background-color: #b300b3;
-  }
-
-  #results {
-    margin: 50px auto;
-    width: 80%;
-    max-width: 900px;
-  }
-
-  .popup {
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 20px;
-    padding: 20px;
-    margin: 20px 0;
-    box-shadow: 0 0 20px rgba(255, 0, 255, 0.25);
-    animation: fadeIn 0.6s ease;
-  }
-
-  .popup h3 {
-    color: violet;
-  }
-
-  .popup p {
-    color: #ccc;
-  }
-
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
+  /* Light mode */
+  body.light{background:#f0eaff;color:#000;}
+  body.light .card{background:rgba(255,255,255,0.8);color:#000;}
+  body.light #sidebar{background:rgba(200,150,255,0.3);}
 </style>
 </head>
 <body>
 
-<header>
-  <h1>GTA 6 Search</h1>
-</header>
-
-<div id="searchBox">
-  <input type="text" id="searchInput" placeholder="Search GTA 6 leaks, updates, or facts...">
-  <button onclick="search()">Search</button>
+<!-- LOGIN OVERLAY -->
+<div id="loginOverlay">
+  <div id="loginBox">
+    <h2>Admin Access</h2>
+    <input type="password" id="adminPass" placeholder="Enter password">
+    <br>
+    <button id="loginBtn">Login</button>
+    <p id="errorMsg" style="color:red;margin-top:8px;display:none;">Incorrect password!</p>
+  </div>
 </div>
 
-<div id="results"></div>
+<!-- SIDEBAR -->
+<div id="sidebar">
+  <h2>Admin Dashboard</h2>
+  <ul>
+    <li><button onclick="showPanel('analytics')">📊 Analytics</button></li>
+    <li><button onclick="showPanel('feedback')">💬 Feedback</button></li>
+    <li><button onclick="showPanel('notifications')">🔔 Notifications</button></li>
+    <li><button onclick="showPanel('themes')">🎨 Theme</button></li>
+    <li><button onclick="showPanel('monetization')">💰 Monetization</button></li>
+  </ul>
+</div>
+
+<button id="toggleBtn">☰ Admin Menu</button>
+
+<div class="main" id="mainContent">
+  <div class="card">
+    <h3>Welcome Admin</h3>
+    <p>Manage GTA 6 site data, feedback, themes, and performance stats.</p>
+  </div>
+</div>
+
+<div id="notifBox"></div>
+<button id="donateBtn">💜 Donate</button>
 
 <script>
-const gta6Data = [
-  { title: "Vice City Returns", text: "GTA 6 takes place in a modernized Vice City, with massive map expansions planned." },
-  { title: "Characters", text: "You’ll play as Lucia and Jason — a Bonnie and Clyde-style duo with dynamic heist missions." },
-  { title: "Release Window", text: "Expected release: May 26 2026 (according to early leaks and fan speculation)." },
-  { title: "Map Size", text: "The map is rumored to be twice as large as GTA V with real-time weather and wildlife systems." },
-  { title: "Trailer 1 Highlights", text: "Over 100 million views within 24 hours — the most-viewed game trailer in history." },
-  { title: "Music", text: "Soundtrack features synthwave, Latin trap, and classic 80s hits for a true Miami vibe." },
-  { title: "Police AI", text: "Improved police chases with smarter patrols, car radios, and AI communication systems." },
-  { title: "Economy", text: "Dynamic economy where prices change based on your in-game reputation and location." }
-];
+  // --- LOGIN ---
+  const loginOverlay = document.getElementById('loginOverlay');
+  const loginBtn = document.getElementById('loginBtn');
+  const errorMsg = document.getElementById('errorMsg');
+  const correctPass = "exelz"; // <— change this password
 
-function search() {
-  const query = document.getElementById('searchInput').value.toLowerCase();
-  const resultsDiv = document.getElementById('results');
-  resultsDiv.innerHTML = '';
+  loginBtn.addEventListener('click', () => {
+    const input = document.getElementById('adminPass').value;
+    if (input === correctPass) {
+      loginOverlay.style.display = 'none';
+    } else {
+      errorMsg.style.display = 'block';
+    }
+  });
 
-  const filtered = gta6Data.filter(item =>
-    item.title.toLowerCase().includes(query) ||
-    item.text.toLowerCase().includes(query)
-  );
+  // --- Dashboard functionality ---
+  const sidebar = document.getElementById('sidebar');
+  const toggleBtn = document.getElementById('toggleBtn');
+  const main = document.getElementById('mainContent');
+  const notifBox = document.getElementById('notifBox');
+  const donateBtn = document.getElementById('donateBtn');
 
-  if (filtered.length === 0) {
-    resultsDiv.innerHTML = `<div class="popup"><h3>No Results Found</h3><p>Try searching something like <b>map</b>, <b>characters</b>, or <b>release</b>.</p></div>`;
-  } else {
-    filtered.forEach(item => {
-      const div = document.createElement('div');
-      div.className = 'popup';
-      div.innerHTML = `<h3>${item.title}</h3><p>${item.text}</p>`;
-      resultsDiv.appendChild(div);
-    });
+  toggleBtn.onclick = () => sidebar.classList.toggle('active');
+
+  let visitors = Math.floor(Math.random() * 300) + 100;
+  setInterval(() => {
+    visitors += Math.floor(Math.random() * 5) - 2;
+    if (document.getElementById("visitorCount"))
+      document.getElementById("visitorCount").innerText = visitors;
+  }, 2000);
+
+  function showPanel(panel) {
+    if (panel === "analytics") {
+      main.innerHTML = `<div class="card">
+        <h3>📊 Live Analytics</h3>
+        <p>Active Visitors: <strong id="visitorCount">${visitors}</strong></p>
+        <p>Total Clicks: <strong>${Math.floor(Math.random()*10000)}</strong></p>
+        <p>Average Session Time: <strong>${(Math.random()*5+2).toFixed(1)} mins</strong></p>
+      </div>`;
+    } else if (panel === "feedback") {
+      main.innerHTML = `<div class="card">
+        <h3>💬 Feedback</h3>
+        <p>"Love the Vice City setting!" — Player001</p>
+        <p>"Add more radio channels!" — LuciaFan</p>
+      </div>`;
+    } else if (panel === "notifications") {
+      notifBox.textContent = "🚨 New event detected on your site!";
+      notifBox.classList.add("show");
+      setTimeout(()=>notifBox.classList.remove("show"),4000);
+    } else if (panel === "themes") {
+      main.innerHTML = `<div class="card">
+        <h3>🎨 Theme Settings</h3>
+        <button onclick="toggleTheme()" style="background:#c084fc;border:none;padding:10px 20px;border-radius:10px;cursor:pointer;">Toggle Light / Dark</button>
+      </div>`;
+    } else if (panel === "monetization") {
+      main.innerHTML = `<div class="card">
+        <h3>💰 Monetization</h3>
+        <p>Ad Revenue: <strong>$${(Math.random()*500).toFixed(2)}</strong></p>
+        <p>Donations: <strong>$${(Math.random()*300).toFixed(2)}</strong></p>
+      </div>`;
+    }
   }
-}
-</script>
 
+  function toggleTheme(){document.body.classList.toggle('light');}
+
+  donateBtn.onclick = () => {
+    notifBox.textContent = "💜 Thanks for supporting the GTA 6 site!";
+    notifBox.classList.add("show");
+    setTimeout(()=>notifBox.classList.remove("show"),4000);
+  };
+</script>
 </body>
 </html>
 
