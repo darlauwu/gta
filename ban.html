@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>GTA 6 Admin — Visitors</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{--vio:#c084fc}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Orbitron',sans-serif;background:radial-gradient(circle,#180018,#000);color:#fff;min-height:100vh;padding:28px}
+  h1{color:var(--vio);text-shadow:0 0 12px rgba(192,132,252,0.3);margin-bottom:18px}
+  .wrap{display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap}
+  .card{background:rgba(255,255,255,0.04);padding:18px;border-radius:12px;border:1px solid rgba(255,255,255,0.04);min-width:320px}
+  .card h2{color:var(--vio);margin-bottom:12px}
+  table{width:100%;border-collapse:collapse;color:#fff;font-size:14px}
+  td,th{padding:8px;border-bottom:1px dashed rgba(255,255,255,0.03);text-align:left}
+  .btn{background:var(--vio);color:#000;border:none;padding:8px 10px;border-radius:8px;cursor:pointer;font-weight:700}
+  .danger{background:#ff4d4d;color:#fff}
+  .small{font-size:13px;color:rgba(255,255,255,0.75)}
+  input.search{padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.06);width:260px;background:transparent;color:#fff;margin-bottom:8px}
+  .export{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:6px 8px;border-radius:8px;color:#fff;cursor:pointer}
+</style>
+</head>
+<body>
+
+<h1>Admin — Visitors & Moderation</h1>
+
+<div style="margin-bottom:12px">
+  <input id="searchBox" class="search" placeholder="Search name or id..." />
+  <button class="export" id="exportBtn">Export CSV</button>
+  <button class="export" id="clearBansBtn">Clear All Bans</button>
+</div>
+
+<div class="wrap">
+  <div class="card" style="flex:1;min-width:520px">
+    <h2>Active Visitors</h2>
+    <div class="small">Visitors are stored in localStorage (gta6_visitors). Bans are stored in gta6_banned.</div>
+    <table id="visTable">
+      <thead><tr><th>ID</th><th>Name</th><th>First Seen</th><th>Last Seen</th><th>Visits</th><th>Action</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <div class="card" style="width:320px">
+    <h2>Banned IDs</h2>
+    <div id="bannedList" style="max-height:300px;overflow:auto"></div>
+    <hr style="border:none;border-top:1px dashed rgba(255,255,255,0.06);margin:8px 0">
+    <div style="margin-top:8px">
+      <input id="manualId" placeholder="Paste visitor id to ban" style="width:100%;padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:#fff">
+      <button class="btn" id="manualBan" style="margin-top:8px">Ban ID</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* localStorage keys (must match index.html) */
+const LS_VISITORS = 'gta6_visitors';
+const LS_BANNED = 'gta6_banned';
+const LS_STATS = 'gta6_stats';
+
+function loadJSON(key,def){ try{ const v = localStorage.getItem(key); return v? JSON.parse(v): def }catch(e){ return def } }
+function saveJSON(key,obj){ localStorage.setItem(key, JSON.stringify(obj)) }
+
+function renderVisitors(filter=''){
+  const tbody = document.querySelector('#visTable tbody');
+  tbody.innerHTML = '';
+  const visitors = loadJSON(LS_VISITORS, {});
+  const banned = loadJSON(LS_BANNED, {});
+  const list = Object.values(visitors).sort((a,b)=> b.lastSeen - a.lastSeen);
+  list.forEach(v=>{
+    if(filter){
+      const q = filter.toLowerCase();
+      if(!(v.name.toLowerCase().includes(q) || v.id.toLowerCase().includes(q))) return;
+    }
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td style="font-size:12px">${v.id}</td>
+      <td>${v.name}</td>
+      <td style="font-size:12px">${new Date(v.firstSeen).toLocaleString()}</td>
+      <td style="font-size:12px">${new Date(v.lastSeen).toLocaleString()}</td>
+      <td>${v.visits||1}</td>
+      <td></td>`;
+    const actionTd = tr.querySelector('td:last-child');
+    const banBtn = document.createElement('button');
+    banBtn.className = 'btn';
+    banBtn.textContent = banned[v.id] ? 'Unban' : 'Ban';
+    if(banned[v.id]) banBtn.classList.add('danger');
+    banBtn.onclick = ()=> toggleBan(v.id);
+    actionTd.appendChild(banBtn);
+    tbody.appendChild(tr);
+  });
+}
+
+function renderBanned(){
+  const box = document.getElementById('bannedList');
+  box.innerHTML = '';
+  const banned = loadJSON(LS_BANNED, {});
+  const keys = Object.keys(banned);
+  if(keys.length===0){ box.innerHTML = '<div class="small">No banned IDs</div>'; return; }
+  keys.forEach(id=>{
+    const div = document.createElement('div');
+    div.style.display='flex'; div.style.justifyContent='space-between'; div.style.margin='6px 0';
+    div.innerHTML = `<div style="font-size:12px;word-break:break-all">${id}</div>`;
+    const ub = document.createElement('button'); ub.className='btn'; ub.textContent='Unban';
+    ub.onclick = ()=> toggleBan(id);
+    div.appendChild(ub);
+    box.appendChild(div);
+  });
+}
+
+function toggleBan(id){
+  const banned = loadJSON(LS_BANNED, {});
+  if(banned[id]){
+    delete banned[id];
+  } else {
+    banned[id] = {by:'admin',ts:Date.now()};
+  }
+  saveJSON(LS_BANNED, banned);
+  renderVisitors(document.getElementById('searchBox').value.trim());
+  renderBanned();
+  alert(banned[id] ? `Banned ${id}` : `Unbanned ${id}`);
+}
+
+/* manual ban button */
+document.getElementById('manualBan').addEventListener('click', ()=>{
+  const id = document.getElementById('manualId').value.trim();
+  if(!id) return alert('Paste an id first');
+  const banned = loadJSON(LS_BANNED, {});
+  banned[id] = {by:'admin',ts:Date.now()};
+  saveJSON(LS_BANNED, banned);
+  renderVisitors(document.getElementById('searchBox').value.trim());
+  renderBanned();
+  document.getElementById('manualId').value='';
+});
+
+/* search */
+document.getElementById('searchBox').addEventListener('input', (e)=>{
+  renderVisitors(e.target.value.trim());
+});
+
+/* export CSV */
+document.getElementById('exportBtn').addEventListener('click', ()=>{
+  const visitors = loadJSON(LS_VISITORS, {});
+  const rows = [['id','name','firstSeen','lastSeen','visits']];
+  Object.values(visitors).forEach(v => rows.push([v.id,v.name,new Date(v.firstSeen).toISOString(), new Date(v.lastSeen).toISOString(), v.visits||0]));
+  const csv = rows.map(r=> r.map(c=> `"${String(c).replace(/"/g,'""')}"`).join(',')).join('\n');
+  const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'gta6_visitors.csv'; a.click();
+  URL.revokeObjectURL(url);
+});
+
+/* clear bans */
+document.getElementById('clearBansBtn').addEventListener('click', ()=>{
+  if(!confirm('Clear all bans?')) return;
+  saveJSON(LS_BANNED, {});
+  renderBanned();
+  alert('All bans cleared');
+});
+
+/* initial render */
+renderVisitors();
+renderBanned();
+</script>
+</body>
+</html>
