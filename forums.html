@@ -1,173 +1,240 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin Dashboard - GTA 6 Portal</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Darla | Home</title>
+<link rel="icon" href="gta/kitty.jpg" type="image/jpg">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
 <style>
-    body {
-        margin: 0;
-        font-family: "Poppins", sans-serif;
-        background: #0a0a0a;
-        color: #fff;
-        overflow-x: hidden;
-    }
-    .sidebar {
-        position: fixed;
-        left: 0;
-        top: 0;
-        height: 100%;
-        width: 70px;
-        background: rgba(255, 20, 147, 0.2);
-        backdrop-filter: blur(12px);
-        transition: width 0.3s;
-        overflow: hidden;
-    }
-    .sidebar:hover {
-        width: 230px;
-    }
-    .sidebar h2 {
-        text-align: center;
-        padding: 15px;
-        font-size: 18px;
-        color: violet;
-    }
-    .sidebar a {
-        display: block;
-        color: white;
-        padding: 12px 15px;
-        text-decoration: none;
-        transition: background 0.3s;
-    }
-    .sidebar a:hover {
-        background: rgba(255, 20, 147, 0.4);
-    }
-    .content {
-        margin-left: 80px;
-        padding: 20px;
-        transition: margin-left 0.3s;
-    }
-    .sidebar:hover + .content {
-        margin-left: 240px;
-    }
-    .card {
-        background: rgba(255,255,255,0.1);
-        border-radius: 15px;
-        padding: 20px;
-        margin-bottom: 20px;
-        backdrop-filter: blur(8px);
-    }
-    .btn {
-        background: violet;
-        color: black;
-        border: none;
-        border-radius: 8px;
-        padding: 10px 15px;
-        cursor: pointer;
-        font-weight: 600;
-    }
-    .btn:hover {
-        background: #ff69b4;
-    }
-    .user-list div {
-        display: flex;
-        justify-content: space-between;
-        padding: 8px;
-        background: rgba(255,255,255,0.05);
-        margin: 5px 0;
-        border-radius: 5px;
-    }
+  :root{--accent:#ffffff; --violet:#c084fc;}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    font-family:'Orbitron',sans-serif;
+    background: url('https://i.redd.it/w1u74qaho25c1.png') center/cover no-repeat fixed;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:flex-start;
+    padding-top:80px;
+    color:#fff;
+  }
+
+  header{
+    position:fixed; top:18px; left:50%; transform:translateX(-50%);
+    z-index:50; display:flex; gap:12px;
+    padding:8px 14px; border-radius:999px;
+    backdrop-filter: blur(6px) saturate(0.9);
+    box-shadow:0 6px 18px rgba(0,0,0,0.35);
+  }
+  .nav-btn{
+    padding:8px 12px; border-radius:999px; text-decoration:none; color:#fff;
+    background:linear-gradient(90deg,rgba(255,255,255,0.03),rgba(255,255,255,0.01));
+    border:1px solid rgba(255,255,255,0.06); font-weight:700;
+  }
+  .nav-btn:hover{box-shadow:0 0 10px rgba(255,77,210,0.18)}
+
+  main{
+    flex:1;
+    display:flex; justify-content:center; align-items:center;
+    width:100%;
+    padding:120px 24px 48px;
+  }
+
+  .countdown-wrap{
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border-radius:24px;
+    padding:40px 48px;
+    text-align:center;
+    box-shadow:0 20px 60px rgba(0,0,0,0.8);
+    border:1px solid rgba(255,255,255,0.06);
+    background:rgba(0,0,0,0.3);
+    min-width:320px;
+    max-width:980px;
+    width:clamp(320px,70vw,980px);
+  }
+
+  .title{font-size:50px;color:rgba(255, 255, 255);font-weight:800;margin-bottom:8px}
+  .subtitle{color:rgba(255,255,255,0.85);margin-bottom:22px}
+
+  .clock{display:flex;gap:18px;justify-content:center;align-items:stretch;margin-top:8px;flex-wrap:wrap;}
+  .unit{
+    min-width:88px; padding:18px 16px; border-radius:14px;
+    background:rgba(0,0,0,0.5); border:1px solid rgba(255, 255, 255);
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+  }
+  .num{font-size:45px;font-weight:900;color:var(--accent);text-shadow:0 2px 6px rgba(255,255,255,0.8)}
+  .label{font-size:20px;color:rgba(255,255,255,0.85);margin-top:6px;text-transform:uppercase;text-shadow:0 1px 3px rgba(255,255,255,0.7)}
+
+  /* Side buttons and donate button (optional) */
+  .side-buttons{
+    position:fixed; top:50%; left:20px; transform:translateY(-50%);
+    display:flex; flex-direction:column; gap:12px; z-index:100;
+  }
+  .side-btn{
+    display:inline-flex; align-items:center; justify-content:center;
+    padding:10px 16px; border-radius:999px; background:rgba(0,0,0,0.4);
+    border:1px solid rgba(255,255,255,0.2); color:#fff; font-weight:700; text-decoration:none;
+    transition:0.3s; box-shadow:0 4px 12px rgba(0,0,0,0.3);
+  }
+  .side-btn:hover{background: rgba(255,255,255,0.1); box-shadow: 0 0 10px #ff4dd2,0 0 20px #ff99e6;}
+
+  .donate-btn{
+    position:fixed; bottom:20px; right:80px; background:#ff4dd2;
+    color:white; font-weight:bold; font-family:'Orbitron',sans-serif;
+    padding:12px 18px; border-radius:999px; text-decoration:none;
+    box-shadow:0 4px 15px rgba(0,0,0,0.3); transition:0.3s; z-index:1001;
+  }
+  .donate-btn:hover{background:#ff1ab3; box-shadow:0 0 15px #ff4dd2,0 0 30px #ff99e6;}
+
+  /* Name overlay */
+  .name-overlay {
+    position: fixed; inset:0; display:flex;align-items:center;justify-content:center;
+    background: rgba(0,0,0,0.75); z-index:9999;
+  }
+  .name-box{
+    background: rgba(18,4,28,0.95); padding:28px; border-radius:12px;
+    width:320px; text-align:center; border: 1px solid rgba(192,132,252,0.12);
+  }
+  .name-box h2{margin-bottom:10px;color:var(--violet);}
+  .name-box input{
+    width:100%; padding:10px; border-radius:8px;
+    border:1px solid rgba(255,255,255,0.06); background:transparent; color:#fff;
+    margin-bottom:10px;
+  }
+  .name-box button{
+    background:var(--violet); border:none; padding:10px 14px; border-radius:8px;
+    color:#000; font-weight:700; cursor:pointer;
+  }
+
+  /* Banned overlay */
+  .banned-overlay{position:fixed;inset:0;background:#080008;display:flex;align-items:center;justify-content:center;z-index:99999;color:#fff;text-align:center;padding:24px}
+  .banned-box{max-width:680px;}
+  .meta{margin-top:10px;color:rgba(255,255,255,0.75);font-size:13px;}
+
+  @media(max-width:640px){
+    header{left:12px;transform:none;right:12px;top:12px;justify-content:flex-start}
+    .countdown-wrap{padding:28px}
+    .num{font-size:28px}
+  }
 </style>
 </head>
 <body>
 
-<div class="sidebar">
-    <h2>⚙️ Admin</h2>
-    <a href="#stats">📊 Real-Time Stats</a>
-    <a href="#users">👥 User Management</a>
-    <a href="#feedback">💬 Feedback</a>
-    <a href="#settings">🎨 Settings</a>
-    <a href="#pages">📂 Manage Pages</a>
-    <a href="#announce">📢 Announcements</a>
+<header>
+  <a href="index" class="nav-btn">Home</a>
+  <a href="map" class="nav-btn">Map</a>
+  <a href="characters" class="nav-btn">Characters</a>
+  <a href="places" class="nav-btn">Places</a>
+  <a href="preorder" class="nav-btn">Wishlist</a>
+  <a href="trailers" class="nav-btn">Trailers</a>
+</header>
+
+<main>
+  <section class="countdown-wrap" aria-labelledby="gta6-title">
+    <h1 id="gta6-title" class="title">Grand Theft Auto VI</h1>
+    <div class="subtitle">Release countdown — May 26, 2026</div>
+
+    <div class="clock" role="timer" aria-live="polite" aria-atomic="true">
+      <div class="unit"><div id="days" class="num">0</div><div class="label">Days</div></div>
+      <div class="unit"><div id="hours" class="num">0</div><div class="label">Hours</div></div>
+      <div class="unit"><div id="minutes" class="num">0</div><div class="label">Minutes</div></div>
+      <div class="unit"><div id="seconds" class="num">0</div><div class="label">Seconds</div></div>
+    </div>
+  </section>
+</main>
+
+<!-- Side buttons & donate -->
+<div class="side-buttons">
+  <a href="trailers" class="side-btn">Trailers</a>
+  <a href="characters" class="side-btn">Characters</a>
+</div>
+<a href="donate" class="donate-btn">Donate</a>
+
+<!-- NAME OVERLAY -->
+<div id="nameOverlay" class="name-overlay" style="display:none">
+  <div class="name-box">
+    <h2>Choose a Display Name</h2>
+    <input id="visitorName" maxlength="24" placeholder="Your name (visible to admins)" />
+    <div style="font-size:13px;color:rgba(255,255,255,0.7);margin-bottom:10px">Be respectful — admins can ban names.</div>
+    <button id="saveNameBtn">Enter Site</button>
+  </div>
 </div>
 
-<div class="content">
-    <section id="stats" class="card">
-        <h2>📊 Real-Time Site Stats</h2>
-        <p>👁️ Views: <span id="views">0</span></p>
-        <p>🖱️ Clicks: <span id="clicks">0</span></p>
-        <button class="btn" onclick="simulateViews()">Simulate Activity</button>
-    </section>
-
-    <section id="users" class="card">
-        <h2>👥 User Management</h2>
-        <div class="user-list" id="userList"></div>
-    </section>
-
-    <section id="feedback" class="card">
-        <h2>💬 Site Feedback</h2>
-        <p>No feedback yet.</p>
-    </section>
-
-    <section id="settings" class="card">
-        <h2>🎨 Settings</h2>
-        <button class="btn" onclick="toggleTheme()">Toggle Dark/Light Mode</button>
-    </section>
-
-    <section id="pages" class="card">
-        <h2>📂 Manage Pages</h2>
-        <ul>
-            <li>News Page</li>
-            <li>Facts Page</li>
-            <li>Forums</li>
-            <li>Wishlist</li>
-            <li>GTA 6 Countdown</li>
-        </ul>
-    </section>
-
-    <section id="announce" class="card">
-        <h2>📢 Announcements</h2>
-        <textarea id="announcementText" placeholder="Write announcement..." rows="3" style="width:100%;border-radius:8px;"></textarea>
-        <button class="btn" onclick="sendAnnouncement()">Send</button>
-    </section>
+<!-- BANNED OVERLAY -->
+<div id="bannedOverlay" class="banned-overlay" style="display:none">
+  <div class="banned-box">
+    <h1 style="color:#ff4d4d">You have been banned</h1>
+    <p class="meta">If you believe this is a mistake contact the site owner. Your visitor id is shown below (for admin reference).</p>
+    <p class="meta"><strong id="bannedId"></strong></p>
+  </div>
 </div>
 
 <script>
-let views = 0, clicks = 0;
-function simulateViews() {
-    views += Math.floor(Math.random() * 50);
-    clicks += Math.floor(Math.random() * 20);
-    document.getElementById('views').innerText = views;
-    document.getElementById('clicks').innerText = clicks;
+/* Countdown */
+const target = new Date('2026-05-26T00:00:00');
+function pad(n){return String(n).padStart(2,'0');}
+function updateCountdown(){
+  const now = new Date();
+  let diff = Math.max(0, Math.floor((target-now)/1000));
+  const days = Math.floor(diff/86400); diff%=86400;
+  const hours = Math.floor(diff/3600); diff%=3600;
+  const minutes = Math.floor(diff/60);
+  const seconds = diff%60;
+  document.getElementById('days').textContent = days;
+  document.getElementById('hours').textContent = pad(hours);
+  document.getElementById('minutes').textContent = pad(minutes);
+  document.getElementById('seconds').textContent = pad(seconds);
 }
+updateCountdown(); setInterval(updateCountdown,1000);
 
-const users = ["PlayerOne", "Exlusx", "GTAFan", "LuciaLover", "ViceCityGuy"];
-const userList = document.getElementById("userList");
-
-users.forEach(user => {
-    const div = document.createElement("div");
-    div.innerHTML = `<span>${user}</span><button class='btn' onclick='banUser(this)'>Ban</button>`;
-    userList.appendChild(div);
-});
-
-function banUser(btn) {
-    btn.innerText = btn.innerText === "Ban" ? "Unban" : "Ban";
-    btn.style.background = btn.innerText === "Ban" ? "violet" : "red";
+/* Visitor & Ban System */
+function makeId(len=14){const chars='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'; let s=''; for(let i=0;i<len;i++) s+=chars[Math.floor(Math.random()*chars.length)]; return s;}
+const LS_VISITOR_ID='gta6_visitor_id', LS_VISITORS='gta6_visitors', LS_BANNED='gta6_banned', LS_STATS='gta6_stats';
+function loadJSON(key,def){try{const v=localStorage.getItem(key);return v?JSON.parse(v):def;}catch(e){return def;}}
+function saveJSON(key,obj){localStorage.setItem(key,JSON.stringify(obj));}
+let visitorId=localStorage.getItem(LS_VISITOR_ID); if(!visitorId){visitorId=makeId(); localStorage.setItem(LS_VISITOR_ID,visitorId);}
+const bannedMap=loadJSON(LS_BANNED,{}); 
+if(bannedMap[visitorId]){
+  document.getElementById('bannedOverlay').style.display='flex';
+  document.getElementById('bannedId').textContent=visitorId;
+}else{
+  (function initVisitorFlow(){
+    const visitors=loadJSON(LS_VISITORS,{});
+    let visitor=visitors[visitorId];
+    if(visitor){visitor.lastSeen=Date.now(); visitor.visits=(visitor.visits||0)+1; visitors[visitorId]=visitor; saveJSON(LS_VISITORS,visitors);
+      const stats=loadJSON(LS_STATS,{views:0}); stats.views=(stats.views||0)+1; saveJSON(LS_STATS,stats);
+      showToast(`Welcome back, ${visitor.name}!`);
+    } else {document.getElementById('nameOverlay').style.display='flex';document.getElementById('visitorName').focus();}
+    document.getElementById('saveNameBtn').addEventListener('click',()=>{
+      const raw=document.getElementById('visitorName').value.trim();
+      const name=raw?raw:'Anonymous';
+      const now=Date.now();
+      const vobj={id:visitorId,name,firstSeen:now,lastSeen:now,visits:1};
+      visitors[visitorId]=vobj; saveJSON(LS_VISITORS,visitors);
+      const stats=loadJSON(LS_STATS,{views:0}); stats.views=(stats.views||0)+1; saveJSON(LS_STATS,stats);
+      document.getElementById('nameOverlay').style.display='none';
+      showToast(`Welcome, ${name}!`);
+    });
+    document.getElementById('visitorName').addEventListener('keypress', e=>{if(e.key==='Enter') document.getElementById('saveNameBtn').click();});
+  })();
 }
-
-function toggleTheme() {
-    document.body.style.background = document.body.style.background === "white" ? "#0a0a0a" : "white";
-    document.body.style.color = document.body.style.color === "black" ? "white" : "black";
+function showToast(msg){
+  const t=document.createElement('div'); t.textContent=msg;
+  Object.assign(t.style,{
+    position:'fixed', left:'50%', bottom:'30px', transform:'translateX(-50%)',
+    background:'rgba(0,0,0,0.7)', padding:'10px 16px', borderRadius:'10px', color:'#fff',
+    zIndex:9999, boxShadow:'0 6px 18px rgba(0,0,0,0.6)', fontFamily:'Orbitron'
+  });
+  document.body.appendChild(t); setTimeout(()=>t.remove(),3000);
 }
-
-function sendAnnouncement() {
-    const text = document.getElementById("announcementText").value;
-    if (text.trim()) alert(`Announcement sent:\n\n${text}`);
-    else alert("Please write something first!");
-}
+/* Admin debugging */
+window._gta6={getVisitors:()=>loadJSON(LS_VISITORS,{}), getBanned:()=>loadJSON(LS_BANNED,{}), getStats:()=>loadJSON(LS_STATS,{})};
 </script>
-
 </body>
 </html>
+
 
 
