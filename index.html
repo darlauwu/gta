@@ -1,28 +1,15 @@
-<!--
-GTA 6 Countdown - single-file HTML
-Instructions:
-- Replace `lucia-bg.jpg` with your Lucia background image in the same folder.
-- Replace `lucia-cursor.png` with your custom cursor image.
-- Replace trailer links in the header anchors with the real trailer URLs.
-- Open this file in a browser to preview.
--->
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Darla | Home</title>
-<link rel="icon" href="gta/kitty.jpg" type="image/jpg">
-    <!-- Orbitron font like your site -->
+  <link rel="icon" href="gta/kitty.jpg" type="image/jpg">
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
   <style>
     *{box-sizing:border-box;margin:0;padding:0}
-    html,body{height:100%}
+    html,body{height:100%;overflow-x:hidden}
 
-    /* Lucia background */
-    :root{
-      --accent:#ffffff;
-    }
     body{
       position: relative;
       font-family:'Orbitron',sans-serif;
@@ -30,38 +17,30 @@ Instructions:
       display:flex;
       align-items:center;
       justify-content:center;
+      overflow:hidden;
     }
 
-    .page{
-      width:100%;
-      min-height:100vh;
-      display:flex;
-      flex-direction:column;
-      position: relative;
-      z-index:1;
+    :root{--accent:#ffffff;}
+
+    /* --- FALLING LEAVES --- */
+    .leaf {
+      position: fixed;
+      top: -10vh;
+      width: 32px;
+      height: 32px;
+      background-image: url('https://pngimg.com/d/autumn_leaves_PNG3623.png');
+      background-size: cover;
+      opacity: 0.8;
+      animation: fall linear infinite;
+      pointer-events: none;
+      z-index: 0;
+    }
+    @keyframes fall {
+      0% {transform: translateY(0) rotate(0deg);}
+      100% {transform: translateY(110vh) rotate(360deg);}
     }
 
-    .trailer-btn{
-      display:inline-flex;
-      gap:8px;
-      align-items:center;
-      padding:8px 12px;
-      border-radius:999px;
-      text-decoration:none;
-      color:var(--accent);
-      font-weight:600;
-      font-size:14px;
-      background:rgba(0,0,0,0.4);
-      border:1px solid rgba(255,255,255,0.1);
-    }
-
-    .trailer-btn .dot{
-      width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,0.9);
-    }
-
-    main{
-      flex:1;display:flex;align-items:center;justify-content:center;padding:120px 24px 48px;
-    }
+    .page{width:100%;min-height:100vh;display:flex;flex-direction:column;position: relative;z-index:1;}
 
     .countdown-wrap{
       backdrop-filter: blur(6px);
@@ -75,15 +54,15 @@ Instructions:
       min-width:320px;
       max-width:980px;
       width:clamp(320px,70vw,980px);
+      z-index: 5;
     }
 
-/* Header (same style as your home) */
     header{
       position:fixed;
       top:18px;
       left:50%;
       transform:translateX(-50%);
-      z-index:50;
+      z-index:10;
       display:flex;
       gap:12px;
       padding:8px 14px;
@@ -98,8 +77,7 @@ Instructions:
     }
     .nav-btn:hover{box-shadow:0 0 10px rgba(255,77,210,0.18)}
 
-    
-    .title{font-size:50px;color:rgba(255, 255, 255);font-weight:800;margin-bottom:8px}
+    .title{font-size:50px;color:rgba(255,255,255);font-weight:800;margin-bottom:8px}
     .subtitle{color:rgba(255,255,255,0.85);margin-bottom:22px}
 
     .clock{
@@ -107,97 +85,44 @@ Instructions:
     }
 
     .unit{
-      min-width:88px;padding:18px 16px;border-radius:14px;background:rgba(0,0,0,0.5);border:1px solid rgba(255, 255, 255);
+      min-width:88px;padding:18px 16px;border-radius:14px;background:rgba(0,0,0,0.5);
+      border:1px solid rgba(255,255,255);
       display:flex;flex-direction:column;align-items:center;justify-content:center;
     }
 
-    .num{font-size:45px;font-weight:900;color:var(--accent);text-shadow:0 2px 6px rgba(255, 255, 255)}
-    .label{font-size:20px;color:rgba(255,255,255,0.85);margin-top:6px;text-transform:uppercase;text-shadow:0 1px 3px rgba(255, 255, 255)}
-
-    .footnote{margin-top:18px;color:rgba(255,255,255,0.8);font-size:30px;text-shadow:0 1px 3px rgba(255, 255, 255}
+    .num{font-size:45px;font-weight:900;color:var(--accent);text-shadow:0 2px 6px rgba(255,255,255)}
+    .label{font-size:20px;color:rgba(255,255,255,0.85);margin-top:6px;text-transform:uppercase;text-shadow:0 1px 3px rgba(255,255,255)}
+    .footnote{margin-top:18px;color:rgba(255,255,255,0.8);font-size:30px;text-shadow:0 1px 3px rgba(255,255,255)}
 
     @media (max-width:640px){
       header{left:12px;transform:none;right:12px;top:12px;justify-content:flex-start}
       .countdown-wrap{padding:28px}
       .num{font-size:28px}
     }
-    .side-buttons {
-  position: fixed;
-  top: 50%;
-  left: 20px; /* change to right:20px for right side */
-  transform: translateY(-50%);
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  z-index: 100;
-}
 
-.side-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 10px 16px;
-  border-radius: 999px;
-  background: rgba(0,0,0,0.4);
-  border: 1px solid rgba(255,255,255,0.2);
-  color: #fff;
-  font-weight: 700;
-  text-decoration: none;
-  transition: 0.3s;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-}
-
-.side-btn:hover {
-  background: rgba(255,255,255,0.1);
-  box-shadow: 0 0 10px #ff4dd2, 0 0 20px #ff99e6;
-}
-    
-    #clock {
-      position: fixed;
-      top: 10px;
-      right: 10px;
-      font-size: 14px;
-      padding: 5px 8px;
-      background: rgba(0, 0, 0, 0.4); /* transparent background */
-      border-radius: 6px;
-      color: #fff;
-      z-index: 1000;
-      font-weight: bold;
-    }
-
-   >
-    body {
-      margin:0;
-      padding:0;
-      font-family:'Orbitron',sans-serif;
-      background:#111;
-      color:#fff;
-      min-height:200vh;
-    }
     .donate-btn {
-  position: fixed;
-  bottom: 20px;
-  right: 80px; /* keeps it left of your settings button */
-  background: #ff4dd2;
-  color: white;
-  font-weight: bold;
-  font-family: 'Orbitron', sans-serif;
-  padding: 12px 18px;
-  border-radius: 999px;
-  text-decoration: none;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-  transition: 0.3s;
-  z-index: 1001;
-}
-.donate-btn:hover {
-  background: #ff1ab3;
-  box-shadow: 0 0 15px #ff4dd2, 0 0 30px #ff99e6;
-}
+      position: fixed;
+      bottom: 20px;
+      right: 80px;
+      background: #ff4dd2;
+      color: white;
+      font-weight: bold;
+      font-family: 'Orbitron', sans-serif;
+      padding: 12px 18px;
+      border-radius: 999px;
+      text-decoration: none;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      transition: 0.3s;
+      z-index: 1001;
+    }
+    .donate-btn:hover {
+      background: #ff1ab3;
+      box-shadow: 0 0 15px #ff4dd2, 0 0 30px #ff99e6;
+    }
   </style>
 </head>
 <body>
-  
-   <header>
+  <header>
     <a href="index" class="nav-btn">Home</a>
     <a href="map" class="nav-btn">Map</a>
     <a href="characters" class="nav-btn">Characters</a>
@@ -205,64 +130,54 @@ Instructions:
     <a href="preorder" class="nav-btn">Wishlist</a>
     <a href="trailers" class="nav-btn">Trailers</a>
   </header>
-  
-    <main>
-      <section class="countdown-wrap" aria-labelledby="gta6-title">
-        <h1 id="gta6-title" class="title">Grand Theft Auto VI</h1>
-        <div class="subtitle">Release countdown — May 26, 2026</div>
 
-        <div class="clock" role="timer" aria-live="polite" aria-atomic="true">
-          <div class="unit">
-            <div id="days" class="num">0</div>
-            <div class="label">Days</div>
-          </div>
-          <div class="unit">
-            <div id="hours" class="num">0</div>
-            <div class="label">Hours</div>
-          </div>
-          <div class="unit">
-            <div id="minutes" class="num">0</div>
-            <div class="label">Minutes</div>
-          </div>
-          <div class="unit">
-            <div id="seconds" class="num">0</div>
-            <div class="label">Seconds</div>
-          </div>
-        </div>
-      </section>
-    </main>
-  </div>
+  <main>
+    <section class="countdown-wrap" aria-labelledby="gta6-title">
+      <h1 id="gta6-title" class="title">Grand Theft Auto VI</h1>
+      <div class="subtitle">Release countdown — May 26, 2026</div>
 
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4645233066140145"
-     crossorigin="anonymous"></script>
+      <div class="clock" role="timer" aria-live="polite" aria-atomic="true">
+        <div class="unit"><div id="days" class="num">0</div><div class="label">Days</div></div>
+        <div class="unit"><div id="hours" class="num">0</div><div class="label">Hours</div></div>
+        <div class="unit"><div id="minutes" class="num">0</div><div class="label">Minutes</div></div>
+        <div class="unit"><div id="seconds" class="num">0</div><div class="label">Seconds</div></div>
+      </div>
+    </section>
+  </main>
   
   <script>
+    // Countdown
     const target = new Date('2026-05-26T00:00:00');
-
     function pad(n){return String(n).padStart(2,'0');}
-
     function update(){
       const now = new Date();
       let diff = Math.floor((target - now) / 1000);
       if (diff < 0) diff = 0;
-
       const days = Math.floor(diff / 86400);
       diff -= days * 86400;
       const hours = Math.floor(diff / 3600);
       diff -= hours * 3600;
       const minutes = Math.floor(diff / 60);
       const seconds = diff - minutes * 60;
-
       document.getElementById('days').textContent = days;
       document.getElementById('hours').textContent = pad(hours);
       document.getElementById('minutes').textContent = pad(minutes);
       document.getElementById('seconds').textContent = pad(seconds);
     }
-
     update();
     setInterval(update, 1000);
 
-    
+    // Create falling leaves
+    for (let i = 0; i < 20; i++) {
+      const leaf = document.createElement('div');
+      leaf.classList.add('leaf');
+      leaf.style.left = Math.random() * 100 + 'vw';
+      leaf.style.animationDuration = 8 + Math.random() * 6 + 's';
+      leaf.style.animationDelay = Math.random() * 5 + 's';
+      leaf.style.opacity = 0.4 + Math.random() * 0.6;
+      leaf.style.transform = `rotate(${Math.random() * 360}deg)`;
+      document.body.appendChild(leaf);
+    }
   </script>
 </body>
 </html>
