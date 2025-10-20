@@ -26,18 +26,23 @@
     .leaf {
       position: fixed;
       top: -10vh;
-      width: 32px;
-      height: 32px;
-      background-image: url('https://media.discordapp.net/attachments/1414343219059097731/1429872270855110676/autumns-embrace-two-vibrant-maple-leaves-fall-colors.png?ex=68f7b7d3&is=68f66653&hm=c9e44c32c5af184ae783c21d66d61f9e097aa4d0a34f11e869ccc2448d4a5301&=&format=webp&quality=lossless&width=832&height=832');
+      width: 28px;
+      height: 28px;
+      background-image: url('https://cdn.discordapp.com/attachments/1414343219059097731/1429872270855110676/autumns-embrace-two-vibrant-maple-leaves-fall-colors.png?ex=68f7b7d3&is=68f66653&hm=c9e44c32c5af184ae783c21d66d61f9e097aa4d0a34f11e869ccc2448d4a5301&');
       background-size: cover;
-      opacity: 0.8;
+      opacity: 0.85;
       animation: fall linear infinite;
       pointer-events: none;
       z-index: 0;
     }
+
     @keyframes fall {
-      0% {transform: translateY(0) rotate(0deg);}
-      100% {transform: translateY(110vh) rotate(360deg);}
+      0% {
+        transform: translateY(0) rotate(0deg);
+      }
+      100% {
+        transform: translateY(110vh) rotate(360deg);
+      }
     }
 
     .page{width:100%;min-height:100vh;display:flex;flex-direction:column;position: relative;z-index:1;}
@@ -144,7 +149,7 @@
       </div>
     </section>
   </main>
-  
+
   <script>
     // Countdown
     const target = new Date('2026-05-26T00:00:00');
@@ -167,13 +172,14 @@
     update();
     setInterval(update, 1000);
 
-    // Create falling leaves
-    for (let i = 0; i < 20; i++) {
+    // Create more falling leaves
+    const totalLeaves = 60; // increased from 20 to 60
+    for (let i = 0; i < totalLeaves; i++) {
       const leaf = document.createElement('div');
       leaf.classList.add('leaf');
       leaf.style.left = Math.random() * 100 + 'vw';
-      leaf.style.animationDuration = 8 + Math.random() * 6 + 's';
-      leaf.style.animationDelay = Math.random() * 5 + 's';
+      leaf.style.animationDuration = 5 + Math.random() * 6 + 's'; // faster fall
+      leaf.style.animationDelay = Math.random() * 10 + 's';
       leaf.style.opacity = 0.4 + Math.random() * 0.6;
       leaf.style.transform = `rotate(${Math.random() * 360}deg)`;
       document.body.appendChild(leaf);
