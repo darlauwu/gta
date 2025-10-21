@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GTA 6 | Admin Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;font-family:'Orbitron',sans-serif}
+  body{
+    background:url('gta/normal.png') center/cover no-repeat fixed;
+    height:100vh;display:flex;align-items:center;justify-content:center;
+  }
+
+  /* LOGIN SCREEN */
+  #loginScreen{
+    background:rgba(0,0,0,0.6);
+    backdrop-filter:blur(10px);
+    border:1px solid rgba(255,255,255,0.2);
+    border-radius:16px;
+    padding:40px;
+    text-align:center;
+    box-shadow:0 0 30px rgba(255,77,210,0.3);
+  }
+  #loginScreen h1{color:#fff;margin-bottom:20px;font-size:28px}
+  #adminPass{
+    padding:10px 14px;
+    border:none;border-radius:8px;
+    background:rgba(255,255,255,0.1);
+    color:white;width:200px;
+    text-align:center;
+  }
+  #loginBtn{
+    margin-top:16px;
+    padding:10px 18px;
+    border-radius:999px;
+    border:none;
+    background:linear-gradient(90deg,#ff4dd2,#ff99e6);
+    color:white;font-weight:700;cursor:pointer;
+  }
+
+  /* DASHBOARD */
+  #dashboard{
+    display:none;
+    width:100%;height:100%;
+    display:flex;
+    color:white;
+  }
+
+  .sidebar{
+    width:240px;
+    background:rgba(0,0,0,0.6);
+    backdrop-filter:blur(8px);
+    border-right:1px solid rgba(255,255,255,0.1);
+    padding:20px;
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+  }
+
+  .sidebar h2{font-size:20px;margin-bottom:10px;color:#ff99e6}
+  .sidebar button{
+    background:rgba(255,255,255,0.1);
+    border:1px solid rgba(255,255,255,0.15);
+    color:white;
+    border-radius:8px;
+    padding:10px;
+    cursor:pointer;
+    text-align:left;
+    transition:0.3s;
+  }
+  .sidebar button:hover{background:rgba(255,255,255,0.2);box-shadow:0 0 10px #ff4dd2}
+
+  .content{
+    flex:1;
+    background:rgba(0,0,0,0.5);
+    backdrop-filter:blur(10px);
+    padding:30px;
+    overflow:auto;
+  }
+
+  .section{
+    display:none;
+    animation:fadeIn 0.4s ease;
+  }
+  @keyframes fadeIn{
+    from{opacity:0;transform:translateY(10px)}
+    to{opacity:1;transform:none}
+  }
+
+  .section.active{display:block;}
+
+  .popup{
+    position:fixed;
+    top:0;left:0;width:100%;height:100%;
+    display:none;align-items:center;justify-content:center;
+    background:rgba(0,0,0,0.6);backdrop-filter:blur(6px);
+    z-index:100;
+  }
+  .popup-content{
+    background:rgba(20,20,20,0.8);
+    padding:30px;border-radius:12px;text-align:center;
+    border:1px solid rgba(255,255,255,0.2);
+  }
+  .popup input{
+    padding:10px;margin-top:10px;
+    border:none;border-radius:6px;
+    background:rgba(255,255,255,0.1);
+    color:#fff;text-align:center;
+  }
+  .popup button{
+    margin-top:14px;padding:10px 16px;
+    border:none;border-radius:8px;
+    background:linear-gradient(90deg,#ff4dd2,#ff99e6);
+    color:white;cursor:pointer;
+  }
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="loginScreen">
+  <h1>Admin Access</h1>
+  <input type="password" id="adminPass" placeholder="Enter Password">
+  <br>
+  <button id="loginBtn">Login</button>
+</div>
+
+<!-- DASHBOARD -->
+<div id="dashboard">
+  <div class="sidebar">
+    <h2>Admin Menu</h2>
+    <button onclick="showSection('overview')">Overview</button>
+    <button onclick="showSection('users')">User Manager</button>
+    <button onclick="showSection('feedback')">Feedback</button>
+    <button onclick="showSection('stats')">Site Stats</button>
+    <button onclick="showSection('editor')">Page Editor</button>
+    <button onclick="showSection('settings')">Settings</button>
+  </div>
+
+  <div class="content">
+    <div id="overview" class="section active">
+      <h2>Welcome, Admin</h2>
+      <p>This panel allows you to manage your GTA 6 fan site — stats, feedback, and customization.</p>
+    </div>
+
+    <div id="users" class="section">
+      <h2>User Manager</h2>
+      <p>Protected section — requires re-authentication.</p>
+    </div>
+
+    <div id="feedback" class="section">
+      <h2>Feedback</h2>
+      <ul id="feedbackList">
+        <li>PlayerOne: “Love the countdown design!”</li>
+        <li>ViceFan92: “Can you add a Lucia wallpaper page?”</li>
+      </ul>
+    </div>
+
+    <div id="stats" class="section">
+      <h2>Live Site Stats</h2>
+      <p id="views">Views: 0</p>
+      <p id="clicks">Clicks: 0</p>
+    </div>
+
+    <div id="editor" class="section">
+      <h2>Page Editor</h2>
+      <textarea id="pageEditor" style="width:100%;height:200px;background:rgba(255,255,255,0.05);color:white;border:1px solid rgba(255,255,255,0.2);border-radius:6px;padding:10px;">
+<!-- Type your page HTML here -->
+      </textarea>
+      <br><button onclick="alert('Page content updated (local only).')">Save</button>
+    </div>
+
+    <div id="settings" class="section">
+      <h2>Settings</h2>
+      <p>Change background image:</p>
+      <input type="text" id="bgInput" placeholder="Enter image URL" style="width:100%;padding:10px;border-radius:8px;margin-top:10px;">
+      <button onclick="changeBackground()">Apply</button>
+    </div>
+  </div>
+</div>
+
+<!-- PASSWORD POPUP -->
+<div id="popup" class="popup">
+  <div class="popup-content">
+    <h2>Re-enter Admin Password</h2>
+    <input type="password" id="popupPass" placeholder="Password">
+    <br><button onclick="checkPopup()">Confirm</button>
+  </div>
+</div>
+
+<script>
+const password = "gta6admin";
+
+document.getElementById("loginBtn").onclick = () => {
+  const pass = document.getElementById("adminPass").value;
+  if(pass === password){
+    document.getElementById("loginScreen").style.display="none";
+    document.getElementById("dashboard").style.display="flex";
+  } else {
+    alert("Incorrect password.");
+  }
+};
+
+function showSection(id){
+  const all = document.querySelectorAll(".section");
+  all.forEach(s=>s.classList.remove("active"));
+  const target = document.getElementById(id);
+  if(id==="users"){
+    document.getElementById("popup").style.display="flex";
+  } else {
+    target.classList.add("active");
+  }
+}
+
+function checkPopup(){
+  const pass = document.getElementById("popupPass").value;
+  if(pass===password){
+    document.getElementById("popup").style.display="none";
+    document.getElementById("users").classList.add("active");
+  } else alert("Access denied.");
+}
+
+let views=0,clicks=0;
+setInterval(()=>{
+  views+=Math.floor(Math.random()*3);
+  clicks+=Math.floor(Math.random()*2);
+  document.getElementById("views").innerText="Views: "+views;
+  document.getElementById("clicks").innerText="Clicks: "+clicks;
+},1000);
+
+function changeBackground(){
+  const url=document.getElementById("bgInput").value;
+  if(url) document.body.style.background=`url('${url}') center/cover no-repeat fixed`;
+}
+</script>
+</body>
+</html>
