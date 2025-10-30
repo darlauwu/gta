@@ -73,7 +73,7 @@
     .trailer-card:hover{transform:translateY(-6px);}
     .trailer-card iframe{
       width:100%;height:200px;border:none;border-radius:12px;
-      pointer-events:none; /* prevent accidental clicks */
+      pointer-events:none; /* prevents iframe from stealing click */
     }
     .trailer-card h2{
       font-size:20px;margin-top:12px;color:#fff;text-align:center;
@@ -85,13 +85,13 @@
       .trailer-card iframe{height:180px;}
     }
 
-    /* Invisible button bottom right */
+    /* Invisible secret button */
     #secret-btn{
       position:fixed;bottom:20px;right:20px;width:50px;height:50px;
       background:transparent;border:none;cursor:pointer;z-index:999;
     }
 
-    /* Fullscreen trailer overlay */
+    /* Fullscreen overlay */
     .overlay{
       position:fixed;inset:0;
       background:rgba(0,0,0,0.9);
@@ -101,12 +101,13 @@
       z-index:1000;
       opacity:0;
       pointer-events:none;
-      transition:opacity 0.3s ease;
+      transition:opacity 0.4s ease;
     }
     .overlay.active{
       opacity:1;
       pointer-events:auto;
     }
+
     .overlay iframe{
       width:90vw;
       height:70vh;
@@ -114,7 +115,15 @@
       border:none;
       border-radius:16px;
       box-shadow:0 0 40px rgba(255,255,255,0.2);
+      transform:scale(0.85);
+      opacity:0;
+      transition:transform 0.4s ease, opacity 0.4s ease;
     }
+    .overlay.active iframe{
+      transform:scale(1);
+      opacity:1;
+    }
+
     .close-btn{
       position:fixed;
       top:30px;right:40px;
@@ -126,6 +135,7 @@
       width:40px;height:40px;
       cursor:pointer;
       transition:0.3s;
+      z-index:1001;
     }
     .close-btn:hover{
       background:rgba(255,255,255,0.25);
