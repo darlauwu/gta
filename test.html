@@ -7,211 +7,205 @@
   <link rel="icon" href="gta/kitty.jpg" type="image/jpg">
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
 
-  <style>
-    * { margin:0; padding:0; box-sizing:border-box; }
-    html, body { height:100%; }
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+html, body { height:100%; }
 
-    body {
-      font-family: 'Orbitron', sans-serif;
-      background:
-        linear-gradient(135deg, rgba(255,77,210,0.15), rgba(0,255,224,0.08)),
-        url('gta/others.jpg') center/cover no-repeat fixed;
-      background-blend-mode: overlay;
-      color: #fff;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
+body {
+  font-family: 'Orbitron', sans-serif;
+  background:
+    linear-gradient(135deg, rgba(255,77,210,0.15), rgba(0,255,224,0.08)),
+    url('gta/others.jpg') center/cover no-repeat fixed;
+  background-blend-mode: overlay;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
-    body::after {
-      content:"";
-      position: fixed;
-      inset:0;
-      background: rgba(0,0,0,0.55);
-      z-index:0;
-    }
+body::after {
+  content:"";
+  position: fixed;
+  inset:0;
+  background: rgba(0,0,0,0.55);
+  z-index:0;
+}
 
-    /* Header nav */
-    header {
-      position: fixed;
-      top:18px;
-      left:50%;
-      transform: translateX(-50%);
-      z-index:50;
-      display: flex;
-      gap:12px;
-      padding:8px 14px;
-      border-radius:999px;
-      backdrop-filter: blur(6px) saturate(0.9);
-      box-shadow:0 6px 18px rgba(0,0,0,0.35);
-    }
-    .nav-btn {
-      padding:8px 12px;
-      border-radius:999px;
-      text-decoration:none;
-      color:#fff;
-      background:linear-gradient(90deg,rgba(255,255,255,0.03),rgba(255,255,255,0.01));
-      border:1px solid rgba(255,255,255,0.06);
-      font-weight:700;
-      transition:0.3s;
-    }
-    .nav-btn:hover { box-shadow:0 0 10px rgba(255,77,210,0.18); }
+header {
+  position: fixed;
+  top:18px;
+  left:50%;
+  transform: translateX(-50%);
+  z-index:50;
+  display: flex;
+  gap:12px;
+  padding:8px 14px;
+  border-radius:999px;
+  backdrop-filter: blur(6px) saturate(0.9);
+  box-shadow:0 6px 18px rgba(0,0,0,0.35);
+}
 
-    /* Page Layout */
-    .page {
-      position: relative;
-      z-index:10;
-      width: clamp(900px,90vw,1300px);
-      margin-top:120px;
-      margin-bottom:60px;
-    }
+.nav-btn {
+  padding:8px 12px;
+  border-radius:999px;
+  text-decoration:none;
+  color:#fff;
+  background:rgba(0,0,0,0.4);
+  border:1px solid rgba(255,255,255,0.08);
+  font-weight:700;
+  transition:0.3s;
+}
+.nav-btn:hover {
+  background:rgba(255,255,255,0.1);
+}
 
-    h1 {
-      text-align: center;
-      font-size:48px;
-      font-weight:900;
-      margin-bottom:40px;
-      text-shadow: 0 0 20px rgba(255,77,210,0.5);
-    }
+.page {
+  position: relative;
+  z-index:10;
+  width: clamp(900px,90vw,1300px);
+  margin-top:120px;
+  margin-bottom:60px;
+}
 
-    /* Grid */
-    .places-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px,1fr));
-      gap:24px;
-    }
+h1 {
+  text-align: center;
+  font-size:48px;
+  font-weight:900;
+  margin-bottom:40px;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.7);
+}
 
-    /* Place Card */
-    .place-card {
-      position: relative;
-      background: rgba(0,0,0,0.45);
-      border:1px solid rgba(255,255,255,0.05);
-      border-radius:18px;
-      overflow: hidden;
-      box-shadow: 0 12px 28px rgba(0,0,0,0.6);
-      transition: transform 0.2s;
-    }
+.places-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px,1fr));
+  gap:24px;
+}
 
-    .place-card:hover { transform: translateY(-6px); }
+.place-card {
+  position: relative;
+  background: rgba(0,0,0,0.45);
+  border:1px solid rgba(255,255,255,0.05);
+  border-radius:18px;
+  overflow: hidden;
+  box-shadow: 0 12px 28px rgba(0,0,0,0.6);
+  transition: transform 0.3s ease;
+}
+.place-card:hover {
+  transform: translateY(-6px);
+}
 
-    .place-card img {
-      width:100%;
-      height:220px;
-      object-fit: cover;
-      border-radius:14px;
-      transition: transform 0.5s ease;
-      display:block;
-    }
+.place-card img {
+  width:100%;
+  height:240px;
+  object-fit: cover;
+  border-radius:12px;
+  display: block;
+}
 
-    .place-card:hover img {
-      transform: scale(1.1);
-      filter: blur(2px) brightness(0.7);
-    }
+/* Overlay appears smoothly on hover */
+.place-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.8);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  text-align: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s ease, visibility 0.4s ease;
+}
 
-    /* Overlay effect */
-    .overlay {
-      position:absolute;
-      inset:0;
-      background: rgba(0,0,0,0.75);
-      color:#fff;
-      display:flex;
-      flex-direction:column;
-      justify-content:center;
-      align-items:center;
-      text-align:center;
-      padding:20px;
-      opacity:0;
-      transition: opacity 0.4s ease;
-      border-radius:18px;
-    }
+.place-card:hover .place-overlay {
+  opacity: 1;
+  visibility: visible;
+}
 
-    .place-card:hover .overlay { opacity:1; }
+.place-overlay h2 {
+  font-size: 22px;
+  margin-bottom: 10px;
+  text-shadow: 0 0 10px rgba(255,255,255,0.2);
+}
 
-    .overlay h2 {
-      font-size:22px;
-      margin-bottom:10px;
-      color:#00ffe0;
-      text-shadow:0 0 10px rgba(0,255,224,0.6);
-    }
+.place-overlay p {
+  font-size: 14px;
+  color: #ddd;
+  line-height: 1.5;
+}
 
-    .overlay p {
-      font-size:14px;
-      line-height:1.5;
-      color:rgba(255,255,255,0.9);
-    }
-
-    @media(max-width:480px) {
-      h1 { font-size:34px; }
-      .overlay h2 { font-size:18px; }
-      .overlay p { font-size:13px; }
-    }
-  </style>
+@media(max-width:480px) {
+  h1 { font-size:34px; }
+  .place-overlay h2 { font-size:18px; }
+}
+</style>
 </head>
+
 <body>
-  <header>
-    <a href="index" class="nav-btn">Home</a>
-    <a href="map" class="nav-btn">Map</a>
-    <a href="characters" class="nav-btn">Characters</a>
-    <a href="places" class="nav-btn">Places</a>
-    <a href="preorder" class="nav-btn">Wishlist</a>
-    <a href="trailers" class="nav-btn">Trailers</a>
-  </header>
+<header>
+  <a href="index" class="nav-btn">Home</a>
+  <a href="map" class="nav-btn">Map</a>
+  <a href="characters" class="nav-btn">Characters</a>
+  <a href="places" class="nav-btn">Places</a>
+  <a href="preorder" class="nav-btn">Wishlist</a>
+  <a href="trailers" class="nav-btn">Trailers</a>
+</header>
 
-  <main class="page">
-    <h1>GTA 6 Locations</h1>
-    <div class="places-grid">
+<main class="page">
+  <h1>GTA 6 Locations</h1>
+  <div class="places-grid">
 
-      <div class="place-card">
-        <img src="gta/places/vice.jpg" alt="Vice City">
-        <div class="overlay">
-          <h2>Vice City</h2>
-          <p>The glamour, hustle, and greed of America captured in a single city — from Ocean Beach’s pastel hotels to Little Cuba’s busy panaderías and the port’s endless ships.</p>
-        </div>
+    <div class="place-card">
+      <img src="gta/places/vice.jpg" alt="Vice City Beach">
+      <div class="place-overlay">
+        <h2>Vice City</h2>
+        <p>The glamour, hustle, and greed of America captured in a single city. From pastel art deco hotels to the bright white sands of Ocean Beach — Vice City has it all.</p>
       </div>
-
-      <div class="place-card">
-        <img src="gta/places/leoninda.jpg" alt="Leonida Keys">
-        <div class="overlay">
-          <h2>Leonida Keys</h2>
-          <p>Tropical paradise meets danger. The Keys are beautiful and deadly — a perfect getaway for anyone who doesn’t mind taking risks.</p>
-        </div>
-      </div>
-
-      <div class="place-card">
-        <img src="gta/places/grassrivers.jpg" alt="Grassrivers">
-        <div class="overlay">
-          <h2>Grassrivers</h2>
-          <p>Beneath the calm waters lie secrets — gators, smugglers, and things even locals don’t talk about. Enter at your own risk.</p>
-        </div>
-      </div>
-
-      <div class="place-card">
-        <img src="gta/places/port.jpg" alt="Port Gellhorn">
-        <div class="overlay">
-          <h2>Port Gellhorn</h2>
-          <p>Once a booming vacation spot, now a shadow of its past. Cheap motels and dirt tracks hide the new underground economy.</p>
-        </div>
-      </div>
-
-      <div class="place-card">
-        <img src="gta/places/ambrosia.jpg" alt="Ambrosia">
-        <div class="overlay">
-          <h2>Ambrosia</h2>
-          <p>American industry’s last stand — fueled by sugar, sweat, and backroom deals. The bikers run the night here.</p>
-        </div>
-      </div>
-
-      <div class="place-card">
-        <img src="gta/places/mount.jpg" alt="Mount Kalaga">
-        <div class="overlay">
-          <h2>Mount Kalaga</h2>
-          <p>Quiet, remote, and crawling with outlaws and mystics. A slice of nature where even the state won’t tread too deep.</p>
-        </div>
-      </div>
-
     </div>
-  </main>
+
+    <div class="place-card">
+      <img src="gta/places/leoninda.jpg" alt="Leoninda Keys">
+      <div class="place-overlay">
+        <h2>Leoninda Keys</h2>
+        <p>A tropical archipelago where life is easy but the waters are deadly. Grab a drink and relax, but don’t drift too far from shore.</p>
+      </div>
+    </div>
+
+    <div class="place-card">
+      <img src="gta/places/grassrivers.jpg" alt="Grassrivers">
+      <div class="place-overlay">
+        <h2>Grassrivers</h2>
+        <p>Swamps filled with gators, secrets, and something far stranger. The deeper you go, the weirder it gets.</p>
+      </div>
+    </div>
+
+    <div class="place-card">
+      <img src="gta/places/port.jpg" alt="Port Gellhorn">
+      <div class="place-overlay">
+        <h2>Port Gellhorn</h2>
+        <p>Abandoned malls, cheap motels, and biker gangs — the new economy of this forgotten tourist town runs on chaos.</p>
+      </div>
+    </div>
+
+    <div class="place-card">
+      <img src="gta/places/ambrosia.jpg" alt="Ambrosia">
+      <div class="place-overlay">
+        <h2>Ambrosia</h2>
+        <p>A town built on sugar and sweat. The refinery fuels the locals, the bikers control the streets.</p>
+      </div>
+    </div>
+
+    <div class="place-card">
+      <img src="gta/places/mount.jpg" alt="Mount Kalaga">
+      <div class="place-overlay">
+        <h2>Mount Kalaga</h2>
+        <p>A rugged wilderness where outlaws and mystics hide from civilization — and maybe something more sinister.</p>
+      </div>
+    </div>
+
+  </div>
+</main>
 </body>
 </html>
-
-
