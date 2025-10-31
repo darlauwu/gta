@@ -3,209 +3,267 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Darla | Places</title>
+  <title>Darla | Trailers</title>
   <link rel="icon" href="gta/kitty.jpg" type="image/jpg">
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
 
-<style>
-* { margin:0; padding:0; box-sizing:border-box; }
-html, body { height:100%; }
+  <style>
+    * {margin:0; padding:0; box-sizing:border-box;}
+    html,body {height:100%;}
+    body {
+      font-family:'Orbitron',sans-serif;
+      background:
+        linear-gradient(135deg, rgba(255,77,210,0.15), rgba(0,255,224,0.08)),
+        url('gta/others.jpg') center/cover no-repeat fixed;
+      background-blend-mode:overlay;
+      color:#fff;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+    }
 
-body {
-  font-family: 'Orbitron', sans-serif;
-  background:
-    linear-gradient(135deg, rgba(255,77,210,0.15), rgba(0,255,224,0.08)),
-    url('gta/others.jpg') center/cover no-repeat fixed;
-  color: #fff;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
+    /* Header */
+    header {
+      position:fixed;
+      top:18px;
+      left:50%;
+      transform:translateX(-50%);
+      z-index:50;
+      display:flex;
+      gap:12px;
+      padding:8px 14px;
+      border-radius:999px;
+      box-shadow:0 6px 18px rgba(0,0,0,0.35);
+      background:rgba(0,0,0,0.35);
+    }
 
-body::after {
-  content:"";
-  position: fixed;
-  inset:0;
-  background: rgba(0,0,0,0.55);
-  z-index:0;
-}
+    .nav-btn {
+      padding:8px 12px;
+      border-radius:999px;
+      text-decoration:none;
+      color:#fff;
+      background:linear-gradient(90deg,rgba(255,255,255,0.03),rgba(255,255,255,0.01));
+      border:1px solid rgba(255,255,255,0.06);
+      font-weight:700;
+      transition:0.3s;
+    }
 
-header {
-  position:fixed;
-  top:18px;
-  left:50%;
-  transform:translateX(-50%);
-  z-index:10;
-  display:flex;
-  gap:12px;
-  padding:8px 14px;
-  border-radius:999px;
-  /* removed blur */
-  background: rgba(0,0,0,0.4);
-}
+    .nav-btn:hover {
+      box-shadow:0 0 10px rgba(255,77,210,0.18);
+    }
 
-.nav-btn {
-  padding:8px 12px;
-  border-radius:999px;
-  text-decoration:none;
-  color:#fff;
-  background:linear-gradient(90deg,rgba(255,255,255,0.03),rgba(255,255,255,0.01));
-  border:1px solid rgba(255,255,255,0.06);
-  font-weight:700;
-  transition:0.3s;
-}
-.nav-btn:hover {
-  background:rgba(255,255,255,0.1);
-}
+    /* Pink + Cyan Wishlist button */
+    a[href="preorder"] {
+      background: linear-gradient(90deg, rgba(255,77,210,0.35), rgba(0,255,224,0.35));
+      border: 1px solid rgba(255,255,255,0.15);
+      box-shadow: 0 0 12px rgba(255,77,210,0.4), 0 0 12px rgba(0,255,224,0.3);
+      transition: all 0.3s ease;
+    }
 
-.page {
-  position: relative;
-  z-index:10;
-  width: clamp(900px,90vw,1300px);
-  margin-top:120px;
-  margin-bottom:60px;
-}
+    a[href="preorder"]:hover {
+      background: linear-gradient(90deg, rgba(255,77,210,0.55), rgba(0,255,224,0.55));
+      box-shadow: 0 0 20px rgba(255,77,210,0.6), 0 0 20px rgba(0,255,224,0.5);
+      transform: scale(1.05);
+    }
 
-h1 {
-  text-align: center;
-  font-size:48px;
-  font-weight:900;
-  margin-bottom:40px;
-  text-shadow: 0 2px 8px rgba(0,0,0,0.7);
-}
+    .page {
+      position:relative;
+      z-index:10;
+      width:clamp(900px,90vw,1300px);
+      margin-top:120px;
+      margin-bottom:60px;
+      animation:fadeIn 1s ease-out;
+    }
 
-.places-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px,1fr));
-  gap:24px;
-}
+    @keyframes fadeIn {
+      from {opacity:0;transform:translateY(20px);}
+      to {opacity:1;transform:translateY(0);}
+    }
 
-.place-card {
-  position: relative;
-  background: rgba(0,0,0,0.45);
-  border:1px solid rgba(255,255,255,0.05);
-  border-radius:18px;
-  overflow: hidden;
-  box-shadow: 0 12px 28px rgba(0,0,0,0.6);
-  transition: transform 0.3s ease;
-}
-.place-card:hover {
-  transform: translateY(-6px);
-}
+    h1 {
+      text-align:center;
+      font-size:48px;
+      font-weight:900;
+      margin-bottom:40px;
+      text-shadow:0 0 10px rgba(255,77,210,0.4),0 0 20px rgba(0,255,224,0.3);
+    }
 
-.place-card img {
-  width:100%;
-  height:240px;
-  object-fit: cover;
-  border-radius:12px;
-  display: block;
-}
+    .trailers-grid {
+      display:grid;
+      grid-template-columns:repeat(auto-fill,minmax(360px,1fr));
+      gap:24px;
+    }
 
-/* Overlay appears smoothly on hover */
-.place-overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,0.8);
-  color: #fff;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-  text-align: center;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.4s ease, visibility 0.4s ease;
-}
+    .trailer-card {
+      background:rgba(0,0,0,0.45);
+      border:1px solid rgba(255,255,255,0.05);
+      border-radius:18px;
+      padding:12px;
+      box-shadow:0 12px 28px rgba(0,0,0,0.6);
+      transition:transform 0.2s;
+      overflow:hidden;
+      cursor:pointer;
+    }
 
-.place-card:hover .place-overlay {
-  opacity: 1;
-  visibility: visible;
-}
+    .trailer-card:hover {transform:translateY(-6px);}
+    .trailer-card iframe {
+      width:100%;
+      height:200px;
+      border:none;
+      border-radius:12px;
+      pointer-events:none;
+    }
 
-.place-overlay h2 {
-  font-size: 22px;
-  margin-bottom: 10px;
-  text-shadow: 0 0 10px rgba(255,255,255,0.2);
-}
+    .trailer-card h2 {
+      font-size:20px;
+      margin-top:12px;
+      color:#fff;
+      text-align:center;
+    }
 
-.place-overlay p {
-  font-size: 14px;
-  color: #ddd;
-  line-height: 1.5;
-}
+    @media(max-width:480px){
+      h1{font-size:34px;}
+      .trailer-card h2{font-size:18px;}
+      .trailer-card iframe{height:180px;}
+    }
 
-@media(max-width:480px) {
-  h1 { font-size:34px; }
-  .place-overlay h2 { font-size:18px; }
-}
-</style>
+    /* Invisible button bottom right */
+    #secret-btn {
+      position:fixed;
+      bottom:20px;
+      right:20px;
+      width:50px;
+      height:50px;
+      background:transparent;
+      border:none;
+      cursor:pointer;
+      z-index:999;
+    }
+
+    /* Fullscreen trailer overlay */
+    .overlay {
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,0.9);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      z-index:1000;
+      opacity:0;
+      pointer-events:none;
+      transition:opacity 0.3s ease;
+    }
+
+    .overlay.active {
+      opacity:1;
+      pointer-events:auto;
+    }
+
+    .overlay iframe {
+      width:90vw;
+      height:70vh;
+      max-width:1200px;
+      border:none;
+      border-radius:16px;
+      box-shadow:0 0 40px rgba(255,255,255,0.2);
+    }
+
+    .close-btn {
+      position:fixed;
+      top:30px;
+      right:40px;
+      background:rgba(255,255,255,0.1);
+      color:#fff;
+      font-size:24px;
+      border:none;
+      border-radius:50%;
+      width:40px;
+      height:40px;
+      cursor:pointer;
+      transition:0.3s;
+    }
+
+    .close-btn:hover {
+      background:rgba(255,255,255,0.25);
+    }
+  </style>
 </head>
 
 <body>
-<header>
-  <a href="index" class="nav-btn">Home</a>
-  <a href="map" class="nav-btn">Map</a>
-  <a href="characters" class="nav-btn">Characters</a>
-  <a href="places" class="nav-btn">Places</a>
-  <a href="preorder" class="nav-btn">Wishlist</a>
-  <a href="trailers" class="nav-btn">Trailers</a>
-</header>
 
-<main class="page">
-  <h1>GTA 6 Locations</h1>
-  <div class="places-grid">
+  <!-- Invisible button -->
+  <button id="secret-btn"></button>
 
-    <div class="place-card">
-      <img src="gta/places/vice.jpg" alt="Vice City Beach">
-      <div class="place-overlay">
-        <h2>Vice City</h2>
-        <p>The glamour, hustle, and greed of America captured in a single city. From pastel art deco hotels to the bright white sands of Ocean Beach — Vice City has it all.</p>
+  <script>
+    document.getElementById("secret-btn").addEventListener("click", function() {
+      let password = prompt("Enter the secret password:");
+      if (password === "darla") {
+        window.location.href = "darla.html";
+      } else if (password !== null) {
+        alert("❌ Wrong password. Access denied.");
+      }
+    });
+  </script>
+
+  <header>
+    <a href="index" class="nav-btn">Home</a>
+    <a href="map" class="nav-btn">Map</a>
+    <a href="characters" class="nav-btn">Characters</a>
+    <a href="places" class="nav-btn">Places</a>
+    <a href="preorder" class="nav-btn">Wishlist</a>
+    <a href="trailers" class="nav-btn">Trailers</a>
+  </header>
+
+  <main class="page">
+    <h1>GTA 6 Trailers</h1>
+    <div class="trailers-grid">
+
+      <div class="trailer-card" data-video="https://www.youtube.com/embed/QdBZY2fkU-0?autoplay=1">
+        <iframe src="https://www.youtube.com/embed/QdBZY2fkU-0" loading="lazy" allowfullscreen></iframe>
+        <h2>Trailer 1</h2>
       </div>
-    </div>
 
-    <div class="place-card">
-      <img src="gta/places/leoninda.jpg" alt="Leoninda Keys">
-      <div class="place-overlay">
-        <h2>Leoninda Keys</h2>
-        <p>A tropical archipelago where life is easy but the waters are deadly. Grab a drink and relax, but don’t drift too far from shore.</p>
+      <div class="trailer-card" data-video="https://www.youtube.com/embed/VQRLujxTm3c?autoplay=1">
+        <iframe src="https://www.youtube.com/embed/VQRLujxTm3c" loading="lazy" allowfullscreen></iframe>
+        <h2>Trailer 2</h2>
       </div>
-    </div>
 
-    <div class="place-card">
-      <img src="gta/places/grassrivers.jpg" alt="Grassrivers">
-      <div class="place-overlay">
-        <h2>Grassrivers</h2>
-        <p>Swamps filled with gators, secrets, and something far stranger. The deeper you go, the weirder it gets.</p>
-      </div>
     </div>
+  </main>
 
-    <div class="place-card">
-      <img src="gta/places/port.jpg" alt="Port Gellhorn">
-      <div class="place-overlay">
-        <h2>Port Gellhorn</h2>
-        <p>Abandoned malls, cheap motels, and biker gangs — the new economy of this forgotten tourist town runs on chaos.</p>
-      </div>
-    </div>
-
-    <div class="place-card">
-      <img src="gta/places/ambrosia.jpg" alt="Ambrosia">
-      <div class="place-overlay">
-        <h2>Ambrosia</h2>
-        <p>A town built on sugar and sweat. The refinery fuels the locals, the bikers control the streets.</p>
-      </div>
-    </div>
-
-    <div class="place-card">
-      <img src="gta/places/mount.jpg" alt="Mount Kalaga">
-      <div class="place-overlay">
-        <h2>Mount Kalaga</h2>
-        <p>A rugged wilderness where outlaws and mystics hide from civilization — and maybe something more sinister.</p>
-      </div>
-    </div>
-
+  <!-- Fullscreen overlay -->
+  <div class="overlay" id="videoOverlay">
+    <button class="close-btn" id="closeOverlay">✕</button>
+    <iframe id="overlayVideo" src="" allowfullscreen></iframe>
   </div>
-</main>
+
+  <script>
+    const overlay = document.getElementById("videoOverlay");
+    const overlayVideo = document.getElementById("overlayVideo");
+    const closeOverlay = document.getElementById("closeOverlay");
+
+    document.querySelectorAll(".trailer-card").forEach(card=>{
+      card.addEventListener("click", ()=>{
+        const videoURL = card.getAttribute("data-video");
+        overlayVideo.src = videoURL;
+        overlay.classList.add("active");
+      });
+    });
+
+    function closeVideo(){
+      overlay.classList.remove("active");
+      overlayVideo.src = ""; // stop video
+    }
+
+    closeOverlay.addEventListener("click", closeVideo);
+    overlay.addEventListener("click", e=>{
+      if(e.target===overlay) closeVideo();
+    });
+    document.addEventListener("keydown", e=>{
+      if(e.key==="Escape") closeVideo();
+    });
+  </script>
+
 </body>
 </html>
 
