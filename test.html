@@ -1,221 +1,176 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Darla | Trailers</title>
-  <link rel="icon" href="gta/kitty.jpg" type="image/jpg">
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maintenance | GTA 6</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+<style>
+  /* Reset & base */
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html, body { height:100%; font-family:'Orbitron',sans-serif; overflow:hidden; }
 
-  <style>
-    * {margin:0; padding:0; box-sizing:border-box;}
-    html,body {height:100%;}
-    body {
-      font-family:'Orbitron',sans-serif;
-      background:
-        linear-gradient(135deg, rgba(255,77,210,0.15), rgba(0,255,224,0.08)),
-        url('gta/others.jpg') center/cover no-repeat fixed;
-      background-blend-mode:overlay;
-      color:#fff;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-    }
+  body {
+    background: url('https://i.redd.it/w1u74qaho25c1.png') center/cover no-repeat fixed;
+    display:flex; justify-content:center; align-items:center; flex-direction:column;
+    color:#fff;
+    position:relative;
+  }
 
-    /* Header with enhanced blur */
-    header{
-      position:fixed;top:18px;left:50%;transform:translateX(-50%);
-      z-index:50;display:flex;gap:12px;padding:8px 14px;border-radius:999px;
+  /* Dark overlay for readability */
+  body::after {
+    content:""; position:absolute; top:0; left:0; right:0; bottom:0;
+    background: rgba(0,0,0,0.8);
+    z-index:0;
+  }
 
-      /* Enhanced blur & frosted glass */
-      backdrop-filter: blur(12px) saturate(1.2);
-      -webkit-backdrop-filter: blur(12px) saturate(1.2);
-      background: rgba(0,0,0,0.25);
+  /* Glitchy neon title */
+  h1 {
+    position:relative;
+    font-size:64px; font-weight:900;
+    text-align:center;
+    color:#ff4dd2;
+    z-index:1;
+    animation: neon-glitch 2s infinite alternate;
+  }
 
-      box-shadow:0 6px 18px rgba(0,0,0,0.35);
-    }
-    .nav-btn{
-      padding:8px 12px;border-radius:999px;text-decoration:none;color:#fff;
-      background:linear-gradient(90deg,rgba(255,255,255,0.03),rgba(255,255,255,0.01));
-      border:1px solid rgba(255,255,255,0.06);font-weight:700;
-      transition:0.3s;
-    }
-    .nav-btn:hover{box-shadow:0 0 10px rgba(255,77,210,0.18)}
+  h1::before,
+  h1::after {
+    content: attr(data-text);
+    position:absolute; left:0; top:0;
+    width:100%; overflow:hidden;
+    clip: rect(0,900px,0,0);
+  }
 
-    .page{
-      position:relative;z-index:10;width:clamp(900px,90vw,1300px);
-      margin-top:120px;margin-bottom:60px;animation:fadeIn 1s ease-out;
-    }
-    @keyframes fadeIn{
-      from{opacity:0;transform:translateY(20px);}
-      to{opacity:1;transform:translateY(0);}
-    }
+  h1::before { left:2px; text-shadow:-2px 0 #0ff; animation: glitch1 2s infinite linear alternate-reverse; }
+  h1::after { left:-2px; text-shadow:-2px 0 #f0f; animation: glitch2 3s infinite linear alternate-reverse; }
 
-    h1{
-      text-align:center;font-size:48px;font-weight:900;margin-bottom:40px;
-      text-shadow:0 0 10px rgba(255,77,210,0.4),0 0 20px rgba(0,255,224,0.3);
-    }
+  @keyframes neon-glitch {
+    0% { text-shadow:0 0 5px #ff4dd2,0 0 10px #ff99e6; }
+    50% { text-shadow:0 0 15px #ff4dd2,0 0 30px #ff99e6,0 0 40px #0ff; }
+    100% { text-shadow:0 0 10px #ff4dd2,0 0 20px #ff99e6; }
+  }
+  @keyframes glitch1 {
+    0%{ clip:rect(0,9999px,0,0); }
+    10%{ clip:rect(10px,9999px,50px,0); transform:translate(-2px,0); }
+    20%{ clip:rect(85px,9999px,90px,0); transform:translate(1px,0); }
+    30%{ clip:rect(40px,9999px,50px,0); transform:translate(-1px,0); }
+    100%{ clip:rect(0,9999px,0,0); }
+  }
+  @keyframes glitch2 {
+    0%{ clip:rect(0,9999px,0,0); }
+    10%{ clip:rect(20px,9999px,70px,0); transform:translate(2px,0); }
+    20%{ clip:rect(60px,9999px,90px,0); transform:translate(-1px,0); }
+    30%{ clip:rect(30px,9999px,40px,0); transform:translate(1px,0); }
+    100%{ clip:rect(0,9999px,0,0); }
+  }
 
-    .trailers-grid{
-      display:grid;
-      grid-template-columns:repeat(auto-fill,minmax(360px,1fr));
-      gap:24px;
-    }
+  p {
+    z-index:1;
+    font-size:20px;
+    margin-top:16px;
+    color: rgba(255,255,255,0.9);
+    text-align:center;
+  }
 
-    .trailer-card{
-      background:rgba(0,0,0,0.45);
-      border:1px solid rgba(255,255,255,0.05);
-      border-radius:18px;
-      padding:12px;
-      box-shadow:0 12px 28px rgba(0,0,0,0.6);
-      transition:transform 0.2s;
-      overflow:hidden;
-      cursor:pointer;
-    }
-    .trailer-card:hover{
-      transform:translateY(-6px) scale(1.02);
-      box-shadow:0 16px 32px rgba(255,77,210,0.25);
-    }
-    .trailer-card iframe{
-      width:100%;height:200px;border:none;border-radius:12px;
-    }
-    .trailer-card h2{
-      font-size:20px;margin-top:12px;color:#fff;text-align:center;
-    }
+  /* Animated progress bar */
+  .progress-bar {
+    position:relative;
+    width:300px; height:12px;
+    background: rgba(255,255,255,0.15);
+    border-radius:999px;
+    overflow:hidden;
+    margin-top:30px;
+    z-index:1;
+  }
+  .progress-fill {
+    height:100%;
+    width:60%;
+    background: linear-gradient(90deg,#ff4dd2,#ff99e6,#0ff);
+    animation: progressAnim 2s infinite linear;
+  }
+  @keyframes progressAnim {
+    0%{ transform:translateX(-100%); }
+    50%{ transform:translateX(0%); }
+    100%{ transform:translateX(100%); }
+  }
 
-    @media(max-width:480px){
-      h1{font-size:34px;}
-      .trailer-card h2{font-size:18px;}
-      .trailer-card iframe{height:180px;}
-    }
+  /* Floating settings button */
+  .settings-btn {
+    position:fixed; bottom:20px; right:20px;
+    width:60px; height:60px; border-radius:50%;
+    background: linear-gradient(135deg,#8a2be2,#ff69b4);
+    display:flex; justify-content:center; align-items:center;
+    font-size:24px; color:#fff; cursor:pointer;
+    box-shadow:0 6px 20px rgba(0,0,0,0.5); z-index:10;
+    transition:0.3s;
+  }
+  .settings-btn:hover{ transform:scale(1.1); }
 
-    /* Invisible button bottom right */
-    #secret-btn{
-      position:fixed;bottom:20px;right:20px;width:50px;height:50px;
-      background:transparent;border:none;cursor:pointer;z-index:999;
-    }
+  /* Popup overlay */
+  .popup-overlay {
+    position:fixed; top:0; left:0; right:0; bottom:0;
+    background: rgba(0,0,0,0.75);
+    backdrop-filter: blur(8px);
+    display:flex; align-items:center; justify-content:center;
+    z-index:20; display:none;
+  }
 
-    /* Fullscreen trailer overlay */
-    .overlay{
-      position:fixed;inset:0;
-      background:rgba(0,0,0,0.95);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      z-index:1000;
-      opacity:0;
-      pointer-events:none;
-      transition:opacity 0.3s ease, visibility 0.3s ease;
-      visibility:hidden;
-    }
-    .overlay.active{
-      opacity:1;
-      pointer-events:auto;
-      visibility:visible;
-    }
-    .overlay iframe{
-      width:90%;
-      max-width:1200px;
-      aspect-ratio:16/9;
-      border:none;
-      border-radius:16px;
-      box-shadow:0 0 40px rgba(255,255,255,0.2);
-    }
-    .close-btn{
-      position:fixed;
-      top:30px;right:40px;
-      background:rgba(255,255,255,0.1);
-      color:#fff;
-      font-size:24px;
-      border:none;
-      border-radius:50%;
-      width:40px;height:40px;
-      cursor:pointer;
-      transition:0.3s;
-    }
-    .close-btn:hover{
-      background:rgba(255,255,255,0.25);
-    }
+  .popup {
+    background: rgba(20,20,20,0.95);
+    border-radius:16px;
+    width:400px; max-width:90%;
+    padding:20px; text-align:center;
+    border:2px solid #8a2be2;
+    box-shadow:0 8px 30px rgba(0,0,0,0.7);
+    animation:fadeIn 0.3s ease;
+  }
+  .popup h2{ color:#ff69b4; margin-bottom:15px; }
+  .popup .option{
+    padding:10px; margin:8px 0;
+    border-radius:8px; background: rgba(255,255,255,0.05);
+    cursor:pointer; transition:0.3s;
+  }
+  .popup .option:hover{ background: rgba(255,255,255,0.15); }
+  .popup .close-btn{
+    margin-top:20px; padding:8px 18px; border:none; border-radius:8px;
+    background:#ff69b4; color:#fff; font-weight:bold; cursor:pointer;
+  }
+  .popup .close-btn:hover{ background:#8a2be2; }
 
-  </style>
+  @keyframes fadeIn { from{opacity:0; transform:scale(0.9);} to{opacity:1; transform:scale(1);} }
+</style>
 </head>
 <body>
-
-  <!-- Invisible button -->
-  <button id="secret-btn"></button>
-
-  <script>
-    document.getElementById("secret-btn").addEventListener("click", function() {
-      let password = prompt("Enter the secret password:");
-      if (password === "darla") {
-        window.location.href = "darla.html";
-      } else if (password !== null) {
-        alert("❌ Wrong password. Access denied.");
-      }
-    });
-  </script>
-
-  <header>
-    <a href="index" class="nav-btn">Home</a>
-    <a href="map" class="nav-btn">Map</a>
-    <a href="characters" class="nav-btn">Characters</a>
-    <a href="places" class="nav-btn">Places</a>
-    <a href="preorder" class="nav-btn">Wishlist</a>
-    <a href="trailers" class="nav-btn">Trailers</a>
-  </header>
-
-  <main class="page">
-    <h1>GTA 6 Trailers</h1>
-    <div class="trailers-grid">
-
-      <div class="trailer-card" data-video="https://www.youtube.com/embed/QdBZY2fkU-0?autoplay=1">
-        <iframe src="https://www.youtube.com/embed/QdBZY2fkU-0" loading="lazy" allowfullscreen></iframe>
-        <h2>Trailer 1</h2>
-      </div>
-
-      <div class="trailer-card" data-video="https://www.youtube.com/embed/VQRLujxTm3c?autoplay=1">
-        <iframe src="https://www.youtube.com/embed/VQRLujxTm3c" loading="lazy" allowfullscreen></iframe>
-        <h2>Trailer 2</h2>
-      </div>
-
-    </div>
-  </main>
-
-  <!-- Fullscreen overlay -->
-  <div class="overlay" id="videoOverlay">
-    <button class="close-btn" id="closeOverlay">✕</button>
-    <iframe id="overlayVideo" src="" allowfullscreen></iframe>
+  <h1 data-text="🚧 UNDER CONSTRUCTION 🚧">🚧 UNDER CONSTRUCTION 🚧</h1>
+  <p>We’re building the GTA 6 experience.<br>Check back soon for updates!</p>
+  <div class="progress-bar">
+    <div class="progress-fill"></div>
   </div>
 
-  <script>
-    const overlay = document.getElementById("videoOverlay");
-    const overlayVideo = document.getElementById("overlayVideo");
-    const closeOverlay = document.getElementById("closeOverlay");
+  <div class="settings-btn" id="settingsBtn">⚙️</div>
 
-    document.querySelectorAll(".trailer-card").forEach(card=>{
-      card.addEventListener("click", ()=>{
-        const videoURL = card.getAttribute("data-video");
-        overlayVideo.src = videoURL;
-        overlay.classList.add("active");
-      });
-    });
+  <div class="popup-overlay" id="popupOverlay">
+    <div class="popup">
+      <h2>Settings</h2>
+      <div class="option">Toggle Dark Mode</div>
+      <div class="option">Other Option</div>
+      <button class="close-btn" id="closePopup">Close</button>
+    </div>
+  </div>
 
-    function closeVideo(){
-      overlay.classList.remove("active");
-      overlayVideo.src = ""; // stop video
-    }
+<script>
+  const settingsBtn = document.getElementById('settingsBtn');
+  const popupOverlay = document.getElementById('popupOverlay');
+  const closePopup = document.getElementById('closePopup');
 
-    closeOverlay.addEventListener("click", closeVideo);
-    overlay.addEventListener("click", e=>{
-      if(e.target===overlay) closeVideo();
-    });
-    document.addEventListener("keydown", e=>{
-      if(e.key==="Escape") closeVideo();
-    });
-  </script>
-
+  settingsBtn.addEventListener('click',()=>{ popupOverlay.style.display='flex'; });
+  closePopup.addEventListener('click',()=>{ popupOverlay.style.display='none'; });
+  popupOverlay.addEventListener('click',e=>{ if(e.target===popupOverlay) popupOverlay.style.display='none'; });
+</script>
 </body>
 </html>
+
 
 
 
