@@ -11,17 +11,10 @@
   html, body { height:100%; font-family:'Orbitron',sans-serif; overflow:hidden; }
 
   body {
-    background: url('https://i.redd.it/w1u74qaho25c1.png') center/cover no-repeat fixed;
+    background: url('gta/jason.jpg') center/cover no-repeat fixed;
     display:flex; justify-content:center; align-items:center; flex-direction:column;
     color:#fff;
     position:relative;
-  }
-
-  /* Dark overlay for readability */
-  body::after {
-    content:""; position:absolute; top:0; left:0; right:0; bottom:0;
-    background: rgba(0,0,0,0.8);
-    z-index:0;
   }
 
   /* Glitchy neon title */
@@ -139,6 +132,27 @@
   .popup .close-btn:hover{ background:#8a2be2; }
 
   @keyframes fadeIn { from{opacity:0; transform:scale(0.9);} to{opacity:1; transform:scale(1);} }
+
+  /* Header with enhanced blur */
+    header{
+      position:fixed;top:18px;left:50%;transform:translateX(-50%);
+      z-index:50;display:flex;gap:12px;padding:8px 14px;border-radius:999px;
+
+      /* Enhanced blur & frosted glass */
+      backdrop-filter: blur(12px) saturate(1.2);
+      -webkit-backdrop-filter: blur(12px) saturate(1.2);
+      background: rgba(0,0,0,0.25);
+
+      box-shadow:0 6px 18px rgba(0,0,0,0.35);
+    }
+    .nav-btn{
+      padding:8px 12px;border-radius:999px;text-decoration:none;color:#fff;
+      background:linear-gradient(90deg,rgba(255,255,255,0.03),rgba(255,255,255,0.01));
+      border:1px solid rgba(255,255,255,0.06);font-weight:700;
+    }
+    .nav-btn:hover{box-shadow:0 0 10px rgba(255,77,210,0.18)}
+
+  
 </style>
 </head>
 <body>
@@ -148,17 +162,16 @@
     <div class="progress-fill"></div>
   </div>
 
-  <div class="settings-btn" id="settingsBtn">⚙️</div>
+ <header>
+    <a href="index" class="nav-btn">Home</a>
+    <a href="map" class="nav-btn">Map</a>
+    <a href="characters" class="nav-btn">Characters</a>
+    <a href="places" class="nav-btn">Places</a>
+    <a href="preorder" class="nav-btn">Wishlist</a>
+    <a href="trailers" class="nav-btn">Trailers</a>
+  </header>
 
-  <div class="popup-overlay" id="popupOverlay">
-    <div class="popup">
-      <h2>Settings</h2>
-      <div class="option">Toggle Dark Mode</div>
-      <div class="option">Other Option</div>
-      <button class="close-btn" id="closePopup">Close</button>
-    </div>
-  </div>
-
+  
 <script>
   const settingsBtn = document.getElementById('settingsBtn');
   const popupOverlay = document.getElementById('popupOverlay');
