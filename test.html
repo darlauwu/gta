@@ -16,7 +16,6 @@ body {
   background:
     linear-gradient(135deg, rgba(255,77,210,0.15), rgba(0,255,224,0.08)),
     url('gta/others.jpg') center/cover no-repeat fixed;
-  background-blend-mode: overlay;
   color: #fff;
   display: flex;
   flex-direction: column;
@@ -32,16 +31,17 @@ body::after {
 }
 
 header {
-  position: fixed;
+  position:fixed;
   top:18px;
   left:50%;
-  transform: translateX(-50%);
-  z-index:50;
-  display: flex;
+  transform:translateX(-50%);
+  z-index:10;
+  display:flex;
   gap:12px;
   padding:8px 14px;
   border-radius:999px;
-  backdrop-filter: blur(6px) saturate(0.9);
+  /* removed blur */
+  background: rgba(0,0,0,0.4);
   box-shadow:0 6px 18px rgba(0,0,0,0.35);
 }
 
@@ -50,8 +50,8 @@ header {
   border-radius:999px;
   text-decoration:none;
   color:#fff;
-  background:rgba(0,0,0,0.4);
-  border:1px solid rgba(255,255,255,0.08);
+  background:linear-gradient(90deg,rgba(255,255,255,0.03),rgba(255,255,255,0.01));
+  border:1px solid rgba(255,255,255,0.06);
   font-weight:700;
   transition:0.3s;
 }
@@ -209,3 +209,4 @@ h1 {
 </main>
 </body>
 </html>
+
