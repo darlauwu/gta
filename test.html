@@ -3,161 +3,140 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Darla | Trailers</title>
+  <title>Darla | Characters</title>
   <link rel="icon" href="gta/kitty.jpg" type="image/jpg">
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
 
   <style>
-    * {margin:0; padding:0; box-sizing:border-box;}
-    html,body {height:100%;}
-    body {
+    *{margin:0;padding:0;box-sizing:border-box}
+    html,body{height:100%}
+    body{
       font-family:'Orbitron',sans-serif;
       background:
         linear-gradient(135deg, rgba(255,77,210,0.15), rgba(0,255,224,0.08)),
         url('gta/others.jpg') center/cover no-repeat fixed;
-      background-blend-mode:overlay;
+      background-blend-mode: overlay;
       color:#fff;
       display:flex;
       flex-direction:column;
       align-items:center;
     }
     body::after{
-      content:"";position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:0;
+      content:"";
+      position:fixed;inset:0;
+      background:rgba(0,0,0,0.55);
+      z-index:0;
     }
 
     /* Header */
     header{
-      position:fixed;top:18px;left:50%;transform:translateX(-50%);
-      z-index:50;display:flex;gap:12px;padding:8px 14px;border-radius:999px;
-      backdrop-filter:blur(6px) saturate(0.9);
+      position:fixed;
+      top:18px;
+      left:50%;
+      transform:translateX(-50%);
+      z-index:50;
+      display:flex;
+      gap:12px;
+      padding:8px 14px;
+      border-radius:999px;
+      backdrop-filter: blur(6px) saturate(0.9);
       box-shadow:0 6px 18px rgba(0,0,0,0.35);
     }
     .nav-btn{
-      padding:8px 12px;border-radius:999px;text-decoration:none;color:#fff;
+      padding:8px 12px;
+      border-radius:999px;
+      text-decoration:none;
+      color:#fff;
       background:linear-gradient(90deg,rgba(255,255,255,0.03),rgba(255,255,255,0.01));
-      border:1px solid rgba(255,255,255,0.06);font-weight:700;
+      border:1px solid rgba(255,255,255,0.06);
+      font-weight:700;
       transition:0.3s;
     }
     .nav-btn:hover{box-shadow:0 0 10px rgba(255,77,210,0.18)}
 
+    /* Page layout */
     .page{
-      position:relative;z-index:10;width:clamp(900px,90vw,1300px);
-      margin-top:120px;margin-bottom:60px;animation:fadeIn 1s ease-out;
+      position:relative;
+      z-index:10;
+      width:clamp(900px,90vw,1300px);
+      margin-top:120px;
+      margin-bottom:60px;
     }
-    @keyframes fadeIn{
-      from{opacity:0;transform:translateY(20px);}
-      to{opacity:1;transform:translateY(0);}
-    }
-
     h1{
-      text-align:center;font-size:48px;font-weight:900;margin-bottom:40px;
-      text-shadow:0 0 10px rgba(255,77,210,0.4),0 0 20px rgba(0,255,224,0.3);
+      text-align:center;
+      font-size:48px;
+      font-weight:900;
+      margin-bottom:40px;
+      text-shadow:0 0 20px rgba(255,77,210,0.5);
     }
 
-    .trailers-grid{
+    /* Character grid */
+    .character-list{
       display:grid;
-      grid-template-columns:repeat(auto-fill,minmax(360px,1fr));
+      grid-template-columns: repeat(auto-fill, minmax(280px,1fr));
       gap:24px;
     }
 
-    .trailer-card{
+    .character-item{
+      position:relative;
       background:rgba(0,0,0,0.45);
       border:1px solid rgba(255,255,255,0.05);
       border-radius:18px;
-      padding:12px;
+      overflow:hidden;
       box-shadow:0 12px 28px rgba(0,0,0,0.6);
       transition:transform 0.2s;
-      overflow:hidden;
-      cursor:pointer;
     }
-    .trailer-card:hover{transform:translateY(-6px);}
-    .trailer-card iframe{
-      width:100%;height:200px;border:none;border-radius:12px;
-      pointer-events:none; /* prevents iframe from stealing click */
+    .character-item:hover{transform:translateY(-6px)}
+    .character-item img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+      border-radius:14px;
+      transition:transform 0.5s ease;
     }
-    .trailer-card h2{
-      font-size:20px;margin-top:12px;color:#fff;text-align:center;
+    .character-item:hover img{
+      transform:scale(1.1);
+      filter:blur(2px) brightness(0.7);
+    }
+
+    /* Overlay text on hover */
+    .overlay{
+      position:absolute;
+      inset:0;
+      background:rgba(0,0,0,0.7);
+      color:#fff;
+      opacity:0;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      align-items:center;
+      text-align:center;
+      padding:20px;
+      border-radius:18px;
+      transition:opacity 0.4s ease;
+    }
+    .character-item:hover .overlay{opacity:1;}
+    .overlay h2{
+      font-size:22px;
+      margin-bottom:10px;
+      color:#00ffe0;
+      text-shadow:0 0 10px rgba(0,255,224,0.6);
+    }
+    .overlay p{
+      font-size:15px;
+      line-height:1.5;
+      color:rgba(255,255,255,0.9);
     }
 
     @media(max-width:480px){
-      h1{font-size:34px;}
-      .trailer-card h2{font-size:18px;}
-      .trailer-card iframe{height:180px;}
-    }
-
-    /* Invisible secret button */
-    #secret-btn{
-      position:fixed;bottom:20px;right:20px;width:50px;height:50px;
-      background:transparent;border:none;cursor:pointer;z-index:999;
-    }
-
-    /* Fullscreen overlay */
-    .overlay{
-      position:fixed;inset:0;
-      background:rgba(0,0,0,0.9);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      z-index:1000;
-      opacity:0;
-      pointer-events:none;
-      transition:opacity 0.4s ease;
-    }
-    .overlay.active{
-      opacity:1;
-      pointer-events:auto;
-    }
-
-    .overlay iframe{
-      width:90vw;
-      height:70vh;
-      max-width:1200px;
-      border:none;
-      border-radius:16px;
-      box-shadow:0 0 40px rgba(255,255,255,0.2);
-      transform:scale(0.85);
-      opacity:0;
-      transition:transform 0.4s ease, opacity 0.4s ease;
-    }
-    .overlay.active iframe{
-      transform:scale(1);
-      opacity:1;
-    }
-
-    .close-btn{
-      position:fixed;
-      top:30px;right:40px;
-      background:rgba(255,255,255,0.1);
-      color:#fff;
-      font-size:24px;
-      border:none;
-      border-radius:50%;
-      width:40px;height:40px;
-      cursor:pointer;
-      transition:0.3s;
-      z-index:1001;
-    }
-    .close-btn:hover{
-      background:rgba(255,255,255,0.25);
+      h1{font-size:34px}
+      .overlay h2{font-size:18px}
+      .overlay p{font-size:14px}
     }
   </style>
 </head>
 <body>
-
-  <!-- Invisible button -->
-  <button id="secret-btn"></button>
-
-  <script>
-    document.getElementById("secret-btn").addEventListener("click", function() {
-      let password = prompt("Enter the secret password:");
-      if (password === "darla") {
-        window.location.href = "darla.html";
-      } else if (password !== null) {
-        alert("❌ Wrong password. Access denied.");
-      }
-    });
-  </script>
-
   <header>
     <a href="index" class="nav-btn">Home</a>
     <a href="map" class="nav-btn">Map</a>
@@ -168,59 +147,92 @@
   </header>
 
   <main class="page">
-    <h1>GTA 6 Trailers</h1>
-    <div class="trailers-grid">
+    <h1>GTA 6 Characters</h1>
+    <div class="character-list">
 
-      <div class="trailer-card" data-video="https://www.youtube.com/embed/QdBZY2fkU-0?autoplay=1">
-        <iframe src="https://www.youtube.com/embed/QdBZY2fkU-0" loading="lazy" allowfullscreen></iframe>
-        <h2>Trailer 1</h2>
+      <div class="character-item">
+        <img src="gta/npc/lucia.jpg" alt="Lucia">
+        <div class="overlay">
+          <h2>Lucia</h2>
+          <p>Life’s been coming at her swinging ever since. Fighting for her family landed her in Leonida Penitentiary — sheer luck got her out. Now, she’s all smart moves from here.</p>
+        </div>
       </div>
 
-      <div class="trailer-card" data-video="https://www.youtube.com/embed/VQRLujxTm3c?autoplay=1">
-        <iframe src="https://www.youtube.com/embed/VQRLujxTm3c" loading="lazy" allowfullscreen></iframe>
-        <h2>Trailer 2</h2>
+      <div class="character-item">
+        <img src="gta/npc/jason.jpg" alt="Jason">
+        <div class="overlay">
+          <h2>Jason</h2>
+          <p>Grew up around criminals and served in the military before finding his way into the Keys’ drug trade. Sharp, quiet, and lethal when he needs to be.</p>
+        </div>
+      </div>
+
+      <div class="character-item">
+        <img src="gta/npc/dre.jpg" alt="Dre'Quan Preist">
+        <div class="overlay">
+          <h2>Dre'Quan Preist</h2>
+          <p>A hustler turned artist — from the streets to the studio, Dre’Quan’s chasing the high of success the legal way now, one track at a time.</p>
+        </div>
+      </div>
+
+      <div class="character-item">
+        <img src="gta/npc/stefanie.png" alt="Stefanie">
+        <div class="overlay">
+          <h2>Stefanie</h2>
+          <p>A social worker for the Leonida Department of Corrections, she’s seen the system’s cracks — and plans to fix them her own way.</p>
+        </div>
+      </div>
+
+      <div class="character-item">
+        <img src="gta/npc/cal.png" alt="Cal Hampton">
+        <div class="overlay">
+          <h2>Cal Hampton</h2>
+          <p>Jason’s friend and fellow associate of Brian’s. Prefers his home lab, beers, and Coast Guard comms — but don’t underestimate his intel.</p>
+        </div>
+      </div>
+
+      <div class="character-item">
+        <img src="gta/npc/boobie.png" alt="Boobie Ike">
+        <div class="overlay">
+          <h2>Boobie Ike</h2>
+          <p>A Vice City legend. Street life funded his empire — real estate, clubs, studios. He smiles big, but business stays deadly serious.</p>
+        </div>
+      </div>
+
+      <div class="character-item">
+        <img src="gta/npc/dimez.webp" alt="Real Dimez">
+        <div class="overlay">
+          <h2>Real Dimez</h2>
+          <p>Bae-Luxe and Roxy — aka Real Dimez — flipped street hustle into social stardom. Music, money, and Miami heat — they run it all.</p>
+        </div>
+      </div>
+
+      <div class="character-item">
+        <img src="gta/npc/raul.png" alt="Raul Bautista">
+        <div class="overlay">
+          <h2>Raul Bautista</h2>
+          <p>Confidence and charm define Raul, a veteran bank robber with a keen eye for talent and a thirst for high-stakes thrills.</p>
+        </div>
+      </div>
+
+      <div class="character-item">
+        <img src="gta/npc/brian.png" alt="Brian Heder">
+        <div class="overlay">
+          <h2>Brian Heder</h2>
+          <p>Old-school drug runner with decades in the Keys. He lets younger crews handle the dirty work now — but his empire’s still afloat.</p>
+        </div>
+      </div>
+
+      <div class="character-item">
+        <img src="gta/npc/luxe.webp" alt="Luxe">
+        <div class="overlay">
+          <h2>Luxe</h2>
+          <p>Bae-Luxe here — Vice City’s finest. From dealer shake-downs to viral fame, she and Roxy built an empire off grit and glow.</p>
+        </div>
       </div>
 
     </div>
   </main>
-
-  <!-- Fullscreen overlay -->
-  <div class="overlay" id="videoOverlay">
-    <button class="close-btn" id="closeOverlay">✕</button>
-    <iframe id="overlayVideo" src="" allowfullscreen></iframe>
-  </div>
-
-  <script>
-    const overlay = document.getElementById("videoOverlay");
-    const overlayVideo = document.getElementById("overlayVideo");
-    const closeOverlay = document.getElementById("closeOverlay");
-
-    document.querySelectorAll(".trailer-card").forEach(card=>{
-      card.addEventListener("click", ()=>{
-        const videoURL = card.getAttribute("data-video");
-        overlayVideo.src = videoURL;
-        overlay.classList.add("active");
-      });
-    });
-
-    function closeVideo(){
-      overlay.classList.remove("active");
-      overlayVideo.src = ""; // stop video
-    }
-
-    closeOverlay.addEventListener("click", closeVideo);
-    overlay.addEventListener("click", e=>{
-      if(e.target===overlay) closeVideo();
-    });
-    document.addEventListener("keydown", e=>{
-      if(e.key==="Escape") closeVideo();
-    });
-  </script>
-
-  <footer style="text-align:center;padding:20px;color:#bbb;font-size:14px;margin-bottom:30px;">
-    Expected Release: May 26th, 2026 — Made by <strong>Exlusx</strong>
-  </footer>
-
 </body>
 </html>
+
 
