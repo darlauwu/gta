@@ -5,66 +5,77 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Darla | Pre-Order</title>
   <link rel="icon" href="gta/kitty.jpg" type="image/jpg">
+  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+  <!-- Font Awesome for Icons -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
   <style>
     * { margin:0; padding:0; box-sizing:border-box; }
-    html, body { height:100%; font-family:'Orbitron',sans-serif; }
+    html, body { height:100%; }
 
     body {
+      font-family: 'Orbitron', sans-serif;
       background:
         linear-gradient(135deg, rgba(255,77,210,0.15), rgba(0,255,224,0.08)),
         url('gta/others.jpg') center/cover no-repeat fixed;
       background-blend-mode: overlay;
+      color: #fff;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      color: #fff;
     }
 
-    /* Header */
-    header {
-      position: fixed;
-      top: 18px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      gap: 12px;
-      padding: 8px 14px;
-      border-radius: 999px;
+    /* Header with enhanced blur */
+    header{
+      position:fixed;
+      top:18px;
+      left:50%;
+      transform:translateX(-50%);
+      z-index:50;
+      display:flex;
+      gap:12px;
+      padding:8px 14px;
+      border-radius:999px;
+
+      /* Enhanced blur & frosted glass */
       backdrop-filter: blur(12px) saturate(1.2);
       -webkit-backdrop-filter: blur(12px) saturate(1.2);
       background: rgba(0,0,0,0.25);
-      box-shadow: 0 6px 18px rgba(0,0,0,0.35);
-      z-index: 50;
+
+      box-shadow:0 6px 18px rgba(0,0,0,0.35);
     }
+
     .nav-btn {
-      padding: 8px 14px;
-      border-radius: 999px;
-      text-decoration: none;
-      color: #fff;
-      font-weight: 700;
-      background: linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
-      border: 1px solid rgba(255,255,255,0.06);
-      transition: 0.3s;
+      padding:8px 12px;
+      border-radius:999px;
+      text-decoration:none;
+      color:#fff;
+      background:linear-gradient(90deg,rgba(255,255,255,0.03),rgba(255,255,255,0.01));
+      border:1px solid rgba(255,255,255,0.06);
+      font-weight:700;
+      transition:0.3s;
     }
     .nav-btn:hover {
-      box-shadow: 0 0 10px rgba(255,77,210,0.3);
-      background: rgba(255,255,255,0.1);
+      box-shadow:0 0 10px rgba(255,77,210,0.18);
     }
 
     main {
       position: relative;
       z-index: 10;
       text-align: center;
-      margin-top: 120px;
+      min-height: 60vh; /* Centers content vertically */
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
     }
 
     h1 {
-      font-size: 48px;
-      margin-bottom: 40px;
-      text-shadow: 0 0 15px rgba(255,77,210,0.5), 0 0 30px rgba(0,255,224,0.3);
+      font-size:48px;
+      margin-bottom:40px;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.7);
     }
 
     .btn-group {
@@ -72,15 +83,12 @@
       flex-direction: column;
       gap: 20px;
       align-items: center;
-      width: 100%;
-      max-width: 400px; /* ensures uniform button width */
     }
 
-    /* Frosted glass preorder buttons */
+    /* Frosted glass blur effect for preorder buttons */
     .preorder-btn {
-      display: flex;               /* full flex for perfect centering */
-      align-items: center;         /* vertical center */
-      justify-content: center;     /* horizontal center */
+      display: inline-flex;
+      align-items: center;
       gap: 12px;
       padding: 16px 32px;
       border-radius: 999px;
@@ -88,19 +96,23 @@
       color: #fff;
       font-weight: 700;
       font-size: 20px;
-      width: 100%; /* full width of parent for alignment */
-      background: linear-gradient(145deg, rgba(255,77,210,0.2), rgba(0,255,224,0.2));
-      border: 2px solid rgba(255, 255, 255, 0.25);
-      box-shadow: 0 0 12px rgba(255,255,255,0.3);
-      backdrop-filter: blur(12px) saturate(1.5);
-      -webkit-backdrop-filter: blur(12px) saturate(1.5);
+
+      /* Blur behind buttons */
+      background: rgba(0,0,0,0.25);
+      backdrop-filter: blur(10px) saturate(1.2);
+      -webkit-backdrop-filter: blur(10px) saturate(1.2);
+
+      border: 1px solid rgba(255,255,255,0.15);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.35);
+
       transition: 0.3s ease-in-out;
     }
 
     .preorder-btn:hover {
+      background: rgba(255,255,255,0.1);
       transform: translateY(-4px) scale(1.05);
-      box-shadow: 0 0 20px rgba(255,77,210,0.8), 0 0 40px rgba(0,255,224,0.6);
-      background: rgba(255,255,255,0.15);
+      box-shadow: 0 0 16px rgba(255,255,255,0.8),
+                  0 0 32px rgba(255,255,255,0.6);
     }
 
     .preorder-btn i {
@@ -108,9 +120,9 @@
     }
 
     @media(max-width:480px) {
-      h1 { font-size: 34px; }
-      .preorder-btn { font-size: 18px; padding: 14px 26px; }
-      .preorder-btn i { font-size: 20px; }
+      h1 { font-size:34px; }
+      .preorder-btn { font-size:18px; padding:14px 26px; }
+      .preorder-btn i { font-size:20px; }
     }
   </style>
 </head>
@@ -123,7 +135,8 @@
     <a href="preorder" class="nav-btn">Wishlist</a>
     <a href="trailers" class="nav-btn">Trailers</a>
   </header>
-  <main style="flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center;">
+
+  <main>
     <h1>Wishlist GTA VI</h1>
     <div class="btn-group">
       <a href="https://www.xbox.com/en-US/games/store/grand-theft-auto-vi/9NL3WWNZLZZN" class="preorder-btn">
@@ -136,6 +149,7 @@
   </main>
 </body>
 </html>
+
 
 
 
