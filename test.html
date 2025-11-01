@@ -1,152 +1,737 @@
+<!--
+GTA 6 Admin Panel (HTML-only)
+- Save this file as admin-panel.html and open in browser.
+- Default admin password: gta6admin
+- Data (users, bans, pages, announcements, analytics, logs) is stored in localStorage keys:
+  gta6_admin_data (object)
+- This is client-side only — for production use a real backend.
+-->
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Darla | Pre-Order</title>
-  <link rel="icon" href="gta/kitty.jpg" type="image/jpg">
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
-  <!-- Font Awesome for Icons -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-
-  <style>
-    * { margin:0; padding:0; box-sizing:border-box; }
-    html, body { height:100%; }
-
-    body {
-      font-family: 'Orbitron', sans-serif;
-      background:
-        linear-gradient(135deg, rgba(255,77,210,0.15), rgba(0,255,224,0.08)),
-        url('gta/others.jpg') center/cover no-repeat fixed;
-      background-blend-mode: overlay;
-      color: #fff;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-    }
-
-    /* Header with enhanced blur */
-    header{
-      position:fixed;
-      top:18px;
-      left:50%;
-      transform:translateX(-50%);
-      z-index:50;
-      display:flex;
-      gap:12px;
-      padding:8px 14px;
-      border-radius:999px;
-
-      /* Enhanced blur & frosted glass */
-      backdrop-filter: blur(12px) saturate(1.2);
-      -webkit-backdrop-filter: blur(12px) saturate(1.2);
-      background: rgba(0,0,0,0.25);
-
-      box-shadow:0 6px 18px rgba(0,0,0,0.35);
-    }
-
-    .nav-btn {
-      padding:8px 12px;
-      border-radius:999px;
-      text-decoration:none;
-      color:#fff;
-      background:linear-gradient(90deg,rgba(255,255,255,0.03),rgba(255,255,255,0.01));
-      border:1px solid rgba(255,255,255,0.06);
-      font-weight:700;
-      transition:0.3s;
-    }
-    .nav-btn:hover {
-      box-shadow:0 0 10px rgba(255,77,210,0.18);
-    }
-
-    main {
-      position: relative;
-      z-index: 10;
-      text-align: center;
-      min-height: 60vh; /* Centers content vertically */
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-    }
-
-    h1 {
-      font-size:48px;
-      margin-bottom:40px;
-      text-shadow: 0 2px 8px rgba(0,0,0,0.7);
-    }
-
-    .btn-group {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-      align-items: center;
-    }
-
-    /* Frosted glass blur effect for preorder buttons */
-    .preorder-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      padding: 16px 32px;
-      border-radius: 999px;
-      text-decoration: none;
-      color: #fff;
-      font-weight: 700;
-      font-size: 20px;
-
-      /* Blur behind buttons */
-      background: rgba(0,0,0,0.25);
-      backdrop-filter: blur(10px) saturate(1.2);
-      -webkit-backdrop-filter: blur(10px) saturate(1.2);
-
-      border: 1px solid rgba(255,255,255,0.15);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.35);
-
-      transition: 0.3s ease-in-out;
-    }
-
-    .preorder-btn:hover {
-      background: rgba(255,255,255,0.1);
-      transform: translateY(-4px) scale(1.05);
-      box-shadow: 0 0 16px rgba(255,255,255,0.8),
-                  0 0 32px rgba(255,255,255,0.6);
-    }
-
-    .preorder-btn i {
-      font-size: 24px;
-    }
-
-    @media(max-width:480px) {
-      h1 { font-size:34px; }
-      .preorder-btn { font-size:18px; padding:14px 26px; }
-      .preorder-btn i { font-size:20px; }
-    }
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>GTA 6 — Admin Control Panel</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg1: #0b0012;
+    --panel: rgba(10,6,18,0.85);
+    --accent: #ff4dd2;
+    --accent-2: #00fff0;
+    --glass: rgba(255,255,255,0.04);
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%;margin:0;font-family:'Orbitron',sans-serif;background:linear-gradient(180deg,#050008,#0b0012);color:#fff}
+  .wrap{display:flex;height:100vh;gap:18px;padding:18px}
+  /* Sidebar */
+  .sidebar{
+    width:260px;
+    background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border:1px solid rgba(255,255,255,0.04);
+    border-radius:14px;
+    padding:18px;
+    display:flex;flex-direction:column;gap:12px;
+    backdrop-filter: blur(8px);
+  }
+  .logo{font-size:18px;color:var(--accent);font-weight:900;text-align:center;padding:6px 0}
+  .menu-btn{background:transparent;border:1px solid rgba(255,255,255,0.04);padding:10px;border-radius:8px;color:#fff;cursor:pointer;text-align:left}
+  .menu-btn:hover{box-shadow:0 6px 20px rgba(255,77,210,0.08);transform:translateY(-2px)}
+  .sidebar .small{font-size:12px;color:rgba(255,255,255,0.6);margin-top:auto;text-align:center}
+  /* Content */
+  .content{flex:1;background:var(--panel);border-radius:14px;padding:20px;overflow:auto;border:1px solid rgba(255,255,255,0.04)}
+  header.admin-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}
+  .stats{display:flex;gap:12px}
+  .stat{background:var(--glass);padding:10px;border-radius:10px;min-width:120px;text-align:center}
+  h1{margin:0;font-size:20px;color:var(--accent)}
+  /* Panels */
+  .panel{display:none}
+  .panel.active{display:block}
+  .card{background:rgba(0,0,0,0.35);padding:14px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);margin-bottom:12px}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{padding:8px;border-bottom:1px dashed rgba(255,255,255,0.04);text-align:left}
+  .btn{background:linear-gradient(90deg,var(--accent),#ff99e6);border:none;padding:8px 12px;border-radius:8px;color:#000;font-weight:700;cursor:pointer}
+  .danger{background:#ff6b6b;color:#fff}
+  input,select,textarea{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);color:#fff;padding:8px;border-radius:8px;width:100%}
+  .flex{display:flex;gap:8px}
+  .small{font-size:13px;color:rgba(255,255,255,0.7)}
+  .muted{color:rgba(255,255,255,0.55);font-size:13px}
+  footer{margin-top:16px;color:rgba(255,255,255,0.5);font-size:12px;text-align:center}
+  /* fingerprint modal */
+  .modal {
+    position:fixed;inset:0;display:flex;align-items:center;justify-content:center;
+    background:rgba(0,0,0,0.6);z-index:9999;backdrop-filter:blur(6px);visibility:hidden;opacity:0;transition:opacity .2s, visibility .2s;
+  }
+  .modal.show{visibility:visible;opacity:1}
+  .fp-card{background:linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));padding:24px;border-radius:12px;border:1px solid rgba(255,255,255,0.06);text-align:center;width:320px}
+  .fp-ring{width:120px;height:120px;border-radius:50%;display:inline-grid;place-items:center;margin:6px auto 12px;background:radial-gradient(circle at 30% 30%, rgba(255,77,210,0.12), transparent 40%);border:2px solid rgba(255,255,255,0.06)}
+  .fp-svg{width:64px;height:64px;opacity:0.95}
+  .fp-progress{height:8px;background:rgba(255,255,255,0.06);border-radius:6px;margin-top:10px;overflow:hidden}
+  .fp-progress > i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent-2));width:0%;transition:width .2s}
+  .hint{font-size:13px;color:rgba(255,255,255,0.7);margin-top:8px}
+  /* responsive */
+  @media(max-width:980px){
+    .wrap{flex-direction:column;padding:12px}
+    .sidebar{width:100%;display:flex;flex-direction:row;overflow:auto}
+    .content{width:100%}
+  }
+</style>
 </head>
 <body>
-  <header>
-    <a href="index" class="nav-btn">Home</a>
-    <a href="map" class="nav-btn">Map</a>
-    <a href="characters" class="nav-btn">Characters</a>
-    <a href="places" class="nav-btn">Places</a>
-    <a href="preorder" class="nav-btn">Wishlist</a>
-    <a href="trailers" class="nav-btn">Trailers</a>
-  </header>
+  <div class="wrap">
+    <aside class="sidebar">
+      <div class="logo">GTA6 Admin — Darla</div>
 
-  <main>
-    <h1>Wishlist GTA VI</h1>
-    <div class="btn-group">
-      <a href="https://www.xbox.com/en-US/games/store/grand-theft-auto-vi/9NL3WWNZLZZN" class="preorder-btn">
-        <i class="fa-brands fa-xbox"></i> Xbox Series X | S
-      </a>
-      <a href="https://www.playstation.com/en-us/games/grand-theft-auto-vi/" class="preorder-btn">
-        <i class="fa-brands fa-playstation"></i> PlayStation 5
-      </a>
+      <button class="menu-btn" onclick="openPanel('overview')">Overview</button>
+      <button class="menu-btn" onclick="secureOpen('users')">User Manager</button>
+      <button class="menu-btn" onclick="secureOpen('bans')">Bans</button>
+      <button class="menu-btn" onclick="openPanel('logs')">Logs</button>
+      <button class="menu-btn" onclick="openPanel('editor')">Page Editor</button>
+      <button class="menu-btn" onclick="openPanel('announcements')">Announcements</button>
+      <button class="menu-btn" onclick="openPanel('analytics')">Analytics</button>
+      <button class="menu-btn" onclick="openPanel('settings')">Settings</button>
+
+      <div class="small">Session: <span id="sessionState">locked</span></div>
+      <div class="small">Tip: use the fingerprint scanner to unlock sensitive sections.</div>
+    </aside>
+
+    <main class="content">
+      <header class="admin-head">
+        <div>
+          <h1>Admin Control Panel</h1>
+          <div class="muted">Local-only admin (no backend) — data saved in browser</div>
+        </div>
+        <div class="stats">
+          <div class="stat"><div class="muted">Views</div><div id="statViews">0</div></div>
+          <div class="stat"><div class="muted">Clicks</div><div id="statClicks">0</div></div>
+          <div class="stat"><div class="muted">Visitors</div><div id="statVisitors">0</div></div>
+        </div>
+      </header>
+
+      <!-- OVERVIEW -->
+      <section id="overview" class="panel active">
+        <div class="card">
+          <h2>Welcome, Admin</h2>
+          <p class="small">Use the sidebar to manage users, bans, pages and site settings. Actions are recorded to the local log.</p>
+        </div>
+
+        <div class="card">
+          <h3>Quick Actions</h3>
+          <div class="flex" style="margin-top:8px">
+            <button class="btn" onclick="createTestUser()">Create Test User</button>
+            <button class="btn" onclick="simulateTraffic()">Simulate Traffic</button>
+            <button class="btn" onclick="openFingerprint(true)">Unlock (Fingerprint)</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- USERS -->
+      <section id="users" class="panel">
+        <div class="card">
+          <h3>User Manager</h3>
+          <p class="small">Visitors are saved locally. You can ban users from here (stored locally).</p>
+        </div>
+
+        <div class="card">
+          <table>
+            <thead><tr><th>ID</th><th>Name</th><th>First Seen</th><th>Last Seen</th><th>Visits</th><th>Action</th></tr></thead>
+            <tbody id="usersTbody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- BANS -->
+      <section id="bans" class="panel">
+        <div class="card">
+          <h3>Bans</h3>
+          <div style="display:flex;gap:8px;margin-top:10px">
+            <input id="banId" placeholder="Visitor ID or name">
+            <input id="banReason" placeholder="Reason (optional)">
+            <button class="btn" onclick="manualBan()">Ban</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h4>Active Bans</h4>
+          <table><thead><tr><th>ID</th><th>Reason</th><th>Banned At</th><th>Action</th></tr></thead><tbody id="bansTbody"></tbody></table>
+        </div>
+      </section>
+
+      <!-- LOGS -->
+      <section id="logs" class="panel">
+        <div class="card">
+          <h3>Activity Log</h3>
+          <div id="logsList" style="max-height:360px;overflow:auto"></div>
+        </div>
+      </section>
+
+      <!-- EDITOR -->
+      <section id="editor" class="panel">
+        <div class="card">
+          <h3>Page Editor (local)</h3>
+          <div style="display:flex;gap:8px">
+            <select id="pageSelect">
+              <option value="home">home</option>
+              <option value="trailers">trailers</option>
+              <option value="countdown">countdown</option>
+              <option value="characters">characters</option>
+            </select>
+            <button class="btn" onclick="loadPage()">Load</button>
+            <button class="btn" onclick="previewPage()">Preview</button>
+            <button class="btn" onclick="savePage()">Save</button>
+          </div>
+          <textarea id="pageEditor" style="margin-top:8px;width:100%;height:260px"></textarea>
+          <iframe id="previewFrame" style="width:100%;height:260px;margin-top:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04)"></iframe>
+        </div>
+      </section>
+
+      <!-- ANNOUNCEMENTS -->
+      <section id="announcements" class="panel">
+        <div class="card">
+          <h3>Announcements</h3>
+          <input id="announceText" placeholder="Type announcement here">
+          <div style="display:flex;gap:8px;margin-top:8px">
+            <input id="announceExpires" type="datetime-local">
+            <button class="btn" onclick="addAnnouncement()">Add</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h4>Active Announcements</h4>
+          <div id="announceList"></div>
+        </div>
+      </section>
+
+      <!-- ANALYTICS -->
+      <section id="analytics" class="panel">
+        <div class="card">
+          <h3>Analytics</h3>
+          <p class="small">Overview of simulated counters (stored locally)</p>
+          <div style="display:flex;gap:8px;margin-top:12px">
+            <button class="btn" onclick="resetAnalytics()">Reset</button>
+            <button class="btn" onclick="simulateTraffic(20)">Simulate +20 Views</button>
+            <button class="btn" onclick="simulateClicks(10)">Simulate +10 Clicks</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- SETTINGS -->
+      <section id="settings" class="panel">
+        <div class="card">
+          <h3>Settings</h3>
+          <label class="muted">Background Image URL</label>
+          <input id="bgUrl" placeholder="Enter image URL for admin background">
+          <div style="display:flex;gap:8px;margin-top:8px">
+            <button class="btn" onclick="applyBg()">Apply</button>
+            <button class="btn" onclick="resetBg()">Reset</button>
+          </div>
+
+          <hr style="margin:12px 0;border:none;border-top:1px dashed rgba(255,255,255,0.04)">
+
+          <label class="muted">Admin Password (change)</label>
+          <input id="newPass" placeholder="New password (leave blank to keep current)">
+          <div style="display:flex;gap:8px;margin-top:8px">
+            <button class="btn" onclick="changePassword()">Change Password</button>
+            <button class="btn" onclick="exportData()">Export Data</button>
+            <button class="btn" onclick="importData()">Import Data</button>
+          </div>
+        </div>
+      </section>
+
+      <footer>Local admin — data saved to browser. For persistent multi-user admin use a backend (Firebase / server).</footer>
+    </main>
+  </div>
+
+  <!-- Fingerprint Modal -->
+  <div id="fpModal" class="modal" aria-hidden="true">
+    <div class="fp-card">
+      <div class="fp-ring">
+        <!-- fingerprint SVG -->
+        <svg class="fp-svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 11c0-5 3-6 3-9"></path>
+          <path d="M12 11c0 8-4 8-4 12"></path>
+          <path d="M7 4c0-1 3-3 5-3s5 2 5 3"></path>
+          <path d="M9 20c1-2 1-4 1-6"></path>
+        </svg>
+      </div>
+
+      <div>
+        <div class="hint" id="fpHint">Place your finger on the scanner (click the ring)</div>
+        <div class="fp-progress" aria-hidden="true"><i id="fpBar"></i></div>
+        <div style="display:flex;gap:8px;margin-top:12px">
+          <button class="btn" onclick="startFingerprint()">Scan</button>
+          <button class="btn" onclick="showPasswordPrompt()">Use Password</button>
+          <button style="background:transparent;border:1px solid rgba(255,255,255,0.06);padding:8px;border-radius:8px;color:#fff" onclick="closeFp()">Close</button>
+        </div>
+      </div>
     </div>
-  </main>
+  </div>
+
+<script>
+(() => {
+  'use strict';
+
+  /* ---------- Configuration ---------- */
+  const DEFAULT_PASSWORD = 'gta6admin'; // change this if desired
+  const SESSION_TIMEOUT_MS = 15 * 60 * 1000; // 15 minutes session
+
+  /* ---------- Storage helpers ---------- */
+  const LS_KEY = 'gta6_admin_data_v1';
+  function loadData(){
+    try { return JSON.parse(localStorage.getItem(LS_KEY)) || {}; }
+    catch(e){ return {}; }
+  }
+  function saveData(data){ localStorage.setItem(LS_KEY, JSON.stringify(data)); }
+  function ensureStructure(){
+    const data = loadData();
+    data.users = data.users || {};         // id -> {id,name,firstSeen,lastSeen,visits}
+    data.bans = data.bans || {};           // id -> {id,reason,ts}
+    data.pages = data.pages || {};         // name -> html string
+    data.announcements = data.announcements || []; // [{id,text,expires}]
+    data.analytics = data.analytics || {views:0,clicks:0};
+    data.logs = data.logs || [];           // array of strings
+    data.password = data.password || DEFAULT_PASSWORD;
+    saveData(data);
+    return data;
+  }
+  ensureStructure();
+
+  /* ---------- Session management ---------- */
+  function setSessionUnlocked(){
+    const expires = Date.now() + SESSION_TIMEOUT_MS;
+    sessionStorage.setItem('gta6_admin_session', JSON.stringify({unlocked:true,expires}));
+    updateSessionDisplay();
+    logAction('Session unlocked (fingerprint)');
+  }
+  function clearSession(){
+    sessionStorage.removeItem('gta6_admin_session');
+    updateSessionDisplay();
+    logAction('Session cleared');
+  }
+  function isSessionUnlocked(){
+    try {
+      const s = JSON.parse(sessionStorage.getItem('gta6_admin_session'));
+      if(!s || !s.unlocked) return false;
+      if(Date.now() > s.expires){ clearSession(); return false; }
+      return true;
+    } catch(e){ return false; }
+  }
+  function updateSessionDisplay(){
+    document.getElementById('sessionState').textContent = isSessionUnlocked() ? 'unlocked' : 'locked';
+  }
+  updateSessionDisplay();
+
+  /* ---------- Logging ---------- */
+  function logAction(text){
+    const data = ensureStructure();
+    const ts = new Date().toLocaleString();
+    data.logs.unshift(`[${ts}] ${text}`);
+    // keep sane length
+    if(data.logs.length > 500) data.logs.length = 500;
+    saveData(data);
+    renderLogs();
+  }
+  function renderLogs(){
+    const data = loadData();
+    const el = document.getElementById('logsList');
+    if(!el) return;
+    el.innerHTML = data.logs.map(l=>`<div class="muted" style="padding:6px;border-bottom:1px dashed rgba(255,255,255,0.03)">${l}</div>`).join('');
+  }
+  renderLogs();
+
+  /* ---------- Fingerprint mock ---------- */
+  const fpModal = document.getElementById('fpModal');
+  const fpBar = document.getElementById('fpBar');
+  let fpTimer = null;
+  function openFingerprint(focusImmediate=false){
+    fpModal.classList.add('show');
+    document.getElementById('fpHint').textContent = 'Place your finger on the scanner (click Scan)';
+    fpBar.style.width = '0%';
+    if(focusImmediate) { /* focus UI, nothing else */ }
+  }
+  window.openFingerprint = openFingerprint;
+  function closeFp(){ fpModal.classList.remove('show'); if(fpTimer) clearInterval(fpTimer); fpBar.style.width='0%'; }
+  window.closeFp = closeFp;
+
+  function startFingerprint(){
+    // animate progress bar and then prompt for password input as secure fallback
+    let val = 0;
+    fpBar.style.width = '0%';
+    document.getElementById('fpHint').textContent = 'Scanning...';
+    if(fpTimer) clearInterval(fpTimer);
+    fpTimer = setInterval(()=>{
+      val += 6 + Math.random()*14;
+      if(val >= 100){
+        clearInterval(fpTimer); fpTimer = null;
+        fpBar.style.width = '100%';
+        // simulate scan result: ask for pass fallback (for demo)
+        setTimeout(()=> {
+          // 75% chance to require password, 25% auto succeed (simulate biometric success)
+          if(Math.random() < 0.25){
+            setSessionUnlocked(); closeFp();
+            alert('Fingerprint accepted — session unlocked');
+          } else {
+            document.getElementById('fpHint').textContent = 'Scan requires PIN — please enter password';
+            showPasswordPrompt();
+          }
+        }, 450);
+      } else {
+        fpBar.style.width = `${Math.min(100,val)}%`;
+      }
+    }, 160);
+  }
+  window.startFingerprint = startFingerprint;
+
+  /* ---------- Password prompt ---------- */
+  function showPasswordPrompt(){
+    const pass = prompt('Admin password:');
+    if(pass === null) return;
+    const data = ensureStructure();
+    if(pass === data.password){
+      setSessionUnlocked();
+      closeFp();
+      alert('Password correct — session unlocked');
+      logAction('Admin logged in with password');
+    } else {
+      alert('Incorrect password');
+      logAction('Failed admin login attempt');
+    }
+  }
+  window.showPasswordPrompt = showPasswordPrompt;
+
+  /* ---------- Secure-open helper ---------- */
+  function secureOpen(panelId){
+    // if session unlocked open, else open fingerprint modal
+    if(isSessionUnlocked()){
+      openPanel(panelId);
+    } else {
+      openFingerprint();
+      // after auth, panel will be opened automatically by checkAuthOpen
+      // we'll store desired panel to open
+      sessionStorage.setItem('gta6_desired_panel', panelId);
+    }
+  }
+  window.secureOpen = secureOpen;
+
+  // after successful unlock, if a desired panel exists, open it
+  (function watchUnlock(){
+    setInterval(()=>{
+      const panel = sessionStorage.getItem('gta6_desired_panel');
+      if(panel && isSessionUnlocked()){
+        openPanel(panel);
+        sessionStorage.removeItem('gta6_desired_panel');
+      }
+    }, 800);
+  })();
+
+  /* ---------- Panels ----------- */
+  function openPanel(id){
+    document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+    const el = document.getElementById(id);
+    if(el) el.classList.add('active');
+    // for certain panels, refresh content
+    if(id === 'users') renderUsers();
+    if(id === 'bans') renderBans();
+    if(id === 'logs') renderLogs();
+    if(id === 'announcements') renderAnnouncements();
+    if(id === 'analytics') renderAnalytics();
+    if(id === 'editor') loadPage();
+  }
+  window.openPanel = openPanel;
+
+  /* ---------- Users ---------- */
+  function createId(){ return 'u_' + Math.random().toString(36).slice(2,10) }
+  function createTestUser(){
+    const data = ensureStructure();
+    const id = createId();
+    const now = Date.now();
+    data.users[id] = {id,name:'Tester_'+id.slice(-4),firstSeen:now,lastSeen:now,visits:1};
+    saveData(data);
+    logAction(`Created test user ${id}`);
+    renderUsers();
+    renderOverviewStats();
+  }
+  window.createTestUser = createTestUser;
+
+  function renderUsers(){
+    const data = ensureStructure();
+    const tbody = document.getElementById('usersTbody');
+    tbody.innerHTML = Object.values(data.users).sort((a,b)=> (b.lastSeen||0)-(a.lastSeen||0)).map(u=>{
+      const fs = new Date(u.firstSeen).toLocaleString();
+      const ls = new Date(u.lastSeen).toLocaleString();
+      return `<tr>
+        <td style="font-size:12px;word-break:break-all">${u.id}</td>
+        <td>${u.name}</td>
+        <td style="font-size:12px">${fs}</td>
+        <td style="font-size:12px">${ls}</td>
+        <td>${u.visits||0}</td>
+        <td><button class="btn" onclick="banById('${u.id}')">Ban</button></td>
+      </tr>`;
+    }).join('') || '<tr><td colspan="6" class="muted">No users yet</td></tr>';
+    document.getElementById('statVisitors').textContent = Object.keys(data.users).length;
+  }
+
+  /* ---------- Bans ---------- */
+  function manualBan(){
+    const key = document.getElementById('banId').value.trim();
+    if(!key){ alert('Enter visitor ID or name'); return; }
+    // if name, try find by name
+    const data = ensureStructure();
+    let id = key;
+    if(!data.users[key]){
+      const found = Object.values(data.users).find(u=>u.name.toLowerCase() === key.toLowerCase());
+      if(found) id = found.id;
+    }
+    data.bans[id] = {id,reason:document.getElementById('banReason').value || 'no reason',ts:Date.now()};
+    saveData(data);
+    logAction(`Banned ${id} (manual)`);
+    renderBans();
+  }
+  window.manualBan = manualBan;
+
+  function banById(id){
+    const data = ensureStructure();
+    data.bans[id] = {id,reason:'banned by admin',ts:Date.now()};
+    saveData(data);
+    logAction(`Banned ${id}`);
+    renderBans();
+    renderUsers();
+  }
+  window.banById = banById;
+
+  function unbanId(id){
+    const data = ensureStructure();
+    delete data.bans[id];
+    saveData(data);
+    logAction(`Unbanned ${id}`);
+    renderBans();
+  }
+  window.unbanId = unbanId;
+
+  function renderBans(){
+    const data = ensureStructure();
+    const tbody = document.getElementById('bansTbody');
+    tbody.innerHTML = Object.values(data.bans).map(b=>{
+      const ts = new Date(b.ts).toLocaleString();
+      return `<tr>
+        <td style="font-size:12px;word-break:break-all">${b.id}</td>
+        <td>${b.reason}</td>
+        <td style="font-size:12px">${ts}</td>
+        <td><button class="btn" onclick="unbanId('${b.id}')">Unban</button></td>
+      </tr>`;
+    }).join('') || '<tr><td colspan="4" class="muted">No active bans</td></tr>';
+  }
+
+  /* ---------- Announcements ---------- */
+  function addAnnouncement(){
+    const text = document.getElementById('announceText').value.trim();
+    const expires = document.getElementById('announceExpires').value;
+    if(!text){ alert('Type announcement'); return; }
+    const data = ensureStructure();
+    data.announcements.unshift({id:'a_'+Date.now(),text,expires: expires? new Date(expires).getTime():null});
+    saveData(data);
+    logAction('Added announcement');
+    renderAnnouncements();
+  }
+  window.addAnnouncement = addAnnouncement;
+
+  function renderAnnouncements(){
+    const data = ensureStructure();
+    const el = document.getElementById('announceList');
+    el.innerHTML = data.announcements.map(a=> {
+      const exp = a.expires ? new Date(a.expires).toLocaleString() : 'never';
+      return `<div style="padding:8px;border-bottom:1px dashed rgba(255,255,255,0.04)"><div style="display:flex;justify-content:space-between"><div><strong>${a.text}</strong><div class="muted">Expires: ${exp}</div></div><div><button class="btn" onclick="removeAnnouncement('${a.id}')">Remove</button></div></div></div>`;
+    }).join('') || '<div class="muted">No announcements</div>';
+  }
+  function removeAnnouncement(id){
+    const data = ensureStructure();
+    data.announcements = data.announcements.filter(a=>a.id!==id);
+    saveData(data);
+    logAction('Removed announcement');
+    renderAnnouncements();
+  }
+  window.removeAnnouncement = removeAnnouncement;
+
+  /* ---------- Page Editor ---------- */
+  function loadPage(){
+    const name = document.getElementById('pageSelect').value;
+    const data = ensureStructure();
+    document.getElementById('pageEditor').value = data.pages[name] || `<!-- ${name} (local) -->\n<h1>${name}</h1>\n<p>Edit content here.</p>`;
+    document.getElementById('previewFrame').srcdoc = document.getElementById('pageEditor').value;
+  }
+  window.loadPage = loadPage;
+
+  function previewPage(){
+    document.getElementById('previewFrame').srcdoc = document.getElementById('pageEditor').value;
+  }
+  window.previewPage = previewPage;
+
+  function savePage(){
+    const name = document.getElementById('pageSelect').value;
+    const data = ensureStructure();
+    data.pages[name] = document.getElementById('pageEditor').value;
+    saveData(data);
+    logAction(`Saved page ${name}`);
+    alert('Saved locally');
+  }
+  window.savePage = savePage;
+
+  /* ---------- Analytics ---------- */
+  function simulateTraffic(views=5){
+    const data = ensureStructure();
+    data.analytics.views = (data.analytics.views||0) + views;
+    saveData(data);
+    logAction(`Simulated ${views} views`);
+    renderAnalytics();
+    renderOverviewStats();
+  }
+  window.simulateTraffic = simulateTraffic;
+
+  function simulateClicks(n=3){
+    const data = ensureStructure();
+    data.analytics.clicks = (data.analytics.clicks||0) + n;
+    saveData(data);
+    logAction(`Simulated ${n} clicks`);
+    renderAnalytics();
+    renderOverviewStats();
+  }
+  window.simulateClicks = simulateClicks;
+
+  function renderAnalytics(){
+    const data = ensureStructure();
+    document.getElementById('statViews').textContent = data.analytics.views || 0;
+    document.getElementById('statClicks').textContent = data.analytics.clicks || 0;
+  }
+  renderAnalytics();
+
+  function renderOverviewStats(){
+    const data = ensureStructure();
+    document.getElementById('statViews').textContent = data.analytics.views || 0;
+    document.getElementById('statClicks').textContent = data.analytics.clicks || 0;
+    document.getElementById('statVisitors').textContent = Object.keys(data.users||{}).length;
+  }
+  renderOverviewStats();
+
+  function resetAnalytics(){
+    const data = ensureStructure();
+    data.analytics = {views:0,clicks:0};
+    saveData(data);
+    renderAnalytics();
+    logAction('Analytics reset');
+  }
+  window.resetAnalytics = resetAnalytics;
+
+  /* ---------- Settings ---------- */
+  function applyBg(){
+    const url = document.getElementById('bgUrl').value.trim();
+    if(!url) return alert('Enter URL');
+    document.body.style.background = `url('${url}') center/cover no-repeat fixed`;
+    const data = ensureStructure();
+    data.settings = data.settings || {};
+    data.settings.bg = url;
+    saveData(data);
+    logAction('Background changed');
+  }
+  window.applyBg = applyBg;
+
+  function resetBg(){
+    document.body.style.background = 'linear-gradient(180deg,#050008,#0b0012)';
+    const data = ensureStructure();
+    if(data.settings) delete data.settings.bg;
+    saveData(data);
+    logAction('Background reset');
+  }
+  window.resetBg = resetBg;
+
+  function changePassword(){
+    const newP = document.getElementById('newPass').value;
+    if(!newP){ alert('Enter a new password'); return; }
+    const data = ensureStructure();
+    data.password = newP;
+    saveData(data);
+    logAction('Admin password changed');
+    alert('Password updated');
+    document.getElementById('newPass').value = '';
+  }
+  window.changePassword = changePassword;
+
+  /* ---------- Export / Import ---------- */
+  function exportData(){
+    const data = ensureStructure();
+    const blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a'); a.href = url; a.download = 'gta6_admin_data.json'; a.click();
+    URL.revokeObjectURL(url);
+    logAction('Exported admin data');
+  }
+  window.exportData = exportData;
+
+  function importData(){
+    const input = document.createElement('input'); input.type='file'; input.accept='application/json';
+    input.onchange = (e) => {
+      const f = e.target.files[0];
+      if(!f) return;
+      const r = new FileReader();
+      r.onload = (ev) => {
+        try{
+          const obj = JSON.parse(ev.target.result);
+          localStorage.setItem(LS_KEY, JSON.stringify(obj));
+          alert('Imported data (reload recommended)');
+          logAction('Imported admin data');
+          location.reload();
+        }catch(err){ alert('Invalid file'); }
+      };
+      r.readAsText(f);
+    };
+    input.click();
+  }
+  window.importData = importData;
+
+  /* ---------- Utilities ---------- */
+  // Render initial lists
+  renderUsers();
+  renderBans();
+  renderAnnouncements();
+  renderLogs();
+  renderAnalytics();
+
+  // Wire preview for page editor when typing
+  document.getElementById('pageEditor').addEventListener('input', ()=> {
+    // live preview with debounce-ish
+    clearTimeout(window._previewTimer);
+    window._previewTimer = setTimeout(()=> document.getElementById('previewFrame').srcdoc = document.getElementById('pageEditor').value, 300);
+  });
+
+  // Auto-save visitors simulation: increment visits for demo
+  setInterval(()=> {
+    const data = ensureStructure();
+    // small randomized visitor activity for demo
+    if(Math.random() < 0.25){
+      // create guest
+      const id = 'g_' + Date.now().toString(36).slice(-6);
+      const now = Date.now();
+      data.users[id] = {id, name:'Guest_'+id.slice(-4), firstSeen:now, lastSeen:now, visits:1};
+      saveData(data);
+      renderUsers();
+      renderOverviewStats();
+    }
+  }, 8000);
+
+  // When modal closed via outside click:
+  document.getElementById('fpModal').addEventListener('click', (e)=> {
+    if(e.target === document.getElementById('fpModal')) closeFp();
+  });
+
+  // Expose some debugging to console
+  window.GTA6Admin = {
+    loadData, saveData, ensureStructure, logAction
+  };
+
+  // Render logs periodically to keep list updated if changed by other tabs
+  setInterval(renderLogs, 2000);
+
+})();
+</script>
 </body>
 </html>
 
