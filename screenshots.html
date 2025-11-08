@@ -23,33 +23,26 @@
       overflow-x: hidden;
     }
 
-    header {
-      position: fixed;
-      top: 18px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 100;
-      display: flex;
-      gap: 12px;
-      padding: 8px 14px;
-      border-radius: 999px;
-      backdrop-filter: blur(10px);
-      background: rgba(0,0,0,0.4);
-      box-shadow: 0 4px 18px rgba(0,0,0,0.4);
-    }
+}
 
-    .nav-btn {
-      text-decoration: none;
-      color: #fff;
-      font-weight: 700;
-      padding: 8px 12px;
-      border-radius: 999px;
-      transition: 0.3s;
-      border: 1px solid rgba(255,255,255,0.08);
+   /* Header with enhanced blur */
+    header{
+      position:fixed;top:18px;left:50%;transform:translateX(-50%);
+      z-index:50;display:flex;gap:12px;padding:8px 14px;border-radius:999px;
+
+      /* Enhanced blur & frosted glass */
+      backdrop-filter: blur(12px) saturate(1.2);
+      -webkit-backdrop-filter: blur(12px) saturate(1.2);
+      background: rgba(0,0,0,0.25);
+
+      box-shadow:0 6px 18px rgba(0,0,0,0.35);
     }
-    .nav-btn:hover {
-      background: rgba(255,255,255,0.1);
+    .nav-btn{
+      padding:8px 12px;border-radius:999px;text-decoration:none;color:#fff;
+      background:linear-gradient(90deg,rgba(255,255,255,0.03),rgba(255,255,255,0.01));
+      border:1px solid rgba(255,255,255,0.06);font-weight:700;
     }
+    .nav-btn:hover{box-shadow:0 0 10px rgba(255,77,210,0.18)}
 
     h1 {
       font-size: 48px;
