@@ -12,13 +12,11 @@
     html,body{height:100%;overflow-x:hidden}
 
     body{
-      position: relative;
       font-family:'Orbitron',sans-serif;
-      background: url('gta/jason.jpg') center/cover no-repeat fixed;
+      background:url('gta/jason.jpg') center/cover no-repeat fixed;
       display:flex;
       align-items:center;
       justify-content:center;
-      overflow:hidden;
     }
 
     :root{--accent:#ffffff;}
@@ -29,135 +27,141 @@
       top:-10vh;
       width:28px;
       height:28px;
-      opacity:.85;
+      background-size:cover;
+      opacity:.7;
       animation:fall linear infinite;
       pointer-events:none;
       z-index:0;
     }
 
     @keyframes fall{
-      from{transform:translateY(0) rotate(0)}
       to{transform:translateY(110vh) rotate(360deg)}
     }
 
+    /* HEADER */
     header{
       position:fixed;
       top:18px;
       left:50%;
       transform:translateX(-50%);
-      z-index:50;
       display:flex;
       gap:12px;
       padding:8px 14px;
       border-radius:999px;
-      backdrop-filter:blur(12px) saturate(1.2);
+      backdrop-filter:blur(12px);
       background:rgba(0,0,0,.25);
-      box-shadow:0 6px 18px rgba(0,0,0,.35);
+      z-index:50;
     }
 
     .nav-btn{
       padding:8px 12px;
       border-radius:999px;
-      text-decoration:none;
       color:#fff;
-      background:linear-gradient(90deg,rgba(255,255,255,.03),rgba(255,255,255,.01));
-      border:1px solid rgba(255,255,255,.06);
+      text-decoration:none;
       font-weight:700;
+      border:1px solid rgba(255,255,255,.08);
     }
 
-    main{z-index:5}
-
+    /* MAIN CARD */
     .countdown-wrap{
       backdrop-filter:blur(6px);
       border-radius:24px;
       padding:40px 48px;
       text-align:center;
+      background:rgba(0,0,0,.35);
       box-shadow:0 20px 60px rgba(0,0,0,.8);
-      border:1px solid rgba(255,255,255,.06);
-      background:rgba(0,0,0,.3);
-      width:clamp(320px,70vw,980px);
+      z-index:5;
     }
 
-    .title{font-size:50px;font-weight:800}
-    .subtitle{margin-bottom:22px;color:rgba(255,255,255,.85)}
+    .title{
+      font-size:48px;
+      font-weight:900;
+      color:#fff;
+    }
+
+    .subtitle{
+      margin-top:10px;
+      color:rgba(255,255,255,.85);
+    }
 
     .clock{
       display:flex;
       gap:18px;
       justify-content:center;
+      margin-top:22px;
       flex-wrap:wrap;
     }
 
     .unit{
-      min-width:88px;
-      padding:18px 16px;
+      min-width:90px;
+      padding:18px;
       border-radius:14px;
-      background:rgba(0,0,0,.5);
-      border:1px solid #fff;
+      background:rgba(0,0,0,.6);
+      border:1px solid rgba(255,255,255,.2);
     }
 
-    .num{font-size:45px;font-weight:900}
-    .label{font-size:20px;text-transform:uppercase}
+    .num{
+      font-size:42px;
+      font-weight:900;
+      color:#fff;
+    }
 
-    /* ===== POP-OUT EMBED ===== */
+    .label{
+      font-size:14px;
+      margin-top:6px;
+      color:rgba(255,255,255,.8);
+    }
 
-    #embedToggle{
+    /* OPEN EMBED BUTTON */
+    #openEmbedBig{
       position:fixed;
       bottom:20px;
       right:20px;
-      width:56px;
-      height:56px;
+      padding:14px 20px;
+      border-radius:999px;
+      border:none;
+      cursor:pointer;
+      font-family:'Orbitron',sans-serif;
+      font-weight:800;
+      color:#fff;
+      background:linear-gradient(135deg,#ff4dd2,#8f5bff);
+      box-shadow:0 0 25px rgba(255,77,210,.6);
+      z-index:1000;
+    }
+
+    /* EMBED OVERLAY */
+    #embedOverlay{
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,.85);
+      backdrop-filter:blur(14px);
+      display:none;
+      z-index:9999;
+    }
+
+    #embedOverlay.active{
+      display:block;
+    }
+
+    #embedOverlay iframe{
+      width:100%;
+      height:100%;
+      border:none;
+    }
+
+    #closeEmbedOverlay{
+      position:absolute;
+      top:20px;
+      right:20px;
+      width:46px;
+      height:46px;
       border-radius:50%;
       border:none;
       cursor:pointer;
-      font-size:22px;
-      background:linear-gradient(135deg,#ff4dd2,#9b5cff);
+      font-size:20px;
       color:#fff;
-      box-shadow:0 0 20px rgba(255,77,210,.6);
+      background:rgba(0,0,0,.6);
       z-index:10000;
-    }
-
-    #embedPanel{
-      position:fixed;
-      bottom:20px;
-      right:-420px;
-      width:400px;
-      height:500px;
-      background:rgba(0,0,0,.55);
-      backdrop-filter:blur(14px);
-      border-radius:20px;
-      box-shadow:0 20px 50px rgba(0,0,0,.8);
-      transition:right .35s ease;
-      z-index:9999;
-      overflow:hidden;
-    }
-
-    #embedPanel.open{right:90px}
-
-    .embed-header{
-      height:44px;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      padding:0 14px;
-      font-weight:700;
-      background:rgba(0,0,0,.4);
-      border-bottom:1px solid rgba(255,255,255,.1);
-    }
-
-    .embed-header button{
-      background:none;
-      border:none;
-      color:#fff;
-      font-size:18px;
-      cursor:pointer;
-    }
-
-    #embedPanel iframe{
-      width:100%;
-      height:calc(100% - 44px);
-      border:none;
-      background:#000;
     }
   </style>
 </head>
@@ -176,7 +180,8 @@
 <main>
   <section class="countdown-wrap">
     <h1 class="title">Grand Theft Auto VI</h1>
-    <div class="subtitle">Release countdown — November 19th, 2026</div>
+    <div class="subtitle">Release countdown — November 19, 2026</div>
+
     <div class="clock">
       <div class="unit"><div id="days" class="num">0</div><div class="label">Days</div></div>
       <div class="unit"><div id="hours" class="num">0</div><div class="label">Hours</div></div>
@@ -186,48 +191,63 @@
   </section>
 </main>
 
-<!-- Pop-out Embed -->
-<button id="embedToggle">🌐</button>
+<!-- OPEN BUTTON -->
+<button id="openEmbedBig">🌐 Open Site</button>
 
-<div id="embedPanel">
-  <div class="embed-header">
-    <span>Live Panel</span>
-    <button id="closeEmbed">✕</button>
-  </div>
+<!-- FULLSCREEN EMBED -->
+<div id="embedOverlay">
+  <button id="closeEmbedOverlay">✕</button>
   <iframe src="https://example.com"></iframe>
 </div>
 
 <script>
-  // Countdown
+  /* COUNTDOWN */
   const target = new Date('2026-11-19T00:00:00');
-  function pad(n){return String(n).padStart(2,'0')}
+  function pad(n){return String(n).padStart(2,'0');}
   setInterval(()=>{
-    let d=Math.max(0,(target-new Date())/1000|0)
-    days.textContent=d/86400|0
-    hours.textContent=pad(d%86400/3600|0)
-    minutes.textContent=pad(d%3600/60|0)
-    seconds.textContent=pad(d%60)
-  },1000)
+    let diff = Math.floor((target - new Date()) / 1000);
+    diff = Math.max(diff,0);
+    const d = Math.floor(diff/86400);
+    diff%=86400;
+    const h = Math.floor(diff/3600);
+    diff%=3600;
+    const m = Math.floor(diff/60);
+    const s = diff%60;
+    days.textContent=d;
+    hours.textContent=pad(h);
+    minutes.textContent=pad(m);
+    seconds.textContent=pad(s);
+  },1000);
 
-  // Leaves
+  /* LEAVES */
   for(let i=0;i<60;i++){
-    let l=document.createElement('div')
-    l.className='leaf'
-    l.style.left=Math.random()*100+'vw'
-    l.style.animationDuration=5+Math.random()*6+'s'
-    l.style.animationDelay=Math.random()*10+'s'
-    document.body.appendChild(l)
+    const l=document.createElement('div');
+    l.className='leaf';
+    l.style.left=Math.random()*100+'vw';
+    l.style.animationDuration=5+Math.random()*6+'s';
+    document.body.appendChild(l);
   }
 
-  // Embed toggle
-  embedToggle.onclick=()=>embedPanel.classList.toggle('open')
-  closeEmbed.onclick=()=>embedPanel.classList.remove('open')
+  /* EMBED TOGGLE */
+  const openBtn = document.getElementById('openEmbedBig');
+  const overlay = document.getElementById('embedOverlay');
+  const closeBtn = document.getElementById('closeEmbedOverlay');
+
+  openBtn.onclick = ()=>{overlay.classList.add('active');document.body.style.overflow='hidden';}
+  closeBtn.onclick = closeOverlay;
+
+  function closeOverlay(){
+    overlay.classList.remove('active');
+    document.body.style.overflow='';
+  }
+
+  document.addEventListener('keydown',e=>{
+    if(e.key==='Escape') closeOverlay();
+  });
 </script>
 
 </body>
 </html>
-
-
 
 
 
