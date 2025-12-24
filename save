@@ -1,71 +1,49 @@
-<!--
-GTA 6 Countdown - single-file HTML
-Instructions:
-- Replace `lucia-bg.jpg` with your Lucia background image in the same folder.
-- Replace `lucia-cursor.png` with your custom cursor image.
-- Replace trailer links in the header anchors with the real trailer URLs.
-- Open this file in a browser to preview.
--->
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Darla | Home</title>
-<link rel="icon" href="gta/kitty.jpg" type="image/jpg">
-    <!-- Orbitron font like your site -->
+  <link rel="icon" href="gta/kitty.jpg" type="image/jpg">
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+
   <style>
     *{box-sizing:border-box;margin:0;padding:0}
-    html,body{height:100%}
+    html,body{height:100%;overflow-x:hidden}
 
-    /* Lucia background */
-    :root{
-      --accent:#ffffff;
-    }
     body{
       position: relative;
       font-family:'Orbitron',sans-serif;
-      background: url('https://i.redd.it/w1u74qaho25c1.png') center/cover no-repeat fixed;
+      background: url('gta/jason.jpg') center/cover no-repeat fixed;
       display:flex;
       align-items:center;
       justify-content:center;
+      overflow:hidden;
     }
 
-    .page{
-      width:100%;
-      min-height:100vh;
-      display:flex;
-      flex-direction:column;
-      position: relative;
-      z-index:1;
+    :root{--accent:#ffffff;}
+
+    /* --- FALLING LEAVES --- */
+    .leaf{
+      position:fixed;
+      top:-10vh;
+      width:28px;
+      height:28px;
+      background-size:cover;
+      opacity:0.85;
+      animation:fall linear infinite;
+      pointer-events:none;
+      z-index:0;
     }
 
-    .trailer-btn{
-      display:inline-flex;
-      gap:8px;
-      align-items:center;
-      padding:8px 12px;
-      border-radius:999px;
-      text-decoration:none;
-      color:var(--accent);
-      font-weight:600;
-      font-size:14px;
-      background:rgba(0,0,0,0.4);
-      border:1px solid rgba(255,255,255,0.1);
-    }
-
-    .trailer-btn .dot{
-      width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,0.9);
-    }
-
-    main{
-      flex:1;display:flex;align-items:center;justify-content:center;padding:120px 24px 48px;
+    @keyframes fall{
+      0%{transform:translateY(0) rotate(0deg)}
+      100%{transform:translateY(110vh) rotate(360deg)}
     }
 
     .countdown-wrap{
-      backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blur(6px);
+      backdrop-filter:blur(6px);
+      -webkit-backdrop-filter:blur(6px);
       border-radius:24px;
       padding:40px 48px;
       text-align:center;
@@ -75,9 +53,10 @@ Instructions:
       min-width:320px;
       max-width:980px;
       width:clamp(320px,70vw,980px);
+      z-index:5;
     }
 
-/* Header (same style as your home) */
+    /* Header */
     header{
       position:fixed;
       top:18px;
@@ -88,181 +67,97 @@ Instructions:
       gap:12px;
       padding:8px 14px;
       border-radius:999px;
-      backdrop-filter: blur(6px) saturate(0.9);
+      backdrop-filter:blur(12px) saturate(1.2);
+      -webkit-backdrop-filter:blur(12px) saturate(1.2);
+      background:rgba(0,0,0,0.25);
       box-shadow:0 6px 18px rgba(0,0,0,0.35);
     }
-    .nav-btn{
-      padding:8px 12px;border-radius:999px;text-decoration:none;color:#fff;
-      background:linear-gradient(90deg,rgba(255,255,255,0.03),rgba(255,255,255,0.01));
-      border:1px solid rgba(255,255,255,0.06);font-weight:700;
-    }
-    .nav-btn:hover{box-shadow:0 0 10px rgba(255,77,210,0.18)}
 
-    
-    .title{font-size:50px;color:rgba(255, 255, 255);font-weight:800;margin-bottom:8px}
-    .subtitle{color:rgba(255,255,255,0.85);margin-bottom:22px}
+    .nav-btn{
+      padding:8px 12px;
+      border-radius:999px;
+      text-decoration:none;
+      color:#fff;
+      background:linear-gradient(90deg,rgba(255,255,255,0.03),rgba(255,255,255,0.01));
+      border:1px solid rgba(255,255,255,0.06);
+      font-weight:700;
+    }
+
+    .title{
+      font-size:50px;
+      color:#ffffff;
+      font-weight:800;
+      margin-bottom:8px;
+    }
+
+    .subtitle{
+      color:rgba(255,255,255,0.85);
+      margin-bottom:22px;
+    }
 
     .clock{
-      display:flex;gap:18px;justify-content:center;align-items:stretch;margin-top:8px;flex-wrap:wrap;
+      display:flex;
+      gap:18px;
+      justify-content:center;
+      flex-wrap:wrap;
     }
 
     .unit{
-      min-width:88px;padding:18px 16px;border-radius:14px;background:rgba(0,0,0,0.5);border:1px solid rgba(255, 255, 255);
-      display:flex;flex-direction:column;align-items:center;justify-content:center;
+      min-width:88px;
+      padding:18px 16px;
+      border-radius:14px;
+      background:rgba(0,0,0,0.5);
+      border:1px solid rgba(255,255,255,0.9);
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
     }
 
-    .num{font-size:45px;font-weight:900;color:var(--accent);text-shadow:0 2px 6px rgba(255, 255, 255)}
-    .label{font-size:20px;color:rgba(255,255,255,0.85);margin-top:6px;text-transform:uppercase;text-shadow:0 1px 3px rgba(255, 255, 255)}
+    /* 🔧 FIXED COUNTDOWN TEXT (NO BLUE) */
+    .num{
+      font-size:45px;
+      font-weight:900;
+      color:#ffffff;
+      text-shadow:0 0 10px rgba(255,255,255,0.35);
+    }
 
-    .footnote{margin-top:18px;color:rgba(255,255,255,0.8);font-size:30px;text-shadow:0 1px 3px rgba(255, 255, 255}
+    .label{
+      font-size:20px;
+      color:rgba(255,255,255,0.85);
+      margin-top:6px;
+      text-transform:uppercase;
+      text-shadow:0 0 6px rgba(255,255,255,0.25);
+    }
 
     @media (max-width:640px){
-      header{left:12px;transform:none;right:12px;top:12px;justify-content:flex-start}
-      .countdown-wrap{padding:28px}
       .num{font-size:28px}
+      .countdown-wrap{padding:28px}
     }
-    .side-buttons {
-  position: fixed;
-  top: 50%;
-  left: 20px; /* change to right:20px for right side */
-  transform: translateY(-50%);
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  z-index: 100;
-}
-
-.side-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 10px 16px;
-  border-radius: 999px;
-  background: rgba(0,0,0,0.4);
-  border: 1px solid rgba(255,255,255,0.2);
-  color: #fff;
-  font-weight: 700;
-  text-decoration: none;
-  transition: 0.3s;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-}
-
-.side-btn:hover {
-  background: rgba(255,255,255,0.1);
-  box-shadow: 0 0 10px #ff4dd2, 0 0 20px #ff99e6;
-}
-    
-    #clock {
-      position: fixed;
-      top: 10px;
-      right: 10px;
-      font-size: 14px;
-      padding: 5px 8px;
-      background: rgba(0, 0, 0, 0.4); /* transparent background */
-      border-radius: 6px;
-      color: #fff;
-      z-index: 1000;
-      font-weight: bold;
-    }
-
-   >
-    body {
-      margin:0;
-      padding:0;
-      font-family:'Orbitron',sans-serif;
-      background:#111;
-      color:#fff;
-      min-height:200vh;
-    }
-    .donate-btn {
-  position: fixed;
-  bottom: 20px;
-  right: 80px; /* keeps it left of your settings button */
-  background: #ff4dd2;
-  color: white;
-  font-weight: bold;
-  font-family: 'Orbitron', sans-serif;
-  padding: 12px 18px;
-  border-radius: 999px;
-  text-decoration: none;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-  transition: 0.3s;
-  z-index: 1001;
-}
-.donate-btn:hover {
-  background: #ff1ab3;
-  box-shadow: 0 0 15px #ff4dd2, 0 0 30px #ff99e6;
-}
   </style>
 </head>
+
 <body>
-  
-   <header>
+  <header>
     <a href="index" class="nav-btn">Home</a>
     <a href="map" class="nav-btn">Map</a>
     <a href="characters" class="nav-btn">Characters</a>
     <a href="places" class="nav-btn">Places</a>
-    <a href="preorder" class="nav-btn">Wishlist</a>
+    <a href="screenshots" class="nav-btn">Screenshots</a>
     <a href="trailers" class="nav-btn">Trailers</a>
   </header>
-  
-    <main>
-      <section class="countdown-wrap" aria-labelledby="gta6-title">
-        <h1 id="gta6-title" class="title">Grand Theft Auto VI</h1>
-        <div class="subtitle">Release countdown — May 26, 2026</div>
 
-        <div class="clock" role="timer" aria-live="polite" aria-atomic="true">
-          <div class="unit">
-            <div id="days" class="num">0</div>
-            <div class="label">Days</div>
-          </div>
-          <div class="unit">
-            <div id="hours" class="num">0</div>
-            <div class="label">Hours</div>
-          </div>
-          <div class="unit">
-            <div id="minutes" class="num">0</div>
-            <div class="label">Minutes</div>
-          </div>
-          <div class="unit">
-            <div id="seconds" class="num">0</div>
-            <div class="label">Seconds</div>
-          </div>
-        </div>
-      </section>
-    </main>
-  </div>
+  <main>
+    <section class="countdown-wrap">
+      <h1 class="title">Grand Theft Auto VI</h1>
+      <div class="subtitle">Release countdown — November 19th, 2026</div>
 
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4645233066140145"
-     crossorigin="anonymous"></script>
-  
-  <script>
-    const target = new Date('2026-05-26T00:00:00');
+      <div class="clock">
+        <div class="unit"><div id="days" class="num">0</div><div class="label">Days</div></div>
+        <div class="unit"><div id="hours" class="num">0</div><div class="label">Hours</div></div>
+        <div class="unit"><div id="minutes" class="num">0</div><div class="label">Minutes</div></div>
+        <div class="unit"><div id="seconds
 
-    function pad(n){return String(n).padStart(2,'0');}
-
-    function update(){
-      const now = new Date();
-      let diff = Math.floor((target - now) / 1000);
-      if (diff < 0) diff = 0;
-
-      const days = Math.floor(diff / 86400);
-      diff -= days * 86400;
-      const hours = Math.floor(diff / 3600);
-      diff -= hours * 3600;
-      const minutes = Math.floor(diff / 60);
-      const seconds = diff - minutes * 60;
-
-      document.getElementById('days').textContent = days;
-      document.getElementById('hours').textContent = pad(hours);
-      document.getElementById('minutes').textContent = pad(minutes);
-      document.getElementById('seconds').textContent = pad(seconds);
-    }
-
-    update();
-    setInterval(update, 1000);
-
-    
   </script>
 </body>
 </html>
