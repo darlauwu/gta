@@ -137,6 +137,98 @@
   </style>
 </head>
 
+<!-- Alerts Tab -->
+<a href="https://www.youtube.com/watch?v=VQRLujxTm3c" target="_blank" class="alerts-tab" id="alertsTab">
+  <img src="" alt="Alert Thumbnail" class="alert-thumb">
+  <div class="alert-text">
+    <strong>Grand theft Auto VI Trailer 2</strong>
+    <span>WATCH NOW</span>
+  </div>
+  <button class="alert-close" onclick="closeAlert(event)">×</button>
+</a>
+
+<style>
+  .alerts-tab {
+    position: fixed;
+    top: 18px;
+    left: 18px;
+    display: flex;
+    align-items: center;
+    background: rgba(0,0,0,0.8);
+    color: #fff;
+    border-radius: 12px;
+    padding: 10px;
+    gap: 10px;
+    max-width: 320px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+    z-index: 100;
+    font-family: 'Orbitron', sans-serif;
+    text-decoration: none;
+  }
+
+  .alert-thumb {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+
+  .alert-text {
+    display: flex;
+    flex-direction: column;
+    font-size: 14px;
+  }
+
+  .alert-text strong {
+    font-size: 15px;
+    margin-bottom: 4px;
+  }
+
+  .alert-close {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 18px;
+    cursor: pointer;
+    margin-left: auto;
+  }
+
+  @media (max-width: 640px) {
+    .alerts-tab {
+      max-width: 220px;
+      padding: 6px;
+      gap: 6px;
+    }
+
+    .alert-thumb {
+      width: 45px;
+      height: 45px;
+    }
+
+    .alert-text strong {
+      font-size: 13px;
+    }
+
+    .alert-text span {
+      font-size: 12px;
+    }
+
+    .alert-close {
+      font-size: 16px;
+    }
+  }
+</style>
+
+<script>
+  function closeAlert(event) {
+    event.preventDefault(); // prevent the link from opening when closing
+    const alert = document.getElementById('alertsTab');
+    alert.style.display = 'none';
+  }
+</script>
+
+
+  
 <body>
   <header>
     <a href="index" class="nav-btn">Home</a>
