@@ -1,205 +1,164 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Maintenance | GTA 6</title>
-  <link rel="icon" href="https://media.discordapp.net/attachments/1414343219059097732/1416467427600109769/IMG_3235.jpg?ex=68c6f397&is=68c5a217&hm=88925fd90bf0f428c981fdb9039e3e6e25e0a9b4c2d37ab651bb695cb331534f&=&format=webp&width=754&height=1006" type="image/png">
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap');
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Maintenance | GTA 6</title>
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html, body { height: 100%; }
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
 
-    body {
-      font-family: 'Orbitron', sans-serif;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      background: url('https://i.redd.it/w1u74qaho25c1.png') center/cover no-repeat fixed;
-      position: relative;
-      overflow: hidden;
-      color: #fff;
-    }
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
 
-    /* dark overlay */
-    body::after {
-      content: "";
-      position: absolute;
-      top:0; left:0; right:0; bottom:0;
-      background: rgba(0,0,0,0.7);
-      z-index: 0;
-    }
+body {
+  font-family: 'Orbitron', sans-serif;
+  background: url('gta/others.jpg') center/cover no-repeat fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  overflow: hidden;
+  position: relative;
+}
 
-    .content {
-      position: relative;
-      z-index: 1;
-      text-align: center;
-      padding: 20px;
-    }
+/* Dark cinematic overlay */
+body::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.78);
+  z-index: 0;
+}
 
-    h1 {
-      font-size: 60px;
-      font-weight: 900;
-      text-shadow: 0 0 10px #ff4dd2, 0 0 20px #ff99e6;
-      animation: glow 2s infinite alternate;
-    }
+/* Scanline effect */
+body::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(255,255,255,0.03),
+    rgba(255,255,255,0.03) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  pointer-events: none;
+  z-index: 1;
+}
 
-    p {
-      font-size: 22px;
-      margin-top: 16px;
-      color: rgba(255,255,255,0.9);
-    }
+.container {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 40px;
+  max-width: 700px;
+  width: 100%;
+}
 
-    @keyframes glow {
-      from { text-shadow: 0 0 10px #ff4dd2; }
-      to { text-shadow: 0 0 20px #ff4dd2, 0 0 40px #ff99e6; }
-    }
+/* Title */
+h1 {
+  font-size: clamp(40px, 6vw, 70px);
+  font-weight: 900;
+  letter-spacing: 2px;
+  text-shadow:
+    0 0 10px #ff4dd2,
+    0 0 25px #ff4dd2,
+    0 0 45px #ff99e6;
+  animation: pulse 2s infinite alternate;
+}
 
-    /* optional animated bar at bottom */
-   .progress-bar {
-    margin: 24px auto 0 auto; /* centers it horizontally */
-    width: 300px;
-    height: 10px;
-    background: rgba(255,255,255,0.15);
-    border-radius: 999px;
-    overflow: hidden;
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    }
+@keyframes pulse {
+  from { opacity: 0.85; }
+  to { opacity: 1; }
+}
 
-    .content {
-    position: relative;
-    z-index: 1;
-    text-align: center;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* centers children like the progress bar */
-    justify-content: center;
-    }
+/* Subtitle */
+.subtitle {
+  margin-top: 18px;
+  font-size: 20px;
+  color: rgba(255,255,255,0.85);
+}
 
-    
-    .progress-fill {
-      position: absolute;
-      top:0; left:0;
-      height: 100%;
-      width: 60%;
-      background: linear-gradient(90deg, #ff4dd2, #ff99e6);
-      animation: loading 2s infinite;
-    }
+/* Status text */
+.status {
+  margin-top: 30px;
+  font-size: 18px;
+  color: #ff99e6;
+  letter-spacing: 1px;
+}
 
-    @keyframes loading {
-      0% { transform: translateX(-100%); }
-      50% { transform: translateX(0%); }
-      100% { transform: translateX(100%); }
-    }
+/* Loading bar */
+.loader {
+  margin: 26px auto 0;
+  width: 320px;
+  height: 12px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.15);
+  overflow: hidden;
+  position: relative;
+}
 
-    /* Dark overlay effect */
-    .overlay-bg {
-      position:fixed;
-      top:0;left:0;right:0;bottom:0;
-      background:rgba(0,0,0,0.7);
-      backdrop-filter:blur(6px);
-      z-index:0;
-      transition:opacity 0.5s;
-    }
+.loader::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  width: 50%;
+  background: linear-gradient(90deg, #ff4dd2, #ff99e6);
+  animation: load 2s infinite ease-in-out;
+}
 
-    /* Hidden overlay (Light Mode = no effect) */
-    .overlay-bg.hidden {
-      display:none;
-    }
+@keyframes load {
+  0% { transform: translateX(-100%); }
+  50% { transform: translateX(0%); }
+  100% { transform: translateX(100%); }
+}
 
-    /* Floating violet settings button */
-    .settings-btn {
-      position:fixed;
-      bottom:20px;
-      right:20px;
-      width:60px;
-      height:60px;
-      border-radius:50%;
-      background:linear-gradient(135deg,#8a2be2,#ff69b4);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-size:24px;
-      cursor:pointer;
-      color:#fff;
-      box-shadow:0 6px 20px rgba(0,0,0,0.5);
-      z-index:1000;
-      transition:0.3s;
-    }
-    .settings-btn:hover { transform:scale(1.1); }
-
-    /* Popup overlay */
-    .popup-overlay {
-      position:fixed;
-      top:0;left:0;right:0;bottom:0;
-      background:rgba(0,0,0,0.7);
-      backdrop-filter:blur(6px);
-      display:none;
-      align-items:center;
-      justify-content:center;
-      z-index:2000;
-    }
-
-    /* Popup window */
-    .popup {
-      background:rgba(20,20,20,0.95);
-      border-radius:16px;
-      width:400px;
-      max-width:90%;
-      padding:20px;
-      text-align:center;
-      box-shadow:0 8px 30px rgba(0,0,0,0.7);
-      border:2px solid #8a2be2;
-      animation:fadeIn 0.3s ease;
-    }
-    .popup h2 { margin-bottom:15px;font-size:22px;color:#ff69b4; }
-
-    .popup .option {
-      margin:10px 0;
-      padding:10px;
-      border-radius:8px;
-      background:rgba(255,255,255,0.05);
-      cursor:pointer;
-      transition:0.3s;
-    }
-    .popup .option:hover { background:rgba(255,255,255,0.15); }
-
-    /* Close button */
-    .close-btn {
-      margin-top:20px;
-      padding:8px 18px;
-      border:none;
-      border-radius:8px;
-      background:#ff69b4;
-      color:#fff;
-      font-weight:bold;
-      cursor:pointer;
-      transition:0.3s;
-    }
-    .close-btn:hover { background:#8a2be2; }
-
-    @keyframes fadeIn {
-      from {opacity:0;transform:scale(0.9);}
-      to {opacity:1;transform:scale(1);}
-    }
-  </style>
+/* Footer hint */
+.footer {
+  margin-top: 40px;
+  font-size: 14px;
+  color: rgba(255,255,255,0.5);
+}
+</style>
 </head>
+
 <body>
-  <div class="content">
-    <h1>🚧 Under Construction 🚧</h1>
-    <p>This page is currently being built.<br>Check back soon for GTA 6 updates!</p>
-    <div class="progress-bar">
-      <div class="progress-fill"></div>
+  <div class="container">
+    <h1>MAINTENANCE MODE</h1>
+
+    <div class="subtitle">
+      Grand Theft Auto VI systems are currently offline
+    </div>
+
+    <div class="loader"></div>
+
+    <div class="status" id="statusText">
+      Initializing systems…
+    </div>
+
+    <div class="footer">
+      © Rockstar-inspired fan project
     </div>
   </div>
-</head>
-<body>
+
+<script>
+const statuses = [
+  "Initializing systems…",
+  "Loading world assets…",
+  "Syncing online services…",
+  "Final checks in progress…"
+];
+
+let index = 0;
+setInterval(() => {
+  index = (index + 1) % statuses.length;
+  document.getElementById("statusText").textContent = statuses[index];
+}, 2500);
+</script>
+</body>
+</html>
+
 
   
 </body>
