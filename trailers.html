@@ -137,13 +137,13 @@
 </head>
 <body>
 
- <script>
-  const maintenance = true; // set to false when site is live
-
-  if (!maintenance) {
-    window.location.href = "maintenance";
-  }
+<script>
+  // Redirect after 5 seconds
+  setTimeout(() => {
+    window.location.href = "maintenance"; // change destination
+  }, 5000);
 </script>
+
 
 
   <header>
