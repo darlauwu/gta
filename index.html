@@ -134,80 +134,83 @@
       .num{font-size:28px}
       .countdown-wrap{padding:28px}
     }
+
+.video-card {
+  width: 360px;
+  background: linear-gradient(180deg, #5b2b82, #3a1b52);
+  border-radius: 18px;
+  padding: 12px;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  color: white;
+  position: fixed;      /* ← change */
+  top: 20px;            /* ← distance from top */
+  left: 20px;           /* ← distance from left */
+  z-index: 9999;        /* ← stays on top */
+  box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+}
+
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(0,0,0,0.55);
+  border: none;
+  color: white;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.thumbnail {
+  position: relative;
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.thumbnail img {
+  width: 100%;
+  display: block;
+}
+
+.play-btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 56px;
+  height: 56px;
+  background: rgba(255,255,255,0.9);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  color: black;
+}
+
+.video-info {
+  margin-top: 10px;
+}
+
+.video-info h3 {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 4px 0;
+}
+
+.video-info p {
+  font-size: 13px;
+  color: #d7c9e6;
+  margin: 0;
+}
+    
   </style>
 </head>
 
-<style>
-  .alerts-tab {
-    position: fixed;
-    top: 18px;
-    left: 18px;
-    display: flex;
-    align-items: center;
-    background: rgba(0,0,0,0.8);
-    color: #fff;
-    border-radius: 12px;
-    padding: 10px;
-    gap: 10px;
-    max-width: 320px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.5);
-    z-index: 100;
-    font-family: 'Orbitron', sans-serif;
-    text-decoration: none;
-  }
 
-  .alert-thumb {
-    width: 60px;
-    height: 60px;
-    object-fit: cover;
-    border-radius: 8px;
-  }
-
-  .alert-text {
-    display: flex;
-    flex-direction: column;
-    font-size: 14px;
-  }
-
-  .alert-text strong {
-    font-size: 15px;
-    margin-bottom: 4px;
-  }
-
-  .alert-close {
-    background: none;
-    border: none;
-    color: #fff;
-    font-size: 18px;
-    cursor: pointer;
-    margin-left: auto;
-  }
-
-  @media (max-width: 640px) {
-    .alerts-tab {
-      max-width: 220px;
-      padding: 6px;
-      gap: 6px;
-    }
-
-    .alert-thumb {
-      width: 45px;
-      height: 45px;
-    }
-
-    .alert-text strong {
-      font-size: 13px;
-    }
-
-    .alert-text span {
-      font-size: 12px;
-    }
-
-    .alert-close {
-      font-size: 16px;
-    }
-  }
-</style>
 
 <script>
   function closeAlert(event) {
@@ -217,6 +220,21 @@
   }
 </script>
 
+<div class="video-card">
+  <button class="close-btn">×</button>
+
+  <div class="thumbnail">
+    <img src="gta/jason.jpg" alt="Video thumbnail">
+    <div class="play-btn">
+      ▶
+    </div>
+  </div>
+
+  <div class="video-info">
+    <h3>Watch Grand Theft Auto VI Trailer 2</h3>
+    <p>Explore Leonida and Vice City!</p>
+  </div>
+</div>
 
   
 <body>
