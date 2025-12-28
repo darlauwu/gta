@@ -137,19 +137,14 @@
 </head>
 <body>
 
-  <!-- Invisible button -->
-  <button id="secret-btn"></button>
+ <script>
+  const maintenance = true; // set to false when site is live
 
-  <script>
-    document.getElementById("secret-btn").addEventListener("click", function() {
-      let password = prompt("Enter the secret password:");
-      if (password === "darla") {
-        window.location.href = "darla.html";
-      } else if (password !== null) {
-        alert("❌ Wrong password. Access denied.");
-      }
-    });
-  </script>
+  if (!maintenance) {
+    window.location.href = "maintenance";
+  }
+</script>
+
 
   <header>
     <a href="index" class="nav-btn">Home</a>
