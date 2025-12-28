@@ -136,17 +136,21 @@
     }
 
 .video-card {
-  width: 280px;
-  background: linear-gradient(180deg, #5b2b82, #3a1b52);
+  width: 230px;
+  background: rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border-radius: 18px;
   padding: 12px;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   color: white;
-  position: fixed;      /* ← change */
-  top: 20px;            /* ← distance from top */
-  left: 20px;           /* ← distance from left */
-  z-index: 9999;        /* ← stays on top */
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 9999;
   box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+  transform: scale(0.75);
+  transform-origin: top left;
 }
 
 
