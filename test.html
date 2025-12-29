@@ -2,27 +2,22 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>VI | Screenshots</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>VI | Home</title>
   <link rel="icon" href="gta/npc/lucia.jpg" type="image/jpg">
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
 
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { height: 100%; scroll-behavior: smooth; }
     body {
       font-family: 'Orbitron', sans-serif;
       background: url('gta/jason.jpg') center/cover no-repeat fixed;
       color: #fff;
       overflow-x: hidden;
-      scroll-behavior: smooth; /* smooth scrolling */
     }
 
-    /* Header with enhanced blur */
+    /* --- Header --- */
     header {
       position: fixed;
       top: 18px;
@@ -34,7 +29,6 @@
       padding: 8px 14px;
       border-radius: 999px;
       backdrop-filter: blur(12px) saturate(1.2);
-      -webkit-backdrop-filter: blur(12px) saturate(1.2);
       background: rgba(0,0,0,0.25);
       box-shadow: 0 6px 18px rgba(0,0,0,0.35);
     }
@@ -47,77 +41,172 @@
       background: linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
       border: 1px solid rgba(255,255,255,0.06);
       font-weight: 700;
+      transition: transform 0.2s, background 0.2s;
     }
 
-    h1 {
-      font-size: 48px;
-      text-align: center;
-      text-shadow: 0 2px 10px rgba(0,0,0,0.7);
-      margin: 120px 0 40px; /* clears header */
-    }
-
-    /* Gallery grid */
-    .gallery {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px,1fr));
-      gap: 18px;
-      width: 90%;
-      max-width: 1400px;
-      margin: 0 auto 80px;
-    }
-
-    /* Images with fade-in + slide-up */
-    .gallery img {
-      width: 100%;
-      height: 180px;
-      object-fit: cover;
-      border-radius: 16px;
-      cursor: pointer;
-      border: 1px solid rgba(255,255,255,0.05);
-      opacity: 0;
-      transform: translateY(20px);
-      transition: transform 0.5s ease, opacity 0.5s ease, box-shadow 0.3s, transform 0.3s;
-    }
-
-    .gallery img.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .gallery img:hover {
+    .nav-btn:hover {
       transform: scale(1.05);
-      box-shadow: 0 0 20px rgba(255,77,210,0.4);
+      background: rgba(255,255,255,0.08);
     }
 
-    /* Fullscreen viewer */
-    .viewer {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.85);
-      backdrop-filter: blur(8px);
-      justify-content: center;
-      align-items: center;
-      z-index: 999;
-      opacity: 0;
-      transition: opacity 0.3s ease;
+    /* --- Countdown Section --- */
+    .countdown-wrap {
+      backdrop-filter: blur(6px);
+      border-radius: 24px;
+      padding: 40px 48px;
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+      border: 1px solid rgba(255,255,255,0.06);
+      background: rgba(0,0,0,0.3);
+      min-width: 320px;
+      max-width: 980px;
+      width: clamp(320px,70vw,980px);
+      margin: 160px auto 80px;
+      position: relative;
     }
 
-    .viewer.active {
+    .title {
+      font-size: 50px;
+      font-weight: 800;
+      margin-bottom: 8px;
+      text-shadow: 0 0 12px rgba(255,255,255,0.6);
+    }
+
+    .subtitle {
+      color: rgba(255,255,255,0.85);
+      margin-bottom: 22px;
+      font-size: 18px;
+    }
+
+    .clock {
       display: flex;
-      opacity: 1;
+      gap: 18px;
+      justify-content: center;
+      flex-wrap: wrap;
     }
 
-    .viewer img {
-      max-width: 90%;
-      max-height: 90%;
-      border-radius: 16px;
-      box-shadow: 0 0 30px rgba(255,255,255,0.2);
+    .unit {
+      min-width: 88px;
+      padding: 18px 16px;
+      border-radius: 14px;
+      background: rgba(0,0,0,0.5);
+      border: 1px solid rgba(255,255,255,0.9);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      perspective: 600px; /* Needed for flip effect */
     }
+
+    .num {
+      font-size: 45px;
+      font-weight: 900;
+      color: #FAFAFB;
+      text-shadow: 0 0 10px rgba(255,255,255,0.35);
+      position: relative;
+      width: 80px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .num span {
+      display: block;
+      backface-visibility: hidden;
+      transform-style: preserve-3d;
+      transition: transform 0.6s ease;
+    }
+
+    .flip .current {
+      transform: rotateX(-180deg);
+    }
+
+    .flip .next {
+      transform: rotateX(0deg);
+    }
+
+    .label {
+      font-size: 20px;
+      color: rgba(255,255,255,0.85);
+      margin-top: 6px;
+      text-transform: uppercase;
+      text-shadow: 0 0 6px rgba(255,255,255,0.25);
+    }
+
+    @media (max-width:640px){
+      .num { font-size: 28px; }
+      .countdown-wrap { padding: 28px; }
+    }
+
+    /* --- Video Card --- */
+    .video-card {
+      width: 275px;
+      background: rgba(0,0,0,0.25);
+      backdrop-filter: blur(12px);
+      border-radius: 18px;
+      padding: 12px;
+      color: white;
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 9999;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+      transform: scale(0.75);
+      transform-origin: top left;
+      transition: transform 0.3s ease;
+    }
+
+    .video-card:hover { transform: scale(0.8); }
+
+    .thumbnail {
+      position: relative;
+      border-radius: 14px;
+      overflow: hidden;
+    }
+
+    .thumbnail img {
+      width: 100%;
+      display: block;
+      border-radius: 12px;
+    }
+
+    .play-btn {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 56px;
+      height: 56px;
+      background: rgba(255,255,255,0.9);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      color: black;
+      pointer-events: none;
+    }
+
+    .video-info {
+      margin-top: 10px;
+    }
+    .video-info h3 {
+      font-size: 16px;
+      font-weight: 600;
+      margin: 0 0 4px 0;
+    }
+    .video-info p {
+      font-size: 13px;
+      color: #d7c9e6;
+      margin: 0;
+    }
+
   </style>
 </head>
-
 <body>
+
+  <!-- Header -->
   <header>
     <a href="index" class="nav-btn">Home</a>
     <a href="map" class="nav-btn">Map</a>
@@ -127,83 +216,85 @@
     <a href="trailers" class="nav-btn">Trailers</a>
   </header>
 
-  <h1>GTA 6 Screenshot Gallery</h1>
-
-  <div class="gallery">
-    <!-- All 36 screenshots -->
-    <img src="gta/screenshots/1.jpg" alt="Screenshot 1">
-    <img src="gta/screenshots/2.jpg" alt="Screenshot 2">
-    <img src="gta/screenshots/3.jpg" alt="Screenshot 3">
-    <img src="gta/screenshots/4.jpg" alt="Screenshot 4">
-    <img src="gta/screenshots/5.jpg" alt="Screenshot 5">
-    <img src="gta/screenshots/6.jpg" alt="Screenshot 6">
-    <img src="gta/screenshots/7.jpg" alt="Screenshot 7">
-    <img src="gta/screenshots/8.jpg" alt="Screenshot 8">
-    <img src="gta/screenshots/9.jpg" alt="Screenshot 9">
-    <img src="gta/screenshots/10.jpg" alt="Screenshot 10">
-    <img src="gta/screenshots/11.jpg" alt="Screenshot 11">
-    <img src="gta/screenshots/12.jpg" alt="Screenshot 12">
-    <img src="gta/screenshots/13.jpg" alt="Screenshot 13">
-    <img src="gta/screenshots/14.jpg" alt="Screenshot 14">
-    <img src="gta/screenshots/15.jpg" alt="Screenshot 15">
-    <img src="gta/screenshots/16.jpg" alt="Screenshot 16">
-    <img src="gta/screenshots/17.jpg" alt="Screenshot 17">
-    <img src="gta/screenshots/18.jpg" alt="Screenshot 18">
-    <img src="gta/screenshots/19.jpg" alt="Screenshot 19">
-    <img src="gta/screenshots/20.jpg" alt="Screenshot 20">
-    <img src="gta/screenshots/21.jpg" alt="Screenshot 21">
-    <img src="gta/screenshots/22.jpg" alt="Screenshot 22">
-    <img src="gta/screenshots/23.jpg" alt="Screenshot 23">
-    <img src="gta/screenshots/24.jpg" alt="Screenshot 24">
-    <img src="gta/screenshots/25.jpg" alt="Screenshot 25">
-    <img src="gta/screenshots/26.jpg" alt="Screenshot 26">
-    <img src="gta/screenshots/27.jpg" alt="Screenshot 27">
-    <img src="gta/screenshots/28.jpg" alt="Screenshot 28">
-    <img src="gta/screenshots/29.jpg" alt="Screenshot 29">
-    <img src="gta/screenshots/30.jpg" alt="Screenshot 30">
-    <img src="gta/screenshots/31.jpg" alt="Screenshot 31">
-    <img src="gta/screenshots/32.jpg" alt="Screenshot 32">
-    <img src="gta/screenshots/33.jpg" alt="Screenshot 33">
-    <img src="gta/screenshots/34.jpg" alt="Screenshot 34">
-    <img src="gta/screenshots/35.jpg" alt="Screenshot 35">
-    <img src="gta/screenshots/36.jpg" alt="Screenshot 36">
+  <!-- Video Card -->
+  <div class="video-card">
+    <a href="https://www.youtube.com/watch?v=VQRLujxTm3c" target="_blank">
+      <div class="thumbnail">
+        <img src="gta/lucia.jpg" alt="Video thumbnail">
+        <div class="play-btn">▶</div>
+      </div>
+    </a>
+    <div class="video-info">
+      <h3>Grand Theft Auto VI Trailer 2</h3>
+      <p>Explore Leonida and Vice City!</p>
+    </div>
   </div>
 
-  <!-- Fullscreen viewer -->
-  <div class="viewer" id="viewer">
-    <img src="" alt="Full View">
-  </div>
+  <!-- Countdown -->
+  <section class="countdown-wrap">
+    <h1 class="title">Grand Theft Auto VI</h1>
+    <div class="subtitle">Release countdown — November 19th, 2026</div>
+    <div class="clock" role="timer" aria-live="polite" aria-atomic="true">
+      <div class="unit">
+        <div class="num"><span class="current">0</span><span class="next">0</span></div>
+        <div class="label">Days</div>
+      </div>
+      <div class="unit">
+        <div class="num"><span class="current">0</span><span class="next">0</span></div>
+        <div class="label">Hours</div>
+      </div>
+      <div class="unit">
+        <div class="num"><span class="current">0</span><span class="next">0</span></div>
+        <div class="label">Minutes</div>
+      </div>
+      <div class="unit">
+        <div class="num"><span class="current">0</span><span class="next">0</span></div>
+        <div class="label">Seconds</div>
+      </div>
+    </div>
+  </section>
 
   <script>
-    const viewer = document.getElementById('viewer');
-    const viewerImg = viewer.querySelector('img');
-    const images = document.querySelectorAll('.gallery img');
+    // Countdown with animated flip
+    const target = new Date('2026-11-19T00:00:00');
 
-    // Fade-in animations using Intersection Observer
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if(entry.isIntersecting){
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
+    const units = document.querySelectorAll('.unit');
+
+    function pad(n){return String(n).padStart(2,'0');}
+
+    function update() {
+      const now = new Date();
+      let diff = Math.floor((target-now)/1000);
+      if(diff<0) diff=0;
+
+      const time = {
+        days: Math.floor(diff/86400),
+        hours: Math.floor((diff%86400)/3600),
+        minutes: Math.floor((diff%3600)/60),
+        seconds: diff%60
+      };
+
+      const values = [time.days, time.hours, time.minutes, time.seconds];
+
+      units.forEach((unit,i)=>{
+        const numEl = unit.querySelector('.num');
+        const current = numEl.querySelector('.current');
+        const next = numEl.querySelector('.next');
+
+        if(Number(current.textContent) !== values[i]){
+          next.textContent = values[i];
+          numEl.classList.add('flip');
+          setTimeout(()=> {
+            current.textContent = values[i];
+            numEl.classList.remove('flip');
+          }, 600);
         }
       });
-    }, { threshold: 0.2 });
+    }
 
-    images.forEach(img => observer.observe(img));
-
-    // Fullscreen viewer
-    images.forEach(img => {
-      img.addEventListener('click', () => {
-        viewerImg.src = img.src;
-        viewer.classList.add('active');
-        document.body.style.overflow = 'hidden'; // prevent background scroll
-      });
-    });
-
-    viewer.addEventListener('click', () => {
-      viewer.classList.remove('active');
-      document.body.style.overflow = 'auto';
-    });
+    update();
+    setInterval(update, 1000);
   </script>
+
 </body>
 </html>
