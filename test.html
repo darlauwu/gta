@@ -21,26 +21,43 @@ body{
   color:#fff;
 }
 
-/* cinematic dark overlay */
+/* cinematic overlay */
 body::before{
   content:"";
   position:absolute;
   inset:0;
-  background:radial-gradient(circle at center, rgba(0,0,0,0.6), rgba(0,0,0,0.85));
+  background:linear-gradient(180deg,rgba(0,0,0,.6),rgba(0,0,0,.9));
   z-index:0;
 }
 
-/* subtle film grain */
+/* heat haze */
 body::after{
   content:"";
   position:absolute;
   inset:0;
-  background:url("https://grainy-gradients.vercel.app/noise.svg");
-  opacity:0.08;
+  background:radial-gradient(circle at center,rgba(255,77,210,.05),transparent 60%);
+  animation:haze 6s infinite alternate;
+  z-index:0;
+}
+@keyframes haze{
+  from{transform:scale(1)}
+  to{transform:scale(1.05)}
+}
+
+/* skyline */
+.skyline{
+  position:absolute;
+  bottom:0;
+  left:0;
+  right:0;
+  height:200px;
+  background:linear-gradient(to top,rgba(0,0,0,.8),transparent),
+    url("https://i.imgur.com/4Z7KZ7x.png") center/cover no-repeat;
+  opacity:.35;
   z-index:0;
 }
 
-/* loader container */
+/* loader box */
 .loader{
   position:relative;
   z-index:1;
@@ -53,92 +70,88 @@ body::after{
 .logo{
   font-size:48px;
   font-weight:900;
-  letter-spacing:2px;
-  margin-bottom:10px;
-  text-shadow:0 0 15px #ff4dd2,0 0 30px #ff99e6;
+  text-shadow:0 0 20px #ff4dd2,0 0 40px #ff99e6;
   animation:pulse 2.5s infinite;
 }
-
 @keyframes pulse{
   0%{text-shadow:0 0 10px #ff4dd2}
-  50%{text-shadow:0 0 25px #ff4dd2,0 0 45px #ff99e6}
+  50%{text-shadow:0 0 30px #ff4dd2,0 0 60px #ff99e6}
   100%{text-shadow:0 0 10px #ff4dd2}
 }
 
-/* subtitle */
-.subtitle{
-  opacity:.85;
-  margin-bottom:28px;
-}
+.subtitle{margin:12px 0 30px;opacity:.85}
 
 /* loading bar */
 .bar{
-  width:100%;
   height:14px;
-  background:rgba(255,255,255,0.15);
+  background:rgba(255,255,255,.15);
   border-radius:999px;
   overflow:hidden;
-  box-shadow:inset 0 0 10px rgba(0,0,0,0.6);
 }
-
 .fill{
   height:100%;
   width:0%;
   background:linear-gradient(90deg,#ff4dd2,#ff99e6);
   box-shadow:0 0 20px #ff4dd2;
-  transition:width .25s ease;
+  transition:.25s;
 }
 
-/* percent */
-.percent{
-  margin-top:16px;
-  font-size:22px;
-  font-weight:700;
-  text-shadow:0 0 8px #ff4dd2;
-}
+.percent{margin-top:14px;font-size:22px}
+.asset{margin-top:12px;font-size:14px;opacity:.7}
 
-/* fake asset loader */
-.asset{
-  margin-top:18px;
-  font-size:14px;
-  opacity:.7;
-  letter-spacing:1px;
-}
-
-/* gta-style tips */
+/* tips */
 .tip{
-  margin-top:30px;
+  margin-top:26px;
   font-size:15px;
   opacity:.8;
   font-style:italic;
-  min-height:20px;
+}
+
+/* press any key */
+.press{
+  margin-top:28px;
+  font-size:16px;
+  opacity:0;
+  animation:blink 1.5s infinite;
+}
+@keyframes blink{
+  0%,100%{opacity:0}
+  50%{opacity:1}
 }
 </style>
 </head>
 
 <body>
 
+<div class="skyline"></div>
+
 <div class="loader">
   <div class="logo">GRAND THEFT AUTO VI</div>
-  <div class="subtitle">Entering Vice City…</div>
+  <div class="subtitle">Vice City is loading…</div>
 
-  <div class="bar">
-    <div class="fill" id="fill"></div>
-  </div>
-
+  <div class="bar"><div class="fill" id="fill"></div></div>
   <div class="percent" id="percent">0%</div>
-  <div class="asset" id="asset">Loading assets…</div>
+  <div class="asset" id="asset">Initializing world…</div>
+
   <div class="tip" id="tip"></div>
+  <div class="press" id="press">PRESS ANY KEY TO CONTINUE</div>
 </div>
 
-<script>
-let progress = 0;
-const fill = document.getElementById("fill");
-const percent = document.getElementById("percent");
-const asset = document.getElementById("asset");
-const tip = document.getElementById("tip");
+<!-- ambient audio -->
+<audio id="bgAudio" loop>
+  <source src="gta/ambient.mp3" type="audio/mpeg">
+</audio>
 
-const assets = [
+<script>
+let progress=0;
+const fill=document.getElementById("fill");
+const percent=document.getElementById("percent");
+const asset=document.getElementById("asset");
+const tip=document.getElementById("tip");
+const press=document.getElementById("press");
+const audio=document.getElementById("bgAudio");
+
+const assets=[
   "Loading Vice City map",
   "Streaming textures",
   "Initializing AI systems",
@@ -148,41 +161,39 @@ const assets = [
   "Finalizing world state"
 ];
 
-const tips = [
-  "Tip: Police response escalates the longer you stay wanted.",
-  "Tip: Different districts react differently to chaos.",
-  "Tip: NPC routines change depending on time of day.",
-  "Tip: Vehicles handle differently based on weather.",
-  "Tip: Exploration unlocks hidden encounters."
+const tips=[
+  "Tip: Police response escalates over time.",
+  "Tip: Weather affects vehicle handling.",
+  "Tip: NPCs remember your actions.",
+  "Tip: Districts react differently to chaos."
 ];
 
-let assetIndex = 0;
-let tipIndex = 0;
+let a=0,t=0;
+setInterval(()=>{tip.textContent=tips[t++%tips.length]},3000);
 
-// rotate tips
-setInterval(()=>{
-  tip.textContent = tips[tipIndex];
-  tipIndex = (tipIndex + 1) % tips.length;
-},3000);
+// start audio on interaction
+document.addEventListener("keydown",()=>audio.play(),{once:true});
+document.addEventListener("click",()=>audio.play(),{once:true});
 
-// loading simulation
-const loading = setInterval(()=>{
-  progress += Math.floor(Math.random()*5)+2;
-  if(progress >= 100){
-    progress = 100;
-    clearInterval(loading);
-    setTimeout(()=>{
-      window.location.href = "index.html"; // HOME PAGE
-    },800);
+const loader=setInterval(()=>{
+  progress+=Math.floor(Math.random()*4)+2;
+  if(progress>=100){
+    progress=100;
+    clearInterval(loader);
+    press.style.opacity=1;
   }
 
-  fill.style.width = progress + "%";
-  percent.textContent = progress + "%";
-
-  asset.textContent = assets[assetIndex];
-  assetIndex = (assetIndex + 1) % assets.length;
-
+  fill.style.width=progress+"%";
+  percent.textContent=progress+"%";
+  asset.textContent=assets[a++%assets.length];
 },140);
+
+// redirect on key or click after load
+function go(){
+  if(progress>=100) window.location.href="index.html";
+}
+document.addEventListener("keydown",go);
+document.addEventListener("click",go);
 </script>
 
 </body>
