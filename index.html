@@ -135,6 +135,30 @@
   .video-info { margin-top: 10px; }
   .video-info h3 { font-size: 16px; font-weight: 600; margin: 0 0 4px 0; }
   .video-info p { font-size: 13px; color: #d7c9e6; margin: 0; }
+
+.corner-link{
+  position:fixed;
+  bottom:22px;
+  right:22px;
+  padding:14px 22px;
+  border-radius:999px;
+  font-family:'Orbitron',sans-serif;
+  font-weight:900;
+  font-size:14px;
+  letter-spacing:1px;
+  color:#000;
+  background:#fff;
+  text-decoration:none;
+  z-index:5000;
+  box-shadow:0 0 15px rgba(255,255,255,0.6);
+  transition:all .25s ease;
+}
+
+.corner-link:hover{
+  transform:scale(1.1);
+  box-shadow:0 0 25px rgba(255,255,255,0.9);
+}
+ 
 </style>
 </head>
 <body>
@@ -161,6 +185,8 @@
     <p>Explore Leonida and Vice City!</p>
   </div>
 </div>
+
+ <a href="https://example.com" class="corner-link">OPEN</a>
 
 <section class="countdown-wrap">
   <h1 class="title">Grand Theft Auto VI</h1>
