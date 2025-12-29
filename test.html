@@ -117,7 +117,35 @@ body::after{
 </head>
 
 <body>
+<div id="startOverlay" style="
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.9);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:5000;
+  cursor:pointer;
+">
+  <div style="text-align:center">
+    <div style="
+      font-size:42px;
+      font-weight:900;
+      margin-bottom:14px;
+    ">GRAND THEFT AUTO VI</div>
 
+    <div style="
+      font-size:18px;
+      opacity:.8;
+    ">Click to Start</div>
+  </div>
+</div>
+
+<audio id="bg-music" loop preload="auto">
+  <source src="gta/loading.mp3" type="audio/mpeg">
+</audio>
+
+  
 <div class="loader">
   <div class="logo">GRAND THEFT AUTO VI</div>
   <div class="subtitle">Entering Vice City…</div>
@@ -183,6 +211,16 @@ const loading = setInterval(()=>{
   assetIndex = (assetIndex + 1) % assets.length;
 
 },900);
+
+const overlay = document.getElementById("startOverlay");
+const music = document.getElementById("bg-music");
+
+overlay.addEventListener("click", () => {
+  overlay.style.display = "none";
+  music.volume = 0.6;
+  music.play();
+});
+  
 </script>
 
 </body>
