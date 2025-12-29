@@ -3,74 +3,115 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Loading | GTA 6</title>
+<title>Loading | GTA VI</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
 
 <style>
-* { margin:0; padding:0; box-sizing:border-box; }
-html, body { height:100%; }
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%}
 
-body {
-  font-family: 'Orbitron', sans-serif;
-  background: url("gta/jason.jpg") center/cover no-repeat fixed;
+body{
+  font-family:'Orbitron',sans-serif;
+  background:url("gta/jason.jpg") center/cover no-repeat fixed;
   display:flex;
   align-items:center;
   justify-content:center;
-  color:#fff;
   overflow:hidden;
+  color:#fff;
 }
 
-/* Dark overlay */
-body::before {
+/* cinematic dark overlay */
+body::before{
   content:"";
   position:absolute;
   inset:0;
-  background:rgba(0,0,0,0.75);
+  background:radial-gradient(circle at center, rgba(0,0,0,0.6), rgba(0,0,0,0.85));
   z-index:0;
 }
 
-.loader {
+/* subtle film grain */
+body::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:url("https://grainy-gradients.vercel.app/noise.svg");
+  opacity:0.08;
+  z-index:0;
+}
+
+/* loader container */
+.loader{
   position:relative;
   z-index:1;
-  text-align:center;
   width:90%;
-  max-width:420px;
+  max-width:520px;
+  text-align:center;
 }
 
-h1 {
-  font-size:42px;
-  margin-bottom:12px;
-  text-shadow:0 0 15px #ff4dd2, 0 0 30px #ff99e6;
+/* title */
+.logo{
+  font-size:48px;
+  font-weight:900;
+  letter-spacing:2px;
+  margin-bottom:10px;
+  text-shadow:0 0 15px #ff4dd2,0 0 30px #ff99e6;
+  animation:pulse 2.5s infinite;
 }
 
-p {
-  opacity:0.85;
-  margin-bottom:30px;
+@keyframes pulse{
+  0%{text-shadow:0 0 10px #ff4dd2}
+  50%{text-shadow:0 0 25px #ff4dd2,0 0 45px #ff99e6}
+  100%{text-shadow:0 0 10px #ff4dd2}
 }
 
-/* Progress bar */
-.bar {
+/* subtitle */
+.subtitle{
+  opacity:.85;
+  margin-bottom:28px;
+}
+
+/* loading bar */
+.bar{
   width:100%;
   height:14px;
   background:rgba(255,255,255,0.15);
   border-radius:999px;
   overflow:hidden;
+  box-shadow:inset 0 0 10px rgba(0,0,0,0.6);
 }
 
-.fill {
+.fill{
   height:100%;
   width:0%;
   background:linear-gradient(90deg,#ff4dd2,#ff99e6);
-  box-shadow:0 0 15px #ff4dd2;
-  transition:width 0.2s linear;
+  box-shadow:0 0 20px #ff4dd2;
+  transition:width .25s ease;
 }
 
-.percent {
-  margin-top:18px;
+/* percent */
+.percent{
+  margin-top:16px;
   font-size:22px;
   font-weight:700;
   text-shadow:0 0 8px #ff4dd2;
+}
+
+/* fake asset loader */
+.asset{
+  margin-top:18px;
+  font-size:14px;
+  opacity:.7;
+  letter-spacing:1px;
+}
+
+/* gta-style tips */
+.tip{
+  margin-top:30px;
+  font-size:15px;
+  opacity:.8;
+  font-style:italic;
+  min-height:20px;
 }
 </style>
 </head>
@@ -78,39 +119,72 @@ p {
 <body>
 
 <div class="loader">
-  <h1>Grand Theft Auto VI</h1>
-  <p>Loading Vice City…</p>
+  <div class="logo">GRAND THEFT AUTO VI</div>
+  <div class="subtitle">Entering Vice City…</div>
 
   <div class="bar">
     <div class="fill" id="fill"></div>
   </div>
 
   <div class="percent" id="percent">0%</div>
+  <div class="asset" id="asset">Loading assets…</div>
+  <div class="tip" id="tip"></div>
 </div>
 
 <script>
 let progress = 0;
 const fill = document.getElementById("fill");
 const percent = document.getElementById("percent");
+const asset = document.getElementById("asset");
+const tip = document.getElementById("tip");
 
-const loading = setInterval(() => {
-  progress += Math.floor(Math.random() * 6) + 2; // realistic load jumps
+const assets = [
+  "Loading Vice City map",
+  "Streaming textures",
+  "Initializing AI systems",
+  "Loading vehicles",
+  "Syncing characters",
+  "Preparing online services",
+  "Finalizing world state"
+];
 
-  if (progress >= 100) {
+const tips = [
+  "Tip: Police response escalates the longer you stay wanted.",
+  "Tip: Different districts react differently to chaos.",
+  "Tip: NPC routines change depending on time of day.",
+  "Tip: Vehicles handle differently based on weather.",
+  "Tip: Exploration unlocks hidden encounters."
+];
+
+let assetIndex = 0;
+let tipIndex = 0;
+
+// rotate tips
+setInterval(()=>{
+  tip.textContent = tips[tipIndex];
+  tipIndex = (tipIndex + 1) % tips.length;
+},3000);
+
+// loading simulation
+const loading = setInterval(()=>{
+  progress += Math.floor(Math.random()*5)+2;
+  if(progress >= 100){
     progress = 100;
     clearInterval(loading);
-
-    // Redirect when loading finishes
-    setTimeout(() => {
-      window.location.href = "index.html"; // 👈 HOME PAGE
-    }, 10000);
+    setTimeout(()=>{
+      window.location.href = "index.html"; // HOME PAGE
+    },800);
   }
 
   fill.style.width = progress + "%";
   percent.textContent = progress + "%";
 
-}, 120);
+  asset.textContent = assets[assetIndex];
+  assetIndex = (assetIndex + 1) % assets.length;
+
+},140);
 </script>
 
 </body>
 </html>
+
