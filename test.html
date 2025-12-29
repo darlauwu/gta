@@ -59,6 +59,7 @@
     max-width: 980px;
     width: clamp(320px,70vw,980px);
     position: relative;
+    z-index: 2;
   }
 
   .title { font-size: 50px; font-weight: 800; margin-bottom: 8px; text-shadow: 0 0 12px rgba(255,255,255,0.6); }
@@ -114,10 +115,52 @@
     text-shadow: 0 0 6px rgba(255,255,255,0.25);
   }
 
-  @media (max-width:640px){
-    .num { font-size: 28px; }
-    .countdown-wrap { padding: 28px; }
+  /* Video card top-left */
+  .video-card {
+    width: 260px;
+    background: rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(12px);
+    border-radius: 18px;
+    padding: 12px;
+    color: white;
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 999;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+    transition: transform 0.2s;
   }
+  .video-card:hover { transform: scale(1.05); }
+
+  .thumbnail {
+    position: relative;
+    border-radius: 14px;
+    overflow: hidden;
+  }
+  .thumbnail img {
+    width: 100%;
+    display: block;
+  }
+  .play-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 56px;
+    height: 56px;
+    background: rgba(255,255,255,0.9);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    color: black;
+    pointer-events: none;
+  }
+  .video-info { margin-top: 10px; }
+  .video-info h3 { font-size: 16px; font-weight: 600; margin: 0 0 4px 0; }
+  .video-info p { font-size: 13px; color: #d7c9e6; margin: 0; }
+  .play-link { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; text-decoration: none; }
 </style>
 </head>
 <body>
@@ -130,6 +173,20 @@
   <a href="screenshots" class="nav-btn">Screenshots</a>
   <a href="trailers" class="nav-btn">Trailers</a>
 </header>
+
+<!-- Video card ad top-left -->
+<div class="video-card">
+  <a href="https://www.youtube.com/watch?v=VQRLujxTm3c" target="_blank">
+    <div class="thumbnail">
+      <img src="gta/lucia.jpg" alt="Video thumbnail">
+      <div class="play-btn">▶</div>
+    </div>
+  </a>
+  <div class="video-info">
+    <h3>GTA VI Trailer 2</h3>
+    <p>Explore Leonida and Vice City!</p>
+  </div>
+</div>
 
 <section class="countdown-wrap">
   <h1 class="title">Grand Theft Auto VI</h1>
