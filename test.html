@@ -82,45 +82,28 @@ h1 {
   border-radius:12px;
   display: block;
 }
+/* Fullscreen view */
+    .viewer {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.8);
+      backdrop-filter: blur(8px);
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+    }
 
-/* Overlay appears smoothly on hover */
-.place-overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,0.8);
-  color: #fff;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-  text-align: center;
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.4s ease, visibility 0.4s ease;
-}
+    .viewer img {
+      max-width: 90%;
+      max-height: 90%;
+      border-radius: 16px;
+      box-shadow: 0 0 30px rgba(255,255,255,0.2);
+    }
 
-.place-card:hover .place-overlay {
-  opacity: 1;
-  visibility: visible;
-}
-
-.place-overlay h2 {
-  font-size: 22px;
-  margin-bottom: 10px;
-  text-shadow: 0 0 10px rgba(255,255,255,0.2);
-}
-
-.place-overlay p {
-  font-size: 14px;
-  color: #ddd;
-  line-height: 1.5;
-}
-
-@media(max-width:480px) {
-  h1 { font-size:34px; }
-  .place-overlay h2 { font-size:18px; }
-}
+    .viewer.active {
+      display: flex;
+    }
 </style>
 </head>
 
@@ -317,8 +300,31 @@ h1 {
       <img src="gta/screenshots/36.jpg" alt="Screenshot 36">
       <div class="place-overlay"><h2>Screenshot 36</h2></div>
     </div>
-
   </div>
+
+<!-- Fullscreen viewer -->
+  <div class="viewer" id="viewer">
+    <img src="" alt="Full View">
+  </div>
+
+  <script>
+    const viewer = document.getElementById('viewer');
+    const viewerImg = viewer.querySelector('img');
+    const images = document.querySelectorAll('.gallery img');
+
+    images.forEach(img => {
+      img.addEventListener('click', () => {
+        viewerImg.src = img.src;
+        viewer.classList.add('active');
+      });
+    });
+
+    viewer.addEventListener('click', () => {
+      viewer.classList.remove('active');
+    });
+  </script>
+
+  
 </main>
 </body>
 </html>
