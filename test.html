@@ -82,28 +82,53 @@ h1 {
   border-radius:12px;
   display: block;
 }
-/* Fullscreen view */
-    .viewer {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.8);
-      backdrop-filter: blur(8px);
-      justify-content: center;
-      align-items: center;
-      z-index: 999;
-    }
+/* Grid and smooth scrolling */
+.places-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px,1fr));
+  gap:24px;
+  scroll-behavior: smooth;
+}
+.screenshot {
+  width:100%;
+  height:240px;
+  object-fit: cover;
+  border-radius:12px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+.screenshot:hover {
+  transform: scale(1.05);
+}
 
-    .viewer img {
-      max-width: 90%;
-      max-height: 90%;
-      border-radius: 16px;
-      box-shadow: 0 0 30px rgba(255,255,255,0.2);
-    }
-
-    .viewer.active {
-      display: flex;
-    }
+/* Lightbox styles */
+.lightbox {
+  display:none;
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background: rgba(0,0,0,0.95);
+  justify-content: center;
+  align-items: center;
+  z-index:999;
+}
+.lightbox-img {
+  max-width:90%;
+  max-height:90%;
+  border-radius:12px;
+  box-shadow:0 0 20px rgba(255,255,255,0.2);
+}
+.close {
+  position:absolute;
+  top:20px;
+  right:30px;
+  color:#fff;
+  font-size:36px;
+  font-weight:bold;
+  cursor:pointer;
+}
 </style>
 </head>
 
@@ -117,212 +142,72 @@ h1 {
   <a href="trailers" class="nav-btn">Trailers</a>
 </header>
 
-<main class="page">
-  <h1>GTA 6 Screenshots</h1>
-  <div class="places-grid">
+ <h1>GTA 6 Screenshot Gallery</h1>
 
-    <div class="place-card">
-      <img src="gta/screenshots/1.jpg" alt="Screenshot 1">
-      <div class="place-overlay"><h2>Screenshot 1</h2></div>
-    </div>
-
-    <div class="place-card">
-      <img src="gta/screenshots/2.jpg" alt="Screenshot 2">
-      <div class="place-overlay"><h2>Screenshot 2</h2></div>
-    </div>
-
-    <div class="place-card">
-      <img src="gta/screenshots/3.jpg" alt="Screenshot 3">
-      <div class="place-overlay"><h2>Screenshot 3</h2></div>
-    </div>
-
-    <div class="place-card">
-      <img src="gta/screenshots/4.jpg" alt="Screenshot 4">
-      <div class="place-overlay"><h2>Screenshot 4</h2></div>
-    </div>
-
-    <div class="place-card">
-      <img src="gta/screenshots/5.jpg" alt="Screenshot 5">
-      <div class="place-overlay"><h2>Screenshot 5</h2></div>
-    </div>
-
-    <div class="place-card">
-      <img src="gta/screenshots/6.jpg" alt="Screenshot 6">
-      <div class="place-overlay"><h2>Screenshot 6</h2></div>
-    </div>
-
-    <div class="place-card">
-      <img src="gta/screenshots/7.jpg" alt="Screenshot 7">
-      <div class="place-overlay"><h2>Screenshot 7</h2></div>
-    </div>
-
-    <div class="place-card">
-      <img src="gta/screenshots/8.jpg" alt="Screenshot 8">
-      <div class="place-overlay"><h2>Screenshot 8</h2></div>
-    </div>
-
-    <div class="place-card">
-      <img src="gta/screenshots/9.jpg" alt="Screenshot 9">
-      <div class="place-overlay"><h2>Screenshot 9</h2></div>
-    </div>
-
-    <div class="place-card">
-      <img src="gta/screenshots/10.jpg" alt="Screenshot 10">
-      <div class="place-overlay"><h2>Screenshot 10</h2></div>
-    </div>
-
-    <div class="place-card">
-      <img src="gta/screenshots/11.jpg" alt="Screenshot 11">
-      <div class="place-overlay"><h2>Screenshot 11</h2></div>
-    </div>
-
-    <div class="place-card">
-      <img src="gta/screenshots/12.jpg" alt="Screenshot 12">
-      <div class="place-overlay"><h2>Screenshot 12</h2></div>
-    </div>
-
-    <div class="place-card">
-      <img src="gta/screenshots/13.jpg" alt="Screenshot 13">
-      <div class="place-overlay"><h2>Screenshot 13</h2></div>
-    </div>
-
-    <div class="place-card">
-      <img src="gta/screenshots/14.jpg" alt="Screenshot 14">
-      <div class="place-overlay"><h2>Screenshot 14</h2></div>
-    </div>
-
-    <div class="place-card">
-      <img src="gta/screenshots/15.jpg" alt="Screenshot 15">
-      <div class="place-overlay"><h2>Screenshot 15</h2></div>
-    </div>
-
-    <div class="place-card">
-      <img src="gta/screenshots/16.jpg" alt="Screenshot 16">
-      <div class="place-overlay"><h2>Screenshot 16</h2></div>
-    </div>
-
-    <div class="place-card">
-      <img src="gta/screenshots/17.jpg" alt="Screenshot 17">
-      <div class="place-overlay"><h2>Screenshot 17</h2></div>
-    </div>
-
-    <div class="place-card">
-      <img src="gta/screenshots/18.jpg" alt="Screenshot 18">
-      <div class="place-overlay"><h2>Screenshot 18</h2></div>
-    </div>
-
-    <div class="place-card">
-      <img src="gta/screenshots/19.jpg" alt="Screenshot 19">
-      <div class="place-overlay"><h2>Screenshot 19</h2></div>
-    </div>
-
-    <div class="place-card">
-      <img src="gta/screenshots/20.jpg" alt="Screenshot 20">
-      <div class="place-overlay"><h2>Screenshot 20</h2></div>
-    </div>
-
-    <div class="place-card">
-      <img src="gta/screenshots/21.jpg" alt="Screenshot 21">
-      <div class="place-overlay"><h2>Screenshot 21</h2></div>
-    </div>
-
-    <div class="place-card">
-      <img src="gta/screenshots/22.jpg" alt="Screenshot 22">
-      <div class="place-overlay"><h2>Screenshot 22</h2></div>
-    </div>
-
-    <div class="place-card">
-      <img src="gta/screenshots/23.jpg" alt="Screenshot 23">
-      <div class="place-overlay"><h2>Screenshot 23</h2></div>
-    </div>
-
-    <div class="place-card">
-      <img src="gta/screenshots/24.jpg" alt="Screenshot 24">
-      <div class="place-overlay"><h2>Screenshot 24</h2></div>
-    </div>
-
-    <div class="place-card">
-      <img src="gta/screenshots/25.jpg" alt="Screenshot 25">
-      <div class="place-overlay"><h2>Screenshot 25</h2></div>
-    </div>
-
-    <div class="place-card">
-      <img src="gta/screenshots/26.jpg" alt="Screenshot 26">
-      <div class="place-overlay"><h2>Screenshot 26</h2></div>
-    </div>
-
-    <div class="place-card">
-      <img src="gta/screenshots/27.jpg" alt="Screenshot 27">
-      <div class="place-overlay"><h2>Screenshot 27</h2></div>
-    </div>
-
-    <div class="place-card">
-      <img src="gta/screenshots/28.jpg" alt="Screenshot 28">
-      <div class="place-overlay"><h2>Screenshot 28</h2></div>
-    </div>
-
-    <div class="place-card">
-      <img src="gta/screenshots/29.jpg" alt="Screenshot 29">
-      <div class="place-overlay"><h2>Screenshot 29</h2></div>
-    </div>
-
-    <div class="place-card">
-      <img src="gta/screenshots/30.jpg" alt="Screenshot 30">
-      <div class="place-overlay"><h2>Screenshot 30</h2></div>
-    </div>
-
-    <div class="place-card">
-      <img src="gta/screenshots/31.jpg" alt="Screenshot 31">
-      <div class="place-overlay"><h2>Screenshot 31</h2></div>
-    </div>
-
-    <div class="place-card">
-      <img src="gta/screenshots/32.jpg" alt="Screenshot 32">
-      <div class="place-overlay"><h2>Screenshot 32</h2></div>
-    </div>
-
-    <div class="place-card">
-      <img src="gta/screenshots/33.jpg" alt="Screenshot 33">
-      <div class="place-overlay"><h2>Screenshot 33</h2></div>
-    </div>
-
-    <div class="place-card">
-      <img src="gta/screenshots/34.jpg" alt="Screenshot 34">
-      <div class="place-overlay"><h2>Screenshot 34</h2></div>
-    </div>
-
-    <div class="place-card">
-      <img src="gta/screenshots/35.jpg" alt="Screenshot 35">
-      <div class="place-overlay"><h2>Screenshot 35</h2></div>
-    </div>
-
-    <div class="place-card">
-      <img src="gta/screenshots/36.jpg" alt="Screenshot 36">
-      <div class="place-overlay"><h2>Screenshot 36</h2></div>
-    </div>
+  <div class="gallery">
+    <img src="gta/screenshots/1.jpg" alt="Screenshot 1">
+    <img src="gta/screenshots/2.jpg" alt="Screenshot 2">
+    <img src="gta/screenshots/3.jpg" alt="Screenshot 3">
+    <img src="gta/screenshots/4.jpg" alt="Screenshot 4">
+    <img src="gta/screenshots/5.jpg" alt="Screenshot 5">
+    <img src="gta/screenshots/6.jpg" alt="Screenshot 6">
+    <img src="gta/screenshots/7.jpg" alt="Screenshot 7">
+    <img src="gta/screenshots/8.jpg" alt="Screenshot 8">
+    <img src="gta/screenshots/9.jpg" alt="Screenshot 9">
+    <img src="gta/screenshots/10.jpg" alt="Screenshot 10">
+    <img src="gta/screenshots/11.jpg" alt="Screenshot 11">
+    <img src="gta/screenshots/12.jpg" alt="Screenshot 12">
+    <img src="gta/screenshots/13.jpg" alt="Screenshot 13">
+    <img src="gta/screenshots/14.jpg" alt="Screenshot 14">
+    <img src="gta/screenshots/15.jpg" alt="Screenshot 15">
+    <img src="gta/screenshots/16.jpg" alt="Screenshot 16">
+    <img src="gta/screenshots/17.jpg" alt="Screenshot 17">
+    <img src="gta/screenshots/18.jpg" alt="Screenshot 18">
+    <img src="gta/screenshots/19.jpg" alt="Screenshot 19">
+    <img src="gta/screenshots/20.jpg" alt="Screenshot 20">
+    <img src="gta/screenshots/21.jpg" alt="Screenshot 21">
+    <img src="gta/screenshots/22.jpg" alt="Screenshot 22">
+    <img src="gta/screenshots/23.jpg" alt="Screenshot 23">
+    <img src="gta/screenshots/24.jpg" alt="Screenshot 24">
+    <img src="gta/screenshots/25.jpg" alt="Screenshot 25">
+    <img src="gta/screenshots/26.jpg" alt="Screenshot 26">
+    <img src="gta/screenshots/27.jpg" alt="Screenshot 27">
+    <img src="gta/screenshots/28.jpg" alt="Screenshot 28">
+    <img src="gta/screenshots/29.jpg" alt="Screenshot 29">
+    <img src="gta/screenshots/30.jpg" alt="Screenshot 30">
+    <img src="gta/screenshots/31.jpg" alt="Screenshot 31">
+    <img src="gta/screenshots/32.jpg" alt="Screenshot 32">
+    <img src="gta/screenshots/33.jpg" alt="Screenshot 33">
+    <img src="gta/screenshots/34.jpg" alt="Screenshot 34">
+    <img src="gta/screenshots/35.jpg" alt="Screenshot 35">
+    <img src="gta/screenshots/36.jpg" alt="Screenshot 36">       
   </div>
 
 <!-- Fullscreen viewer -->
-  <div class="viewer" id="viewer">
-    <img src="" alt="Full View">
-  </div>
+<div id="lightbox" class="lightbox">
+  <span class="close">&times;</span>
+  <img class="lightbox-img" src="">
+</div>
+  
+<script>
+// Open lightbox on click
+const lightbox = document.getElementById('lightbox');
+const lightboxImg = document.querySelector('.lightbox-img');
+document.querySelectorAll('.screenshot').forEach(img => {
+  img.addEventListener('click', () => {
+    lightbox.style.display = 'flex';
+    lightboxImg.src = img.src;
+  });
+});
 
-  <script>
-    const viewer = document.getElementById('viewer');
-    const viewerImg = viewer.querySelector('img');
-    const images = document.querySelectorAll('.gallery img');
-
-    images.forEach(img => {
-      img.addEventListener('click', () => {
-        viewerImg.src = img.src;
-        viewer.classList.add('active');
-      });
-    });
-
-    viewer.addEventListener('click', () => {
-      viewer.classList.remove('active');
-    });
-  </script>
+// Close lightbox
+document.querySelector('.close').addEventListener('click', () => {
+  lightbox.style.display = 'none';
+});
+lightbox.addEventListener('click', (e) => {
+  if(e.target === lightbox) lightbox.style.display = 'none';
+});
+</script>
 
   
 </main>
