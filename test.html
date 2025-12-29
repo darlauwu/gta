@@ -2,151 +2,135 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-   <title>VI | Home</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>VI | Screenshots</title>
   <link rel="icon" href="gta/npc/lucia.jpg" type="image/jpg">
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
 
-<style>
-* { margin:0; padding:0; box-sizing:border-box; }
-html, body { height:100%; }
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-body {
-  font-family: 'Orbitron', sans-serif;
-  background:
-    linear-gradient(135deg, rgba(255,77,210,0.15), rgba(0,255,224,0.08)),
-    url('gta/others.jpg') center/cover no-repeat fixed;
-  color: #fff;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
+    body {
+      font-family: 'Orbitron', sans-serif;
+      background: url('gta/jason.jpg') center/cover no-repeat fixed;
+      color: #fff;
+      overflow-x: hidden;
+      scroll-behavior: smooth; /* smooth scrolling */
+    }
 
-/* Header with enhanced blur */
-    header{
-      position:fixed;top:18px;left:50%;transform:translateX(-50%);
-      z-index:50;display:flex;gap:12px;padding:8px 14px;border-radius:999px;
-
-      /* Enhanced blur & frosted glass */
+    /* Header with enhanced blur */
+    header {
+      position: fixed;
+      top: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 50;
+      display: flex;
+      gap: 12px;
+      padding: 8px 14px;
+      border-radius: 999px;
       backdrop-filter: blur(12px) saturate(1.2);
       -webkit-backdrop-filter: blur(12px) saturate(1.2);
       background: rgba(0,0,0,0.25);
-
-      box-shadow:0 6px 18px rgba(0,0,0,0.35);
-    }
-    .nav-btn{
-      padding:8px 12px;border-radius:999px;text-decoration:none;color:#fff;
-      background:linear-gradient(90deg,rgba(255,255,255,0.03),rgba(255,255,255,0.01));
-      border:1px solid rgba(255,255,255,0.06);font-weight:700;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.35);
     }
 
-.page {
-  position: relative;
-  z-index:10;
-  width: clamp(900px,90vw,1300px);
-  margin-top:120px;
-  margin-bottom:60px;
-}
+    .nav-btn {
+      padding: 8px 12px;
+      border-radius: 999px;
+      text-decoration: none;
+      color: #fff;
+      background: linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+      border: 1px solid rgba(255,255,255,0.06);
+      font-weight: 700;
+    }
 
-h1 {
-  text-align: center;
-  font-size:48px;
-  font-weight:900;
-  margin-bottom:40px;
-  text-shadow: 0 2px 8px rgba(0,0,0,0.7);
-}
+    h1 {
+      font-size: 48px;
+      text-align: center;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.7);
+      margin: 120px 0 40px; /* clears header */
+    }
 
-.places-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px,1fr));
-  gap:24px;
-}
+    /* Gallery grid */
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px,1fr));
+      gap: 18px;
+      width: 90%;
+      max-width: 1400px;
+      margin: 0 auto 80px;
+    }
 
-.place-card {
-  position: relative;
-  background: rgba(0,0,0,0.45);
-  border:1px solid rgba(255,255,255,0.05);
-  border-radius:18px;
-  overflow: hidden;
-  box-shadow: 0 12px 28px rgba(0,0,0,0.6);
-  transition: transform 0.3s ease;
-}
-.place-card:hover {
-  transform: translateY(-6px);
-}
+    /* Images with fade-in + slide-up */
+    .gallery img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 16px;
+      cursor: pointer;
+      border: 1px solid rgba(255,255,255,0.05);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: transform 0.5s ease, opacity 0.5s ease, box-shadow 0.3s, transform 0.3s;
+    }
 
-.place-card img {
-  width:100%;
-  height:240px;
-  object-fit: cover;
-  border-radius:12px;
-  display: block;
-}
-/* Grid and smooth scrolling */
-.places-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px,1fr));
-  gap:24px;
-  scroll-behavior: smooth;
-}
-.screenshot {
-  width:100%;
-  height:240px;
-  object-fit: cover;
-  border-radius:12px;
-  cursor: pointer;
-  transition: transform 0.3s ease;
-}
-.screenshot:hover {
-  transform: scale(1.05);
-}
+    .gallery img.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
 
-/* Lightbox styles */
-.lightbox {
-  display:none;
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  background: rgba(0,0,0,0.95);
-  justify-content: center;
-  align-items: center;
-  z-index:999;
-}
-.lightbox-img {
-  max-width:90%;
-  max-height:90%;
-  border-radius:12px;
-  box-shadow:0 0 20px rgba(255,255,255,0.2);
-}
-.close {
-  position:absolute;
-  top:20px;
-  right:30px;
-  color:#fff;
-  font-size:36px;
-  font-weight:bold;
-  cursor:pointer;
-}
-</style>
+    .gallery img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px rgba(255,77,210,0.4);
+    }
+
+    /* Fullscreen viewer */
+    .viewer {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.85);
+      backdrop-filter: blur(8px);
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .viewer.active {
+      display: flex;
+      opacity: 1;
+    }
+
+    .viewer img {
+      max-width: 90%;
+      max-height: 90%;
+      border-radius: 16px;
+      box-shadow: 0 0 30px rgba(255,255,255,0.2);
+    }
+  </style>
 </head>
 
 <body>
-<header>
-  <a href="index" class="nav-btn">Home</a>
-  <a href="map" class="nav-btn">Map</a>
-  <a href="characters" class="nav-btn">Characters</a>
-  <a href="places" class="nav-btn">Places</a>
+  <header>
+    <a href="index" class="nav-btn">Home</a>
+    <a href="map" class="nav-btn">Map</a>
+    <a href="characters" class="nav-btn">Characters</a>
+    <a href="places" class="nav-btn">Places</a>
     <a href="screenshots" class="nav-btn">Screenshots</a>
-  <a href="trailers" class="nav-btn">Trailers</a>
-</header>
+    <a href="trailers" class="nav-btn">Trailers</a>
+  </header>
 
- <main class="page">
-  <h1>GTA 6 Screenshots</h1>
-  <div class="places-grid">
+  <h1>GTA 6 Screenshot Gallery</h1>
 
   <div class="gallery">
+    <!-- All 36 screenshots -->
     <img src="gta/screenshots/1.jpg" alt="Screenshot 1">
     <img src="gta/screenshots/2.jpg" alt="Screenshot 2">
     <img src="gta/screenshots/3.jpg" alt="Screenshot 3">
@@ -182,36 +166,44 @@ h1 {
     <img src="gta/screenshots/33.jpg" alt="Screenshot 33">
     <img src="gta/screenshots/34.jpg" alt="Screenshot 34">
     <img src="gta/screenshots/35.jpg" alt="Screenshot 35">
-    <img src="gta/screenshots/36.jpg" alt="Screenshot 36">       
+    <img src="gta/screenshots/36.jpg" alt="Screenshot 36">
   </div>
 
-<!-- Fullscreen viewer -->
-<div id="lightbox" class="lightbox">
-  <span class="close">&times;</span>
-  <img class="lightbox-img" src="">
-</div>
-  
-<script>
-// Open lightbox on click
-const lightbox = document.getElementById('lightbox');
-const lightboxImg = document.querySelector('.lightbox-img');
-document.querySelectorAll('.screenshot').forEach(img => {
-  img.addEventListener('click', () => {
-    lightbox.style.display = 'flex';
-    lightboxImg.src = img.src;
-  });
-});
+  <!-- Fullscreen viewer -->
+  <div class="viewer" id="viewer">
+    <img src="" alt="Full View">
+  </div>
 
-// Close lightbox
-document.querySelector('.close').addEventListener('click', () => {
-  lightbox.style.display = 'none';
-});
-lightbox.addEventListener('click', (e) => {
-  if(e.target === lightbox) lightbox.style.display = 'none';
-});
-</script>
+  <script>
+    const viewer = document.getElementById('viewer');
+    const viewerImg = viewer.querySelector('img');
+    const images = document.querySelectorAll('.gallery img');
 
-  
-</main>
+    // Fade-in animations using Intersection Observer
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.2 });
+
+    images.forEach(img => observer.observe(img));
+
+    // Fullscreen viewer
+    images.forEach(img => {
+      img.addEventListener('click', () => {
+        viewerImg.src = img.src;
+        viewer.classList.add('active');
+        document.body.style.overflow = 'hidden'; // prevent background scroll
+      });
+    });
+
+    viewer.addEventListener('click', () => {
+      viewer.classList.remove('active');
+      document.body.style.overflow = 'auto';
+    });
+  </script>
 </body>
 </html>
