@@ -3,217 +3,115 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>GTA VI | Home</title>
-<link rel="icon" href="gta/npc/lucia.jpg" type="image/jpg">
+<title>VI | Unknown</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
 <style>
-  /* --- Reset & Base --- */
   * { margin:0; padding:0; box-sizing:border-box; }
-  html, body { height:100%; overflow:hidden; font-family:'Orbitron',sans-serif; }
-  body {
-    background: url('gta/jason.jpg') center/cover no-repeat fixed;
-    color:#fff;
-    display:flex;
-    justify-content:center;
-    align-items:center;
+  html, body { height:100%; overflow:hidden; font-family:'Orbitron', sans-serif; background:#000; color:#fff; }
+
+  /* Background glitch & animation */
+  body::before {
+    content:'';
+    position:absolute;
+    inset:0;
+    background: url('gta/others.jpg') center/cover no-repeat fixed;
+    opacity:0.2;
+    animation:glitchBg 10s linear infinite;
+    z-index:0;
+  }
+  @keyframes glitchBg {
+    0%{ transform: translate(0,0); }
+    25%{ transform: translate(3px,-3px); }
+    50%{ transform: translate(-3px,3px); }
+    75%{ transform: translate(2px,-2px); }
+    100%{ transform: translate(0,0); }
   }
 
-  /* --- Header --- */
-  header {
-    position: fixed;
-    top: 18px; left: 50%;
-    transform: translateX(-50%);
-    z-index: 100;
-    display:flex; gap:12px;
-    padding:8px 14px;
-    border-radius:999px;
-    backdrop-filter: blur(12px) saturate(1.2);
-    background: rgba(0,0,0,0.25);
-    box-shadow:0 6px 18px rgba(0,0,0,0.35);
-  }
-  .nav-btn {
-    padding:8px 12px; border-radius:999px;
-    text-decoration:none; color:#fff;
-    background: linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
-    border:1px solid rgba(255,255,255,0.06);
-    font-weight:700;
-    transition:0.2s;
-  }
-  .nav-btn:hover { transform: scale(1.05); background: rgba(255,255,255,0.08); }
-
-  /* --- Top-left Video Card --- */
-  .video-card {
-    width: 260px;
-    background: rgba(0,0,0,0.25);
-    backdrop-filter: blur(12px);
-    border-radius:18px;
-    padding:12px;
-    position: fixed;
-    top:20px; left:20px;
-    z-index: 99;
-    box-shadow:0 12px 40px rgba(0,0,0,0.4);
-    transition: transform 0.2s;
-  }
-  .video-card:hover { transform: scale(1.05); }
-  .thumbnail { position: relative; border-radius:14px; overflow:hidden; }
-  .thumbnail img { width:100%; display:block; }
-  .play-btn {
-    position:absolute; top:50%; left:50%;
+  /* Central mysterious container */
+  .mystery {
+    position:absolute;
+    top:50%; left:50%;
     transform:translate(-50%,-50%);
-    width:56px; height:56px;
-    background: rgba(255,255,255,0.9);
-    border-radius:50%;
-    display:flex; align-items:center; justify-content:center;
-    font-size:22px; color:black; pointer-events:none;
-  }
-  .video-info { margin-top:10px; }
-  .video-info h3 { font-size:16px; font-weight:600; margin:0 0 4px; }
-  .video-info p { font-size:13px; color:#d7c9e6; margin:0; }
-
-  /* --- Hero Countdown --- */
-  .countdown-wrap {
-    backdrop-filter: blur(6px);
+    backdrop-filter: blur(12px);
+    background: rgba(0,0,0,0.35);
+    border:1px solid rgba(255,255,255,0.08);
     border-radius:24px;
-    padding:40px 48px;
+    padding:60px;
+    width: clamp(300px, 60vw, 700px);
     text-align:center;
     box-shadow:0 20px 60px rgba(0,0,0,0.8);
-    border:1px solid rgba(255,255,255,0.06);
-    background: rgba(0,0,0,0.3);
-    min-width:320px; max-width:980px;
-    width:clamp(320px,70vw,980px);
-    position:relative; z-index:2;
-    display:flex; flex-direction:column; align-items:center;
-  }
-  .title { font-size:50px; font-weight:800; margin-bottom:8px; text-shadow: 0 0 12px #FF4DD2; }
-  .subtitle { color: rgba(255,255,255,0.85); margin-bottom:22px; font-size:18px; }
-
-  .clock { display:flex; gap:18px; justify-content:center; flex-wrap:wrap; }
-  .unit {
-    min-width:88px; padding:18px 16px;
-    border-radius:14px; background: rgba(0,0,0,0.5);
-    border:1px solid rgba(255,255,255,0.9);
-    display:flex; flex-direction:column; align-items:center;
-    justify-content:center;
-    animation:fadeIn 0.5s ease;
-  }
-  .num {
-    font-size:50px; font-weight:900;
-    color:#FAFAFB;
-    text-shadow:0 0 10px #FF4DD2;
-    transition:0.3s ease;
-  }
-  .label {
-    font-size:20px; color: rgba(255,255,255,0.85);
-    margin-top:6px; text-transform:uppercase;
-    text-shadow:0 0 6px rgba(255,77,210,0.25);
+    z-index:10;
+    animation:fadeIn 2s ease;
   }
 
-  /* --- Game World Teaser --- */
-  .world-teaser {
-    display:flex; gap:24px; margin-top:40px;
-    flex-wrap:wrap; justify-content:center;
+  .mystery h1 {
+    font-size:48px;
+    color:#FF4DD2;
+    text-shadow:0 0 12px #FF4DD2;
+    margin-bottom:20px;
   }
-  .place-card {
-    position:relative; width:180px; height:120px;
-    border-radius:14px; overflow:hidden;
-    background:rgba(0,0,0,0.25);
-    backdrop-filter:blur(8px);
-    box-shadow:0 8px 24px rgba(0,0,0,0.5);
-    transition:transform 0.3s;
+
+  .mystery p {
+    font-size:18px;
+    color:#fff;
+    opacity:0.8;
+    margin-bottom:30px;
+  }
+
+  .mystery button {
+    padding:12px 28px;
+    font-size:18px;
+    font-weight:700;
+    color:#000;
+    background:#FF4DD2;
+    border:none;
+    border-radius:14px;
     cursor:pointer;
+    transition:0.3s;
   }
-  .place-card:hover { transform: scale(1.05); }
-  .place-card img { width:100%; height:100%; object-fit:cover; }
+  .mystery button:hover {
+    background:#FF77E0;
+    transform: scale(1.05);
+  }
 
-  /* --- Characters Teaser --- */
-  .characters {
-    display:flex; gap:24px; margin-top:40px;
-    flex-wrap:wrap; justify-content:center;
-  }
-  .char-card {
-    width:120px; border-radius:14px;
-    overflow:hidden; background:rgba(0,0,0,0.25);
-    backdrop-filter:blur(8px);
-    box-shadow:0 8px 24px rgba(0,0,0,0.5);
-    transition:transform 0.3s;
-    cursor:pointer;
-  }
-  .char-card:hover { transform: scale(1.1); }
-  .char-card img { width:100%; height:100%; object-fit:cover; }
-
-  /* Animations */
   @keyframes fadeIn {
-    from { opacity:0; transform: translateY(-10px); }
-    to { opacity:1; transform: translateY(0); }
+    from { opacity:0; transform: translate(-50%, -55%); }
+    to { opacity:1; transform: translate(-50%, -50%); }
+  }
+
+  /* Floating glitch effect */
+  .glitch-text {
+    display:inline-block;
+    position: relative;
+    font-size:32px;
+    font-weight:900;
+    color:#FF4DD2;
+    text-shadow: 2px 2px #00FFE0;
+    animation:glitchText 2s infinite;
+  }
+
+  @keyframes glitchText {
+    0%{ transform: translate(0,0); }
+    20%{ transform: translate(-2px,2px); }
+    40%{ transform: translate(2px,-2px); }
+    60%{ transform: translate(-2px,-2px); }
+    80%{ transform: translate(2px,2px); }
+    100%{ transform: translate(0,0); }
   }
 </style>
 </head>
 <body>
-
-<header>
-  <a href="index" class="nav-btn">Home</a>
-  <a href="map" class="nav-btn">Map</a>
-  <a href="characters" class="nav-btn">Characters</a>
-  <a href="places" class="nav-btn">Places</a>
-  <a href="screenshots" class="nav-btn">Screenshots</a>
-  <a href="trailers" class="nav-btn">Trailers</a>
-</header>
-
-<!-- Video Card -->
-<div class="video-card">
-  <a href="https://www.youtube.com/watch?v=VQRLujxTm3c" target="_blank">
-    <div class="thumbnail">
-      <img src="gta/lucia.jpg" alt="Video thumbnail">
-      <div class="play-btn">▶</div>
-    </div>
-  </a>
-  <div class="video-info">
-    <h3>GTA VI Trailer 2</h3>
-    <p>Explore Leonida and Vice City!</p>
+  <div class="mystery">
+    <h1 class="glitch-text">???</h1>
+    <p>Something is coming. Are you ready to find out?</p>
+    <button onclick="reveal()">Discover</button>
   </div>
-</div>
-
-<!-- Countdown -->
-<section class="countdown-wrap">
-  <h1 class="title">Grand Theft Auto VI</h1>
-  <div class="subtitle">Release countdown — November 19th, 2026</div>
-  <div class="clock" role="timer" aria-live="polite">
-    <div class="unit"><div class="num" id="days">0</div><div class="label">Days</div></div>
-    <div class="unit"><div class="num" id="hours">0</div><div class="label">Hours</div></div>
-    <div class="unit"><div class="num" id="minutes">0</div><div class="label">Minutes</div></div>
-    <div class="unit"><div class="num" id="seconds">0</div><div class="label">Seconds</div></div>
-  </div>
-
-  <!-- Game world teaser -->
-  <div class="world-teaser">
-    <div class="place-card"><img src="gta/places/vice.jpg" alt="Vice City Beach"></div>
-    <div class="place-card"><img src="gta/places/leoninda.jpg" alt="Leoninda Keys"></div>
-    <div class="place-card"><img src="gta/places/ambrosia.jpg" alt="Ambrosia"></div>
-  </div>
-
-  <!-- Characters teaser -->
-  <div class="characters">
-    <div class="char-card"><img src="gta/npc/lucia.jpg" alt="Lucia"></div>
-    <div class="char-card"><img src="gta/npc/jason.jpg" alt="Jason"></div>
-    <div class="char-card"><img src="gta/npc/marcus.jpg" alt="Marcus"></div>
-  </div>
-</section>
 
 <script>
-const target = new Date('2026-11-19T00:00:00');
-function pad(n){ return String(n).padStart(2,'0'); }
-function update() {
-  const now = new Date();
-  let diff = Math.floor((target - now)/1000);
-  if(diff<0) diff=0;
-  document.getElementById('days').textContent = Math.floor(diff/86400);
-  document.getElementById('hours').textContent = pad(Math.floor((diff%86400)/3600));
-  document.getElementById('minutes').textContent = pad(Math.floor((diff%3600)/60));
-  document.getElementById('seconds').textContent = pad(diff%60);
+function reveal(){
+  const mystery = document.querySelector('.mystery');
+  mystery.innerHTML = '<h1 class="glitch-text">GTA VI</h1><p>Welcome to the unknown world of Vice City and Leonida. Stay tuned for more secrets.</p>';
 }
-update();
-setInterval(update,1000);
 </script>
-
 </body>
 </html>
