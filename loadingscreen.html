@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Loading | GTA VI</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;800;900&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;background:#000;color:#fff;font-family:'Orbitron',sans-serif;overflow:hidden}
+
+/* ===== Animated GTA 6 Gradient ===== */
+.bg{
+  position:fixed;inset:0;
+  background:linear-gradient(120deg,#ff4dd2,#00ffff,#7f00ff);
+  background-size:400% 400%;
+  animation:bgMove 10s infinite ease;
+  z-index:-3;
+}
+@keyframes bgMove{
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+.bg::after{
+  content:"";position:absolute;inset:0;
+  background:rgba(0,0,0,.78);
+}
+
+/* ===== Scanlines ===== */
+.scanlines{
+  position:fixed;inset:0;
+  background:repeating-linear-gradient(
+    to bottom,
+    rgba(255,255,255,0.03) 0px,
+    rgba(255,255,255,0.03) 1px,
+    transparent 2px,
+    transparent 4px
+  );
+  pointer-events:none;
+  z-index:2;
+}
+
+/* ===== Center UI ===== */
+.center{
+  height:100%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  z-index:3;
+}
+
+.logo{
+  font-size:68px;
+  font-weight:900;
+  text-shadow:0 0 25px #ff4dd2,0 0 45px #00ffff;
+}
+
+.subtitle{
+  opacity:.85;
+  margin-top:8px;
+  margin-bottom:30px;
+  letter-spacing:2px;
+}
+
+/* ===== Loading Bar ===== */
+.bar{
+  width:360px;
+  height:12px;
+  background:rgba(255,255,255,.15);
+  border-radius:999px;
+  overflow:hidden;
+  box-shadow:0 0 20px rgba(255,77,210,.4);
+}
+
+.fill{
+  height:100%;
+  width:0%;
+  background:linear-gradient(90deg,#ff4dd2,#00ffff);
+  box-shadow:0 0 30px #ff4dd2;
+  transition:width .3s ease;
+}
+
+/* ===== Text ===== */
+.percent{
+  margin-top:18px;
+  font-size:18px;
+  letter-spacing:2px;
+  color:#fff;
+}
+
+.asset{
+  margin-top:10px;
+  font-size:14px;
+  opacity:.7;
+}
+
+/* ===== Radio ===== */
+.radio{
+  margin-top:22px;
+  font-size:13px;
+  letter-spacing:3px;
+  opacity:.6;
+}
+
+/* ===== Particles ===== */
+.particle{
+  position:absolute;
+  width:2px;height:2px;
+  background:#fff;
+  opacity:.4;
+  animation:float linear infinite;
+}
+@keyframes float{
+  from{transform:translateY(110vh)}
+  to{transform:translateY(-10vh)}
+}
+</style>
+</head>
+
+<body>
+
+<div class="bg"></div>
+<div class="scanlines"></div>
+
+<div class="center">
+  <div class="logo">GTA VI</div>
+  <div class="subtitle">Booting Vice City Systems</div>
+
+  <div class="bar">
+    <div class="fill" id="fill"></div>
+  </div>
+
+  <div class="percent" id="percent">0%</div>
+  <div class="asset" id="asset">Initializing Engine</div>
+  <div class="radio" id="radio">RADIO: VICE WAVES FM</div>
+</div>
+
+<script>
+/* ===== PARTICLES ===== */
+for(let i=0;i<90;i++){
+  const p=document.createElement("div");
+  p.className="particle";
+  p.style.left=Math.random()*100+"vw";
+  p.style.animationDuration=(6+Math.random()*10)+"s";
+  p.style.animationDelay=Math.random()*5+"s";
+  document.body.appendChild(p);
+}
+
+/* ===== ASSETS ===== */
+const assets=[
+  "Loading Vice City Map",
+  "Streaming Pedestrians",
+  "Loading Vehicles",
+  "Initializing AI Traffic",
+  "Loading Neon Textures",
+  "Connecting Social Club",
+  "Finalizing World State"
+];
+
+const radios=[
+  "VICE WAVES FM",
+  "NEON CITY RADIO",
+  "SUNSET DRIVE",
+  "BASSLINE FM",
+  "OCEAN SOUNDS"
+];
+
+let progress=0;
+let assetIndex=0;
+let radioIndex=0;
+
+const fill=document.getElementById("fill");
+const percent=document.getElementById("percent");
+const asset=document.getElementById("asset");
+const radio=document.getElementById("radio");
+
+/* ===== RADIO CYCLE ===== */
+setInterval(()=>{
+  radioIndex=(radioIndex+1)%radios.length;
+  radio.textContent="RADIO: "+radios[radioIndex];
+},2500);
+
+/* ===== LOADING ===== */
+const loading=setInterval(()=>{
+  progress+=Math.random()*7;
+  if(progress>=100){
+    progress=100;
+    clearInterval(loading);
+    setTimeout(()=>{
+      window.location.href="index.html"; // HOME PAGE
+    },1000);
+  }
+
+  fill.style.width=progress+"%";
+  percent.textContent=Math.floor(progress)+"%";
+
+  if(progress>assetIndex*15 && assetIndex<assets.length){
+    asset.textContent=assets[assetIndex];
+    assetIndex++;
+  }
+},140);
+</script>
+
+</body>
+</html>
