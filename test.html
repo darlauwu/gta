@@ -76,7 +76,6 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    perspective: 600px;
   }
 
   .num {
@@ -84,28 +83,7 @@
     font-weight: 900;
     color: #FAFAFB;
     text-shadow: 0 0 10px rgba(255,255,255,0.35);
-    position: relative;
-    width: 80px;
-    height: 60px;
   }
-
-  .num span {
-    display: block;
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    backface-visibility: hidden;
-    transform-style: preserve-3d;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .num .current { transform: rotateX(0deg); z-index: 2; }
-  .num .next { transform: rotateX(180deg); z-index: 1; }
-
-  .flip .current { transform: rotateX(-180deg); transition: transform 0.6s ease-in; }
-  .flip .next { transform: rotateX(0deg); transition: transform 0.6s ease-in; }
 
   .label {
     font-size: 20px;
@@ -137,10 +115,7 @@
     border-radius: 14px;
     overflow: hidden;
   }
-  .thumbnail img {
-    width: 100%;
-    display: block;
-  }
+  .thumbnail img { width: 100%; display: block; }
   .play-btn {
     position: absolute;
     top: 50%;
@@ -160,7 +135,6 @@
   .video-info { margin-top: 10px; }
   .video-info h3 { font-size: 16px; font-weight: 600; margin: 0 0 4px 0; }
   .video-info p { font-size: 13px; color: #d7c9e6; margin: 0; }
-  .play-link { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; text-decoration: none; }
 </style>
 </head>
 <body>
@@ -192,16 +166,15 @@
   <h1 class="title">Grand Theft Auto VI</h1>
   <div class="subtitle">Release countdown — November 19th, 2026</div>
   <div class="clock" role="timer" aria-live="polite" aria-atomic="true">
-    <div class="unit"><div class="num"><span class="current">0</span><span class="next">0</span></div><div class="label">Days</div></div>
-    <div class="unit"><div class="num"><span class="current">0</span><span class="next">0</span></div><div class="label">Hours</div></div>
-    <div class="unit"><div class="num"><span class="current">0</span><span class="next">0</span></div><div class="label">Minutes</div></div>
-    <div class="unit"><div class="num"><span class="current">0</span><span class="next">0</span></div><div class="label">Seconds</div></div>
+    <div class="unit"><div class="num" id="days">0</div><div class="label">Days</div></div>
+    <div class="unit"><div class="num" id="hours">0</div><div class="label">Hours</div></div>
+    <div class="unit"><div class="num" id="minutes">0</div><div class="label">Minutes</div></div>
+    <div class="unit"><div class="num" id="seconds">0</div><div class="label">Seconds</div></div>
   </div>
 </section>
 
 <script>
 const target = new Date('2026-11-19T00:00:00');
-const units = document.querySelectorAll('.unit');
 
 function pad(n){ return String(n).padStart(2,'0'); }
 
@@ -210,35 +183,15 @@ function update() {
   let diff = Math.floor((target - now)/1000);
   if(diff < 0) diff = 0;
 
-  const time = {
-    days: Math.floor(diff/86400),
-    hours: Math.floor((diff%86400)/3600),
-    minutes: Math.floor((diff%3600)/60),
-    seconds: diff%60
-  };
-
-  const values = [time.days, time.hours, time.minutes, time.seconds];
-
-  units.forEach((unit,i)=>{
-    const numEl = unit.querySelector('.num');
-    const current = numEl.querySelector('.current');
-    const next = numEl.querySelector('.next');
-
-    if(Number(current.textContent) !== values[i]){
-      next.textContent = values[i];
-      numEl.classList.add('flip');
-      setTimeout(()=>{
-        current.textContent = values[i];
-        numEl.classList.remove('flip');
-      }, 600);
-    }
-  });
+  document.getElementById('days').textContent = Math.floor(diff/86400);
+  document.getElementById('hours').textContent = pad(Math.floor((diff%86400)/3600));
+  document.getElementById('minutes').textContent = pad(Math.floor((diff%3600)/60));
+  document.getElementById('seconds').textContent = pad(diff%60);
 }
 
 update();
 setInterval(update, 1000);
 </script>
-
 </body>
 </html>
 
