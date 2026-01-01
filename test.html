@@ -9,7 +9,7 @@
 *{margin:0;padding:0;box-sizing:border-box}
 html,body{width:100%;height:100%;overflow:hidden;background:#000}
 
-/* video container */
+/* video background */
 .video-bg{
   position:fixed;
   inset:0;
@@ -17,7 +17,6 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000}
   z-index:0;
 }
 
-/* youtube iframe */
 .video-bg iframe{
   position:absolute;
   top:50%;
@@ -25,10 +24,10 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000}
   width:120vw;
   height:120vh;
   transform:translate(-50%,-50%);
-  pointer-events:none; /* disables clicking */
+  pointer-events:none;
 }
 
-/* dark cinematic overlay */
+/* cinematic overlay */
 .overlay{
   position:fixed;
   inset:0;
@@ -36,7 +35,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000}
   z-index:1;
 }
 
-/* loading container */
+/* loader */
 .loader{
   position:fixed;
   bottom:30px;
@@ -48,7 +47,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000}
   gap:10px;
 }
 
-/* circular loader */
+/* spinner */
 .circle{
   width:64px;
   height:64px;
@@ -62,12 +61,11 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000}
   to{transform:rotate(360deg)}
 }
 
-/* percentage */
+/* percent */
 .percent{
   font-family:Arial, sans-serif;
   font-size:14px;
   color:#fff;
-  opacity:.9;
   letter-spacing:1px;
 }
 </style>
@@ -75,38 +73,43 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000}
 
 <body>
 
-<!-- VIDEO BACKGROUND -->
+<!-- VIDEO -->
 <div class="video-bg">
   <iframe
-    src="https://www.youtube.com/embed/gkasTel-pjs?autoplay=1&mute=1&controls=0&showinfo=0&rel=0&playsinline=1&loop=1&playlist=gkasTel-pjs"
+    src="https://www.youtube.com/embed/gkasTel-pjs?autoplay=1&controls=0&rel=0&playsinline=1&loop=1&playlist=gkasTel-pjs"
     frameborder="0"
-    allow="autoplay; fullscreen"
+    allow="autoplay; encrypted-media"
   ></iframe>
 </div>
 
-<!-- OVERLAY -->
 <div class="overlay"></div>
 
-<!-- LOADING UI -->
+<!-- LOADER -->
 <div class="loader">
   <div class="circle"></div>
   <div class="percent" id="percent">0%</div>
 </div>
 
 <script>
-let p = 0;
-const percent = document.getElementById("percent");
+const percentEl = document.getElementById("percent");
 
-const load = setInterval(()=>{
-  p++;
-  percent.textContent = p + "%";
+const TOTAL_TIME = 32000; // EXACTLY 32 seconds
+const START_TIME = Date.now();
 
-  if(p >= 100){
-    clearInterval(load);
-    // OPTIONAL REDIRECT:
+const timer = setInterval(() => {
+  const elapsed = Date.now() - START_TIME;
+  let progress = Math.floor((elapsed / TOTAL_TIME) * 100);
+
+  if (progress >= 100) {
+    progress = 100;
+    clearInterval(timer);
+
+    // OPTIONAL redirect after loading
     // window.location.href = "index.html";
   }
-}, 60);
+
+  percentEl.textContent = progress + "%";
+}, 100);
 </script>
 
 </body>
