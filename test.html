@@ -7,24 +7,26 @@
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-html,body{width:100%;height:100%;overflow:hidden;background:#000}
+html,body{
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  background:#000;
+  font-family:Arial, sans-serif;
+}
 
 /* video background */
 .video-bg{
   position:fixed;
   inset:0;
-  overflow:hidden;
   z-index:0;
+  pointer-events:none;
 }
 
-.video-bg iframe{
-  position:absolute;
-  top:50%;
-  left:50%;
-  width:120vw;
-  height:120vh;
-  transform:translate(-50%,-50%);
-  pointer-events:none;
+.video-bg video{
+  width:100%;
+  height:100%;
+  object-fit:cover;
 }
 
 /* cinematic overlay */
@@ -53,7 +55,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000}
   height:64px;
   border-radius:50%;
   border:4px solid rgba(255,255,255,0.15);
-  border-top:4px solid #ffffff;
+  border-top:4px solid #fff;
   animation:spin 1s linear infinite;
 }
 
@@ -63,9 +65,8 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000}
 
 /* percent */
 .percent{
-  font-family:Arial, sans-serif;
-  font-size:14px;
   color:#fff;
+  font-size:14px;
   letter-spacing:1px;
 }
 </style>
@@ -73,13 +74,11 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000}
 
 <body>
 
-<!-- VIDEO -->
+<!-- MP4 VIDEO BACKGROUND -->
 <div class="video-bg">
-  <iframe
-    src="https://www.youtube.com/embed/gkasTel-pjs?autoplay=1&controls=0&rel=0&playsinline=1&loop=1&playlist=gkasTel-pjs"
-    frameborder="0"
-    allow="autoplay; encrypted-media"
-  ></iframe>
+  <video id="bgVideo" autoplay playsinline>
+    <source src="gta/loading.mp4" type="video/mp4">
+  </video>
 </div>
 
 <div class="overlay"></div>
@@ -91,26 +90,35 @@ html,body{width:100%;height:100%;overflow:hidden;background:#000}
 </div>
 
 <script>
+const video = document.getElementById("bgVideo");
 const percentEl = document.getElementById("percent");
 
-const TOTAL_TIME = 32000; // EXACTLY 32 seconds
+/* ensure audio plays after interaction if required */
+document.addEventListener("click", () => {
+  video.muted = false;
+  video.play();
+},{once:true});
+
+/* EXACT 32s loading */
+const TOTAL_TIME = 28000;
 const START_TIME = Date.now();
 
 const timer = setInterval(() => {
   const elapsed = Date.now() - START_TIME;
   let progress = Math.floor((elapsed / TOTAL_TIME) * 100);
 
-  if (progress >= 100) {
+  if(progress >= 100){
     progress = 100;
     clearInterval(timer);
 
-    // OPTIONAL redirect after loading
+    // OPTIONAL redirect
     // window.location.href = "index.html";
   }
 
   percentEl.textContent = progress + "%";
-}, 100);
+},100);
 </script>
 
 </body>
 </html>
+
