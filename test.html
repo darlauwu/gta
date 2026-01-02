@@ -18,21 +18,21 @@ body{
   overflow-x:hidden;
 }
 
-/* overlay */
+/* dark overlay */
 body::before{
   content:"";
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,0.82);
+  background:rgba(0,0,0,0.8);
   z-index:0;
 }
 
 .page{
   position:relative;
   z-index:1;
-  max-width:1200px;
-  margin:auto;
-  padding:120px 20px 100px;
+  max-width:1100px;
+  margin:0 auto;
+  padding:140px 20px 80px; /* space for fixed navbar */
 }
 
 /* title */
@@ -40,77 +40,45 @@ h1{
   text-align:center;
   font-size:52px;
   font-weight:900;
+  margin-bottom:12px;
   text-shadow:0 0 15px #ff4dd2,0 0 30px #ff99e6;
 }
 
 .subtitle{
   text-align:center;
   opacity:.85;
-  margin:10px 0 50px;
-}
-
-/* FILTERS */
-.filters{
-  display:flex;
-  gap:12px;
-  justify-content:center;
-  flex-wrap:wrap;
   margin-bottom:70px;
 }
 
-.filter-btn{
-  padding:10px 16px;
-  border-radius:999px;
-  background:rgba(255,255,255,0.08);
-  border:1px solid rgba(255,255,255,0.15);
-  color:#fff;
-  cursor:pointer;
-  transition:.3s;
-  font-weight:700;
-}
-
-.filter-btn:hover,
-.filter-btn.active{
-  background:#ff4dd2;
-  box-shadow:0 0 20px #ff4dd2;
-}
-
-/* TIMELINE */
+/* timeline line */
 .timeline{
   position:relative;
-  padding-left:50px;
+  padding-left:40px;
 }
 
 .timeline::before{
   content:"";
   position:absolute;
-  left:20px;
+  left:18px;
   top:0;
   bottom:0;
   width:4px;
   background:linear-gradient(180deg,#ff4dd2,#8a2be2);
-  box-shadow:0 0 20px #ff4dd2;
+  box-shadow:0 0 15px #ff4dd2;
 }
 
-/* EVENT */
+/* event */
 .event{
   position:relative;
-  margin-bottom:70px;
-  opacity:0;
-  transform:translateY(40px);
-  transition:.6s ease;
-}
-
-.event.show{
-  opacity:1;
-  transform:none;
+  margin-bottom:60px;
+  padding-left:40px;
 }
 
 .event::before{
   content:"";
   position:absolute;
-  left:12px;
-  top:20px;
+  left:-2px;
+  top:6px;
   width:18px;
   height:18px;
   background:#ff4dd2;
@@ -118,15 +86,14 @@ h1{
   box-shadow:0 0 15px #ff4dd2,0 0 30px #ff99e6;
 }
 
-/* CARD */
+/* card */
 .card{
-  margin-left:40px;
   background:rgba(0,0,0,0.55);
   backdrop-filter:blur(10px);
-  border-radius:20px;
-  padding:24px;
+  border-radius:18px;
+  padding:22px 26px;
   border:1px solid rgba(255,255,255,0.08);
-  box-shadow:0 12px 35px rgba(0,0,0,0.7);
+  box-shadow:0 10px 30px rgba(0,0,0,0.6);
   transition:.3s;
 }
 
@@ -135,14 +102,14 @@ h1{
   box-shadow:0 0 25px rgba(255,77,210,0.4);
 }
 
-/* BADGES */
+/* type badges */
 .badge{
   display:inline-block;
-  padding:6px 14px;
+  padding:6px 12px;
   border-radius:999px;
   font-size:12px;
-  font-weight:800;
-  margin-bottom:10px;
+  font-weight:700;
+  margin-bottom:12px;
 }
 
 .announcement{background:#ff4dd2}
@@ -151,151 +118,145 @@ h1{
 .delay{background:#ff4444}
 .milestone{background:#00ffaa;color:#000}
 
-/* TEXT */
-.date{font-size:13px;opacity:.7;margin-bottom:6px}
-.title{font-size:22px;font-weight:900;margin-bottom:10px}
-.desc{font-size:15px;line-height:1.6;opacity:.9}
-
-/* SCREENSHOT */
-.thumb{
-  margin-top:14px;
-  border-radius:14px;
-  overflow:hidden;
-  border:1px solid rgba(255,255,255,0.15);
+/* text */
+.date{
+  font-size:14px;
+  opacity:.7;
+  margin-bottom:8px;
 }
 
-.thumb img{
-  width:100%;
-  display:block;
-  transition:.4s;
+.title{
+  font-size:22px;
+  font-weight:800;
+  margin-bottom:8px;
 }
 
-.thumb:hover img{
-  transform:scale(1.05);
+.desc{
+  font-size:15px;
+  line-height:1.6;
+  opacity:.9;
 }
 
-/* BUTTONS */
-.actions{
-  margin-top:14px;
-  display:flex;
-  gap:12px;
-  flex-wrap:wrap;
+/* Header */
+header {
+  position: fixed !important;
+  top: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  display: flex;
+  gap: 12px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  backdrop-filter: blur(12px) saturate(1.2);
+  background: rgba(0,0,0,0.25);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.35);
 }
 
-.btn{
-  padding:8px 14px;
-  border-radius:999px;
-  background:rgba(255,255,255,0.12);
-  border:1px solid rgba(255,255,255,0.2);
-  color:#fff;
-  text-decoration:none;
-  font-size:13px;
-  transition:.3s;
+.nav-btn {
+  padding: 8px 12px;
+  border-radius: 999px;
+  text-decoration: none;
+  color: #fff;
+  background: linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+  border: 1px solid rgba(255,255,255,0.06);
+  font-weight: 700;
+  transition: transform 0.2s, background 0.2s;
+}
+.nav-btn:hover {
+  transform: scale(1.05);
+  background: rgba(255,255,255,0.08);
 }
 
-.btn:hover{
-  background:#ff4dd2;
-  box-shadow:0 0 15px #ff4dd2;
-}
-
-/* MUSIC TOGGLE */
-.music-btn{
-  position:fixed;
-  bottom:20px;
-  right:20px;
-  width:56px;
-  height:56px;
-  border-radius:50%;
-  background:linear-gradient(135deg,#ff4dd2,#8a2be2);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:20px;
-  cursor:pointer;
-  box-shadow:0 6px 20px rgba(0,0,0,0.6);
-  z-index:999;
-}
-
+/* responsive */
 @media(max-width:640px){
   h1{font-size:38px}
+  .timeline{padding-left:25px}
+  .timeline::before{left:10px}
+  .event{padding-left:30px}
 }
 </style>
 </head>
 
 <body>
 
-<audio id="bgm" loop>
-  <source src="music/ambient.mp3" type="audio/mpeg">
-</audio>
-
-<div class="music-btn" onclick="toggleMusic()">🎵</div>
+<header>
+  <a href="index" class="nav-btn">Home</a>
+  <a href="map" class="nav-btn">Map</a>
+  <a href="characters" class="nav-btn">Characters</a>
+  <a href="places" class="nav-btn">Places</a>
+  <a href="screenshots" class="nav-btn">Screenshots</a>
+  <a href="trailers" class="nav-btn">Trailers</a>
+</header>
 
 <div class="page">
-<h1>GTA VI Timeline</h1>
-<div class="subtitle">Announcements • Trailers • Delays • Milestones</div>
+  <h1>GTA VI Timeline</h1>
+  <div class="subtitle">Announcements • Trailers • Delays • Milestones</div>
 
-<div class="filters">
-  <div class="filter-btn active" onclick="filterEvents('all')">All</div>
-  <div class="filter-btn" onclick="filterEvents('announcement')">Announcements</div>
-  <div class="filter-btn" onclick="filterEvents('trailer')">Trailers</div>
-  <div class="filter-btn" onclick="filterEvents('teaser')">Teasers</div>
-  <div class="filter-btn" onclick="filterEvents('delay')">Delays</div>
-  <div class="filter-btn" onclick="filterEvents('milestone')">Milestones</div>
-</div>
+  <div class="timeline">
 
-<div class="timeline">
-
-<!-- EVENT -->
-<div class="event" data-type="trailer">
-  <div class="card">
-    <div class="badge trailer">TRAILER</div>
-    <div class="date">December 5, 2023</div>
-    <div class="title">GTA VI Trailer 1</div>
-    <div class="desc">Vice City revealed with Lucia, modern satire, and next-gen visuals.</div>
-
-    <div class="actions">
-      <a href="https://youtube.com" target="_blank" class="btn">▶ Watch Trailer</a>
+    <div class="event">
+      <div class="card">
+        <div class="badge announcement">ANNOUNCEMENT</div>
+        <div class="date">February 4, 2022</div>
+        <div class="title">Rockstar Confirms GTA VI Development</div>
+        <div class="desc">
+          Rockstar Games officially confirms that development on the next
+          Grand Theft Auto title is well underway.
+        </div>
+      </div>
     </div>
 
-    <div class="thumb">
-      <img src="gta/screenshots/1.jpg">
+    <div class="event">
+      <div class="card">
+        <div class="badge teaser">TEASER</div>
+        <div class="date">December 4, 2023</div>
+        <div class="title">Official GTA VI Logo Reveal</div>
+        <div class="desc">
+          Rockstar reveals the GTA VI logo and Vice City-inspired branding,
+          igniting massive hype across the internet.
+        </div>
+      </div>
     </div>
+
+    <div class="event">
+      <div class="card">
+        <div class="badge trailer">TRAILER</div>
+        <div class="date">December 5, 2023</div>
+        <div class="title">Trailer 1 Released</div>
+        <div class="desc">
+          The first official trailer showcases Vice City, Lucia,
+          next-gen visuals, and modern social media satire.
+        </div>
+      </div>
+    </div>
+
+    <div class="event">
+      <div class="card">
+        <div class="badge delay">DELAY</div>
+        <div class="date">2024</div>
+        <div class="title">Release Window Adjusted</div>
+        <div class="desc">
+          Rockstar confirms GTA VI will launch in 2026 to ensure
+          the highest level of polish and quality.
+        </div>
+      </div>
+    </div>
+
+    <div class="event">
+      <div class="card">
+        <div class="badge milestone">MILESTONE</div>
+        <div class="date">November 19, 2026</div>
+        <div class="title">GTA VI Launch Day</div>
+        <div class="desc">
+          Grand Theft Auto VI officially launches worldwide,
+          marking the biggest release in Rockstar history.
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>
-
-<!-- ADD MORE EVENTS SAME FORMAT -->
-
-</div>
-</div>
-
-<script>
-/* scroll reveal */
-const events = document.querySelectorAll(".event");
-const observer = new IntersectionObserver(entries=>{
-  entries.forEach(e=>{
-    if(e.isIntersecting) e.target.classList.add("show");
-  });
-},{threshold:.15});
-events.forEach(e=>observer.observe(e));
-
-/* filters */
-function filterEvents(type){
-  document.querySelectorAll(".filter-btn").forEach(b=>b.classList.remove("active"));
-  event.target.classList.add("active");
-
-  events.forEach(e=>{
-    e.style.display = (type==="all" || e.dataset.type===type) ? "block" : "none";
-  });
-}
-
-/* music */
-let playing=false;
-function toggleMusic(){
-  const audio=document.getElementById("bgm");
-  playing?audio.pause():audio.play();
-  playing=!playing;
-}
-</script>
 
 </body>
 </html>
