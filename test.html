@@ -18,15 +18,49 @@ body{
   overflow-x:hidden;
 }
 
-/* dark overlay */
+/* dark overlay ONLY (no blur) */
 body::before{
   content:"";
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,0.8);
+  background:rgba(0,0,0,0.75);
   z-index:0;
 }
 
+/* FIXED NAVBAR (WILL NOT SCROLL) */
+header{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  z-index:9999;
+
+  display:flex;
+  justify-content:center;
+  gap:12px;
+
+  padding:14px 20px;
+  background:rgba(0,0,0,0.85);
+  box-shadow:0 6px 20px rgba(0,0,0,0.6);
+}
+
+.nav-btn{
+  padding:8px 14px;
+  border-radius:999px;
+  text-decoration:none;
+  color:#fff;
+  background:rgba(255,255,255,0.06);
+  border:1px solid rgba(255,255,255,0.08);
+  font-weight:700;
+  transition:transform .2s, background .2s;
+}
+
+.nav-btn:hover{
+  transform:scale(1.05);
+  background:rgba(255,255,255,0.12);
+}
+
+/* PAGE */
 .page{
   position:relative;
   z-index:1;
@@ -50,7 +84,7 @@ h1{
   margin-bottom:70px;
 }
 
-/* timeline line */
+/* timeline */
 .timeline{
   position:relative;
   padding-left:40px;
@@ -86,10 +120,9 @@ h1{
   box-shadow:0 0 15px #ff4dd2,0 0 30px #ff99e6;
 }
 
-/* card */
+/* card (NO BLUR) */
 .card{
-  background:rgba(0,0,0,0.55);
-  backdrop-filter:blur(10px);
+  background:rgba(0,0,0,0.65);
   border-radius:18px;
   padding:22px 26px;
   border:1px solid rgba(255,255,255,0.08);
@@ -102,7 +135,7 @@ h1{
   box-shadow:0 0 25px rgba(255,77,210,0.4);
 }
 
-/* type badges */
+/* badges */
 .badge{
   display:inline-block;
   padding:6px 12px;
@@ -119,54 +152,9 @@ h1{
 .milestone{background:#00ffaa;color:#000}
 
 /* text */
-.date{
-  font-size:14px;
-  opacity:.7;
-  margin-bottom:8px;
-}
-
-.title{
-  font-size:22px;
-  font-weight:800;
-  margin-bottom:8px;
-}
-
-.desc{
-  font-size:15px;
-  line-height:1.6;
-  opacity:.9;
-}
-
-/* Header */
-header {
-  position: fixed !important;
-  top: 18px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 9999;
-  display: flex;
-  gap: 12px;
-  padding: 8px 14px;
-  border-radius: 999px;
-  backdrop-filter: blur(12px) saturate(1.2);
-  background: rgba(0,0,0,0.25);
-  box-shadow: 0 6px 18px rgba(0,0,0,0.35);
-}
-
-.nav-btn {
-  padding: 8px 12px;
-  border-radius: 999px;
-  text-decoration: none;
-  color: #fff;
-  background: linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
-  border: 1px solid rgba(255,255,255,0.06);
-  font-weight: 700;
-  transition: transform 0.2s, background 0.2s;
-}
-.nav-btn:hover {
-  transform: scale(1.05);
-  background: rgba(255,255,255,0.08);
-}
+.date{font-size:14px;opacity:.7;margin-bottom:8px}
+.title{font-size:22px;font-weight:800;margin-bottom:8px}
+.desc{font-size:15px;line-height:1.6;opacity:.9}
 
 /* responsive */
 @media(max-width:640px){
@@ -213,8 +201,7 @@ header {
         <div class="date">December 4, 2023</div>
         <div class="title">Official GTA VI Logo Reveal</div>
         <div class="desc">
-          Rockstar reveals the GTA VI logo and Vice City-inspired branding,
-          igniting massive hype across the internet.
+          Rockstar reveals the GTA VI logo and Vice City-inspired branding.
         </div>
       </div>
     </div>
@@ -226,7 +213,7 @@ header {
         <div class="title">Trailer 1 Released</div>
         <div class="desc">
           The first official trailer showcases Vice City, Lucia,
-          next-gen visuals, and modern social media satire.
+          and next-gen visuals.
         </div>
       </div>
     </div>
@@ -237,8 +224,7 @@ header {
         <div class="date">2024</div>
         <div class="title">Release Window Adjusted</div>
         <div class="desc">
-          Rockstar confirms GTA VI will launch in 2026 to ensure
-          the highest level of polish and quality.
+          Rockstar confirms GTA VI will launch in 2026 for maximum polish.
         </div>
       </div>
     </div>
@@ -249,8 +235,7 @@ header {
         <div class="date">November 19, 2026</div>
         <div class="title">GTA VI Launch Day</div>
         <div class="desc">
-          Grand Theft Auto VI officially launches worldwide,
-          marking the biggest release in Rockstar history.
+          Grand Theft Auto VI launches worldwide.
         </div>
       </div>
     </div>
