@@ -144,11 +144,48 @@ h1{
   .timeline::before{left:10px}
   .event{padding-left:30px}
 }
+/* Header */
+  header {
+    position: fixed;
+    top: 18px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 50;
+    display: flex;
+    gap: 12px;
+    padding: 8px 14px;
+    border-radius: 999px;
+    backdrop-filter: blur(12px) saturate(1.2);
+    background: rgba(0,0,0,0.25);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+  }
+
+  .nav-btn {
+    padding: 8px 12px;
+    border-radius: 999px;
+    text-decoration: none;
+    color: #fff;
+    background: linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+    border: 1px solid rgba(255,255,255,0.06);
+    font-weight: 700;
+    transition: transform 0.2s, background 0.2s;
+  }
+  .nav-btn:hover { transform: scale(1.05); background: rgba(255,255,255,0.08); }
 </style>
 </head>
 
 <body>
 
+<header>
+  <a href="index" class="nav-btn">Home</a>
+  <a href="map" class="nav-btn">Map</a>
+  <a href="characters" class="nav-btn">Characters</a>
+  <a href="places" class="nav-btn">Places</a>
+  <a href="screenshots" class="nav-btn">Screenshots</a>
+  <a href="trailers" class="nav-btn">Trailers</a>
+</header>
+
+  
 <div class="page">
   <h1>GTA VI Timeline</h1>
   <div class="subtitle">Announcements • Trailers • Delays • Milestones</div>
