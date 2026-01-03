@@ -1,181 +1,255 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>VI | Map</title>
-  <link rel="icon" href="gta/npc/lucia.jpg" type="image/jpg">
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>VI | Map</title>
 
-  <style>
-    *{box-sizing:border-box;margin:0;padding:0}
-    html,body{height:100%}
+<link rel="icon" href="gta/npc/lucia.jpg" type="image/jpg">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
 
-    body{
-      font-family:'Orbitron',sans-serif;
-      background:
-        linear-gradient(135deg, rgba(255,77,210,0.15), rgba(0,255,224,0.08)),
-        url('gta/others.jpg') center/cover no-repeat fixed;
-      background-blend-mode: overlay;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      color:#fff;
-    }
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
 
-    /* ===== NAVBAR ===== */
-    header{
-      position:fixed;
-      top:18px;
-      left:50%;
-      transform:translateX(-50%);
-      z-index:50;
-      display:flex;
-      gap:12px;
-      padding:8px 14px;
-      border-radius:999px;
-      backdrop-filter: blur(12px) saturate(1.2);
-      -webkit-backdrop-filter: blur(12px) saturate(1.2);
-      background:rgba(0,0,0,0.25);
-      box-shadow:0 6px 18px rgba(0,0,0,0.35);
-    }
+body{
+  font-family:'Orbitron',sans-serif;
+  background:
+    linear-gradient(135deg, rgba(255,77,210,.18), rgba(0,255,224,.1)),
+    url('gta/others.jpg') center/cover fixed;
+  display:flex;
+  justify-content:center;
+  color:#fff;
+  transition:background-position .1s linear;
+}
 
-    .nav-btn{
-      padding:8px 12px;
-      border-radius:999px;
-      text-decoration:none;
-      color:#fff;
-      font-weight:700;
-      background:linear-gradient(90deg,rgba(255,255,255,0.03),rgba(255,255,255,0.01));
-      border:1px solid rgba(255,255,255,0.06);
-    }
-    .nav-btn:hover{
-      box-shadow:0 0 10px rgba(255,77,210,0.25);
-    }
+/* ===== NAVBAR ===== */
+header{
+  position:fixed;
+  top:18px;
+  left:50%;
+  transform:translateX(-50%);
+  z-index:100;
+  display:flex;
+  gap:12px;
+  padding:8px 14px;
+  border-radius:999px;
+  backdrop-filter:blur(12px);
+  background:rgba(0,0,0,.25);
+}
 
-    /* ===== PAGE ===== */
-    .page{
-      position:relative;
-      z-index:10;
-      width:clamp(900px,88vw,1400px);
-      height:calc(100vh - 140px);
-      display:flex;
-      flex-direction:column;
-      margin-top:40px; /* ← pushes embed down */
-    }
+.nav-btn{
+  color:#fff;
+  text-decoration:none;
+  font-weight:700;
+  padding:8px 12px;
+  border-radius:999px;
+}
 
-    .embed-card{
-      flex:1;
-      border-radius:20px;
-      overflow:hidden;
-      background:linear-gradient(180deg, rgba(0,0,0,0.28), rgba(0,0,0,0.22));
-      border:1px solid rgba(255,255,255,0.04);
-      box-shadow:0 30px 80px rgba(0,0,0,0.5);
-      display:flex;
-      flex-direction:column;
-      position:relative;
-    }
+/* ===== PAGE ===== */
+.page{
+  width:clamp(900px,88vw,1400px);
+  height:calc(100vh - 140px);
+  margin-top:40px;
+  display:flex;
+}
 
-    .embed-header{
-      padding:18px 22px;
-      margin-bottom:12px; /* EMBEDDED SPACING */
-    }
+/* ===== CARD ===== */
+.embed-card{
+  flex:1;
+  position:relative;
+  border-radius:22px;
+  overflow:hidden;
+  background:rgba(0,0,0,.3);
+  border:1px solid rgba(255,255,255,.06);
+  box-shadow:0 40px 120px rgba(0,0,0,.7);
+}
 
-    .embed-title{
-      font-size:20px;
-      font-weight:900;
-    }
+/* ===== HEADER ===== */
+.embed-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:16px 22px;
+  z-index:10;
+}
 
-    .embed-frame{
-      flex:1;
-      width:100%;
-      border:0;
-      background:#111;
-      margin-top:4px; /* EMBEDDED SPACING */
-    }
+.embed-title{font-weight:900;font-size:20px}
 
-    /* ===== FALLBACK ===== */
-    .fallback{
-      position:absolute;
-      inset:0;
-      display:none;
-      align-items:center;
-      justify-content:center;
-      text-align:center;
-      background:rgba(0,0,0,0.65);
-      backdrop-filter: blur(8px);
-      z-index:20;
-    }
+.embed-actions{display:flex;gap:10px}
 
-    .fallback a{
-      color:#ff9bdc;
-      font-weight:800;
-      text-decoration:none;
-    }
+.action-btn{
+  padding:6px 12px;
+  border-radius:999px;
+  font-weight:800;
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.12);
+  color:#fff;
+  cursor:pointer;
+}
 
-    @media(max-width:760px){
-      .page{
-        width:96vw;
-        height:calc(100vh - 110px);
-      }
-      .embed-title{font-size:16px}
-    }
-  </style>
+/* ===== IFRAME ===== */
+.embed-frame{
+  width:100%;
+  height:100%;
+  border:0;
+  background:#111;
+}
+
+/* ===== LOADING ===== */
+.loading{
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:rgba(0,0,0,.65);
+  backdrop-filter:blur(6px);
+  z-index:20;
+  font-weight:900;
+}
+
+/* ===== FALLBACK ===== */
+.fallback{
+  position:absolute;
+  inset:0;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  background:rgba(0,0,0,.75);
+  z-index:30;
+}
+
+/* ===== MINI MAP ===== */
+.mini-map{
+  position:absolute;
+  bottom:18px;
+  right:18px;
+  width:180px;
+  height:120px;
+  border-radius:14px;
+  background:url('gta/mini-map.jpg') center/cover;
+  border:1px solid rgba(255,255,255,.15);
+  box-shadow:0 10px 30px rgba(0,0,0,.6);
+  opacity:.7;
+  transition:.3s;
+}
+.mini-map:hover{opacity:1;transform:scale(1.05)}
+
+/* ===== PINS ===== */
+.pin{
+  position:absolute;
+  width:12px;
+  height:12px;
+  border-radius:50%;
+  background:#ff4dd2;
+  box-shadow:0 0 12px #ff4dd2;
+  animation:pulse 1.6s infinite;
+}
+
+@keyframes pulse{
+  0%{transform:scale(1);opacity:1}
+  100%{transform:scale(2);opacity:0}
+}
+
+@media(max-width:760px){
+  .page{width:96vw}
+}
+</style>
 </head>
 
 <body>
 
-  <header>
-    <a href="index" class="nav-btn">Home</a>
-    <a href="map" class="nav-btn">Map</a>
-    <a href="characters" class="nav-btn">Characters</a>
-    <a href="places" class="nav-btn">Places</a>
-    <a href="screenshots" class="nav-btn">Screenshots</a>
-    <a href="trailers" class="nav-btn">Trailers</a>
-  </header>
+<header>
+  <a href="index" class="nav-btn">Home</a>
+  <a href="map" class="nav-btn">Map</a>
+  <a href="characters" class="nav-btn">Characters</a>
+  <a href="places" class="nav-btn">Places</a>
+  <a href="screenshots" class="nav-btn">Screenshots</a>
+  <a href="trailers" class="nav-btn">Trailers</a>
+</header>
 
-  <main class="page">
-    <div class="embed-card">
-      <div class="embed-header">
-        <div class="embed-title">Grand Theft Auto VI Map</div>
-      </div>
+<main class="page">
+<div class="embed-card" id="card">
 
-      <iframe
-        id="embedFrame"
-        class="embed-frame"
-        src="https://map.stateofleonida.net/"
-        sandbox="allow-same-origin allow-scripts allow-forms allow-popups"
-        allowfullscreen>
-      </iframe>
-
-      <div class="fallback" id="fallback">
-        <div>
-          <p>Embedding is blocked.</p><br>
-          <a href="https://map.stateofleonida.net/" target="_blank">
-            Open map in new tab →
-          </a>
-        </div>
-      </div>
+  <div class="embed-header">
+    <div class="embed-title">Grand Theft Auto VI Map</div>
+    <div class="embed-actions">
+      <button class="action-btn" id="refresh">↻</button>
+      <button class="action-btn" id="fullscreen">⛶</button>
     </div>
-  </main>
+  </div>
 
-  <script>
-    const iframe = document.getElementById('embedFrame');
-    const fallback = document.getElementById('fallback');
+  <iframe id="embedFrame" class="embed-frame"
+    src="https://map.stateofleonida.net/"
+    sandbox="allow-same-origin allow-scripts allow-forms allow-popups"
+    allowfullscreen></iframe>
 
-    iframe.addEventListener('load', () => {
-      setTimeout(() => {
-        let blocked = false;
-        try {
-          const doc = iframe.contentDocument || iframe.contentWindow.document;
-          if (!doc || doc.documentElement.innerHTML.length < 50) blocked = true;
-        } catch {
-          blocked = true;
-        }
-        fallback.style.display = blocked ? 'flex' : 'none';
-      }, 300);
-    });
-  </script>
+  <div class="loading" id="loading">LOADING MAP…</div>
+
+  <div class="fallback" id="fallback">
+    <a href="https://map.stateofleonida.net/" target="_blank">Open in new tab →</a>
+  </div>
+
+  <!-- Mini Map -->
+  <div class="mini-map"></div>
+
+  <!-- Example Pins -->
+  <div class="pin" style="top:45%;left:52%"></div>
+  <div class="pin" style="top:60%;left:40%"></div>
+
+</div>
+</main>
+
+<audio id="uiSound" src="gta/ui-click.mp3" preload="auto"></audio>
+
+<script>
+const iframe = document.getElementById('embedFrame');
+const loading = document.getElementById('loading');
+const fallback = document.getElementById('fallback');
+const card = document.getElementById('card');
+const sound = document.getElementById('uiSound');
+
+/* ===== LOAD CHECK ===== */
+iframe.onload = () => {
+  loading.style.display='none';
+  try{
+    if(!iframe.contentDocument) fallback.style.display='flex';
+  }catch{fallback.style.display='flex'}
+};
+
+/* ===== BUTTONS ===== */
+refresh.onclick=()=>{sound.play();loading.style.display='flex';iframe.src=iframe.src}
+fullscreen.onclick=toggleFS;
+
+document.addEventListener('keydown',e=>{
+  if(e.key.toLowerCase()==='f') toggleFS();
+});
+
+function toggleFS(){
+  sound.play();
+  document.fullscreenElement ? document.exitFullscreen() : card.requestFullscreen();
+}
+
+/* ===== PARALLAX ===== */
+document.addEventListener('mousemove',e=>{
+  document.body.style.backgroundPosition =
+    `${50 + e.clientX/80}% ${50 + e.clientY/80}%`;
+});
+
+/* ===== MOBILE SWIPE ===== */
+let startX=0;
+document.addEventListener('touchstart',e=>startX=e.touches[0].clientX);
+document.addEventListener('touchend',e=>{
+  let dx=e.changedTouches[0].clientX-startX;
+  if(Math.abs(dx)>80) toggleFS();
+});
+</script>
+
+</body>
+</html>
+
 
 </body>
 </html>
