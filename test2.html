@@ -20,7 +20,7 @@
       flex-direction: column;
     }
 
-    /* Dark Overlay – enabled by default */
+    /* Dark Overlay – ON by default */
     body.dark-overlay::before {
       content: "";
       position: fixed;
@@ -30,7 +30,7 @@
       pointer-events: none;
     }
 
-    /* High Contrast – enabled by default */
+    /* High Contrast – ON by default */
     body.high-contrast {
       filter: contrast(1.25) brightness(1.12);
     }
@@ -39,13 +39,13 @@
       text-shadow: 0 0 8px rgba(0,0,0,0.9);
     }
 
-    /* Reduce Animations – enabled by default */
+    /* Reduce Animations – ON by default */
     body.reduce-animations * {
       transition: none !important;
       animation: none !important;
     }
 
-    /* Navbar – matches the latest screenshot style */
+    /* Navbar – transparent frosted glass style (matches home page and original intent) */
     header {
       position: fixed;
       top: 16px;
@@ -56,8 +56,11 @@
       gap: 6px;
       padding: 6px 14px;
       border-radius: 999px;
-      background: #2a6b7c;                     /* teal-blue from screenshot */
-      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+      backdrop-filter: blur(12px) saturate(1.2);
+      -webkit-backdrop-filter: blur(12px) saturate(1.2);
+      background: rgba(0, 0, 0, 0.35);          /* semi-transparent dark */
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
     }
 
     .nav-btn {
@@ -122,7 +125,7 @@
       background: #0a0a0a;
     }
 
-    /* Settings button (bottom-right gear) */
+    /* Settings button & menu */
     #settings-btn {
       position: fixed;
       bottom: 20px;
@@ -149,7 +152,6 @@
       background: rgba(255,255,255,0.2);
     }
 
-    /* Settings menu */
     #settings-menu {
       position: fixed;
       bottom: 90px;
@@ -262,7 +264,7 @@
   <!-- Settings Button -->
   <button id="settings-btn">⚙</button>
 
-  <!-- Settings Menu (with requested toggles already ON by default) -->
+  <!-- Settings Menu -->
   <div id="settings-menu">
     <div class="setting-item">
       <span class="setting-label">Dark Overlay</span>
@@ -285,7 +287,6 @@
         <span class="slider"></span>
       </label>
     </div>
-    <!-- You can add more toggles here later if needed -->
   </div>
 
   <script>
@@ -304,7 +305,7 @@
       }
     });
 
-    // Toggle functionality (already ON by default via body classes)
+    // Toggle functionality
     document.getElementById('toggle-overlay').addEventListener('change', e => {
       document.body.classList.toggle('dark-overlay', e.target.checked);
     });
@@ -315,24 +316,6 @@
 
     document.getElementById('toggle-motion').addEventListener('change', e => {
       document.body.classList.toggle('reduce-animations', e.target.checked);
-    });
-
-    // Optional: iframe fallback detection (kept from your original)
-    const iframe = document.getElementById('embedFrame');
-    iframe.addEventListener('load', () => {
-      setTimeout(() => {
-        let blocked = false;
-        try {
-          const doc = iframe.contentDocument || iframe.contentWindow.document;
-          if (!doc || doc.documentElement.innerHTML.length < 50) blocked = true;
-        } catch (err) {
-          blocked = true;
-        }
-        if (blocked) {
-          // You can add a fallback message here if desired
-          console.log("Embed may be blocked");
-        }
-      }, 300);
     });
   </script>
 </body>
