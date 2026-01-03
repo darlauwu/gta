@@ -150,30 +150,6 @@
       text-shadow: 0 2px 10px rgba(255,255,255,0.2);
     }
 
-    .play-hint {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(0,0,0,0.4);
-      opacity: 0;
-      transition: opacity 0.4s ease;
-      pointer-events: none;
-      z-index: 2;
-    }
-
-    .trailer-card:hover .play-hint {
-      opacity: 1;
-    }
-
-    .play-hint::before {
-      content: "▶";
-      font-size: 5rem;
-      color: rgba(255, 77, 210, 0.9);
-      filter: drop-shadow(0 0 20px rgba(255,77,210,0.7));
-    }
-
     .overlay {
       position: fixed;
       inset: 0;
@@ -263,7 +239,7 @@
       <div class="trailer-card" data-video="https://www.youtube.com/embed/QdBZY2fkU-0?autoplay=1&rel=0" tabindex="0" role="button" aria-label="Play Trailer 1">
         <div class="video-wrapper">
           <iframe src="https://www.youtube.com/embed/QdBZY2fkU-0?mute=1&controls=0" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen title="GTA VI Trailer 1"></iframe>
-          <div class="play-hint"></div>
+          <!-- Removed the pink play button overlay -->
         </div>
         <div class="card-info">
           <h2>Trailer 1 – Reveal</h2>
@@ -273,7 +249,7 @@
       <div class="trailer-card" data-video="https://www.youtube.com/embed/VQRLujxTm3c?autoplay=1&rel=0" tabindex="0" role="button" aria-label="Play Trailer 2">
         <div class="video-wrapper">
           <iframe src="https://www.youtube.com/embed/VQRLujxTm3c?mute=1&controls=0" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen title="GTA VI Trailer 2"></iframe>
-          <div class="play-hint"></div>
+          <!-- Removed the pink play button overlay -->
         </div>
         <div class="card-info">
           <h2>Trailer 2 – Jason & Lucia</h2>
@@ -312,7 +288,10 @@
         if (url) openVideo(url);
       };
 
+      // Click anywhere on the card to open full-screen video
       card.addEventListener("click", play);
+
+      // Keyboard accessibility
       card.addEventListener("keydown", e => {
         if (e.key === "Enter" || e.key === " ") {
           e.preventDefault();
