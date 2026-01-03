@@ -1,0 +1,448 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>VI | Home</title>
+<link rel="icon" href="gta/npc/lucia.jpg" type="image/jpg">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { height: 100%; overflow: hidden; }
+  body {
+    font-family: 'Orbitron', sans-serif;
+    background: url('https://www.rockstargames.com/VI/_next/image?url=%2FVI%2F_next%2Fstatic%2Fmedia%2FJason_and_Lucia_02_landscape.8aced7fd.jpg&w=3840&q=75') center/cover no-repeat fixed;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: filter 0.8s ease;
+    position: relative;
+  }
+
+  body.dark-overlay::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.3);
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  body.high-contrast { filter: contrast(1.25) brightness(1.1); }
+
+  body.reduce-animations * { transition: none !important; animation: none !important; }
+
+  body.hide-nav header { display: none; }
+
+  body.countdown-top .countdown-wrap { position: fixed; top: 100px; }
+
+  body.countdown-bottom .countdown-wrap { position: fixed; bottom: 100px; }
+
+  /* Text glow levels */
+  .glow-none   { text-shadow: none; }
+  .glow-low    { text-shadow: 0 0 8px #fff, 0 0 16px #fff; }
+  .glow-medium { text-shadow: 0 0 16px #fff, 0 0 32px #fff; }
+  .glow-strong { text-shadow: 0 0 24px #fff, 0 0 48px #fff, 0 0 80px #fff; }
+
+  /* Font size scale */
+  body.font-large  { font-size: 1.15em; }
+  body.font-xlarge { font-size: 1.35em; }
+
+  header {
+    position: fixed;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    display: flex;
+    gap: 8px;
+    padding: 6px 12px;
+    border-radius: 999px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  }
+
+  .nav-btn {
+    padding: 6px 12px;
+    border-radius: 999px;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 14px;
+    transition: all 0.2s ease;
+  }
+  .nav-btn:hover {
+    background: rgba(255,255,255,0.15);
+  }
+
+  .countdown-wrap {
+    backdrop-filter: blur(var(--blur, 10px));
+    -webkit-backdrop-filter: blur(var(--blur, 10px));
+    border-radius: 20px;
+    padding: 30px 40px;
+    text-align: center;
+    background: rgba(255, 255, 255, var(--countdown-opacity, 0.1));
+    border: 1px solid rgba(255,255,255,0.15);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    min-width: 300px;
+    max-width: 800px;
+    width: clamp(300px, 60vw, 800px);
+    z-index: 10;
+  }
+
+  .title {
+    font-size: 40px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    color: #fff;
+    transition: text-shadow 0.6s ease;
+  }
+
+  .subtitle {
+    color: rgba(255,255,255,0.8);
+    font-size: 16px;
+    margin-bottom: 20px;
+  }
+
+  .clock {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .unit {
+    min-width: 80px;
+    padding: 12px;
+    border-radius: 10px;
+    background: rgba(0,0,0,0.6);
+    border: 1px solid rgba(255,255,255,0.3);
+  }
+
+  .num {
+    font-size: 36px;
+    font-weight: 900;
+    color: #fff;
+  }
+
+  .label {
+    font-size: 14px;
+    color: rgba(255,255,255,0.8);
+    text-transform: uppercase;
+  }
+
+  /* Settings */
+  #settings-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: #fff;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    z-index: 999;
+    transition: all 0.3s ease;
+  }
+  #settings-btn:hover {
+    transform: scale(1.1);
+    background: rgba(255,255,255,0.2);
+  }
+
+  #settings-menu {
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    width: 280px;
+    max-height: 60vh;
+    overflow-y: auto;
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 15px;
+    padding: 15px 20px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+    z-index: 998;
+    transform: translateY(20px) scale(0.95);
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.4s ease;
+  }
+  #settings-menu.visible {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .setting-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+  .setting-item:last-child { border-bottom: none; }
+
+  .setting-label { font-weight: 500; color: #fff; font-size: 14px; }
+
+  .toggle {
+    position: relative;
+    width: 40px;
+    height: 20px;
+  }
+  .toggle input { opacity: 0; width: 0; height: 0; }
+  .slider {
+    position: absolute;
+    inset: 0;
+    background: #ccc;
+    border-radius: 20px;
+    transition: 0.4s;
+  }
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 2px;
+    bottom: 2px;
+    background: #fff;
+    border-radius: 50%;
+    transition: 0.4s;
+  }
+  input:checked + .slider { background: #2196F3; }
+  input:checked + .slider:before { transform: translateX(20px); }
+
+  select, input[type="range"] {
+    background: rgba(255,255,255,0.1);
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 6px;
+    padding: 4px 8px;
+    accent-color: #2196F3;
+  }
+  input[type="range"] { width: 100px; }
+</style>
+</head>
+<body class="dark-overlay high-contrast reduce-animations">
+
+<header>
+  <a href="index" class="nav-btn">Home</a>
+  <a href="map" class="nav-btn">Map</a>
+  <a href="characters" class="nav-btn">Characters</a>
+  <a href="places" class="nav-btn">Places</a>
+  <a href="screenshots" class="nav-btn">Screenshots</a>
+  <a href="trailers" class="nav-btn">Trailers</a>
+</header>
+
+<section class="countdown-wrap">
+  <h1 class="title">Grand Theft Auto VI</h1>
+  <div class="subtitle">Release countdown — November 19th, 2026</div>
+  <div class="clock" role="timer" aria-live="polite" aria-atomic="true">
+    <div class="unit"><div class="num" id="days">—</div><div class="label">Days</div></div>
+    <div class="unit"><div class="num" id="hours">—</div><div class="label">Hours</div></div>
+    <div class="unit"><div class="num" id="minutes">—</div><div class="label">Minutes</div></div>
+    <div class="unit"><div class="num" id="seconds">—</div><div class="label">Seconds</div></div>
+  </div>
+</section>
+
+<!--<button id="settings-btn">⚙</button>-->
+
+<div id="settings-menu">
+  <div class="setting-item">
+    <span class="setting-label">Background Music</span>
+    <label class="toggle">
+      <input type="checkbox" id="toggle-music">
+      <span class="slider"></span>
+    </label>
+  </div>
+  <div class="setting-item">
+    <span class="setting-label">Music Volume</span>
+    <input type="range" min="0" max="100" value="30" id="music-volume">
+  </div>
+  <div class="setting-item">
+    <span class="setting-label">Dark Overlay</span>
+    <label class="toggle"><input type="checkbox" id="toggle-overlay" checked><span class="slider"></span></label>
+  </div>
+  <div class="setting-item">
+    <span class="setting-label">High Contrast</span>
+    <label class="toggle"><input type="checkbox" id="toggle-contrast" checked><span class="slider"></span></label>
+  </div>
+  <div class="setting-item">
+    <span class="setting-label">Reduce Animations</span>
+    <label class="toggle"><input type="checkbox" id="toggle-motion" checked><span class="slider"></span></label>
+  </div>
+  <div class="setting-item">
+    <span class="setting-label">Hide Nav Bar</span>
+    <label class="toggle"><input type="checkbox" id="toggle-nav"><span class="slider"></span></label>
+  </div>
+  <div class="setting-item">
+    <span class="setting-label">Countdown Position</span>
+    <select id="countdown-position">
+      <option value="" selected>Center</option>
+      <option value="top">Top</option>
+      <option value="bottom">Bottom</option>
+    </select>
+  </div>
+  <div class="setting-item">
+    <span class="setting-label">Text Glow</span>
+    <select id="text-glow">
+      <option value="none" selected>None</option>
+      <option value="low">Low</option>
+      <option value="medium">Medium</option>
+      <option value="strong">Strong</option>
+    </select>
+  </div>
+  <div class="setting-item">
+    <span class="setting-label">Blur Strength</span>
+    <select id="blur-level">
+      <option value="10" selected>Medium</option>
+      <option value="6">Low</option>
+      <option value="14">High</option>
+      <option value="22">Very High</option>
+    </select>
+  </div>
+  <div class="setting-item">
+    <span class="setting-label">Color Tint</span>
+    <select id="color-tint">
+      <option value="sunset" selected>Warm Sunset</option>
+      <option value="">Default</option>
+      <option value="vice">Vice Neon</option>
+      <option value="teal">Ocean Teal</option>
+    </select>
+  </div>
+  <div class="setting-item">
+    <span class="setting-label">Font Size</span>
+    <select id="font-scale">
+      <option value="">Normal</option>
+      <option value="large">Large</option>
+      <option value="xlarge">Extra Large</option>
+    </select>
+  </div>
+  <div class="setting-item">
+    <span class="setting-label">Panel Opacity</span>
+    <select id="panel-opacity">
+      <option value="0.1" selected>Subtle</option>
+      <option value="0.2">Medium</option>
+      <option value="0.3">Strong</option>
+    </select>
+  </div>
+</div>
+
+<!-- Background Music -->
+<audio id="bg-music" loop preload="auto">
+  <source src="https://soundcloud.com/turbonotlaser/sets/gta-vice-city-radio" type="audio/mpeg">
+  <!-- Replace with your own music file path when you have one -->
+  Your browser does not support the audio element.
+</audio>
+
+<script>
+// Countdown (accurate as of January 3, 2026)
+const targetDate = new Date('2026-11-19T00:00:00Z');
+function pad(n) { return n.toString().padStart(2, '0'); }
+
+function updateCountdown() {
+  const diffMs = targetDate - new Date();
+  if (diffMs <= 0) {
+    document.getElementById('days').textContent = '0';
+    document.getElementById('hours').textContent = '00';
+    document.getElementById('minutes').textContent = '00';
+    document.getElementById('seconds').textContent = '00';
+    return;
+  }
+  const days    = Math.floor(diffMs / 86400000);
+  const hours   = Math.floor((diffMs % 86400000) / 3600000);
+  const minutes = Math.floor((diffMs % 3600000) / 60000);
+  const seconds = Math.floor((diffMs % 60000) / 1000);
+  document.getElementById('days').textContent    = days;
+  document.getElementById('hours').textContent   = pad(hours);
+  document.getElementById('minutes').textContent = pad(minutes);
+  document.getElementById('seconds').textContent = pad(seconds);
+}
+setInterval(updateCountdown, 1000);
+updateCountdown();
+
+// Settings menu
+const btn = document.getElementById('settings-btn');
+const menu = document.getElementById('settings-menu');
+
+btn.addEventListener('click', (e) => {
+  e.stopPropagation();
+  menu.classList.toggle('visible');
+});
+
+document.addEventListener('click', (e) => {
+  if (!menu.contains(e.target) && !btn.contains(e.target)) {
+    menu.classList.remove('visible');
+  }
+});
+
+// Helper
+function setVar(name, value) {
+  document.documentElement.style.setProperty(name, value);
+}
+
+// Music control
+const audio = document.getElementById('bg-music');
+const musicToggle = document.getElementById('toggle-music');
+const musicVolume = document.getElementById('music-volume');
+
+musicToggle.addEventListener('change', (e) => {
+  if (e.target.checked) {
+    audio.play().catch(err => console.log("Play prevented:", err));
+  } else {
+    audio.pause();
+  }
+});
+
+musicVolume.addEventListener('input', (e) => {
+  audio.volume = e.target.value / 100;
+});
+
+audio.volume = musicVolume.value / 100;
+
+// Apply default settings via JS (in case CSS classes are not enough)
+document.getElementById('toggle-overlay').checked = true;
+document.getElementById('toggle-contrast').checked = true;
+document.getElementById('toggle-motion').checked = true;
+document.querySelector('#text-glow').value = 'none';
+document.querySelector('#blur-level').value = '10';
+document.querySelector('#color-tint').value = 'sunset';
+document.querySelector('#panel-opacity').value = '0.1';
+
+// Trigger the change events once to apply defaults
+document.getElementById('toggle-overlay').dispatchEvent(new Event('change'));
+document.getElementById('toggle-contrast').dispatchEvent(new Event('change'));
+document.getElementById('toggle-motion').dispatchEvent(new Event('change'));
+document.getElementById('text-glow').dispatchEvent(new Event('change'));
+document.getElementById('blur-level').dispatchEvent(new Event('change'));
+document.getElementById('color-tint').dispatchEvent(new Event('change'));
+document.getElementById('panel-opacity').dispatchEvent(new Event('change'));
+
+// Other settings listeners (unchanged)
+document.getElementById('toggle-nav').addEventListener('change', e =>
+  document.body.classList.toggle('hide-nav', e.target.checked));
+
+document.getElementById('countdown-position').addEventListener('change', e => {
+  document.body.className = document.body.className.replace(/countdown-\w+/g, '').trim();
+  if (e.target.value) document.body.classList.add('countdown-' + e.target.value);
+});
+
+document.getElementById('font-scale').addEventListener('change', e => {
+  document.body.className = document.body.className.replace(/font-\w+/g, '').trim();
+  if (e.target.value) document.body.classList.add('font-' + e.target.value);
+});
+</script>
+</body>
+</html>
