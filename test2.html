@@ -30,7 +30,7 @@
     transition: opacity 0.6s ease;
   }
 
-  /* Header (unchanged) */
+  /* Header */
   header {
     position: fixed;
     top: 18px;
@@ -57,14 +57,53 @@
   }
   .nav-btn:hover { transform: scale(1.05); background: rgba(255,255,255,0.08); }
 
-  /* Countdown (unchanged) */
-  .countdown-wrap { /* ... your existing styles ... */ }
-  .title { /* ... */ }
-  .subtitle { /* ... */ }
-  .clock { /* ... */ }
-  .unit { /* ... */ }
-  .num { /* ... */ }
-  .label { /* ... */ }
+  /* Countdown */
+  .countdown-wrap {
+    backdrop-filter: blur(6px);
+    border-radius: 24px;
+    padding: 40px 48px;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+    border: 1px solid rgba(255,255,255,0.06);
+    background: rgba(0,0,0,0.3);
+    min-width: 320px;
+    max-width: 980px;
+    width: clamp(320px,70vw,980px);
+    position: relative;
+    z-index: 2;
+  }
+  .title {
+    font-size: 50px;
+    font-weight: 800;
+    margin-bottom: 8px;
+    text-shadow: 0 6px 12px rgba(0,0,0,0.65);
+  }
+  .subtitle { color: rgba(255,255,255,0.85); margin-bottom: 22px; font-size: 18px; }
+  .clock { display: flex; gap: 18px; justify-content: center; flex-wrap: wrap; }
+  .unit {
+    min-width: 88px;
+    padding: 18px 16px;
+    border-radius: 14px;
+    background: rgba(0,0,0,0.5);
+    border: 1px solid rgba(255,255,255,0.9);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .num {
+    font-size: 45px;
+    font-weight: 900;
+    color: #FAFAFB;
+    text-shadow: 0 0 10px rgba(255,255,255,0.35);
+  }
+  .label {
+    font-size: 20px;
+    color: rgba(255,255,255,0.85);
+    margin-top: 6px;
+    text-transform: uppercase;
+    text-shadow: 0 0 6px rgba(255,255,255,0.25);
+  }
 
   /* Settings button & menu */
   #settings-btn {
@@ -169,7 +208,7 @@
     transform: translateX(22px);
   }
 
-  /* Optional: particles / glow example class */
+  /* Optional particles example */
   body.particles::after {
     content: "";
     position: fixed;
@@ -184,7 +223,6 @@
 </head>
 <body>
 
-<!-- Your existing header + countdown -->
 <header>
   <a href="index" class="nav-btn">Home</a>
   <a href="map" class="nav-btn">Map</a>
@@ -247,20 +285,36 @@
 </div>
 
 <script>
-// Countdown (your original code)
-const target = new Date('2026-11-19T00:00:00');
-function pad(n){ return String(n).padStart(2,'0'); }
-function update() {
-  const now = new Date();
-  let diff = Math.floor((target - now)/1000);
-  if(diff < 0) diff = 0;
-  document.getElementById('days').textContent = Math.floor(diff/86400);
-  document.getElementById('hours').textContent = pad(Math.floor((diff%86400)/3600));
-  document.getElementById('minutes').textContent = pad(Math.floor((diff%3600)/60));
-  document.getElementById('seconds').textContent = pad(diff%60);
+// Accurate GTA VI release countdown (target: November 19, 2026 at 00:00 UTC)
+const targetDate = new Date('2026-11-19T00:00:00Z');
+
+function pad(n) {
+  return String(n).padStart(2, '0');
 }
-update();
-setInterval(update, 1000);
+
+function updateCountdown() {
+  const now = new Date();
+  let diffMs = targetDate - now;
+
+  if (diffMs < 0) {
+    diffMs = 0;
+    // Optional: you can uncomment this later to show "released" message
+    // document.querySelector('.countdown-wrap').innerHTML = '<h1 class="title">GTA VI IS OUT NOW!</h1><p style="font-size:24px;margin-top:20px;">Play it!</p>';
+  }
+
+  const days    = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+  const hours   = Math.floor((diffMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const minutes = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds = Math.floor((diffMs % (1000 * 60)) / 1000);
+
+  document.getElementById('days').textContent    = days;
+  document.getElementById('hours').textContent   = pad(hours);
+  document.getElementById('minutes').textContent = pad(minutes);
+  document.getElementById('seconds').textContent = pad(seconds);
+}
+
+updateCountdown();
+setInterval(updateCountdown, 1000);
 
 // Settings menu toggle
 const btn = document.getElementById('settings-btn');
@@ -270,14 +324,14 @@ btn.addEventListener('click', () => {
   menu.classList.toggle('visible');
 });
 
-// Optional: close menu when clicking outside
+// Close menu when clicking outside
 document.addEventListener('click', e => {
   if (!btn.contains(e.target) && !menu.contains(e.target)) {
     menu.classList.remove('visible');
   }
 });
 
-// Settings logic examples
+// Settings functionality
 document.getElementById('toggle-overlay').addEventListener('change', e => {
   document.body.classList.toggle('dark-overlay', e.target.checked);
 });
@@ -290,7 +344,7 @@ document.getElementById('toggle-contrast').addEventListener('change', e => {
   document.body.style.filter = e.target.checked ? 'contrast(1.3) brightness(1.1)' : '';
 });
 
-// You can expand others similarly (music needs <audio> element + real file, motion needs more logic, etc.)
+// You can expand the other toggles later (music needs an <audio> element, etc.)
 </script>
 </body>
-</html>
+</html>>
