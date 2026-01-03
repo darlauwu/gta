@@ -11,8 +11,8 @@
   html, body { height: 100%; overflow: hidden; }
   body {
     font-family: 'Orbitron', sans-serif;
-    background: url('gta/jason.jpg') center/cover no-repeat fixed;
-    color: #f0e8ff;
+    background: url('https://www.rockstargames.com/VI/_next/image?url=%2FVI%2F_next%2Fstatic%2Fmedia%2FJason_and_Lucia_02_landscape.8aced7fd.jpg&w=3840&q=75') center/cover no-repeat fixed;
+    color: #fff;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -24,7 +24,7 @@
     content: "";
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.75);
+    background: rgba(0,0,0,0.3);
     z-index: 1;
     pointer-events: none;
   }
@@ -33,11 +33,17 @@
 
   body.reduce-animations * { transition: none !important; animation: none !important; }
 
+  body.hide-nav header { display: none; }
+
+  body.countdown-top .countdown-wrap { position: fixed; top: 100px; }
+
+  body.countdown-bottom .countdown-wrap { position: fixed; bottom: 100px; }
+
   /* Text glow levels */
   .glow-none   { text-shadow: none; }
-  .glow-low    { text-shadow: 0 0 8px #c084fc, 0 0 16px #a855f7; }
-  .glow-medium { text-shadow: 0 0 16px #c084fc, 0 0 32px #a855f7; }
-  .glow-strong { text-shadow: 0 0 24px #c084fc, 0 0 48px #a855f7, 0 0 80px #9333ea; }
+  .glow-low    { text-shadow: 0 0 8px #fff, 0 0 16px #fff; }
+  .glow-medium { text-shadow: 0 0 16px #fff, 0 0 32px #fff; }
+  .glow-strong { text-shadow: 0 0 24px #fff, 0 0 48px #fff, 0 0 80px #fff; }
 
   /* Font size scale */
   body.font-large  { font-size: 1.15em; }
@@ -45,142 +51,134 @@
 
   header {
     position: fixed;
-    top: 16px;
+    top: 10px;
     left: 50%;
     transform: translateX(-50%);
     z-index: 100;
     display: flex;
-    gap: 10px;
-    padding: 10px 16px;
+    gap: 8px;
+    padding: 6px 12px;
     border-radius: 999px;
-    backdrop-filter: blur(var(--blur, 12px));
-    -webkit-backdrop-filter: blur(var(--blur, 12px));
-    background: rgba(15, 10, 30, var(--nav-opacity, 0.65));
-    border: 1px solid rgba(160, 100, 255, 0.25);
-    box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
   }
 
   .nav-btn {
-    padding: 8px 14px;
+    padding: 6px 12px;
     border-radius: 999px;
-    color: #e0d0ff;
+    color: #fff;
     text-decoration: none;
-    font-weight: 700;
-    font-size: 15px;
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(200,140,255,0.15);
-    transition: all 0.25s ease;
+    font-weight: 500;
+    font-size: 14px;
+    transition: all 0.2s ease;
   }
   .nav-btn:hover {
-    background: rgba(180,100,255,0.18);
-    transform: translateY(-1px);
-    box-shadow: 0 4px 15px rgba(140,80,220,0.4);
+    background: rgba(255,255,255,0.15);
   }
 
   .countdown-wrap {
-    backdrop-filter: blur(var(--blur, 10px));
-    -webkit-backdrop-filter: blur(var(--blur, 10px));
-    border-radius: 24px;
-    padding: 40px 50px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 30px 40px;
     text-align: center;
-    background: rgba(10,5,25, var(--countdown-opacity, 0.55));
-    border: 1px solid rgba(160,100,255,0.3);
-    box-shadow: 0 20px 70px rgba(0,0,0,0.75);
-    min-width: 340px;
-    max-width: 960px;
-    width: clamp(340px, 75vw, 960px);
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255,255,255,0.15);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    min-width: 300px;
+    max-width: 800px;
+    width: clamp(300px, 60vw, 800px);
     z-index: 10;
   }
 
   .title {
-    font-size: 56px;
-    font-weight: 900;
-    margin-bottom: 10px;
-    color: #e0c0ff;
+    font-size: 40px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    color: #fff;
     transition: text-shadow 0.6s ease;
   }
 
   .subtitle {
-    color: rgba(220,200,255,0.9);
-    font-size: 19px;
-    margin-bottom: 28px;
+    color: rgba(255,255,255,0.8);
+    font-size: 16px;
+    margin-bottom: 20px;
   }
 
   .clock {
     display: flex;
-    gap: 16px;
+    gap: 12px;
     justify-content: center;
     flex-wrap: wrap;
   }
 
   .unit {
-    min-width: 90px;
-    padding: 16px;
-    border-radius: 16px;
-    background: rgba(20,15,40,0.6);
-    border: 1px solid rgba(180,120,255,0.35);
-    backdrop-filter: blur(6px);
+    min-width: 80px;
+    padding: 12px;
+    border-radius: 10px;
+    background: rgba(0,0,0,0.6);
+    border: 1px solid rgba(255,255,255,0.3);
   }
 
   .num {
-    font-size: 48px;
+    font-size: 36px;
     font-weight: 900;
-    color: #f8f0ff;
-    text-shadow: 0 0 15px rgba(200,140,255,0.5);
+    color: #fff;
   }
 
   .label {
-    font-size: 18px;
-    color: rgba(220,200,255,0.85);
-    margin-top: 6px;
+    font-size: 14px;
+    color: rgba(255,255,255,0.8);
     text-transform: uppercase;
   }
 
   /* Settings */
   #settings-btn {
     position: fixed;
-    bottom: 28px;
-    right: 28px;
-    width: 66px;
-    height: 66px;
+    bottom: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
-    background: rgba(20,15,40,0.8);
-    backdrop-filter: blur(14px);
-    border: 2px solid rgba(180,100,255,0.5);
-    color: #d0b0ff;
-    font-size: 32px;
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: #fff;
+    font-size: 24px;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
     z-index: 999;
     transition: all 0.3s ease;
   }
   #settings-btn:hover {
-    transform: scale(1.1) rotate(25deg);
-    background: rgba(50,30,70,0.95);
-    border-color: #c080ff;
+    transform: scale(1.1);
+    background: rgba(255,255,255,0.2);
   }
 
   #settings-menu {
     position: fixed;
-    bottom: 110px;
-    right: 28px;
-    width: 300px;
-    max-height: 65vh;
+    bottom: 80px;
+    right: 20px;
+    width: 280px;
+    max-height: 60vh;
     overflow-y: auto;
-    background: rgba(15,10,35,0.92);
-    backdrop-filter: blur(18px);
-    border: 1px solid rgba(160,100,255,0.4);
-    border-radius: 18px;
-    padding: 18px 22px;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.7);
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 15px;
+    padding: 15px 20px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.4);
     z-index: 998;
-    transform: translateY(20px) scale(0.92);
+    transform: translateY(20px) scale(0.95);
     opacity: 0;
     pointer-events: none;
-    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transition: all 0.4s ease;
   }
   #settings-menu.visible {
     transform: translateY(0) scale(1);
@@ -192,50 +190,49 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 14px 6px;
-    border-bottom: 1px solid rgba(255,255,255,0.08);
-    font-size: 15px;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
   }
   .setting-item:last-child { border-bottom: none; }
 
-  .setting-label { font-weight: 600; color: #d0c0ff; }
+  .setting-label { font-weight: 500; color: #fff; font-size: 14px; }
 
   .toggle {
     position: relative;
-    width: 52px;
-    height: 28px;
+    width: 40px;
+    height: 20px;
   }
   .toggle input { opacity: 0; width: 0; height: 0; }
   .slider {
     position: absolute;
     inset: 0;
-    background: #3a3a50;
-    border-radius: 28px;
+    background: #ccc;
+    border-radius: 20px;
     transition: 0.4s;
   }
   .slider:before {
     position: absolute;
     content: "";
-    height: 22px;
-    width: 22px;
-    left: 3px;
-    bottom: 3px;
+    height: 16px;
+    width: 16px;
+    left: 2px;
+    bottom: 2px;
     background: #fff;
     border-radius: 50%;
     transition: 0.4s;
   }
-  input:checked + .slider { background: #a855f7; }
-  input:checked + .slider:before { transform: translateX(24px); }
+  input:checked + .slider { background: #2196F3; }
+  input:checked + .slider:before { transform: translateX(20px); }
 
   select, input[type="range"] {
-    background: rgba(40,30,60,0.7);
-    color: #e0d0ff;
-    border: 1px solid #666;
-    border-radius: 8px;
-    padding: 6px 10px;
-    accent-color: #a855f7;
+    background: rgba(255,255,255,0.1);
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 6px;
+    padding: 4px 8px;
+    accent-color: #2196F3;
   }
-  input[type="range"] { width: 120px; }
+  input[type="range"] { width: 100px; }
 </style>
 </head>
 <body>
@@ -276,7 +273,7 @@
   </div>
   <div class="setting-item">
     <span class="setting-label">Dark Overlay</span>
-    <label class="toggle"><input type="checkbox" id="toggle-overlay" checked><span class="slider"></span></label>
+    <label class="toggle"><input type="checkbox" id="toggle-overlay"><span class="slider"></span></label>
   </div>
   <div class="setting-item">
     <span class="setting-label">High Contrast</span>
@@ -287,11 +284,23 @@
     <label class="toggle"><input type="checkbox" id="toggle-motion"><span class="slider"></span></label>
   </div>
   <div class="setting-item">
+    <span class="setting-label">Hide Nav Bar</span>
+    <label class="toggle"><input type="checkbox" id="toggle-nav"><span class="slider"></span></label>
+  </div>
+  <div class="setting-item">
+    <span class="setting-label">Countdown Position</span>
+    <select id="countdown-position">
+      <option value="">Center</option>
+      <option value="top">Top</option>
+      <option value="bottom">Bottom</option>
+    </select>
+  </div>
+  <div class="setting-item">
     <span class="setting-label">Text Glow</span>
     <select id="text-glow">
       <option value="none">None</option>
-      <option value="low" selected>Low</option>
-      <option value="medium">Medium</option>
+      <option value="low">Low</option>
+      <option value="medium" selected>Medium</option>
       <option value="strong">Strong</option>
     </select>
   </div>
@@ -299,8 +308,8 @@
     <span class="setting-label">Blur Strength</span>
     <select id="blur-level">
       <option value="6">Low</option>
-      <option value="10">Medium</option>
-      <option value="14" selected>High</option>
+      <option value="10" selected>Medium</option>
+      <option value="14">High</option>
       <option value="22">Very High</option>
     </select>
   </div>
@@ -324,17 +333,16 @@
   <div class="setting-item">
     <span class="setting-label">Panel Opacity</span>
     <select id="panel-opacity">
-      <option value="0.45">Subtle</option>
-      <option value="0.55" selected>Medium</option>
-      <option value="0.70">Strong</option>
+      <option value="0.1" selected>Subtle</option>
+      <option value="0.2">Medium</option>
+      <option value="0.3">Strong</option>
     </select>
   </div>
 </div>
 
-<!-- Background Music -->
+<!-- Background Music - replace src with your MP3 file or a public URL like https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3 for testing (royalty-free example) -->
 <audio id="bg-music" loop preload="auto">
-  <source src="music/loading.mp3" type="audio/mpeg">
-  <!-- Replace the src path above with your actual music file location -->
+  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
   Your browser does not support the audio element.
 </audio>
 
@@ -352,12 +360,12 @@ function updateCountdown() {
     document.getElementById('seconds').textContent = '00';
     return;
   }
-  const days    = Math.floor(diffMs / 86400000);
-  const hours   = Math.floor((diffMs % 86400000) / 3600000);
+  const days = Math.floor(diffMs / 86400000);
+  const hours = Math.floor((diffMs % 86400000) / 3600000);
   const minutes = Math.floor((diffMs % 3600000) / 60000);
   const seconds = Math.floor((diffMs % 60000) / 1000);
-  document.getElementById('days').textContent    = days;
-  document.getElementById('hours').textContent   = pad(hours);
+  document.getElementById('days').textContent = days;
+  document.getElementById('hours').textContent = pad(hours);
   document.getElementById('minutes').textContent = pad(minutes);
   document.getElementById('seconds').textContent = pad(seconds);
 }
@@ -391,10 +399,7 @@ const musicVolume = document.getElementById('music-volume');
 
 musicToggle.addEventListener('change', (e) => {
   if (e.target.checked) {
-    audio.play().catch(err => {
-      console.log("Autoplay prevented:", err);
-      // Most browsers require user interaction → toggle click counts
-    });
+    audio.play().catch(err => console.log("Autoplay prevented:", err));
   } else {
     audio.pause();
   }
@@ -404,7 +409,6 @@ musicVolume.addEventListener('input', (e) => {
   audio.volume = e.target.value / 100;
 });
 
-// Initialize volume
 audio.volume = musicVolume.value / 100;
 
 // Other settings
@@ -417,6 +421,14 @@ document.getElementById('toggle-contrast').addEventListener('change', e =>
 document.getElementById('toggle-motion').addEventListener('change', e =>
   document.body.classList.toggle('reduce-animations', e.target.checked));
 
+document.getElementById('toggle-nav').addEventListener('change', e =>
+  document.body.classList.toggle('hide-nav', e.target.checked));
+
+document.getElementById('countdown-position').addEventListener('change', e => {
+  document.body.className = document.body.className.replace(/countdown-\w+/g, '').trim();
+  if (e.target.value) document.body.classList.add('countdown-' + e.target.value);
+});
+
 document.getElementById('text-glow').addEventListener('change', e => {
   document.querySelector('.title').className = 'title glow-' + e.target.value;
 });
@@ -427,7 +439,7 @@ document.getElementById('blur-level').addEventListener('change', e => {
 
 document.getElementById('panel-opacity').addEventListener('change', e => {
   setVar('--countdown-opacity', e.target.value);
-  setVar('--nav-opacity', (parseFloat(e.target.value) * 0.9).toFixed(2));
+  setVar('--nav-opacity', e.target.value);
 });
 
 document.getElementById('font-scale').addEventListener('change', e => {
@@ -440,9 +452,11 @@ document.getElementById('color-tint').addEventListener('change', e => {
   document.body.className = document.body.className.replace(/tint-\w+/g, '').trim();
   if (val) {
     document.body.classList.add('tint-' + val);
-    if (val === 'vice')   document.body.style.filter = 'hue-rotate(200deg) saturate(1.4)';
-    if (val === 'teal')   document.body.style.filter = 'hue-rotate(140deg) saturate(1.3)';
-    if (val === 'sunset') document.body.style.filter = 'hue-rotate(340deg) saturate(1.2)';
+    let filter = '';
+    if (val === 'vice') filter = 'hue-rotate(200deg) saturate(1.4)';
+    if (val === 'teal') filter = 'hue-rotate(140deg) saturate(1.3)';
+    if (val === 'sunset') filter = 'hue-rotate(340deg) saturate(1.2)';
+    document.body.style.filter = filter;
   } else {
     document.body.style.filter = '';
   }
