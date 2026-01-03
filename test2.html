@@ -8,138 +8,139 @@
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body { height: 100%; overflow: hidden; }
+    html, body { height: 100%; }
     body {
       font-family: 'Orbitron', sans-serif;
-      background:
-        linear-gradient(135deg, rgba(255,77,210,0.12), rgba(0,255,224,0.06)),
-        url('gta/others.jpg') center/cover no-repeat fixed;
+      background: linear-gradient(135deg, rgba(255,77,210,0.12), rgba(0,255,224,0.06)),
+                  url('gta/others.jpg') center/cover no-repeat fixed;
       background-blend-mode: overlay;
       color: #fff;
       display: flex;
       flex-direction: column;
     }
 
-    /* Dark Overlay */
     body.dark-overlay::before {
       content: "";
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.35);
+      background: rgba(0,0,0,0.35);
       z-index: 1;
       pointer-events: none;
     }
 
-    /* High Contrast */
-    body.high-contrast {
-      filter: contrast(1.25) brightness(1.12);
-    }
-    body.high-contrast .embed-title,
-    body.high-contrast .nav-btn {
-      text-shadow: 0 0 8px rgba(0,0,0,0.9);
-    }
-
-    /* ───────────────────────────────────────────────
-       NAVBAR – EXACT MATCH to your latest screenshot
-    ─────────────────────────────────────────────── */
     header {
-          position: fixed;
-          top: 16px;
-          left: 50%;
-          transform: translateX(-50%);
-          z-index: 100;
-          display: flex;
-          gap: 4px;
-          padding: 6px 12px;
-          border-radius: 999px;
-          background: #2a6b7c;                     /* teal-blue-green from screenshot */
-          box-shadow: 0 4px 20px rgba(0,0,0,0.5);
-          backdrop-filter: none;                    /* solid color, no heavy blur */
-        }
+      position: fixed;
+      top: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 100;
+      display: flex;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: #2a6b7c;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    }
 
     .nav-btn {
       padding: 8px 18px;
       border-radius: 999px;
-      color: #ffffff;
+      color: #fff;
       text-decoration: none;
       font-weight: 600;
       font-size: 14px;
       background: transparent;
       transition: all 0.2s ease;
-      white-space: nowrap;
     }
 
-    .nav-btn:hover {
-      background: rgba(255, 255, 255, 0.15);
-    }
+    .nav-btn:hover { background: rgba(255,255,255,0.15); }
+    .nav-btn.active { background: rgba(255,255,255,0.28); font-weight: 800; }
 
-    .nav-btn.active {
-      background: rgba(255, 255, 255, 0.22);     /* slightly lighter to match highlight */
-      font-weight: 800;
-    }
-
-    /* Page layout */
     .page {
-      position: relative;
+      flex: 1;
       z-index: 10;
-      flex: 1;
+      margin: 90px 20px 20px;
       display: flex;
       flex-direction: column;
-      margin: 80px 20px 20px;
-      max-width: 100%;
-      overflow: hidden;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
     }
 
-    .embed-card {
-      flex: 1;
-      border-radius: 20px;
-      overflow: hidden;
-      background: rgba(0,0,0,0.35);
-      border: 1px solid rgba(255,255,255,0.08);
-      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-      display: flex;
-      flex-direction: column;
-      backdrop-filter: blur(6px);
-    }
-
-    .embed-header {
-      padding: 16px 24px;
-      background: rgba(0,0,0,0.3);
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-    }
-
-    .embed-title {
-      font-size: 22px;
-      font-weight: 800;
-      color: #fff;
-    }
-
-    .embed-frame {
-      flex: 1;
-      border: 0;
+    .map-container {
+      max-width: 1200px;
       width: 100%;
-      background: #0a0a0a;
+      background: rgba(0,0,0,0.5);
+      border-radius: 16px;
+      padding: 30px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+      border: 1px solid rgba(100,200,255,0.2);
+    }
+
+    .map-title {
+      font-size: 32px;
+      margin-bottom: 16px;
+    }
+
+    .map-preview {
+      width: 100%;
+      height: 500px;
+      background: url('https://i.imgur.com/your-map-preview.jpg') center/cover; /* ← replace with real preview image */
+      border-radius: 12px;
+      margin: 20px 0;
+      position: relative;
+    }
+
+    .map-btn {
+      display: inline-block;
+      padding: 16px 40px;
+      background: #0a84ff;
+      color: white;
+      font-size: 20px;
+      font-weight: 700;
+      border-radius: 50px;
+      text-decoration: none;
+      margin-top: 20px;
+      box-shadow: 0 8px 30px rgba(10,132,255,0.4);
+      transition: all 0.3s;
+    }
+
+    .map-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 40px rgba(10,132,255,0.6);
     }
 
     @media (max-width: 768px) {
-      header {
-        padding: 6px 10px;
-        gap: 4px;
-        top: 12px;
-        flex-wrap: wrap;
-        justify-content: center;
-      }
-      .nav-btn {
-        padding: 6px 12px;
-        font-size: 13px;
-      }
-      .page {
-        margin: 70px 12px 12px;
-      }
-      .embed-header {
-        padding: 12px 16px;
-      }
-      .embed-title {
-        font-size: 18px;
-      }
-   
+      .page { margin: 80px 12px 12px; }
+      .map-preview { height: 300px; }
+      .map-title { font-size: 24px; }
+    }
+  </style>
+</head>
+<body class="dark-overlay">
+
+  <header>
+    <a href="index" class="nav-btn">Home</a>
+    <a href="map" class="nav-btn active">Map</a>
+    <a href="characters" class="nav-btn">Characters</a>
+    <a href="places" class="nav-btn">Places</a>
+    <a href="screenshots" class="nav-btn">Screenshots</a>
+    <a href="trailers" class="nav-btn">Trailers</a>
+  </header>
+
+  <div class="page">
+    <div class="map-container">
+      <h1 class="map-title">Grand Theft Auto VI Interactive Map</h1>
+      <div class="map-preview"></div> <!-- Add a nice screenshot of the map here -->
+      <p style="font-size:18px; margin:20px 0; opacity:0.9;">
+        Explore Leonida, Vice City, and the full state in high detail.<br>
+        The map includes locations, collectibles, secrets, and more.
+      </p>
+      <a href="https://map.stateofleonida.net/" target="_blank" class="map-btn">
+        Open Full Map → 
+      </a>
+    </div>
+  </div>
+
+</body>
+</html>
