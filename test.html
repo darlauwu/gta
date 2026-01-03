@@ -74,9 +74,15 @@ header{
   z-index:10;
 }
 
-.embed-title{font-weight:900;font-size:20px}
+.embed-title{
+  font-weight:900;
+  font-size:20px;
+}
 
-.embed-actions{display:flex;gap:10px}
+.embed-actions{
+  display:flex;
+  gap:10px;
+}
 
 .action-btn{
   padding:6px 12px;
@@ -109,18 +115,6 @@ header{
   font-weight:900;
 }
 
-/* ===== FALLBACK ===== */
-.fallback{
-  position:absolute;
-  inset:0;
-  display:none;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  background:rgba(0,0,0,.75);
-  z-index:30;
-}
-
 /* ===== MINI MAP ===== */
 .mini-map{
   position:absolute;
@@ -135,7 +129,10 @@ header{
   opacity:.7;
   transition:.3s;
 }
-.mini-map:hover{opacity:1;transform:scale(1.05)}
+.mini-map:hover{
+  opacity:1;
+  transform:scale(1.05);
+}
 
 /* ===== PINS ===== */
 .pin{
@@ -181,16 +178,15 @@ header{
     </div>
   </div>
 
-  <iframe id="embedFrame" class="embed-frame"
+  <iframe
+    id="embedFrame"
+    class="embed-frame"
     src="https://map.stateofleonida.net/"
     sandbox="allow-same-origin allow-scripts allow-forms allow-popups"
-    allowfullscreen></iframe>
+    allowfullscreen>
+  </iframe>
 
   <div class="loading" id="loading">LOADING MAP…</div>
-
-  <div class="fallback" id="fallback">
-    <a href="https://map.stateofleonida.net/" target="_blank">Open in new tab →</a>
-  </div>
 
   <!-- Mini Map -->
   <div class="mini-map"></div>
@@ -207,50 +203,50 @@ header{
 <script>
 const iframe = document.getElementById('embedFrame');
 const loading = document.getElementById('loading');
-const fallback = document.getElementById('fallback');
 const card = document.getElementById('card');
 const sound = document.getElementById('uiSound');
 
-/* ===== LOAD CHECK ===== */
+/* ===== LOAD ===== */
 iframe.onload = () => {
-  loading.style.display='none';
-  try{
-    if(!iframe.contentDocument) fallback.style.display='flex';
-  }catch{fallback.style.display='flex'}
+  loading.style.display = 'none';
 };
 
 /* ===== BUTTONS ===== */
-refresh.onclick=()=>{sound.play();loading.style.display='flex';iframe.src=iframe.src}
-fullscreen.onclick=toggleFS;
+refresh.onclick = () => {
+  sound.play();
+  loading.style.display = 'flex';
+  iframe.src = iframe.src;
+};
 
-document.addEventListener('keydown',e=>{
-  if(e.key.toLowerCase()==='f') toggleFS();
+fullscreen.onclick = toggleFS;
+
+document.addEventListener('keydown', e => {
+  if (e.key.toLowerCase() === 'f') toggleFS();
 });
 
 function toggleFS(){
   sound.play();
-  document.fullscreenElement ? document.exitFullscreen() : card.requestFullscreen();
+  document.fullscreenElement
+    ? document.exitFullscreen()
+    : card.requestFullscreen();
 }
 
 /* ===== PARALLAX ===== */
-document.addEventListener('mousemove',e=>{
+document.addEventListener('mousemove', e => {
   document.body.style.backgroundPosition =
     `${50 + e.clientX/80}% ${50 + e.clientY/80}%`;
 });
 
 /* ===== MOBILE SWIPE ===== */
-let startX=0;
-document.addEventListener('touchstart',e=>startX=e.touches[0].clientX);
-document.addEventListener('touchend',e=>{
-  let dx=e.changedTouches[0].clientX-startX;
-  if(Math.abs(dx)>80) toggleFS();
+let startX = 0;
+document.addEventListener('touchstart', e => {
+  startX = e.touches[0].clientX;
+});
+document.addEventListener('touchend', e => {
+  let dx = e.changedTouches[0].clientX - startX;
+  if (Math.abs(dx) > 80) toggleFS();
 });
 </script>
 
 </body>
 </html>
-
-
-</body>
-</html>
-
