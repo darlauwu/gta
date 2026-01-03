@@ -15,13 +15,12 @@
         linear-gradient(135deg, rgba(255,77,210,0.18), rgba(0,255,224,0.12)),
         url('gta/jason.jpg') center/cover no-repeat fixed;
       background-blend-mode: overlay;
-      color: #fff;
+      color: #ffffff;
       display: flex;
       flex-direction: column;
       align-items: center;
     }
 
-    /* Header (unchanged but with slight glow) */
     header {
       position: fixed; top: 18px; left: 50%; transform: translateX(-50%);
       z-index: 50; display: flex; gap: 12px; padding: 8px 14px; border-radius: 999px;
@@ -31,7 +30,8 @@
       box-shadow: 0 6px 18px rgba(0,0,0,0.4), 0 0 15px rgba(255,77,210,0.15);
     }
     .nav-btn {
-      padding: 8px 12px; border-radius: 999px; text-decoration: none; color: #fff;
+      padding: 8px 12px; border-radius: 999px; text-decoration: none;
+      color: #ffffff;
       background: linear-gradient(90deg, rgba(255,255,255,0.04), rgba(255,255,255,0.015));
       border: 1px solid rgba(255,255,255,0.08);
       font-weight: 700; transition: 0.3s;
@@ -50,12 +50,11 @@
       font-size: 52px;
       font-weight: 900;
       margin-bottom: 50px;
-      color: #ffffff !important;
-      text-shadow: 0 6px 12px rgba(0,0,0,0.65); /* your requested shadow */
+      color: #ffffff;
+      text-shadow: 0 6px 12px rgba(0,0,0,0.65);
       letter-spacing: -1px;
     }
 
-    /* Enhanced 3D Flip Cards */
     .character-list {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -63,8 +62,8 @@
     }
 
     .character-item {
-      perspective: 1200px; /* 3D space */
-      height: 420px; /* fixed height for consistent flip */
+      perspective: 1200px;
+      height: 420px;
     }
 
     .character-card {
@@ -116,6 +115,7 @@
     .front-overlay h2 {
       font-size: 28px;
       margin-bottom: 8px;
+      color: #ffffff;
       text-shadow: 0 3px 10px rgba(0,0,0,0.9), 0 0 15px rgba(255,77,210,0.5);
     }
 
@@ -130,15 +130,16 @@
     .card-back h2 {
       font-size: 28px;
       margin-bottom: 18px;
-      color: #ff4dd2;
-      text-shadow: 0 0 15px rgba(255,77,210,0.7);
+      color: #ffffff;
+      text-shadow: 0 0 15px rgba(0,0,0,0.8);
     }
 
     .card-back p {
       font-size: 16px;
       line-height: 1.6;
-      color: rgba(255,255,255,0.92);
+      color: #ffffff;
       max-width: 90%;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.7);
     }
 
     @media (max-width: 768px) {
@@ -177,7 +178,7 @@
           </div>
           <div class="card-face card-back">
             <h2>Lucia</h2>
-            <p>Life’s been coming at her swinging ever since. Fighting for her family landed her in Leonida Penitentiary — sheer luck got her out. Now, she’s all smart moves from here.</p>
+            <p>Lucia fights for her family and her future. After prison, she’s done playing nice — now every move is calculated, with Jason as her partner in crime.</p>
           </div>
         </div>
       </div>
@@ -192,12 +193,10 @@
           </div>
           <div class="card-face card-back">
             <h2>Jason</h2>
-            <p>Grew up around criminals and served in the military before finding his way into the Keys’ drug trade. Sharp, quiet, and lethal when he needs to be.</p>
+            <p>Army vet turned Keys drug runner. Sharp and deadly, he’s looking for an out — meeting Lucia might be his ticket… or his downfall.</p>
           </div>
         </div>
       </div>
-
-      <!-- Repeat the same structure for the other characters -->
 
       <div class="character-item">
         <div class="character-card">
@@ -209,7 +208,7 @@
           </div>
           <div class="card-face card-back">
             <h2>Dre'Quan Preist</h2>
-            <p>A hustler turned artist — from the streets to the studio, Dre’Quan’s chasing the high of success the legal way now, one track at a time.</p>
+            <p>Street hustler gone legit. Runs Only Raw Records with Boobie Ike and signed Real Dimez — one hit could make him a Vice City legend.</p>
           </div>
         </div>
       </div>
@@ -224,7 +223,7 @@
           </div>
           <div class="card-face card-back">
             <h2>Stefanie</h2>
-            <p>A social worker for the Leonida Department of Corrections, she’s seen the system’s cracks — and plans to fix them her own way.</p>
+            <p>Leonida Corrections social worker tired of a broken system. She’s ready to fix it her way — even if it means breaking a few rules.</p>
           </div>
         </div>
       </div>
@@ -239,7 +238,7 @@
           </div>
           <div class="card-face card-back">
             <h2>Cal Hampton</h2>
-            <p>Jason’s friend and fellow associate of Brian’s. Prefers his home lab, beers, and Coast Guard comms — but don’t underestimate his intel.</p>
+            <p>Jason’s paranoid, beer-loving friend. Hides at home monitoring Coast Guard chatter — but bigger scores might pull him into the chaos.</p>
           </div>
         </div>
       </div>
@@ -254,7 +253,7 @@
           </div>
           <div class="card-face card-back">
             <h2>Boobie Ike</h2>
-            <p>A Vice City legend. Street life funded his empire — real estate, clubs, studios. He smiles big, but business stays deadly serious.</p>
+            <p>Vice City icon. Built an empire from clubs and real estate — smiles wide, but business is always deadly serious.</p>
           </div>
         </div>
       </div>
@@ -269,7 +268,7 @@
           </div>
           <div class="card-face card-back">
             <h2>Real Dimez</h2>
-            <p>Bae-Luxe and Roxy — aka Real Dimez — flipped street hustle into social stardom. Music, money, and Miami heat — they run it all.</p>
+            <p>Bae-Luxe & Roxy — viral duo turned Only Raw signees. Street hustle became bars and fame — now they’re fighting to stay relevant.</p>
           </div>
         </div>
       </div>
@@ -284,7 +283,7 @@
           </div>
           <div class="card-face card-back">
             <h2>Raul Bautista</h2>
-            <p>Confidence and charm define Raul, a veteran bank robber with a keen eye for talent and a thirst for high-stakes thrills.</p>
+            <p>Veteran bank robber with charm and ice-cold precision. Always hunting the next big score — and the perfect crew to pull it off.</p>
           </div>
         </div>
       </div>
@@ -299,7 +298,7 @@
           </div>
           <div class="card-face card-back">
             <h2>Brian Heder</h2>
-            <p>Old-school drug runner with decades in the Keys. He lets younger crews handle the dirty work now — but his empire’s still afloat.</p>
+            <p>Old-school Keys drug kingpin. Lets the young crews do the dirty work now — but his empire still runs deep and ruthless.</p>
           </div>
         </div>
       </div>
@@ -314,7 +313,7 @@
           </div>
           <div class="card-face card-back">
             <h2>Luxe</h2>
-            <p>Bae-Luxe here — Vice City’s finest. From dealer shake-downs to viral fame, she and Roxy built an empire off grit and glow.</p>
+            <p>Half of Real Dimez. Turned dealer shake-downs into viral fame and bars. Hungry for the throne — one bad move could end it all.</p>
           </div>
         </div>
       </div>
