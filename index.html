@@ -35,53 +35,50 @@
   }
 
  .nav-btn {
-  padding:          9px 18px;
+  padding:          9px 17px;
   border-radius:    999px;
-  color:            #e0f4ff;                /* slightly softer white-blue */
+  color:            white;
   font-weight:      600;
-  font-size:        0.94rem;
   text-decoration:  none;
+  font-size:        0.94rem;
   letter-spacing:   0.3px;
   white-space:      nowrap;
 
-  /* Base semi-transparent teal-cyan glass look */
-  background:       rgba(25,  80, 140, 0.18);   /* main dark-teal tint */
+  /* Pure clear / neutral glass look – no color tint */
+  background:       rgba(255, 255, 255, 0.08);
 
-  /* Optional: subtle gradient for more depth (most game UIs use this) */
-  /* background:    linear-gradient(135deg, rgba(30,90,150,0.20) 0%, rgba(20,70,130,0.14) 100%); */
+  /* Very light, almost invisible border with slight white glow */
+  border:           1px solid rgba(255, 255, 255, 0.18);
 
-  border:           1px solid rgba(60, 160, 255, 0.28);  /* cyan glow border */
-
-  /* Glossy inner shine + depth shadow */
+  /* Glossy shine + soft shadow – keeps the premium transparent feel */
   box-shadow:
-    inset 0 1.5px 2px rgba(120, 220, 255, 0.40),   /* bright cyan highlight top */
-    inset 0 -1px 1px rgba(0, 30, 70, 0.35),        /* subtle darkening bottom */
-    0 4px 16px rgba(0, 0, 0, 0.38);                /* outer drop shadow */
+    inset 0 1.2px 1.5px rgba(255, 255, 255, 0.40),   /* bright top highlight */
+    inset 0 -0.8px 1px  rgba(255, 255, 255, 0.08),   /* subtle bottom shade */
+    0 4px 18px       rgba(0, 0, 0, 0.30);            /* gentle drop shadow */
 
   transition:       all 0.24s ease;
   cursor:           pointer;
 }
 
 .nav-btn:hover {
-  background:       rgba(40, 110, 180, 0.28);   /* brighter on hover */
+  background:       rgba(255, 255, 255, 0.14);
 
-  border-color:     rgba(90, 190, 255, 0.45);
+  border-color:     rgba(255, 255, 255, 0.32);
 
   transform:        scale(1.05) translateY(-1px);
 
   box-shadow:
-    inset 0 2px 3px rgba(140, 240, 255, 0.55),   /* stronger glow */
-    inset 0 -1px 1px rgba(0, 40, 90, 0.40),
-    0 10px 28px rgba(0, 0, 0, 0.48);             /* deeper shadow */
+    inset 0 1.5px 2px  rgba(255, 255, 255, 0.65),   /* stronger shine on hover */
+    inset 0 -1px 1px   rgba(255, 255, 255, 0.12),
+    0 10px 30px        rgba(0, 0, 0, 0.38);
 }
 
-/* Optional: pressed / clicked state */
 .nav-btn:active {
   transform:        scale(0.98) translateY(0);
   box-shadow:
-    inset 0 2px 4px rgba(0, 0, 0, 0.55),
-    inset 0 -1px 1px rgba(0, 30, 70, 0.45),
-    0 3px 12px rgba(0, 0, 0, 0.45);
+    inset 0 2px 4px rgba(0, 0, 0, 0.45),
+    inset 0 -1px 1px rgba(255, 255, 255, 0.10),
+    0 3px 12px      rgba(0, 0, 0, 0.35);
   transition:       all 0.11s ease;
 }
   /* Countdown */
