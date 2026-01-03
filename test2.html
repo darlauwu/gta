@@ -8,26 +8,44 @@
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body { height: 100%; }
+    html, body { height: 100%; overflow: hidden; }
     body {
       font-family: 'Orbitron', sans-serif;
-      background: linear-gradient(135deg, rgba(255,77,210,0.12), rgba(0,255,224,0.06)),
-                  url('gta/others.jpg') center/cover no-repeat fixed;
+      background:
+        linear-gradient(135deg, rgba(255,77,210,0.12), rgba(0,255,224,0.06)),
+        url('gta/others.jpg') center/cover no-repeat fixed;
       background-blend-mode: overlay;
       color: #fff;
       display: flex;
       flex-direction: column;
     }
 
+    /* Dark Overlay – enabled by default */
     body.dark-overlay::before {
       content: "";
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,0.35);
+      background: rgba(0, 0, 0, 0.35);
       z-index: 1;
       pointer-events: none;
     }
 
+    /* High Contrast – enabled by default */
+    body.high-contrast {
+      filter: contrast(1.25) brightness(1.12);
+    }
+    body.high-contrast .embed-title,
+    body.high-contrast .nav-btn {
+      text-shadow: 0 0 8px rgba(0,0,0,0.9);
+    }
+
+    /* Reduce Animations – enabled by default */
+    body.reduce-animations * {
+      transition: none !important;
+      animation: none !important;
+    }
+
+    /* Navbar – matches the latest screenshot style */
     header {
       position: fixed;
       top: 16px;
@@ -38,7 +56,7 @@
       gap: 6px;
       padding: 6px 14px;
       border-radius: 999px;
-      background: #2a6b7c;
+      background: #2a6b7c;                     /* teal-blue from screenshot */
       box-shadow: 0 4px 20px rgba(0,0,0,0.5);
     }
 
@@ -50,74 +68,174 @@
       font-weight: 600;
       font-size: 14px;
       background: transparent;
-      transition: all 0.2s ease;
+      transition: background 0.2s ease;
+      white-space: nowrap;
     }
 
-    .nav-btn:hover { background: rgba(255,255,255,0.15); }
-    .nav-btn.active { background: rgba(255,255,255,0.28); font-weight: 800; }
+    .nav-btn:hover {
+      background: rgba(255,255,255,0.15);
+    }
 
+    .nav-btn.active {
+      background: rgba(255,255,255,0.28);
+      font-weight: 800;
+    }
+
+    /* Page layout */
     .page {
-      flex: 1;
+      position: relative;
       z-index: 10;
-      margin: 90px 20px 20px;
+      flex: 1;
+      margin: 80px 20px 20px;
       display: flex;
       flex-direction: column;
+    }
+
+    .embed-card {
+      flex: 1;
+      border-radius: 20px;
+      overflow: hidden;
+      background: rgba(0,0,0,0.35);
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+      display: flex;
+      flex-direction: column;
+      backdrop-filter: blur(6px);
+    }
+
+    .embed-header {
+      padding: 16px 24px;
+      background: rgba(0,0,0,0.3);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .embed-title {
+      font-size: 22px;
+      font-weight: 800;
+      color: #fff;
+    }
+
+    .embed-frame {
+      flex: 1;
+      border: 0;
+      width: 100%;
+      background: #0a0a0a;
+    }
+
+    /* Settings button (bottom-right gear) */
+    #settings-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.12);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: #fff;
+      font-size: 24px;
+      display: flex;
       align-items: center;
       justify-content: center;
-      text-align: center;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      z-index: 999;
+      transition: all 0.3s ease;
     }
 
-    .map-container {
-      max-width: 1200px;
-      width: 100%;
-      background: rgba(0,0,0,0.5);
+    #settings-btn:hover {
+      transform: scale(1.1);
+      background: rgba(255,255,255,0.2);
+    }
+
+    /* Settings menu */
+    #settings-menu {
+      position: fixed;
+      bottom: 90px;
+      right: 20px;
+      width: 280px;
+      max-height: 65vh;
+      overflow-y: auto;
+      background: rgba(255,255,255,0.12);
+      backdrop-filter: blur(15px);
+      border: 1px solid rgba(255,255,255,0.18);
       border-radius: 16px;
-      padding: 30px;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.6);
-      border: 1px solid rgba(100,200,255,0.2);
+      padding: 16px 20px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+      z-index: 998;
+      transform: translateY(20px) scale(0.95);
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.35s ease;
     }
 
-    .map-title {
-      font-size: 32px;
-      margin-bottom: 16px;
+    #settings-menu.visible {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+      pointer-events: auto;
     }
 
-    .map-preview {
-      width: 100%;
-      height: 500px;
-      background: url('https://i.imgur.com/your-map-preview.jpg') center/cover; /* ← replace with real preview image */
-      border-radius: 12px;
-      margin: 20px 0;
+    .setting-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.12);
+      font-size: 14px;
+    }
+    .setting-item:last-child { border-bottom: none; }
+
+    .setting-label { color: #fff; font-weight: 500; }
+
+    .toggle {
       position: relative;
+      width: 44px;
+      height: 22px;
     }
+    .toggle input { opacity: 0; width: 0; height: 0; }
+    .slider {
+      position: absolute;
+      inset: 0;
+      background: #555;
+      border-radius: 22px;
+      transition: 0.4s;
+    }
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: 2px;
+      bottom: 2px;
+      background: #fff;
+      border-radius: 50%;
+      transition: 0.4s;
+    }
+    input:checked + .slider { background: #2196F3; }
+    input:checked + .slider:before { transform: translateX(22px); }
 
-    .map-btn {
-      display: inline-block;
-      padding: 16px 40px;
-      background: #0a84ff;
-      color: white;
-      font-size: 20px;
-      font-weight: 700;
-      border-radius: 50px;
-      text-decoration: none;
-      margin-top: 20px;
-      box-shadow: 0 8px 30px rgba(10,132,255,0.4);
-      transition: all 0.3s;
+    select, input[type="range"] {
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 6px;
+      padding: 4px 8px;
+      accent-color: #2196F3;
     }
-
-    .map-btn:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 12px 40px rgba(10,132,255,0.6);
-    }
+    input[type="range"] { width: 110px; }
 
     @media (max-width: 768px) {
-      .page { margin: 80px 12px 12px; }
-      .map-preview { height: 300px; }
-      .map-title { font-size: 24px; }
+      header { padding: 6px 10px; gap: 4px; top: 12px; flex-wrap: wrap; justify-content: center; }
+      .nav-btn { padding: 6px 12px; font-size: 13px; }
+      .page { margin: 70px 12px 12px; }
+      .embed-header { padding: 12px 16px; }
+      .embed-title { font-size: 18px; }
+      #settings-menu { width: 90%; right: 5%; }
     }
   </style>
 </head>
-<body class="dark-overlay">
+<body class="dark-overlay high-contrast reduce-animations">
 
   <header>
     <a href="index" class="nav-btn">Home</a>
@@ -129,18 +247,93 @@
   </header>
 
   <div class="page">
-    <div class="map-container">
-      <h1 class="map-title">Grand Theft Auto VI Interactive Map</h1>
-      <div class="map-preview"></div> <!-- Add a nice screenshot of the map here -->
-      <p style="font-size:18px; margin:20px 0; opacity:0.9;">
-        Explore Leonida, Vice City, and the full state in high detail.<br>
-        The map includes locations, collectibles, secrets, and more.
-      </p>
-      <a href="https://map.stateofleonida.net/" target="_blank" class="map-btn">
-        Open Full Map → 
-      </a>
+    <div class="embed-card">
+      <div class="embed-header">
+        <div class="embed-title">Grand Theft Auto VI Map</div>
+      </div>
+      <iframe id="embedFrame" class="embed-frame"
+        src="https://map.stateofleonida.net/"
+        allowfullscreen
+        sandbox="allow-same-origin allow-scripts allow-forms allow-popups">
+      </iframe>
     </div>
   </div>
 
+  <!-- Settings Button -->
+  <button id="settings-btn">⚙</button>
+
+  <!-- Settings Menu (with requested toggles already ON by default) -->
+  <div id="settings-menu">
+    <div class="setting-item">
+      <span class="setting-label">Dark Overlay</span>
+      <label class="toggle">
+        <input type="checkbox" id="toggle-overlay" checked>
+        <span class="slider"></span>
+      </label>
+    </div>
+    <div class="setting-item">
+      <span class="setting-label">High Contrast</span>
+      <label class="toggle">
+        <input type="checkbox" id="toggle-contrast" checked>
+        <span class="slider"></span>
+      </label>
+    </div>
+    <div class="setting-item">
+      <span class="setting-label">Reduce Animations</span>
+      <label class="toggle">
+        <input type="checkbox" id="toggle-motion" checked>
+        <span class="slider"></span>
+      </label>
+    </div>
+    <!-- You can add more toggles here later if needed -->
+  </div>
+
+  <script>
+    // Settings menu toggle
+    const btn = document.getElementById('settings-btn');
+    const menu = document.getElementById('settings-menu');
+
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      menu.classList.toggle('visible');
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!menu.contains(e.target) && !btn.contains(e.target)) {
+        menu.classList.remove('visible');
+      }
+    });
+
+    // Toggle functionality (already ON by default via body classes)
+    document.getElementById('toggle-overlay').addEventListener('change', e => {
+      document.body.classList.toggle('dark-overlay', e.target.checked);
+    });
+
+    document.getElementById('toggle-contrast').addEventListener('change', e => {
+      document.body.classList.toggle('high-contrast', e.target.checked);
+    });
+
+    document.getElementById('toggle-motion').addEventListener('change', e => {
+      document.body.classList.toggle('reduce-animations', e.target.checked);
+    });
+
+    // Optional: iframe fallback detection (kept from your original)
+    const iframe = document.getElementById('embedFrame');
+    iframe.addEventListener('load', () => {
+      setTimeout(() => {
+        let blocked = false;
+        try {
+          const doc = iframe.contentDocument || iframe.contentWindow.document;
+          if (!doc || doc.documentElement.innerHTML.length < 50) blocked = true;
+        } catch (err) {
+          blocked = true;
+        }
+        if (blocked) {
+          // You can add a fallback message here if desired
+          console.log("Embed may be blocked");
+        }
+      }, 300);
+    });
+  </script>
 </body>
 </html>
