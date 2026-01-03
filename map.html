@@ -37,18 +37,15 @@
       box-shadow:0 6px 18px rgba(0,0,0,0.35);
     }
 
-    /* Page container like your main layout */
-    .page{
-      position:relative;
-      z-index:10;
-      width:clamp(900px,88vw,1400px);
-      height:calc(100vh - 140px);
-      display:flex;
-      flex-direction:column;
-      gap:16px;
-      align-items:stretch;
-      justify-content:flex-start;
-    }
+   .page{
+  position:relative;
+  z-index:10;
+  width:clamp(900px,88vw,1400px);
+  height:calc(100vh - 140px);
+  display:flex;
+  flex-direction:column;
+  margin-top:40px; /* ← pushes embed down */
+}
 
     /* Card for embed */
     .embed-card{
