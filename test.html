@@ -1,247 +1,181 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Timeline | GTA VI</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>VI | Map</title>
+  <link rel="icon" href="gta/npc/lucia.jpg" type="image/jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
 
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
 
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
-html,body{height:100%}
+    body{
+      font-family:'Orbitron',sans-serif;
+      background:
+        linear-gradient(135deg, rgba(255,77,210,0.15), rgba(0,255,224,0.08)),
+        url('gta/others.jpg') center/cover no-repeat fixed;
+      background-blend-mode: overlay;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:#fff;
+    }
 
-body{
-  font-family:'Orbitron',sans-serif;
-  background:url("gta/jason.jpg") center/cover no-repeat fixed;
-  color:#fff;
-  overflow-x:hidden;
-}
+    /* ===== NAVBAR ===== */
+    header{
+      position:fixed;
+      top:18px;
+      left:50%;
+      transform:translateX(-50%);
+      z-index:50;
+      display:flex;
+      gap:12px;
+      padding:8px 14px;
+      border-radius:999px;
+      backdrop-filter: blur(12px) saturate(1.2);
+      -webkit-backdrop-filter: blur(12px) saturate(1.2);
+      background:rgba(0,0,0,0.25);
+      box-shadow:0 6px 18px rgba(0,0,0,0.35);
+    }
 
-/* dark overlay ONLY (no blur) */
-body::before{
-  content:"";
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,0.75);
-  z-index:0;
-}
+    .nav-btn{
+      padding:8px 12px;
+      border-radius:999px;
+      text-decoration:none;
+      color:#fff;
+      font-weight:700;
+      background:linear-gradient(90deg,rgba(255,255,255,0.03),rgba(255,255,255,0.01));
+      border:1px solid rgba(255,255,255,0.06);
+    }
+    .nav-btn:hover{
+      box-shadow:0 0 10px rgba(255,77,210,0.25);
+    }
 
-/* FIXED NAVBAR (WILL NOT SCROLL) */
-header{
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  z-index:9999;
+    /* ===== PAGE ===== */
+    .page{
+      position:relative;
+      z-index:10;
+      width:clamp(900px,88vw,1400px);
+      height:calc(100vh - 140px);
+      display:flex;
+      flex-direction:column;
+    }
 
-  display:flex;
-  justify-content:center;
-  gap:12px;
+    .embed-card{
+      flex:1;
+      border-radius:20px;
+      overflow:hidden;
+      background:linear-gradient(180deg, rgba(0,0,0,0.28), rgba(0,0,0,0.22));
+      border:1px solid rgba(255,255,255,0.04);
+      box-shadow:0 30px 80px rgba(0,0,0,0.5);
+      display:flex;
+      flex-direction:column;
+      position:relative;
+    }
 
-  padding:14px 20px;
-  background:rgba(0,0,0,0.85);
-  box-shadow:0 6px 20px rgba(0,0,0,0.6);
-}
+    .embed-header{
+      padding:18px 22px;
+      margin-bottom:12px; /* EMBEDDED SPACING */
+    }
 
-.nav-btn{
-  padding:8px 14px;
-  border-radius:999px;
-  text-decoration:none;
-  color:#fff;
-  background:rgba(255,255,255,0.06);
-  border:1px solid rgba(255,255,255,0.08);
-  font-weight:700;
-  transition:transform .2s, background .2s;
-}
+    .embed-title{
+      font-size:20px;
+      font-weight:900;
+    }
 
-.nav-btn:hover{
-  transform:scale(1.05);
-  background:rgba(255,255,255,0.12);
-}
+    .embed-frame{
+      flex:1;
+      width:100%;
+      border:0;
+      background:#111;
+      margin-top:4px; /* EMBEDDED SPACING */
+    }
 
-/* PAGE */
-.page{
-  position:relative;
-  z-index:1;
-  max-width:1100px;
-  margin:0 auto;
-  padding:140px 20px 80px; /* space for fixed navbar */
-}
+    /* ===== FALLBACK ===== */
+    .fallback{
+      position:absolute;
+      inset:0;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+      background:rgba(0,0,0,0.65);
+      backdrop-filter: blur(8px);
+      z-index:20;
+    }
 
-/* title */
-h1{
-  text-align:center;
-  font-size:52px;
-  font-weight:900;
-  margin-bottom:12px;
-  text-shadow:0 0 15px #ff4dd2,0 0 30px #ff99e6;
-}
+    .fallback a{
+      color:#ff9bdc;
+      font-weight:800;
+      text-decoration:none;
+    }
 
-.subtitle{
-  text-align:center;
-  opacity:.85;
-  margin-bottom:70px;
-}
-
-/* timeline */
-.timeline{
-  position:relative;
-  padding-left:40px;
-}
-
-.timeline::before{
-  content:"";
-  position:absolute;
-  left:18px;
-  top:0;
-  bottom:0;
-  width:4px;
-  background:linear-gradient(180deg,#ff4dd2,#8a2be2);
-  box-shadow:0 0 15px #ff4dd2;
-}
-
-/* event */
-.event{
-  position:relative;
-  margin-bottom:60px;
-  padding-left:40px;
-}
-
-.event::before{
-  content:"";
-  position:absolute;
-  left:-2px;
-  top:6px;
-  width:18px;
-  height:18px;
-  background:#ff4dd2;
-  border-radius:50%;
-  box-shadow:0 0 15px #ff4dd2,0 0 30px #ff99e6;
-}
-
-/* card (NO BLUR) */
-.card{
-  background:rgba(0,0,0,0.65);
-  border-radius:18px;
-  padding:22px 26px;
-  border:1px solid rgba(255,255,255,0.08);
-  box-shadow:0 10px 30px rgba(0,0,0,0.6);
-  transition:.3s;
-}
-
-.card:hover{
-  transform:translateY(-6px);
-  box-shadow:0 0 25px rgba(255,77,210,0.4);
-}
-
-/* badges */
-.badge{
-  display:inline-block;
-  padding:6px 12px;
-  border-radius:999px;
-  font-size:12px;
-  font-weight:700;
-  margin-bottom:12px;
-}
-
-.announcement{background:#ff4dd2}
-.trailer{background:#8a2be2}
-.teaser{background:#ff99e6;color:#000}
-.delay{background:#ff4444}
-.milestone{background:#00ffaa;color:#000}
-
-/* text */
-.date{font-size:14px;opacity:.7;margin-bottom:8px}
-.title{font-size:22px;font-weight:800;margin-bottom:8px}
-.desc{font-size:15px;line-height:1.6;opacity:.9}
-
-/* responsive */
-@media(max-width:640px){
-  h1{font-size:38px}
-  .timeline{padding-left:25px}
-  .timeline::before{left:10px}
-  .event{padding-left:30px}
-}
-</style>
+    @media(max-width:760px){
+      .page{
+        width:96vw;
+        height:calc(100vh - 110px);
+      }
+      .embed-title{font-size:16px}
+    }
+  </style>
 </head>
 
 <body>
 
-<header>
-  <a href="index" class="nav-btn">Home</a>
-  <a href="map" class="nav-btn">Map</a>
-  <a href="characters" class="nav-btn">Characters</a>
-  <a href="places" class="nav-btn">Places</a>
-  <a href="screenshots" class="nav-btn">Screenshots</a>
-  <a href="trailers" class="nav-btn">Trailers</a>
-</header>
+  <header>
+    <a href="index" class="nav-btn">Home</a>
+    <a href="map" class="nav-btn">Map</a>
+    <a href="characters" class="nav-btn">Characters</a>
+    <a href="places" class="nav-btn">Places</a>
+    <a href="screenshots" class="nav-btn">Screenshots</a>
+    <a href="trailers" class="nav-btn">Trailers</a>
+  </header>
 
-<div class="page">
-  <h1>GTA VI Timeline</h1>
-  <div class="subtitle">Announcements • Trailers • Delays • Milestones</div>
+  <main class="page">
+    <div class="embed-card">
+      <div class="embed-header">
+        <div class="embed-title">Grand Theft Auto VI Map</div>
+      </div>
 
-  <div class="timeline">
+      <iframe
+        id="embedFrame"
+        class="embed-frame"
+        src="https://map.stateofleonida.net/"
+        sandbox="allow-same-origin allow-scripts allow-forms allow-popups"
+        allowfullscreen>
+      </iframe>
 
-    <div class="event">
-      <div class="card">
-        <div class="badge announcement">ANNOUNCEMENT</div>
-        <div class="date">February 4, 2022</div>
-        <div class="title">Rockstar Confirms GTA VI Development</div>
-        <div class="desc">
-          Rockstar Games officially confirms that development on the next
-          Grand Theft Auto title is well underway.
+      <div class="fallback" id="fallback">
+        <div>
+          <p>Embedding is blocked.</p><br>
+          <a href="https://map.stateofleonida.net/" target="_blank">
+            Open map in new tab →
+          </a>
         </div>
       </div>
     </div>
+  </main>
 
-    <div class="event">
-      <div class="card">
-        <div class="badge teaser">TEASER</div>
-        <div class="date">December 4, 2023</div>
-        <div class="title">Official GTA VI Logo Reveal</div>
-        <div class="desc">
-          Rockstar reveals the GTA VI logo and Vice City-inspired branding.
-        </div>
-      </div>
-    </div>
+  <script>
+    const iframe = document.getElementById('embedFrame');
+    const fallback = document.getElementById('fallback');
 
-    <div class="event">
-      <div class="card">
-        <div class="badge trailer">TRAILER</div>
-        <div class="date">December 5, 2023</div>
-        <div class="title">Trailer 1 Released</div>
-        <div class="desc">
-          The first official trailer showcases Vice City, Lucia,
-          and next-gen visuals.
-        </div>
-      </div>
-    </div>
-
-    <div class="event">
-      <div class="card">
-        <div class="badge delay">DELAY</div>
-        <div class="date">2024</div>
-        <div class="title">Release Window Adjusted</div>
-        <div class="desc">
-          Rockstar confirms GTA VI will launch in 2026 for maximum polish.
-        </div>
-      </div>
-    </div>
-
-    <div class="event">
-      <div class="card">
-        <div class="badge milestone">MILESTONE</div>
-        <div class="date">November 19, 2026</div>
-        <div class="title">GTA VI Launch Day</div>
-        <div class="desc">
-          Grand Theft Auto VI launches worldwide.
-        </div>
-      </div>
-    </div>
-
-  </div>
-</div>
+    iframe.addEventListener('load', () => {
+      setTimeout(() => {
+        let blocked = false;
+        try {
+          const doc = iframe.contentDocument || iframe.contentWindow.document;
+          if (!doc || doc.documentElement.innerHTML.length < 50) blocked = true;
+        } catch {
+          blocked = true;
+        }
+        fallback.style.display = blocked ? 'flex' : 'none';
+      }, 300);
+    });
+  </script>
 
 </body>
 </html>
+
