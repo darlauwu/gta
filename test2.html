@@ -1,350 +1,164 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>VI | Home</title>
-<link rel="icon" href="gta/npc/lucia.jpg" type="image/jpg">
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
-<style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  html, body { height: 100%; overflow: hidden; }
-  body {
-    font-family: 'Orbitron', sans-serif;
-    background: url('gta/jason.jpg') center/cover no-repeat fixed;
-    color: #fff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: filter 0.6s ease;
-  }
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>VI | Map</title>
+  <link rel="icon" href="gta/npc/lucia.jpg" type="image/jpg">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; overflow: hidden; }
+    body {
+      font-family: 'Orbitron', sans-serif;
+      background:
+        linear-gradient(135deg, rgba(255,77,210,0.12), rgba(0,255,224,0.06)),
+        url('gta/others.jpg') center/cover no-repeat fixed;
+      background-blend-mode: overlay;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+    }
 
-  /* Dark overlay when enabled */
-  body.dark-overlay::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.65);
-    z-index: 1;
-    pointer-events: none;
-    transition: opacity 0.6s ease;
-  }
+    /* ───────────────────────────────────────────────
+       DARK OVERLAY (applied by default)
+    ─────────────────────────────────────────────── */
+    body.dark-overlay::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.35);    /* ~moderate dim — change to 0.5 for stronger */
+      z-index: 1;
+      pointer-events: none;
+    }
 
-  /* Header */
-  header {
-    position: fixed;
-    top: 18px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 50;
-    display: flex;
-    gap: 12px;
-    padding: 8px 14px;
-    border-radius: 999px;
-    backdrop-filter: blur(12px) saturate(1.2);
-    background: rgba(0,0,0,0.25);
-    box-shadow: 0 6px 18px rgba(0,0,0,0.35);
-  }
-  .nav-btn {
-    padding: 8px 12px;
-    border-radius: 999px;
-    text-decoration: none;
-    color: #fff;
-    background: linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
-    border: 1px solid rgba(255,255,255,0.06);
-    font-weight: 700;
-    transition: transform 0.2s, background 0.2s;
-  }
-  .nav-btn:hover { transform: scale(1.05); background: rgba(255,255,255,0.08); }
+    /* ───────────────────────────────────────────────
+       HIGH CONTRAST (applied by default)
+    ─────────────────────────────────────────────── */
+    body.high-contrast {
+      filter: contrast(1.25) brightness(1.12);
+    }
+    body.high-contrast .title,
+    body.high-contrast .embed-title,
+    body.high-contrast .nav-btn {
+      text-shadow: 0 0 8px rgba(0,0,0,0.9), 0 0 14px rgba(0,0,0,0.7);
+    }
 
-  /* Countdown */
-  .countdown-wrap {
-    backdrop-filter: blur(6px);
-    border-radius: 24px;
-    padding: 40px 48px;
-    text-align: center;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.8);
-    border: 1px solid rgba(255,255,255,0.06);
-    background: rgba(0,0,0,0.3);
-    min-width: 320px;
-    max-width: 980px;
-    width: clamp(320px,70vw,980px);
-    position: relative;
-    z-index: 2;
-  }
-  .title {
-    font-size: 50px;
-    font-weight: 800;
-    margin-bottom: 8px;
-    text-shadow: 0 6px 12px rgba(0,0,0,0.65);
-  }
-  .subtitle { color: rgba(255,255,255,0.85); margin-bottom: 22px; font-size: 18px; }
-  .clock { display: flex; gap: 18px; justify-content: center; flex-wrap: wrap; }
-  .unit {
-    min-width: 88px;
-    padding: 18px 16px;
-    border-radius: 14px;
-    background: rgba(0,0,0,0.5);
-    border: 1px solid rgba(255,255,255,0.9);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
-  .num {
-    font-size: 45px;
-    font-weight: 900;
-    color: #FAFAFB;
-    text-shadow: 0 0 10px rgba(255,255,255,0.35);
-  }
-  .label {
-    font-size: 20px;
-    color: rgba(255,255,255,0.85);
-    margin-top: 6px;
-    text-transform: uppercase;
-    text-shadow: 0 0 6px rgba(255,255,255,0.25);
-  }
+    /* ───────────────────────────────────────────────
+       NEW NAVBAR (frosted glass, pill shape, neon hover)
+    ─────────────────────────────────────────────── */
+    header {
+      position: fixed;
+      top: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 100;
+      display: flex;
+      gap: 10px;
+      padding: 8px 16px;
+      border-radius: 999px;
+      backdrop-filter: blur(12px) saturate(1.3);
+      -webkit-backdrop-filter: blur(12px) saturate(1.3);
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+    }
 
-  /* Settings button & menu */
-  #settings-btn {
-    position: fixed;
-    bottom: 24px;
-    right: 24px;
-    width: 64px;
-    height: 64px;
-    border-radius: 50%;
-    background: rgba(20,20,35,0.75);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(180,100,255,0.4);
-    color: #e0c0ff;
-    font-size: 28px;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    box-shadow: 0 8px 25px rgba(0,0,0,0.5);
-    z-index: 9999;
-    transition: all 0.3s ease;
-  }
-  #settings-btn:hover {
-    transform: scale(1.12) rotate(30deg);
-    background: rgba(40,30,60,0.9);
-    border-color: #c080ff;
-    box-shadow: 0 12px 35px rgba(120,60,220,0.45);
-  }
+    .nav-btn {
+      padding: 8px 14px;
+      border-radius: 999px;
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 14px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: all 0.25s ease;
+    }
 
-  #settings-menu {
-    position: fixed;
-    bottom: 100px;
-    right: 24px;
-    background: rgba(15,15,30,0.92);
-    backdrop-filter: blur(16px);
-    border: 1px solid rgba(140,90,220,0.35);
-    border-radius: 16px;
-    padding: 16px 20px;
-    width: 260px;
-    max-height: 420px;
-    overflow-y: auto;
-    box-shadow: 0 20px 50px rgba(0,0,0,0.7);
-    z-index: 9998;
-    transform: translateY(20px) scale(0.85);
-    opacity: 0;
-    pointer-events: none;
-    transition: all 0.35s cubic-bezier(0.32, 0.72, 0, 1);
-  }
-  #settings-menu.visible {
-    transform: translateY(0) scale(1);
-    opacity: 1;
-    pointer-events: auto;
-  }
+    .nav-btn:hover,
+    .nav-btn.active {
+      background: rgba(255,77,210,0.25);
+      border-color: rgba(255,77,210,0.5);
+      box-shadow: 0 0 12px rgba(255,77,210,0.4);
+      transform: translateY(-1px);
+    }
 
-  .setting-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 12px 8px;
-    border-bottom: 1px solid rgba(255,255,255,0.06);
-  }
-  .setting-item:last-child { border-bottom: none; }
-  .setting-label {
-    font-size: 15px;
-    font-weight: 600;
-    color: #e0d0ff;
-  }
-  .toggle {
-    position: relative;
-    width: 48px;
-    height: 26px;
-  }
-  .toggle input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-  }
-  .slider {
-    position: absolute;
-    cursor: pointer;
-    inset: 0;
-    background: #333;
-    border-radius: 26px;
-    transition: .4s;
-  }
-  .slider:before {
-    position: absolute;
-    content: "";
-    height: 20px;
-    width: 20px;
-    left: 3px;
-    bottom: 3px;
-    background: white;
-    border-radius: 50%;
-    transition: .4s;
-  }
-  input:checked + .slider {
-    background: #8a4fff;
-  }
-  input:checked + .slider:before {
-    transform: translateX(22px);
-  }
+    /* Page layout */
+    .page {
+      position: relative;
+      z-index: 10;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      margin: 80px 20px 20px;           /* space for fixed header */
+      max-width: 100%;
+      overflow: hidden;
+    }
 
-  /* Optional particles example */
-  body.particles::after {
-    content: "";
-    position: fixed;
-    inset: 0;
-    background: radial-gradient(circle at 30% 70%, rgba(180,100,255,0.08) 0%, transparent 40%);
-    pointer-events: none;
-    z-index: 0;
-    animation: pulse 12s infinite alternate;
-  }
-  @keyframes pulse { to { opacity: 0.4; } }
-</style>
+    .embed-card {
+      flex: 1;
+      border-radius: 20px;
+      overflow: hidden;
+      background: rgba(0,0,0,0.35);
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+      display: flex;
+      flex-direction: column;
+      backdrop-filter: blur(6px);
+    }
+
+    .embed-header {
+      padding: 16px 24px;
+      background: rgba(0,0,0,0.3);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .embed-title {
+      font-size: 22px;
+      font-weight: 800;
+      color: #fff;
+    }
+
+    .embed-frame {
+      flex: 1;
+      border: 0;
+      width: 100%;
+      background: #0a0a0a;
+    }
+
+    @media (max-width: 768px) {
+      header { padding: 6px 12px; gap: 6px; top: 12px; }
+      .nav-btn { padding: 6px 10px; font-size: 13px; }
+      .page { margin: 70px 12px 12px; }
+      .embed-header { padding: 12px 16px; }
+      .embed-title { font-size: 18px; }
+    }
+  </style>
 </head>
-<body>
+<body class="dark-overlay high-contrast">
 
-<header>
-  <a href="index" class="nav-btn">Home</a>
-  <a href="map" class="nav-btn">Map</a>
-  <a href="characters" class="nav-btn">Characters</a>
-  <a href="places" class="nav-btn">Places</a>
-  <a href="screenshots" class="nav-btn">Screenshots</a>
-  <a href="trailers" class="nav-btn">Trailers</a>
-</header>
+  <header>
+    <a href="index" class="nav-btn">Home</a>
+    <a href="map" class="nav-btn">Map</a>
+    <a href="characters" class="nav-btn">Characters</a>
+    <a href="places" class="nav-btn">Places</a>
+    <a href="screenshots" class="nav-btn">Screenshots</a>
+    <a href="trailers" class="nav-btn">Trailers</a>
+  </header>
 
-<section class="countdown-wrap">
-  <h1 class="title">Grand Theft Auto VI</h1>
-  <div class="subtitle">Release countdown — November 19th, 2026</div>
-  <div class="clock" role="timer" aria-live="polite" aria-atomic="true">
-    <div class="unit"><div class="num" id="days">0</div><div class="label">Days</div></div>
-    <div class="unit"><div class="num" id="hours">0</div><div class="label">Hours</div></div>
-    <div class="unit"><div class="num" id="minutes">0</div><div class="label">Minutes</div></div>
-    <div class="unit"><div class="num" id="seconds">0</div><div class="label">Seconds</div></div>
+  <div class="page">
+    <div class="embed-card">
+      <div class="embed-header">
+        <div class="embed-title">Grand Theft Auto VI Map</div>
+      </div>
+      <iframe id="embedFrame" class="embed-frame"
+        src="https://map.stateofleonida.net/"
+        allowfullscreen
+        sandbox="allow-same-origin allow-scripts allow-forms allow-popups">
+      </iframe>
+    </div>
   </div>
-</section>
 
-<!-- Settings button & menu -->
-<button id="settings-btn">⚙</button>
-
-<div id="settings-menu">
-  <div class="setting-item">
-    <span class="setting-label">Background Music</span>
-    <label class="toggle">
-      <input type="checkbox" id="toggle-music" checked>
-      <span class="slider"></span>
-    </label>
-  </div>
-  <div class="setting-item">
-    <span class="setting-label">Dark Overlay</span>
-    <label class="toggle">
-      <input type="checkbox" id="toggle-overlay">
-      <span class="slider"></span>
-    </label>
-  </div>
-  <div class="setting-item">
-    <span class="setting-label">Subtle Particles</span>
-    <label class="toggle">
-      <input type="checkbox" id="toggle-particles">
-      <span class="slider"></span>
-    </label>
-  </div>
-  <div class="setting-item">
-    <span class="setting-label">Reduce Motion</span>
-    <label class="toggle">
-      <input type="checkbox" id="toggle-motion">
-      <span class="slider"></span>
-    </label>
-  </div>
-  <div class="setting-item">
-    <span class="setting-label">High Contrast Text</span>
-    <label class="toggle">
-      <input type="checkbox" id="toggle-contrast">
-      <span class="slider"></span>
-    </label>
-  </div>
-</div>
-
-<script>
-// Accurate GTA VI release countdown (target: November 19, 2026 at 00:00 UTC)
-const targetDate = new Date('2026-11-19T00:00:00Z');
-
-function pad(n) {
-  return String(n).padStart(2, '0');
-}
-
-function updateCountdown() {
-  const now = new Date();
-  let diffMs = targetDate - now;
-
-  if (diffMs < 0) {
-    diffMs = 0;
-    // Optional: you can uncomment this later to show "released" message
-    // document.querySelector('.countdown-wrap').innerHTML = '<h1 class="title">GTA VI IS OUT NOW!</h1><p style="font-size:24px;margin-top:20px;">Play it!</p>';
-  }
-
-  const days    = Math.floor(diffMs / (1000 * 60 * 60 * 24));
-  const hours   = Math.floor((diffMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  const minutes = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
-  const seconds = Math.floor((diffMs % (1000 * 60)) / 1000);
-
-  document.getElementById('days').textContent    = days;
-  document.getElementById('hours').textContent   = pad(hours);
-  document.getElementById('minutes').textContent = pad(minutes);
-  document.getElementById('seconds').textContent = pad(seconds);
-}
-
-updateCountdown();
-setInterval(updateCountdown, 1000);
-
-// Settings menu toggle
-const btn = document.getElementById('settings-btn');
-const menu = document.getElementById('settings-menu');
-
-btn.addEventListener('click', () => {
-  menu.classList.toggle('visible');
-});
-
-// Close menu when clicking outside
-document.addEventListener('click', e => {
-  if (!btn.contains(e.target) && !menu.contains(e.target)) {
-    menu.classList.remove('visible');
-  }
-});
-
-// Settings functionality
-document.getElementById('toggle-overlay').addEventListener('change', e => {
-  document.body.classList.toggle('dark-overlay', e.target.checked);
-});
-
-document.getElementById('toggle-particles').addEventListener('change', e => {
-  document.body.classList.toggle('particles', e.target.checked);
-});
-
-document.getElementById('toggle-contrast').addEventListener('change', e => {
-  document.body.style.filter = e.target.checked ? 'contrast(1.3) brightness(1.1)' : '';
-});
-
-// You can expand the other toggles later (music needs an <audio> element, etc.)
-</script>
 </body>
-</html>>
+</html>
