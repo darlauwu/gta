@@ -2,164 +2,145 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>VI | Screenshots</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>VI | Home</title>
   <link rel="icon" href="gta/npc/lucia.jpg" type="image/jpg">
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
   <style>
     * { margin:0; padding:0; box-sizing:border-box; }
+    html, body { height:100%; }
     body {
       font-family: 'Orbitron', sans-serif;
       background:
-        linear-gradient(135deg, rgba(255,77,210,0.15), rgba(0,255,224,0.10)),
-        url('gta/jason.jpg') center/cover no-repeat fixed;
+        linear-gradient(135deg, rgba(255,77,210,0.15), rgba(0,255,224,0.08)),
+        url('gta/others.jpg') center/cover no-repeat fixed;
       background-blend-mode: overlay;
       color: #ffffff;
-      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       overflow-x: hidden;
     }
 
     header {
-      position: fixed;
-      top: 18px; left: 50%; transform: translateX(-50%);
-      z-index: 100;
-      display: flex; gap: 12px;
-      padding: 10px 18px;
-      border-radius: 999px;
-      backdrop-filter: blur(14px) saturate(1.4);
-      background: rgba(0,0,0,0.35);
-      box-shadow: 0 8px 24px rgba(0,0,0,0.5), 0 0 20px rgba(255,77,210,0.2);
+      position: fixed; top: 18px; left: 50%; transform: translateX(-50%);
+      z-index: 50; display: flex; gap: 12px; padding: 8px 14px; border-radius: 999px;
+      backdrop-filter: blur(12px) saturate(1.2);
+      background: rgba(0,0,0,0.25);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.35), 0 0 15px rgba(255,77,210,0.15);
     }
 
     .nav-btn {
-      padding: 10px 16px;
-      border-radius: 999px;
-      text-decoration: none;
-      color: #fff;
-      font-weight: 700;
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(255,255,255,0.1);
-      transition: all 0.3s ease;
+      padding: 8px 12px; border-radius: 999px; text-decoration: none; color: #ffffff;
+      background: linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+      border: 1px solid rgba(255,255,255,0.06);
+      font-weight: 700; transition: 0.3s;
     }
 
-    .nav-btn:hover {
-      background: rgba(255,77,210,0.15);
-      box-shadow: 0 0 16px rgba(255,77,210,0.4);
-      transform: scale(1.05);
+    .nav-btn:hover { box-shadow: 0 0 10px rgba(255,77,210,0.18); transform: scale(1.05); }
+
+    .hero {
+      position: relative;
+      width: 100%; height: 60vh;
+      background: url('gta/others.jpg') center/cover no-repeat;
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
+      text-align: center;
+      margin-top: 80px; /* Clears header */
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.6), rgba(0,0,0,0.2));
+    }
+
+    .hero h1 {
+      position: relative; z-index: 1;
+      font-size: clamp(3rem, 10vw, 5rem);
+      font-weight: 900;
+      text-shadow: 0 6px 12px rgba(0,0,0,0.65);
+      margin-bottom: 10px;
+    }
+
+    .hero p {
+      position: relative; z-index: 1;
+      font-size: clamp(1.2rem, 4vw, 1.8rem);
+      max-width: 80%; opacity: 0.9;
     }
 
     .page {
-      padding: 140px 5% 100px;
-      max-width: 1600px;
-      margin: 0 auto;
+      width: clamp(900px, 90vw, 1300px);
+      margin: 40px auto 60px;
+      padding: 0 20px;
     }
 
-    h1 {
-      text-align: center;
-      font-size: clamp(3rem, 8vw, 5.5rem);
-      font-weight: 900;
-      margin-bottom: 60px;
-      color: #ffffff;
-      text-shadow: 0 6px 12px rgba(0,0,0,0.65);
-      letter-spacing: -1px;
+    .places-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 24px;
     }
 
-    .gallery {
-      column-count: 4;
-      column-gap: 24px;
-      width: 100%;
-    }
-
-    .gallery-item {
-      break-inside: avoid;
-      margin-bottom: 24px;
-      opacity: 0;
-      transform: translateY(40px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
+    .place-card {
+      position: relative;
       border-radius: 18px;
       overflow: hidden;
-      box-shadow: 0 12px 32px rgba(0,0,0,0.5);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.6);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      background: rgba(0,0,0,0.45);
+      border: 1px solid rgba(255,255,255,0.05);
     }
 
-    .gallery-item.visible {
-      opacity: 1;
-      transform: translateY(0);
+    .place-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.7), 0 0 20px rgba(255,77,210,0.4);
     }
 
-    .gallery-item:hover {
-      transform: scale(1.06) translateY(-12px);
-      box-shadow: 0 24px 48px rgba(0,0,0,0.7), 0 0 40px rgba(255,77,210,0.5);
-    }
-
-    .gallery-item img {
-      width: 100%;
-      height: auto;
-      display: block;
+    .place-card img {
+      width: 100%; height: 240px;
       object-fit: cover;
-      transition: transform 0.6s ease;
+      transition: transform 0.4s ease;
       loading: lazy;
     }
 
-    .gallery-item:hover img {
-      transform: scale(1.12);
+    .place-card:hover img { transform: scale(1.05); }
+
+    .place-overlay {
+      position: absolute; inset: 0;
+      background: rgba(0,0,0,0.75);
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
+      padding: 20px; text-align: center;
+      opacity: 0; transform: scale(0.95);
+      transition: opacity 0.4s ease, transform 0.4s ease;
     }
 
-    /* Fullscreen Viewer */
-    .viewer {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.92);
-      backdrop-filter: blur(12px);
-      z-index: 9999;
-      justify-content: center;
-      align-items: center;
-      opacity: 0;
-      transition: opacity 0.4s ease;
+    .place-card:hover .place-overlay {
+      opacity: 1; transform: scale(1);
     }
 
-    .viewer.active {
-      display: flex;
-      opacity: 1;
+    .place-overlay h2 {
+      font-size: 22px; margin-bottom: 10px;
+      text-shadow: 0 0 10px rgba(255,255,255,0.2);
     }
 
-    .viewer img {
-      max-width: 92%;
-      max-height: 92vh;
-      border-radius: 20px;
-      box-shadow: 0 0 60px rgba(255,255,255,0.15);
-      object-fit: contain;
+    .place-overlay p {
+      font-size: 14px; color: #ffffff;
+      line-height: 1.5; max-width: 90%;
     }
 
-    .close-btn {
-      position: absolute;
-      top: 30px; right: 30px;
-      font-size: 3.5rem;
-      color: #fff;
-      cursor: pointer;
-      text-shadow: 0 0 10px rgba(0,0,0,0.8);
-      transition: all 0.3s;
+    @media (max-width: 768px) {
+      .hero { height: 50vh; }
+      .hero h1 { font-size: 2.5rem; }
+      .hero p { font-size: 1.2rem; }
     }
 
-    .close-btn:hover { transform: scale(1.2); color: #ff4dd2; }
-
-    .nav-arrow {
-      position: absolute;
-      top: 50%; transform: translateY(-50%);
-      font-size: 4.5rem;
-      color: rgba(255,255,255,0.7);
-      cursor: pointer;
-      user-select: none;
-      transition: all 0.3s;
+    @media (max-width: 480px) {
+      .hero { height: 40vh; }
+      .hero h1 { font-size: 2rem; }
+      .hero p { font-size: 1rem; }
+      .place-overlay h2 { font-size: 18px; }
+      .place-overlay p { font-size: 13px; }
     }
-
-    .nav-arrow:hover { color: #ff4dd2; transform: translateY(-50%) scale(1.15); }
-    .prev { left: 30px; }
-    .next { right: 30px; }
-
-    @media (max-width: 1100px) { .gallery { column-count: 3; } }
-    @media (max-width: 768px)  { .gallery { column-count: 2; } h1 { font-size: 3.5rem; } }
-    @media (max-width: 480px)  { .gallery { column-count: 1; } .close-btn, .nav-arrow { font-size: 2.8rem; } }
   </style>
 </head>
 <body>
@@ -172,115 +153,56 @@
     <a href="trailers" class="nav-btn">Trailers</a>
   </header>
 
-  <div class="page">
-    <h1>GTA 6 Screenshot Gallery</h1>
+  <section class="hero">
+    <h1>Explore Leonida</h1>
+    <p>The neon-soaked streets of Vice City and beyond await in GTA 6. Dive into beaches, swamps, and secrets.</p>
+  </section>
 
-    <div class="gallery">
-      <div class="gallery-item"><img src="gta/screenshots/1.jpg"  alt="Screenshot 1"  loading="lazy"></div>
-      <div class="gallery-item"><img src="gta/screenshots/2.jpg"  alt="Screenshot 2"  loading="lazy"></div>
-      <div class="gallery-item"><img src="gta/screenshots/3.jpg"  alt="Screenshot 3"  loading="lazy"></div>
-      <div class="gallery-item"><img src="gta/screenshots/4.jpg"  alt="Screenshot 4"  loading="lazy"></div>
-      <div class="gallery-item"><img src="gta/screenshots/5.jpg"  alt="Screenshot 5"  loading="lazy"></div>
-      <div class="gallery-item"><img src="gta/screenshots/6.jpg"  alt="Screenshot 6"  loading="lazy"></div>
-      <div class="gallery-item"><img src="gta/screenshots/7.jpg"  alt="Screenshot 7"  loading="lazy"></div>
-      <div class="gallery-item"><img src="gta/screenshots/8.jpg"  alt="Screenshot 8"  loading="lazy"></div>
-      <div class="gallery-item"><img src="gta/screenshots/9.jpg"  alt="Screenshot 9"  loading="lazy"></div>
-      <div class="gallery-item"><img src="gta/screenshots/10.jpg" alt="Screenshot 10" loading="lazy"></div>
-      <div class="gallery-item"><img src="gta/screenshots/11.jpg" alt="Screenshot 11" loading="lazy"></div>
-      <div class="gallery-item"><img src="gta/screenshots/12.jpg" alt="Screenshot 12" loading="lazy"></div>
-      <div class="gallery-item"><img src="gta/screenshots/13.jpg" alt="Screenshot 13" loading="lazy"></div>
-      <div class="gallery-item"><img src="gta/screenshots/14.jpg" alt="Screenshot 14" loading="lazy"></div>
-      <div class="gallery-item"><img src="gta/screenshots/15.jpg" alt="Screenshot 15" loading="lazy"></div>
-      <div class="gallery-item"><img src="gta/screenshots/16.jpg" alt="Screenshot 16" loading="lazy"></div>
-      <div class="gallery-item"><img src="gta/screenshots/17.jpg" alt="Screenshot 17" loading="lazy"></div>
-      <div class="gallery-item"><img src="gta/screenshots/18.jpg" alt="Screenshot 18" loading="lazy"></div>
-      <div class="gallery-item"><img src="gta/screenshots/19.jpg" alt="Screenshot 19" loading="lazy"></div>
-      <div class="gallery-item"><img src="gta/screenshots/20.jpg" alt="Screenshot 20" loading="lazy"></div>
-      <div class="gallery-item"><img src="gta/screenshots/21.jpg" alt="Screenshot 21" loading="lazy"></div>
-      <div class="gallery-item"><img src="gta/screenshots/22.jpg" alt="Screenshot 22" loading="lazy"></div>
-      <div class="gallery-item"><img src="gta/screenshots/23.jpg" alt="Screenshot 23" loading="lazy"></div>
-      <div class="gallery-item"><img src="gta/screenshots/24.jpg" alt="Screenshot 24" loading="lazy"></div>
-      <div class="gallery-item"><img src="gta/screenshots/25.jpg" alt="Screenshot 25" loading="lazy"></div>
-      <div class="gallery-item"><img src="gta/screenshots/26.jpg" alt="Screenshot 26" loading="lazy"></div>
-      <div class="gallery-item"><img src="gta/screenshots/27.jpg" alt="Screenshot 27" loading="lazy"></div>
-      <div class="gallery-item"><img src="gta/screenshots/28.jpg" alt="Screenshot 28" loading="lazy"></div>
-      <div class="gallery-item"><img src="gta/screenshots/29.jpg" alt="Screenshot 29" loading="lazy"></div>
-      <div class="gallery-item"><img src="gta/screenshots/30.jpg" alt="Screenshot 30" loading="lazy"></div>
-      <div class="gallery-item"><img src="gta/screenshots/31.jpg" alt="Screenshot 31" loading="lazy"></div>
-      <div class="gallery-item"><img src="gta/screenshots/32.jpg" alt="Screenshot 32" loading="lazy"></div>
-      <div class="gallery-item"><img src="gta/screenshots/33.jpg" alt="Screenshot 33" loading="lazy"></div>
-      <div class="gallery-item"><img src="gta/screenshots/34.jpg" alt="Screenshot 34" loading="lazy"></div>
-      <div class="gallery-item"><img src="gta/screenshots/35.jpg" alt="Screenshot 35" loading="lazy"></div>
-      <div class="gallery-item"><img src="gta/screenshots/36.jpg" alt="Screenshot 36" loading="lazy"></div>
+  <main class="page">
+    <div class="places-grid">
+      <div class="place-card">
+        <img src="gta/places/vice.jpg" alt="Vice City Beach">
+        <div class="place-overlay">
+          <h2>Vice City</h2>
+          <p>The glamour, hustle, and greed of America captured in a single city. From pastel art deco hotels to the bright white sands of Ocean Beach — Vice City has it all.</p>
+        </div>
+      </div>
+      <div class="place-card">
+        <img src="gta/places/leoninda.jpg" alt="Leoninda Keys">
+        <div class="place-overlay">
+          <h2>Leoninda Keys</h2>
+          <p>A tropical archipelago where life is easy but the waters are deadly. Grab a drink and relax, but don’t drift too far from shore.</p>
+        </div>
+      </div>
+      <div class="place-card">
+        <img src="gta/places/grassrivers.jpg" alt="Grassrivers">
+        <div class="place-overlay">
+          <h2>Grassrivers</h2>
+          <p>Swamps filled with gators, secrets, and something far stranger. The deeper you go, the weirder it gets.</p>
+        </div>
+      </div>
+      <div class="place-card">
+        <img src="gta/places/port.jpg" alt="Port Gellhorn">
+        <div class="place-overlay">
+          <h2>Port Gellhorn</h2>
+          <p>Abandoned malls, cheap motels, and biker gangs — the new economy of this forgotten tourist town runs on chaos.</p>
+        </div>
+      </div>
+      <div class="place-card">
+        <img src="gta/places/ambrosia.jpg" alt="Ambrosia">
+        <div class="place-overlay">
+          <h2>Ambrosia</h2>
+          <p>A town built on sugar and sweat. The refinery fuels the locals, the bikers control the streets.</p>
+        </div>
+      </div>
+      <div class="place-card">
+        <img src="gta/places/mount.jpg" alt="Mount Kalaga">
+        <div class="place-overlay">
+          <h2>Mount Kalaga</h2>
+          <p>A rugged wilderness where outlaws and mystics hide from civilization — and maybe something more sinister.</p>
+        </div>
+      </div>
     </div>
-  </div>
-
-  <!-- Fullscreen Viewer -->
-  <div class="viewer" id="viewer">
-    <span class="close-btn" id="close">&times;</span>
-    <span class="nav-arrow prev" id="prev">&lt;</span>
-    <img id="viewerImg" src="" alt="Full View">
-    <span class="nav-arrow next" id="next">&gt;</span>
-  </div>
-
-  <script>
-    const viewer    = document.getElementById('viewer');
-    const viewerImg = document.getElementById('viewerImg');
-    const closeBtn  = document.getElementById('close');
-    const prevBtn   = document.getElementById('prev');
-    const nextBtn   = document.getElementById('next');
-    const items     = document.querySelectorAll('.gallery-item img');
-    let currentIndex = 0;
-
-    // Fade-in observer
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.parentElement.classList.add('visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.1 });
-
-    items.forEach(img => observer.observe(img));
-
-    // Open viewer
-    items.forEach((img, idx) => {
-      img.addEventListener('click', () => {
-        currentIndex = idx;
-        viewerImg.src = img.src;
-        viewer.classList.add('active');
-        document.body.style.overflow = 'hidden';
-      });
-    });
-
-    // Close
-    const close = () => {
-      viewer.classList.remove('active');
-      document.body.style.overflow = '';
-    };
-
-    closeBtn.addEventListener('click', close);
-    viewer.addEventListener('click', e => { if (e.target === viewer) close(); });
-
-    // Navigation
-    prevBtn.addEventListener('click', () => {
-      currentIndex = (currentIndex - 1 + items.length) % items.length;
-      viewerImg.src = items[currentIndex].src;
-    });
-
-    nextBtn.addEventListener('click', () => {
-      currentIndex = (currentIndex + 1) % items.length;
-      viewerImg.src = items[currentIndex].src;
-    });
-
-    // Keyboard
-    document.addEventListener('keydown', e => {
-      if (!viewer.classList.contains('active')) return;
-      if (e.key === 'Escape') close();
-      if (e.key === 'ArrowLeft')  prevBtn.click();
-      if (e.key === 'ArrowRight') nextBtn.click();
-    });
-  </script>
+  </main>
 </body>
 </html>
