@@ -2,265 +2,335 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>VI | Locations</title>
-  <link rel="icon" href="gta/npc/lucia.jpg" type="image/jpg">
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GTA VI | Trailers</title>
+  <meta name="description" content="Official trailers for Grand Theft Auto VI – Vice City, Lucia & Jason, Leonida awaits." />
+  <link rel="icon" href="gta/npc/lucia.jpg" type="image/jpg" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet" />
   <style>
-    * { margin:0; padding:0; box-sizing:border-box; }
-    html, body { height:100%; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+    }
+
     body {
-      font-family: 'Orbitron', sans-serif;
+      font-family: 'Orbitron', system-ui, sans-serif;
       background:
-        linear-gradient(135deg, rgba(255,77,210,0.18), rgba(0,255,224,0.12)),
-        url('gta/others.jpg') center/cover no-repeat fixed;
+        linear-gradient(135deg, rgba(255, 77, 210, 0.18), rgba(0, 255, 224, 0.12)),
+        url('gta/jason.jpg') center / cover no-repeat fixed;
       background-blend-mode: overlay;
       color: #fff;
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
     }
 
     header {
-      position: fixed; top: 18px; left: 50%; transform: translateX(-50%);
-      z-index: 50; display: flex; gap: 12px; padding: 8px 14px; border-radius: 999px;
-      backdrop-filter: blur(12px) saturate(1.3);
-      -webkit-backdrop-filter: blur(12px) saturate(1.3);
-      background: rgba(0,0,0,0.3);
-      box-shadow: 0 6px 18px rgba(0,0,0,0.4), 0 0 15px rgba(255,77,210,0.15);
+      position: fixed;
+      top: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 100;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      padding: 10px 20px;
+      border-radius: 50px;
+      backdrop-filter: blur(16px) saturate(180%);
+      -webkit-backdrop-filter: blur(16px) saturate(180%);
+      background: rgba(0, 0, 0, 0.38);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+      transition: box-shadow 0.4s ease;
     }
+
+    header:hover {
+      box-shadow: 0 12px 40px rgba(255, 77, 210, 0.35);
+    }
+
     .nav-btn {
-      padding: 8px 12px; border-radius: 999px; text-decoration: none; color: #fff;
-      background: linear-gradient(90deg, rgba(255,255,255,0.04), rgba(255,255,255,0.015));
-      border: 1px solid rgba(255,255,255,0.08);
-      font-weight: 700; transition: 0.3s;
+      padding: 10px 18px;
+      border-radius: 50px;
+      text-decoration: none;
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.95rem;
+      background: linear-gradient(90deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: all 0.35s ease;
     }
-    .nav-btn:hover { box-shadow: 0 0 14px rgba(255,77,210,0.25); transform: scale(1.05); }
+
+    .nav-btn:hover,
+    .nav-btn:focus {
+      background: rgba(255, 77, 210, 0.2);
+      box-shadow: 0 0 16px rgba(255, 77, 210, 0.6);
+      transform: translateY(-1px);
+    }
 
     .page {
-      position: relative; z-index: 10;
-      width: clamp(900px, 90vw, 1400px);
-      margin-top: 120px; margin-bottom: 80px;
+      position: relative;
+      z-index: 10;
+      width: clamp(860px, 90vw, 1380px);
+      margin: 140px auto 80px;
       padding: 0 20px;
+      animation: fadeIn 1.1s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
 
     h1 {
       text-align: center;
-      font-size: 52px;
+      font-size: clamp(3.2rem, 7vw, 4.8rem);
       font-weight: 900;
-      margin-bottom: 60px;
-      color: #ffffff;
-      text-shadow: 0 6px 12px rgba(0,0,0,0.65);
+      margin-bottom: 50px;
+      color: #fff;
+      text-shadow: 0 6px 20px rgba(0,0,0,0.8), 0 0 20px rgba(255,77,210,0.4);
       letter-spacing: -1px;
     }
 
-    .places-grid {
+    .trailers-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
       gap: 32px;
     }
 
-    .place-item {
-      perspective: 1200px;
-      height: 420px;
-    }
-
-    .place-card {
+    .trailer-card {
       position: relative;
-      width: 100%;
-      height: 100%;
-      transform-style: preserve-3d;
-      transition: transform 0.7s cubic-bezier(0.4, 0.2, 0.2, 1);
-      border-radius: 20px;
-      box-shadow: 0 15px 35px rgba(0,0,0,0.6);
-    }
-
-    .place-item:hover .place-card {
-      transform: rotateY(180deg);
-      box-shadow: 0 25px 50px rgba(0,0,0,0.8), 0 0 30px rgba(255,77,210,0.4);
-    }
-
-    .card-face {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      backface-visibility: hidden;
-      border-radius: 20px;
+      background: rgba(0, 0, 0, 0.62);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      border-radius: 24px;
       overflow: hidden;
-      border: 2px solid rgba(255,255,255,0.08);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.7);
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      cursor: pointer;
     }
 
-    .card-front {
-      background: rgba(0,0,0,0.5);
+    .trailer-card:hover {
+      transform: translateY(-12px) scale(1.03);
+      box-shadow: 0 24px 60px rgba(0,0,0,0.8),
+                  0 0 40px rgba(255, 77, 210, 0.45),
+                  0 0 20px rgba(0, 255, 224, 0.25);
     }
 
-    .card-front img {
-      width: 100%; height: 100%;
-      object-fit: cover;
-      transition: transform 0.6s ease, filter 0.6s ease;
+    .video-wrapper {
+      position: relative;
+      padding-top: 56.25%; /* 16:9 */
+      background: #111;
     }
 
-    .place-item:hover .card-front img {
+    .video-wrapper iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+      border-radius: 18px 18px 0 0;
+      pointer-events: none; /* Prevent interaction with preview iframe */
+    }
+
+    .card-info {
+      padding: 20px 16px;
+      text-align: center;
+    }
+
+    .trailer-card h2 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin: 0;
+      color: #fff;
+      text-shadow: 0 2px 10px rgba(255,255,255,0.2);
+    }
+
+    .play-hint {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0,0,0,0.4);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .trailer-card:hover .play-hint {
+      opacity: 1;
+    }
+
+    .play-hint::before {
+      content: "▶";
+      font-size: 5rem;
+      color: rgba(255, 77, 210, 0.9);
+      filter: drop-shadow(0 0 20px rgba(255,77,210,0.7));
+    }
+
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.96);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+    }
+
+    .overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .overlay iframe {
+      width: 92vw;
+      max-width: 1400px;
+      height: 78vh;
+      max-height: 85vh;
+      border: none;
+      border-radius: 20px;
+      box-shadow: 0 0 80px rgba(255,255,255,0.15);
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 24px;
+      right: 32px;
+      background: rgba(255,255,255,0.12);
+      color: #fff;
+      font-size: 28px;
+      font-weight: bold;
+      width: 52px;
+      height: 52px;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .close-btn:hover {
+      background: rgba(255, 77, 210, 0.4);
       transform: scale(1.12);
-      filter: brightness(0.75) contrast(1.15);
     }
 
-    .front-overlay {
-      position: absolute; inset: 0;
-      display: flex; flex-direction: column; justify-content: flex-end;
-      padding: 30px;
-      background: linear-gradient(to top, rgba(0,0,0,0.85), transparent 60%);
-    }
-
-    .front-overlay h2 {
-      font-size: 32px;
-      text-shadow: 0 4px 12px rgba(0,0,0,0.9), 0 0 18px rgba(255,77,210,0.6);
-      color: #ffffff;
-    }
-
-    .card-back {
-      background: rgba(10,10,20,0.92);
-      transform: rotateY(180deg);
-      display: flex; flex-direction: column; justify-content: center; align-items: center;
-      padding: 40px; text-align: center;
-      backdrop-filter: blur(8px);
-    }
-
-    .card-back h2 {
-      font-size: 32px;
-      margin-bottom: 24px;
-      color: #ffffff;
-      text-shadow: 0 0 15px rgba(0,0,0,0.8);
-    }
-
-    .card-back p {
-      font-size: 17px;
-      line-height: 1.7;
-      color: #ffffff;
-      max-width: 90%;
-      text-shadow: 0 1px 4px rgba(0,0,0,0.7);
-    }
-
-    @media (max-width: 768px) {
-      h1 { font-size: 42px; margin-bottom: 50px; }
-      .place-item { height: 380px; }
-      .front-overlay h2, .card-back h2 { font-size: 28px; }
-      .card-back p { font-size: 16px; }
+    @media (max-width: 820px) {
+      .trailers-grid {
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 24px;
+      }
+      h1 { font-size: clamp(2.8rem, 9vw, 3.8rem); }
     }
 
     @media (max-width: 480px) {
-      h1 { font-size: 36px; }
-      .places-grid { gap: 24px; }
-      .front-overlay { padding: 20px; }
-      .card-back { padding: 30px; }
+      header {
+        padding: 8px 14px;
+        gap: 10px;
+        top: 12px;
+      }
+      .nav-btn {
+        padding: 8px 12px;
+        font-size: 0.85rem;
+      }
+      .page { margin-top: 120px; }
     }
   </style>
 </head>
 <body>
-  <header>
+
+  <header role="navigation" aria-label="Main navigation">
     <a href="index" class="nav-btn">Home</a>
     <a href="map" class="nav-btn">Map</a>
     <a href="characters" class="nav-btn">Characters</a>
     <a href="places" class="nav-btn">Places</a>
     <a href="screenshots" class="nav-btn">Screenshots</a>
-    <a href="trailers" class="nav-btn">Trailers</a>
+    <a href="trailers" class="nav-btn" aria-current="page">Trailers</a>
   </header>
 
   <main class="page">
-    <h1>GTA 6 Locations</h1>
-    <div class="places-grid">
+    <h1>GTA VI Trailers</h1>
 
-      <div class="place-item">
-        <div class="place-card">
-          <div class="card-face card-front">
-            <img src="gta/places/vice.jpg" alt="Vice City Beach">
-            <div class="front-overlay">
-              <h2>Vice City</h2>
-            </div>
-          </div>
-          <div class="card-face card-back">
-            <h2>Vice City</h2>
-            <p>The glamour, hustle, and greed of America captured in a single city. From pastel art deco hotels to the bright white sands of Ocean Beach — Vice City has it all.</p>
-          </div>
+    <div class="trailers-grid">
+      <div class="trailer-card" data-video="https://www.youtube.com/embed/QdBZY2fkU-0?autoplay=1&rel=0" tabindex="0" role="button" aria-label="Play Trailer 1">
+        <div class="video-wrapper">
+          <iframe src="https://www.youtube.com/embed/QdBZY2fkU-0?mute=1&controls=0" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen title="GTA VI Trailer 1"></iframe>
+          <div class="play-hint"></div>
+        </div>
+        <div class="card-info">
+          <h2>Trailer 1 – Reveal</h2>
         </div>
       </div>
 
-      <div class="place-item">
-        <div class="place-card">
-          <div class="card-face card-front">
-            <img src="gta/places/leoninda.jpg" alt="Leoninda Keys">
-            <div class="front-overlay">
-              <h2>Leoninda Keys</h2>
-            </div>
-          </div>
-          <div class="card-face card-back">
-            <h2>Leoninda Keys</h2>
-            <p>A tropical archipelago where life is easy but the waters are deadly. Grab a drink and relax, but don’t drift too far from shore.</p>
-          </div>
+      <div class="trailer-card" data-video="https://www.youtube.com/embed/VQRLujxTm3c?autoplay=1&rel=0" tabindex="0" role="button" aria-label="Play Trailer 2">
+        <div class="video-wrapper">
+          <iframe src="https://www.youtube.com/embed/VQRLujxTm3c?mute=1&controls=0" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen title="GTA VI Trailer 2"></iframe>
+          <div class="play-hint"></div>
+        </div>
+        <div class="card-info">
+          <h2>Trailer 2 – Jason & Lucia</h2>
         </div>
       </div>
 
-      <div class="place-item">
-        <div class="place-card">
-          <div class="card-face card-front">
-            <img src="gta/places/grassrivers.jpg" alt="Grassrivers">
-            <div class="front-overlay">
-              <h2>Grassrivers</h2>
-            </div>
-          </div>
-          <div class="card-face card-back">
-            <h2>Grassrivers</h2>
-            <p>Swamps filled with gators, secrets, and something far stranger. The deeper you go, the weirder it gets.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="place-item">
-        <div class="place-card">
-          <div class="card-face card-front">
-            <img src="gta/places/port.jpg" alt="Port Gellhorn">
-            <div class="front-overlay">
-              <h2>Port Gellhorn</h2>
-            </div>
-          </div>
-          <div class="card-face card-back">
-            <h2>Port Gellhorn</h2>
-            <p>Abandoned malls, cheap motels, and biker gangs — the new economy of this forgotten tourist town runs on chaos.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="place-item">
-        <div class="place-card">
-          <div class="card-face card-front">
-            <img src="gta/places/ambrosia.jpg" alt="Ambrosia">
-            <div class="front-overlay">
-              <h2>Ambrosia</h2>
-            </div>
-          </div>
-          <div class="card-face card-back">
-            <h2>Ambrosia</h2>
-            <p>A town built on sugar and sweat. The refinery fuels the locals, the bikers control the streets.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="place-item">
-        <div class="place-card">
-          <div class="card-face card-front">
-            <img src="gta/places/mount.jpg" alt="Mount Kalaga">
-            <div class="front-overlay">
-              <h2>Mount Kalaga</h2>
-            </div>
-          </div>
-          <div class="card-face card-back">
-            <h2>Mount Kalaga</h2>
-            <p>A rugged wilderness where outlaws and mystics hide from civilization — and maybe something more sinister.</p>
-          </div>
-        </div>
-      </div>
-
+      <!-- Add more cards here when Trailer 3 / Gameplay drops -->
     </div>
   </main>
+
+  <div class="overlay" id="videoOverlay" aria-hidden="true">
+    <button class="close-btn" id="closeOverlay" aria-label="Close video">✕</button>
+    <iframe id="overlayVideo" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  </div>
+
+  <script>
+    const overlay = document.getElementById("videoOverlay");
+    const overlayVideo = document.getElementById("overlayVideo");
+    const closeBtn = document.getElementById("closeOverlay");
+
+    function openVideo(url) {
+      overlayVideo.src = url;
+      overlay.classList.add("active");
+      overlay.setAttribute("aria-hidden", "false");
+    }
+
+    function closeVideo() {
+      overlay.classList.remove("active");
+      overlay.setAttribute("aria-hidden", "true");
+      overlayVideo.src = ""; // stop video
+    }
+
+    document.querySelectorAll(".trailer-card").forEach(card => {
+      const play = () => {
+        const url = card.dataset.video;
+        if (url) openVideo(url);
+      };
+
+      card.addEventListener("click", play);
+      card.addEventListener("keydown", e => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          play();
+        }
+      });
+    });
+
+    closeBtn.addEventListener("click", closeVideo);
+    overlay.addEventListener("click", e => {
+      if (e.target === overlay) closeVideo();
+    });
+
+    document.addEventListener("keydown", e => {
+      if (e.key === "Escape" && overlay.classList.contains("active")) {
+        closeVideo();
+      }
+    });
+  </script>
 </body>
 </html>
