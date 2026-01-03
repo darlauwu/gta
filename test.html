@@ -33,6 +33,16 @@
 
   body.reduce-animations * { transition: none !important; animation: none !important; }
 
+  /* Text glow levels */
+  .glow-none   { text-shadow: none; }
+  .glow-low    { text-shadow: 0 0 8px #c084fc, 0 0 16px #a855f7; }
+  .glow-medium { text-shadow: 0 0 16px #c084fc, 0 0 32px #a855f7; }
+  .glow-strong { text-shadow: 0 0 24px #c084fc, 0 0 48px #a855f7, 0 0 80px #9333ea; }
+
+  /* Font size scale */
+  body.font-large  { font-size: 1.15em; }
+  body.font-xlarge { font-size: 1.35em; }
+
   header {
     position: fixed;
     top: 16px;
@@ -43,9 +53,9 @@
     gap: 10px;
     padding: 10px 16px;
     border-radius: 999px;
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    background: rgba(15, 10, 30, 0.65);
+    backdrop-filter: blur(var(--blur, 12px));
+    -webkit-backdrop-filter: blur(var(--blur, 12px));
+    background: rgba(15, 10, 30, var(--nav-opacity, 0.65));
     border: 1px solid rgba(160, 100, 255, 0.25);
     box-shadow: 0 4px 20px rgba(0,0,0,0.5);
   }
@@ -68,12 +78,12 @@
   }
 
   .countdown-wrap {
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(var(--blur, 10px));
+    -webkit-backdrop-filter: blur(var(--blur, 10px));
     border-radius: 24px;
     padding: 40px 50px;
     text-align: center;
-    background: rgba(10,5,25,0.55);
+    background: rgba(10,5,25, var(--countdown-opacity, 0.55));
     border: 1px solid rgba(160,100,255,0.3);
     box-shadow: 0 20px 70px rgba(0,0,0,0.75);
     min-width: 340px;
@@ -87,7 +97,7 @@
     font-weight: 900;
     margin-bottom: 10px;
     color: #e0c0ff;
-    text-shadow: 0 0 20px rgba(160,100,255,0.6);
+    transition: text-shadow 0.6s ease;
   }
 
   .subtitle {
@@ -157,7 +167,9 @@
     position: fixed;
     bottom: 110px;
     right: 28px;
-    width: 290px;
+    width: 300px;
+    max-height: 65vh;
+    overflow-y: auto;
     background: rgba(15,10,35,0.92);
     backdrop-filter: blur(18px);
     border: 1px solid rgba(160,100,255,0.4);
@@ -182,10 +194,11 @@
     align-items: center;
     padding: 14px 6px;
     border-bottom: 1px solid rgba(255,255,255,0.08);
+    font-size: 15px;
   }
   .setting-item:last-child { border-bottom: none; }
 
-  .setting-label { font-size: 15px; font-weight: 600; color: #d0c0ff; }
+  .setting-label { font-weight: 600; color: #d0c0ff; }
 
   .toggle {
     position: relative;
@@ -251,8 +264,19 @@
 
 <div id="settings-menu">
   <div class="setting-item">
+    <span class="setting-label">Background Music</span>
+    <label class="toggle">
+      <input type="checkbox" id="toggle-music">
+      <span class="slider"></span>
+    </label>
+  </div>
+  <div class="setting-item">
+    <span class="setting-label">Music Volume</span>
+    <input type="range" min="0" max="100" value="30" id="music-volume">
+  </div>
+  <div class="setting-item">
     <span class="setting-label">Dark Overlay</span>
-    <label class="toggle"><input type="checkbox" id="toggle-overlay"><span class="slider"></span></label>
+    <label class="toggle"><input type="checkbox" id="toggle-overlay" checked><span class="slider"></span></label>
   </div>
   <div class="setting-item">
     <span class="setting-label">High Contrast</span>
@@ -262,11 +286,60 @@
     <span class="setting-label">Reduce Animations</span>
     <label class="toggle"><input type="checkbox" id="toggle-motion"><span class="slider"></span></label>
   </div>
-  <!-- Add more real toggles here later (particles, blur, theme, etc.) -->
+  <div class="setting-item">
+    <span class="setting-label">Text Glow</span>
+    <select id="text-glow">
+      <option value="none">None</option>
+      <option value="low" selected>Low</option>
+      <option value="medium">Medium</option>
+      <option value="strong">Strong</option>
+    </select>
+  </div>
+  <div class="setting-item">
+    <span class="setting-label">Blur Strength</span>
+    <select id="blur-level">
+      <option value="6">Low</option>
+      <option value="10">Medium</option>
+      <option value="14" selected>High</option>
+      <option value="22">Very High</option>
+    </select>
+  </div>
+  <div class="setting-item">
+    <span class="setting-label">Color Tint</span>
+    <select id="color-tint">
+      <option value="">Default</option>
+      <option value="vice">Vice Neon</option>
+      <option value="teal">Ocean Teal</option>
+      <option value="sunset">Warm Sunset</option>
+    </select>
+  </div>
+  <div class="setting-item">
+    <span class="setting-label">Font Size</span>
+    <select id="font-scale">
+      <option value="">Normal</option>
+      <option value="large">Large</option>
+      <option value="xlarge">Extra Large</option>
+    </select>
+  </div>
+  <div class="setting-item">
+    <span class="setting-label">Panel Opacity</span>
+    <select id="panel-opacity">
+      <option value="0.45">Subtle</option>
+      <option value="0.55" selected>Medium</option>
+      <option value="0.70">Strong</option>
+    </select>
+  </div>
 </div>
 
+<!-- Background Music -->
+<audio id="bg-music" loop preload="auto">
+  <source src="music/loading.mp3" type="audio/mpeg">
+  <!-- Replace the src path above with your actual music file location -->
+  Your browser does not support the audio element.
+</audio>
+
 <script>
-// Countdown – fixed & accurate
+// Countdown
 const targetDate = new Date('2026-11-19T00:00:00Z');
 function pad(n) { return n.toString().padStart(2, '0'); }
 
@@ -279,12 +352,10 @@ function updateCountdown() {
     document.getElementById('seconds').textContent = '00';
     return;
   }
-
   const days    = Math.floor(diffMs / 86400000);
   const hours   = Math.floor((diffMs % 86400000) / 3600000);
   const minutes = Math.floor((diffMs % 3600000) / 60000);
   const seconds = Math.floor((diffMs % 60000) / 1000);
-
   document.getElementById('days').textContent    = days;
   document.getElementById('hours').textContent   = pad(hours);
   document.getElementById('minutes').textContent = pad(minutes);
@@ -308,17 +379,73 @@ document.addEventListener('click', (e) => {
   }
 });
 
-// Working toggles
-document.getElementById('toggle-overlay').addEventListener('change', e => {
-  document.body.classList.toggle('dark-overlay', e.target.checked);
+// Helper
+function setVar(name, value) {
+  document.documentElement.style.setProperty(name, value);
+}
+
+// Music control
+const audio = document.getElementById('bg-music');
+const musicToggle = document.getElementById('toggle-music');
+const musicVolume = document.getElementById('music-volume');
+
+musicToggle.addEventListener('change', (e) => {
+  if (e.target.checked) {
+    audio.play().catch(err => {
+      console.log("Autoplay prevented:", err);
+      // Most browsers require user interaction → toggle click counts
+    });
+  } else {
+    audio.pause();
+  }
 });
 
-document.getElementById('toggle-contrast').addEventListener('change', e => {
-  document.body.classList.toggle('high-contrast', e.target.checked);
+musicVolume.addEventListener('input', (e) => {
+  audio.volume = e.target.value / 100;
 });
 
-document.getElementById('toggle-motion').addEventListener('change', e => {
-  document.body.classList.toggle('reduce-animations', e.target.checked);
+// Initialize volume
+audio.volume = musicVolume.value / 100;
+
+// Other settings
+document.getElementById('toggle-overlay').addEventListener('change', e =>
+  document.body.classList.toggle('dark-overlay', e.target.checked));
+
+document.getElementById('toggle-contrast').addEventListener('change', e =>
+  document.body.classList.toggle('high-contrast', e.target.checked));
+
+document.getElementById('toggle-motion').addEventListener('change', e =>
+  document.body.classList.toggle('reduce-animations', e.target.checked));
+
+document.getElementById('text-glow').addEventListener('change', e => {
+  document.querySelector('.title').className = 'title glow-' + e.target.value;
+});
+
+document.getElementById('blur-level').addEventListener('change', e => {
+  setVar('--blur', e.target.value + 'px');
+});
+
+document.getElementById('panel-opacity').addEventListener('change', e => {
+  setVar('--countdown-opacity', e.target.value);
+  setVar('--nav-opacity', (parseFloat(e.target.value) * 0.9).toFixed(2));
+});
+
+document.getElementById('font-scale').addEventListener('change', e => {
+  document.body.className = document.body.className.replace(/font-\w+/g, '').trim();
+  if (e.target.value) document.body.classList.add('font-' + e.target.value);
+});
+
+document.getElementById('color-tint').addEventListener('change', e => {
+  const val = e.target.value;
+  document.body.className = document.body.className.replace(/tint-\w+/g, '').trim();
+  if (val) {
+    document.body.classList.add('tint-' + val);
+    if (val === 'vice')   document.body.style.filter = 'hue-rotate(200deg) saturate(1.4)';
+    if (val === 'teal')   document.body.style.filter = 'hue-rotate(140deg) saturate(1.3)';
+    if (val === 'sunset') document.body.style.filter = 'hue-rotate(340deg) saturate(1.2)';
+  } else {
+    document.body.style.filter = '';
+  }
 });
 </script>
 </body>
