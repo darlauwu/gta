@@ -30,12 +30,52 @@
       box-shadow: 0 6px 18px rgba(0,0,0,0.4), 0 0 15px rgba(255,77,210,0.15);
     }
     .nav-btn {
-      padding: 8px 12px; border-radius: 999px; text-decoration: none; color: #fff;
-      background: linear-gradient(90deg, rgba(255,255,255,0.04), rgba(255,255,255,0.015));
-      border: 1px solid rgba(255,255,255,0.08);
-      font-weight: 700; transition: 0.3s;
-    }
-    .nav-btn:hover { box-shadow: 0 0 14px rgba(255,77,210,0.25); transform: scale(1.05); }
+  padding:          9px 17px;
+  border-radius:    999px;
+  color:            white;
+  font-weight:      600;
+  text-decoration:  none;
+  font-size:        0.94rem;
+  letter-spacing:   0.3px;
+  white-space:      nowrap;
+
+  /* Pure clear / neutral glass look – no color tint */
+  background:       rgba(255, 255, 255, 0.08);
+
+  /* Very light, almost invisible border with slight white glow */
+  border:           1px solid rgba(255, 255, 255, 0.18);
+
+  /* Glossy shine + soft shadow – keeps the premium transparent feel */
+  box-shadow:
+    inset 0 1.2px 1.5px rgba(255, 255, 255, 0.40),   /* bright top highlight */
+    inset 0 -0.8px 1px  rgba(255, 255, 255, 0.08),   /* subtle bottom shade */
+    0 4px 18px       rgba(0, 0, 0, 0.30);            /* gentle drop shadow */
+
+  transition:       all 0.24s ease;
+  cursor:           pointer;
+}
+
+.nav-btn:hover {
+  background:       rgba(255, 255, 255, 0.14);
+
+  border-color:     rgba(255, 255, 255, 0.32);
+
+  transform:        scale(1.05) translateY(-1px);
+
+  box-shadow:
+    inset 0 1.5px 2px  rgba(255, 255, 255, 0.65),   /* stronger shine on hover */
+    inset 0 -1px 1px   rgba(255, 255, 255, 0.12),
+    0 10px 30px        rgba(0, 0, 0, 0.38);
+}
+
+.nav-btn:active {
+  transform:        scale(0.98) translateY(0);
+  box-shadow:
+    inset 0 2px 4px rgba(0, 0, 0, 0.45),
+    inset 0 -1px 1px rgba(255, 255, 255, 0.10),
+    0 3px 12px      rgba(0, 0, 0, 0.35);
+  transition:       all 0.11s ease;
+}
 
     .page {
       position: relative; z-index: 10;
