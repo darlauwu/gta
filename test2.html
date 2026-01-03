@@ -39,44 +39,43 @@
       text-shadow: 0 0 8px rgba(0,0,0,0.9);
     }
 
-    /* Navbar – exact match to your screenshot */
+    /* ───────────────────────────────────────────────
+       NAVBAR – EXACT MATCH to your latest screenshot
+    ─────────────────────────────────────────────── */
     header {
-      position: fixed;
-      top: 16px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 100;
-      display: flex;
-      gap: 6px;
-      padding: 6px 14px;
-      border-radius: 999px;
-      backdrop-filter: blur(12px) saturate(1.2);
-      -webkit-backdrop-filter: blur(12px) saturate(1.2);
-      background: rgba(0, 0, 0, 0.45);           /* semi-dark with blur */
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
-    }
+          position: fixed;
+          top: 16px;
+          left: 50%;
+          transform: translateX(-50%);
+          z-index: 100;
+          display: flex;
+          gap: 4px;
+          padding: 6px 12px;
+          border-radius: 999px;
+          background: #2a6b7c;                     /* teal-blue-green from screenshot */
+          box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+          backdrop-filter: none;                    /* solid color, no heavy blur */
+        }
 
     .nav-btn {
-      padding: 8px 16px;
+      padding: 8px 18px;
       border-radius: 999px;
-      color: #fff;
+      color: #ffffff;
       text-decoration: none;
       font-weight: 600;
       font-size: 14px;
       background: transparent;
-      transition: all 0.25s ease;
+      transition: all 0.2s ease;
       white-space: nowrap;
     }
 
     .nav-btn:hover {
-      background: rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.15);
     }
 
     .nav-btn.active {
-      background: rgba(255, 255, 255, 0.28);     /* stronger highlight for current page */
+      background: rgba(255, 255, 255, 0.22);     /* slightly lighter to match highlight */
       font-weight: 800;
-      box-shadow: inset 0 0 10px rgba(255,255,255,0.15);
     }
 
     /* Page layout */
@@ -124,7 +123,7 @@
 
     @media (max-width: 768px) {
       header {
-        padding: 6px 12px;
+        padding: 6px 10px;
         gap: 4px;
         top: 12px;
         flex-wrap: wrap;
@@ -143,32 +142,4 @@
       .embed-title {
         font-size: 18px;
       }
-    }
-  </style>
-</head>
-<body class="dark-overlay high-contrast">
-
-  <header>
-    <a href="index" class="nav-btn">Home</a>
-    <a href="map" class="nav-btn active">Map</a>
-    <a href="characters" class="nav-btn">Characters</a>
-    <a href="places" class="nav-btn">Places</a>
-    <a href="screenshots" class="nav-btn">Screenshots</a>
-    <a href="trailers" class="nav-btn">Trailers</a>
-  </header>
-
-  <div class="page">
-    <div class="embed-card">
-      <div class="embed-header">
-        <div class="embed-title">Grand Theft Auto VI Map</div>
-      </div>
-      <iframe id="embedFrame" class="embed-frame"
-        src="https://map.stateofleonida.net/"
-        allowfullscreen
-        sandbox="allow-same-origin allow-scripts allow-forms allow-popups">
-      </iframe>
-    </div>
-  </div>
-
-</body>
-</html>
+   
