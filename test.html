@@ -1,169 +1,122 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>GTA VI | Live Release Hub</title>
-
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>VI | Home</title>
+<link rel="icon" href="gta/npc/lucia.jpg" type="image/jpg">
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-html,body{height:100%}
+html,body{height:100%;overflow:hidden}
 
 body{
   font-family:'Orbitron',sans-serif;
-  background:url("gta/jason.jpg") center/cover no-repeat fixed;
+  background:url('gta/jason.jpg') center/cover no-repeat fixed;
   color:#fff;
-  overflow-x:hidden;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
 
-/* dark overlay */
-body::before{
-  content:"";
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,0.85);
-  z-index:0;
-}
-
-/* ================= HEADER ================= */
+/* Header */
 header{
   position:fixed;
-  top:16px;
+  top:18px;
   left:50%;
   transform:translateX(-50%);
   z-index:50;
   display:flex;
   gap:12px;
-  padding:10px 16px;
-  border-radius:999px;
-  background:rgba(0,0,0,0.6);
-  border:1px solid rgba(255,255,255,0.1);
-}
-
-header a{
-  color:#fff;
-  text-decoration:none;
-  font-weight:700;
   padding:8px 14px;
   border-radius:999px;
+  background:rgba(0,0,0,0.25);
+  box-shadow:0 6px 18px rgba(0,0,0,0.35);
+}
+
+.nav-btn{
+  padding:9px 17px;
+  border-radius:999px;
+  color:#fff;
+  font-weight:600;
+  text-decoration:none;
+  background:rgba(255,255,255,0.08);
+  border:1px solid rgba(255,255,255,0.18);
+  box-shadow:
+    inset 0 1.2px 1.5px rgba(255,255,255,0.4),
+    0 4px 18px rgba(0,0,0,0.3);
+  transition:.25s;
+}
+.nav-btn:hover{
+  background:rgba(255,255,255,0.14);
+  transform:scale(1.05);
+}
+
+/* Launch Panel */
+.launch-wrap{
+  backdrop-filter:blur(6px);
+  border-radius:24px;
+  padding:46px 52px;
+  text-align:center;
+  box-shadow:0 20px 60px rgba(0,0,0,0.8);
+  border:1px solid rgba(255,255,255,0.06);
+  background:rgba(0,0,0,0.32);
+  max-width:900px;
+  width:clamp(320px,70vw,900px);
+}
+
+.title{
+  font-size:52px;
+  font-weight:900;
+  margin-bottom:10px;
+}
+
+.release-badge{
+  display:inline-block;
+  margin-bottom:18px;
+  padding:6px 18px;
+  border-radius:999px;
+  font-size:14px;
+  letter-spacing:2px;
+  font-weight:800;
+  color:#000;
+  background:linear-gradient(90deg,#00ffaa,#7affd6);
+}
+
+.subtitle{
+  font-size:18px;
+  color:rgba(255,255,255,0.85);
+  margin-bottom:34px;
+}
+
+/* Actions */
+.actions{
+  display:flex;
+  gap:18px;
+  justify-content:center;
+  flex-wrap:wrap;
+}
+
+.action-btn{
+  padding:14px 28px;
+  border-radius:999px;
+  font-weight:800;
+  text-decoration:none;
+  color:#000;
+  background:linear-gradient(90deg,#ff4dd2,#ff99e6);
+  box-shadow:0 10px 30px rgba(0,0,0,0.45);
   transition:.25s;
 }
 
-header a:hover{
-  background:rgba(255,255,255,0.1);
+.action-btn.secondary{
+  background:rgba(255,255,255,0.12);
+  color:#fff;
+  border:1px solid rgba(255,255,255,0.25);
 }
 
-/* ================= PAGE ================= */
-.page{
-  position:relative;
-  z-index:1;
-  max-width:1200px;
-  margin:0 auto;
-  padding:140px 20px 80px;
-  text-align:center;
-}
-
-/* ================= HERO ================= */
-.hero h1{
-  font-size:56px;
-  font-weight:900;
-  text-shadow:0 0 20px #ff4dd2,0 0 40px #ff99e6;
-}
-
-.hero .status{
-  margin-top:12px;
-  font-size:18px;
-  letter-spacing:2px;
-  color:#00ffaa;
-}
-
-.hero p{
-  margin-top:18px;
-  opacity:.85;
-}
-
-/* ================= BUTTON GRID ================= */
-.grid{
-  margin-top:60px;
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:24px;
-}
-
-.card{
-  background:rgba(0,0,0,0.55);
-  border-radius:18px;
-  padding:26px;
-  border:1px solid rgba(255,255,255,0.08);
-  box-shadow:0 10px 30px rgba(0,0,0,0.6);
-  transition:.3s;
-}
-
-.card:hover{
-  transform:translateY(-8px);
-  box-shadow:0 0 30px rgba(255,77,210,0.5);
-}
-
-.card h3{
-  margin-bottom:10px;
-  font-size:20px;
-}
-
-.card p{
-  font-size:14px;
-  opacity:.8;
-  margin-bottom:18px;
-}
-
-.card a{
-  display:inline-block;
-  padding:10px 18px;
-  border-radius:999px;
-  background:linear-gradient(90deg,#ff4dd2,#ff99e6);
-  color:#000;
-  font-weight:800;
-  text-decoration:none;
-}
-
-/* ================= LIVE FEED ================= */
-.feed{
-  margin-top:90px;
-  text-align:left;
-}
-
-.feed h2{
-  text-align:center;
-  margin-bottom:30px;
-  font-size:32px;
-}
-
-.update{
-  background:rgba(0,0,0,0.5);
-  border-left:4px solid #ff4dd2;
-  padding:18px 22px;
-  border-radius:12px;
-  margin-bottom:18px;
-}
-
-.update .time{
-  font-size:12px;
-  opacity:.6;
-  margin-bottom:6px;
-}
-
-.update .text{
-  font-size:15px;
-  line-height:1.6;
-}
-
-/* ================= FOOTER ================= */
-footer{
-  margin-top:100px;
-  text-align:center;
-  opacity:.6;
-  font-size:13px;
+.action-btn:hover{
+  transform:translateY(-2px) scale(1.05);
 }
 </style>
 </head>
@@ -171,88 +124,29 @@ footer{
 <body>
 
 <header>
-  <a href="index.html">Home</a>
-  <a href="map.html">Map</a>
-  <a href="characters.html">Characters</a>
-  <a href="screenshots.html">Screenshots</a>
-  <a href="trailers.html">Trailers</a>
+  <a href="index" class="nav-btn">Home</a>
+  <a href="map" class="nav-btn">Map</a>
+  <a href="characters" class="nav-btn">Characters</a>
+  <a href="places" class="nav-btn">Places</a>
+  <a href="screenshots" class="nav-btn">Screenshots</a>
+  <a href="trailers" class="nav-btn">Trailers</a>
 </header>
 
-<div class="page">
+<section class="launch-wrap">
+  <h1 class="title">Grand Theft Auto VI</h1>
 
-  <!-- HERO -->
-  <div class="hero">
-    <h1>GRAND THEFT AUTO VI</h1>
-    <div class="status">OUT NOW</div>
-    <p>Welcome to Vice City. The next generation of Grand Theft Auto is here.</p>
+  <div class="release-badge">OUT NOW</div>
+
+  <div class="subtitle">
+    Vice City is open. The next era of Grand Theft Auto has begun.
   </div>
 
-  <!-- HUB GRID -->
-  <div class="grid">
-    <div class="card">
-      <h3>Play Now</h3>
-      <p>Purchase or launch GTA VI on your platform.</p>
-      <a href="#">Launch</a>
-    </div>
-
-    <div class="card">
-      <h3>Vice City Map</h3>
-      <p>Explore districts, landmarks, and hidden locations.</p>
-      <a href="map.html">Open Map</a>
-    </div>
-
-    <div class="card">
-      <h3>Characters</h3>
-      <p>Meet Lucia, Jason, and the cast of Vice City.</p>
-      <a href="characters.html">View</a>
-    </div>
-
-    <div class="card">
-      <h3>Media</h3>
-      <p>Trailers, screenshots, and official artwork.</p>
-      <a href="screenshots.html">Browse</a>
-    </div>
-
-    <div class="card">
-      <h3>Updates</h3>
-      <p>Patches, hotfixes, and Rockstar announcements.</p>
-      <a href="#">View Feed</a>
-    </div>
-
-    <div class="card">
-      <h3>Community</h3>
-      <p>Stats, milestones, and player activity.</p>
-      <a href="#">Enter</a>
-    </div>
+  <div class="actions">
+    <a href="#" class="action-btn">Play Now</a>
+    <a href="trailers" class="action-btn secondary">Watch Trailer</a>
+    <a href="map" class="action-btn secondary">Explore Map</a>
   </div>
-
-  <!-- LIVE FEED -->
-  <div class="feed">
-    <h2>Live Updates</h2>
-
-    <div class="update">
-      <div class="time">Launch Day</div>
-      <div class="text">
-        GTA VI has officially launched worldwide on PlayStation and Xbox.
-      </div>
-    </div>
-
-    <div class="update">
-      <div class="time">+2 Hours</div>
-      <div class="text">
-        Day One patch deployed to improve performance and stability.
-      </div>
-    </div>
-
-    <div class="update">
-      <div class="time">+6 Hours</div>
-      <div class="text">
-        Rockstar confirms record-breaking player numbers across platforms.
-      </div>
-    </div>
-  </div>
-
-</div>
+</section>
 
 </body>
 </html>
