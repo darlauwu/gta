@@ -18,68 +18,40 @@
     justify-content: center;
   }
 
-  /* Header */
-  header {
-    position: fixed;
-    top: 18px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 50;
-    display: flex;
-    gap: 12px;
-    padding: 8px 14px;
-    border-radius: 999px;
-    backdrop-filter: blur(12px) saturate(1.2);
-    background: rgba(0,0,0,0.25);
-    box-shadow: 0 6px 18px rgba(0,0,0,0.35);
-  }
-
- .nav-btn {
-  padding:          9px 17px;
-  border-radius:    999px;
-  color:            white;
-  font-weight:      600;
-  text-decoration:  none;
-  font-size:        0.94rem;
-  letter-spacing:   0.3px;
-  white-space:      nowrap;
-
-  /* Pure clear / neutral glass look – no color tint */
-  background:       rgba(255, 255, 255, 0.08);
-
-  /* Very light, almost invisible border with slight white glow */
-  border:           1px solid rgba(255, 255, 255, 0.18);
-
-  /* Glossy shine + soft shadow – keeps the premium transparent feel */
-  box-shadow:
-    inset 0 1.2px 1.5px rgba(255, 255, 255, 0.40),   /* bright top highlight */
-    inset 0 -0.8px 1px  rgba(255, 255, 255, 0.08),   /* subtle bottom shade */
-    0 4px 18px       rgba(0, 0, 0, 0.30);            /* gentle drop shadow */
-
-  transition:       all 0.24s ease;
-  cursor:           pointer;
+   header{
+  position:fixed;
+  top:18px;
+  left:50%;
+  transform:translateX(-50%);
+  z-index:50;
+  display:flex;
+  gap:12px;
+  padding:8px 14px;
+  border-radius:999px;
+  background:rgba(0,0,0,0.25);
+  box-shadow:0 6px 18px rgba(0,0,0,0.35);
 }
 
-.nav-btn:hover {
-  background:       rgba(255, 255, 255, 0.14);
+    header:hover {
+      box-shadow: 0 12px 40px rgba(255, 77, 210, 0.35);
+    }
 
-  border-color:     rgba(255, 255, 255, 0.32);
-
-  transform:        scale(1.05) translateY(-1px);
-
+   .nav-btn{
+  padding:9px 17px;
+  border-radius:999px;
+  color:#fff;
+  font-weight:600;
+  text-decoration:none;
+  background:rgba(255,255,255,0.08);
+  border:1px solid rgba(255,255,255,0.18);
   box-shadow:
-    inset 0 1.5px 2px  rgba(255, 255, 255, 0.65),   /* stronger shine on hover */
-    inset 0 -1px 1px   rgba(255, 255, 255, 0.12),
-    0 10px 30px        rgba(0, 0, 0, 0.38);
+    inset 0 1.2px 1.5px rgba(255,255,255,0.4),
+    0 4px 18px rgba(0,0,0,0.3);
+  transition:.25s;
 }
-
-.nav-btn:active {
-  transform:        scale(0.98) translateY(0);
-  box-shadow:
-    inset 0 2px 4px rgba(0, 0, 0, 0.45),
-    inset 0 -1px 1px rgba(255, 255, 255, 0.10),
-    0 3px 12px      rgba(0, 0, 0, 0.35);
-  transition:       all 0.11s ease;
+.nav-btn:hover{
+  background:rgba(255,255,255,0.14);
+  transform:scale(1.05);
 }
   /* Countdown */
   .countdown-wrap {
