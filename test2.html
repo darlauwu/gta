@@ -9,23 +9,14 @@
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-html,body{height:100%}
-
 body{
   font-family:'Orbitron',sans-serif;
-  background:url('gta/jason.jpg') center/cover no-repeat fixed;
+  background:#000;
   color:#fff;
   overflow-x:hidden;
 }
 
-/* dark cinematic overlay */
-body::before{
-  content:"";
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,0.75);
-  z-index:0;
-}
+/* ================= NAVBAR (YOUR STYLE) ================= */
 
 header{
   position:fixed;
@@ -37,75 +28,110 @@ header{
   gap:12px;
   padding:8px 14px;
   border-radius:999px;
-  background:rgba(0,0,0,0.28);
-  backdrop-filter:blur(12px);
-  border:1px solid rgba(255,255,255,0.06);
+  background:rgba(0,0,0,0.25);
+  box-shadow:0 6px 18px rgba(0,0,0,0.35);
+}
+
+header:hover{
+  box-shadow:0 12px 40px rgba(255,77,210,0.35);
 }
 
 .nav-btn{
-  padding:9px 18px;
+  padding:9px 17px;
   border-radius:999px;
+  color:#fff;
+  font-weight:600;
   text-decoration:none;
-  color:rgba(255,255,255,0.85);
-  background:rgba(255,255,255,0.05);
-  border:1px solid rgba(255,255,255,0.05);
-  font-size:0.94rem;
+  background:rgba(255,255,255,0.08);
+  border:1px solid rgba(255,255,255,0.18);
+  box-shadow:
+    inset 0 1.2px 1.5px rgba(255,255,255,0.4),
+    0 4px 18px rgba(0,0,0,0.3);
+  transition:.25s;
 }
 
-.nav-btn:hover{background:rgba(255,255,255,0.1)}
+.nav-btn:hover{
+  background:rgba(255,255,255,0.14);
+  transform:scale(1.05);
+}
+
+/* ================= PAGE ================= */
 
 .page{
-  position:relative;
-  z-index:1;
-  max-width:1200px;
+  max-width:1300px;
   margin:0 auto;
   padding:140px 20px 80px;
   text-align:center;
 }
 
 h1{
-  font-size:54px;
-  font-weight:800;
-  margin-bottom:14px;
+  font-size:52px;
+  margin-bottom:12px;
 }
 
 .subtitle{
-  opacity:.8;
+  opacity:.75;
   margin-bottom:60px;
-  font-size:18px;
 }
 
-/* cards */
+/* ================= PREORDER CARDS ================= */
+
 .cards{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-  gap:24px;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:28px;
 }
 
 .card{
-  background:rgba(0,0,0,0.55);
-  backdrop-filter:blur(12px);
-  border-radius:22px;
-  padding:28px;
-  border:1px solid rgba(255,255,255,0.08);
-  text-align:left;
-  transition:.3s;
+  position:relative;
+  height:420px;
+  border-radius:26px;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,0.12);
+  transition:.35s;
 }
 
 .card:hover{
-  transform:translateY(-6px);
+  transform:translateY(-8px);
+}
+
+/* background image */
+.card-bg{
+  position:absolute;
+  inset:0;
+  background-size:cover;
+  background-position:center;
+  filter:brightness(0.55);
+}
+
+/* dark overlay */
+.card::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(to top,rgba(0,0,0,0.9),rgba(0,0,0,0.2));
+}
+
+/* content */
+.card-content{
+  position:absolute;
+  inset:0;
+  z-index:2;
+  padding:28px;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-end;
 }
 
 .edition{
-  font-size:20px;
-  font-weight:700;
-  margin-bottom:8px;
+  font-size:22px;
+  font-weight:800;
 }
 
 .price{
-  font-size:32px;
+  font-size:34px;
   font-weight:800;
-  margin-bottom:14px;
+  margin:6px 0 12px;
 }
 
 .features{
@@ -114,59 +140,49 @@ h1{
   opacity:.9;
 }
 
-.features li{
-  margin-bottom:8px;
-}
-
-/* button */
 .buy-btn{
-  display:block;
-  margin-top:24px;
+  margin-top:18px;
   padding:14px;
-  text-align:center;
   border-radius:999px;
+  text-align:center;
   text-decoration:none;
   color:#fff;
-  background:rgba(255,255,255,0.12);
-  border:1px solid rgba(255,255,255,0.2);
+  background:rgba(255,255,255,0.14);
+  border:1px solid rgba(255,255,255,0.25);
   font-weight:700;
   transition:.25s;
 }
 
 .buy-btn:hover{
-  background:rgba(255,255,255,0.22);
+  background:rgba(255,255,255,0.28);
 }
 
-/* platform selector */
+/* ================= PLATFORM ================= */
+
 .platforms{
   margin-top:70px;
 }
 
 .platforms h2{
-  margin-bottom:20px;
+  margin-bottom:18px;
 }
 
 .platform-buttons{
   display:flex;
-  gap:14px;
   justify-content:center;
+  gap:14px;
   flex-wrap:wrap;
 }
 
 .platform{
   padding:12px 22px;
   border-radius:999px;
-  background:rgba(255,255,255,0.06);
-  border:1px solid rgba(255,255,255,0.12);
-  cursor:pointer;
-  transition:.2s;
+  background:rgba(255,255,255,0.08);
+  border:1px solid rgba(255,255,255,0.2);
 }
 
-.platform:hover{
-  background:rgba(255,255,255,0.14);
-}
+/* ================= FOOTER ================= */
 
-/* footer note */
 .note{
   margin-top:60px;
   font-size:13px;
@@ -186,43 +202,53 @@ h1{
 
 <div class="page">
   <h1>Pre-Order Grand Theft Auto VI</h1>
-  <div class="subtitle">Choose your edition and prepare for Vice City.</div>
+  <div class="subtitle">Choose your edition. Vice City awaits.</div>
 
   <div class="cards">
 
+    <!-- STANDARD -->
     <div class="card">
-      <div class="edition">Standard Edition</div>
-      <div class="price">$69.99</div>
-      <ul class="features">
-        <li>• Full GTA VI base game</li>
-        <li>• Story Mode</li>
-        <li>• GTA Online access</li>
-      </ul>
-      <a href="#" class="buy-btn">Pre-Order</a>
+      <div class="card-bg" style="background-image:url('gta/preorder/standard.jpg')"></div>
+      <div class="card-content">
+        <div class="edition">Standard Edition</div>
+        <div class="price">$69.99</div>
+        <div class="features">
+          • Base Game<br>
+          • Story Mode<br>
+          • GTA Online Access
+        </div>
+        <a href="#" class="buy-btn">Pre-Order</a>
+      </div>
     </div>
 
+    <!-- DELUXE -->
     <div class="card">
-      <div class="edition">Deluxe Edition</div>
-      <div class="price">$89.99</div>
-      <ul class="features">
-        <li>• Everything in Standard</li>
-        <li>• Exclusive vehicles</li>
-        <li>• Bonus weapons</li>
-        <li>• In-game currency pack</li>
-      </ul>
-      <a href="#" class="buy-btn">Pre-Order</a>
+      <div class="card-bg" style="background-image:url('gta/preorder/deluxe.jpg')"></div>
+      <div class="card-content">
+        <div class="edition">Deluxe Edition</div>
+        <div class="price">$89.99</div>
+        <div class="features">
+          • Bonus Vehicles<br>
+          • Exclusive Weapons<br>
+          • GTA$ Starter Pack
+        </div>
+        <a href="#" class="buy-btn">Pre-Order</a>
+      </div>
     </div>
 
+    <!-- ULTIMATE -->
     <div class="card">
-      <div class="edition">Ultimate Edition</div>
-      <div class="price">$109.99</div>
-      <ul class="features">
-        <li>• Everything in Deluxe</li>
-        <li>• Early GTA Online access</li>
-        <li>• Exclusive properties</li>
-        <li>• Collector cosmetics</li>
-      </ul>
-      <a href="#" class="buy-btn">Pre-Order</a>
+      <div class="card-bg" style="background-image:url('gta/preorder/ultimate.jpg')"></div>
+      <div class="card-content">
+        <div class="edition">Ultimate Edition</div>
+        <div class="price">$109.99</div>
+        <div class="features">
+          • Early Online Access<br>
+          • Exclusive Properties<br>
+          • Collector Cosmetics
+        </div>
+        <a href="#" class="buy-btn">Pre-Order</a>
+      </div>
     </div>
 
   </div>
@@ -232,16 +258,15 @@ h1{
     <div class="platform-buttons">
       <div class="platform">PlayStation 5</div>
       <div class="platform">Xbox Series X|S</div>
-      <div class="platform">PC (Coming Later)</div>
+      <div class="platform">PC (Later)</div>
     </div>
   </div>
 
   <div class="note">
-    Pre-order content subject to change. Not affiliated with Rockstar Games.
+    Fan-made concept site. Not affiliated with Rockstar Games.
   </div>
 </div>
 
 </body>
 </html>
-
 
