@@ -14,8 +14,8 @@
       font-family: 'Orbitron', sans-serif;
       min-height: 100vh;
       background:
-        linear-gradient(135deg, rgba(255,77,210,0.2), rgba(0,255,224,0.15)),
-        url('gta/jason.jpg') center/cover no-repeat fixed;
+        linear-gradient(135deg, rgba(255,77,210,0.18), rgba(0,255,224,0.12)),
+        url('gta/jason.jpg') center/cover no-repeat fixed; /* replace with your main hero bg if different */
       background-blend-mode: overlay;
       color: #fff;
       display: flex;
@@ -23,120 +23,150 @@
     }
     header {
       position: fixed;
-      top: 16px;
+      top: 20px;
       left: 50%;
       transform: translateX(-50%);
       z-index: 100;
       display: flex;
-      gap: 12px;
-      padding: 10px 18px;
-      border-radius: 999px;
-      backdrop-filter: blur(16px);
-      background: rgba(0,0,0,0.4);
-      border: 1px solid rgba(255,255,255,0.1);
-      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+      gap: 10px;
+      padding: 10px 20px;
+      border-radius: 50px;
+      backdrop-filter: blur(12px);
+      background: rgba(0,0,0,0.45);
+      border: 1px solid rgba(255,255,255,0.15);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
     }
     .nav-btn {
-      padding: 10px 16px;
-      border-radius: 999px;
+      padding: 10px 18px;
+      border-radius: 50px;
       color: #fff;
       font-weight: 700;
       text-decoration: none;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.08);
       transition: all 0.3s;
     }
-    .nav-btn:hover, .nav-btn.active { background: rgba(255,77,210,0.25); transform: scale(1.05); }
+    .nav-btn:hover, .nav-btn.active {
+      background: rgba(255,77,210,0.3);
+      transform: scale(1.05);
+    }
     main {
       flex: 1;
+      position: relative;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       text-align: center;
-      padding: 120px 20px 60px;
+      padding: 100px 20px 60px;
     }
     h1 {
-      font-size: clamp(4rem, 10vw, 6.5rem);
+      font-size: clamp(5rem, 12vw, 9rem);
       font-weight: 900;
-      letter-spacing: 4px;
-      background: linear-gradient(90deg, #ff4dd2, #00ffe0);
+      letter-spacing: 8px;
+      background: linear-gradient(90deg, #ff4dd2, #00ffe0, #ff4dd2);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      text-shadow: 0 0 30px rgba(255,77,210,0.6);
-      margin-bottom: 16px;
+      text-shadow: 0 0 40px rgba(255,77,210,0.7);
+      margin-bottom: 12px;
     }
-    .tagline { font-size: 1.8rem; margin-bottom: 24px; opacity: 0.9; }
-    .release { font-size: 2rem; color: #00ffe0; margin-bottom: 32px; text-shadow: 0 0 20px #00ffe0; }
-
-    /* Clean status banner */
+    .tagline {
+      font-size: 1.8rem;
+      margin-bottom: 16px;
+      opacity: 0.92;
+    }
+    .release {
+      font-size: 2.2rem;
+      color: #00ffe0;
+      margin-bottom: 40px;
+      text-shadow: 0 0 25px #00ffe0;
+    }
+    /* Countdown placed in the circled area – glass panel with cyan digits */
+    .countdown-container {
+      position: relative;
+      margin: 60px 0 80px;
+      width: 90%;
+      max-width: 800px;
+    }
+    .countdown-panel {
+      background: rgba(0,0,0,0.35);
+      backdrop-filter: blur(12px);
+      border-radius: 24px;
+      border: 1px solid rgba(0,255,224,0.4);
+      padding: 20px 30px;
+      box-shadow: 0 10px 40px rgba(0,255,224,0.3);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+    .countdown-label {
+      font-size: 1.3rem;
+      opacity: 0.9;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+    }
+    .countdown {
+      display: flex;
+      gap: 20px;
+      font-size: clamp(3rem, 8vw, 5.5rem);
+      font-weight: 900;
+      color: #00ffe0;
+      text-shadow: 0 0 30px #00ffe0, 0 0 50px rgba(0,255,224,0.6);
+    }
+    .countdown-segment {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: 110px;
+    }
+    .countdown-unit {
+      font-size: 0.45em;
+      opacity: 0.8;
+      margin-top: 6px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
     .status {
       font-size: 1.4rem;
       font-weight: 700;
       background: rgba(0,0,0,0.5);
       padding: 12px 32px;
-      border-radius: 999px;
-      border: 2px solid rgba(0,255,224,0.4);
+      border-radius: 50px;
+      border: 2px solid rgba(255,77,210,0.4);
       backdrop-filter: blur(10px);
-      margin-bottom: 32px;
+      margin: 40px 0;
       max-width: 90%;
-      box-shadow: 0 0 20px rgba(0,255,224,0.3);
     }
-
-    /* Frosted countdown – simple & elegant */
-    .countdown-container {
-      margin: 32px 0 48px;
-    }
-    .countdown-label { font-size: 1.4rem; opacity: 0.85; margin-bottom: 12px; }
-    .countdown {
-      display: flex;
-      justify-content: center;
-      gap: 24px;
-      font-size: clamp(2.2rem, 7vw, 4.5rem);
-      font-weight: 900;
-      color: transparent;
-      background: rgba(255,255,255,0.9);
-      -webkit-background-clip: text;
-      backdrop-filter: blur(8px);
-      padding: 16px 32px;
-      border-radius: 20px;
-      border: 1px solid rgba(255,255,255,0.3);
-      box-shadow: 0 0 40px rgba(0,255,224,0.4);
-    }
-    .countdown-segment { display: flex; flex-direction: column; align-items: center; min-width: 100px; }
-    .countdown-value { text-shadow: 0 0 20px #00ffe0; }
-    .countdown-unit { font-size: 0.5em; opacity: 0.8; margin-top: 4px; text-transform: uppercase; }
-
     .btn-group {
       display: flex;
       flex-direction: column;
       gap: 20px;
-      align-items: center;
-      margin: 32px 0;
+      margin: 30px 0;
     }
     .action-btn {
       display: flex;
       align-items: center;
       gap: 12px;
-      padding: 16px 36px;
-      border-radius: 999px;
+      padding: 16px 40px;
+      border-radius: 50px;
       background: linear-gradient(135deg, rgba(255,77,210,0.3), rgba(0,255,224,0.2));
       backdrop-filter: blur(12px);
-      border: 1px solid rgba(255,255,255,0.2);
+      border: 1px solid rgba(255,255,255,0.15);
       color: #fff;
       font-weight: 900;
       font-size: 1.3rem;
       text-decoration: none;
       transition: all 0.3s;
     }
-    .action-btn:hover { transform: translateY(-4px); box-shadow: 0 0 30px rgba(255,77,210,0.5); }
-
+    .action-btn:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 0 30px rgba(255,77,210,0.5);
+    }
     .note {
       font-size: 1.1rem;
       max-width: 700px;
       opacity: 0.8;
-      line-height: 1.6;
-      margin: 32px 0;
+      margin: 30px 0;
     }
     footer {
       padding: 40px 20px;
@@ -146,7 +176,7 @@
       margin-top: auto;
     }
     @media (max-width: 768px) {
-      .countdown { gap: 16px; font-size: 3rem; padding: 12px 24px; }
+      .countdown { gap: 12px; font-size: 3.5rem; }
       .countdown-segment { min-width: 80px; }
     }
   </style>
@@ -167,29 +197,32 @@
     <p class="tagline">Vice City. Leonida. Coming soon.</p>
     <div class="release">November 19, 2026</div>
 
-    <div class="status">Pre-orders coming soon – Wishlist now!</div>
-
+    <!-- Countdown positioned in the circled/overlay area -->
     <div class="countdown-container">
-      <div class="countdown-label">TIME UNTIL RELEASE</div>
-      <div class="countdown" id="countdown">
-        <div class="countdown-segment">
-          <span class="countdown-value" id="days">000</span>
-          <span class="countdown-unit">DAYS</span>
-        </div>
-        <div class="countdown-segment">
-          <span class="countdown-value" id="hours">00</span>
-          <span class="countdown-unit">HOURS</span>
-        </div>
-        <div class="countdown-segment">
-          <span class="countdown-value" id="minutes">00</span>
-          <span class="countdown-unit">MIN</span>
-        </div>
-        <div class="countdown-segment">
-          <span class="countdown-value" id="seconds">00</span>
-          <span class="countdown-unit">SEC</span>
+      <div class="countdown-panel">
+        <div class="countdown-label">TIME UNTIL RELEASE</div>
+        <div class="countdown" id="countdown">
+          <div class="countdown-segment">
+            <span id="days">317</span>
+            <span class="countdown-unit">DAYS</span>
+          </div>
+          <div class="countdown-segment">
+            <span id="hours">00</span>
+            <span class="countdown-unit">HOURS</span>
+          </div>
+          <div class="countdown-segment">
+            <span id="minutes">00</span>
+            <span class="countdown-unit">MIN</span>
+          </div>
+          <div class="countdown-segment">
+            <span id="seconds">00</span>
+            <span class="countdown-unit">SEC</span>
+          </div>
         </div>
       </div>
     </div>
+
+    <div class="status">Pre-orders coming soon – Wishlist now!</div>
 
     <div class="btn-group">
       <a href="https://www.playstation.com/en-us/games/grand-theft-auto-vi/" class="action-btn" target="_blank">
@@ -200,8 +233,7 @@
       </a>
     </div>
 
-    <p class="note">Pre-orders not yet open (Jan 2026). Wishlist for notifications when they launch. Release confirmed: Nov 19, 2026.</p>
-
+    <p class="note">Pre-orders not yet open (January 2026). Wishlist to get notified when they go live. Release: November 19, 2026.</p>
   </main>
 
   <footer>
@@ -214,15 +246,15 @@
       const now = new Date().getTime();
       let diff = releaseDate - now;
       if (diff <= 0) {
-        document.getElementById('countdown').innerHTML = '<span style="color:#00ffe0;">AVAILABLE NOW</span>';
+        document.getElementById('countdown').innerHTML = '<span style="color:#ff4dd2;">AVAILABLE NOW</span>';
         return;
       }
-      const days = Math.floor(diff / (1000*60*60*24));
-      const hours = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
+      const days    = Math.floor(diff / (1000*60*60*24));
+      const hours   = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
       const minutes = Math.floor((diff % (1000*60*60)) / (1000*60));
       const seconds = Math.floor((diff % (1000*60)) / 1000);
-      document.getElementById('days').textContent = days.toString().padStart(3,'0');
-      document.getElementById('hours').textContent = hours.toString().padStart(2,'0');
+      document.getElementById('days').textContent    = days.toString().padStart(3,'0');
+      document.getElementById('hours').textContent   = hours.toString().padStart(2,'0');
       document.getElementById('minutes').textContent = minutes.toString().padStart(2,'0');
       document.getElementById('seconds').textContent = seconds.toString().padStart(2,'0');
     }
@@ -230,7 +262,5 @@
     updateCountdown();
   </script>
 
-</body>
-</html>
 </body>
 </html>
