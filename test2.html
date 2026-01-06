@@ -14,7 +14,7 @@
     body {
       font-family: 'Orbitron', sans-serif;
       background:
-        linear-gradient(135deg, rgba(255,77,210,0.22), rgba(0,255,224,0.15)),
+        linear-gradient(135deg, rgba(255,77,210,0.25), rgba(0,255,224,0.18)),
         url('gta/jason.jpg') center/cover no-repeat fixed;
       background-blend-mode: overlay;
       color: #fff;
@@ -62,43 +62,99 @@
       padding: 140px 20px 80px;
     }
     .hero {
-      max-width: 1000px;
+      max-width: 1100px;
       margin: 0 auto 60px;
     }
     h1 {
-      font-size: clamp(4rem, 10vw, 7rem);
+      font-size: clamp(4.5rem, 12vw, 8rem);
       font-weight: 900;
-      letter-spacing: 6px;
-      text-shadow: 0 6px 30px rgba(0,0,0,0.9), 0 0 40px rgba(255,77,210,0.5);
-      margin-bottom: 20px;
+      letter-spacing: 8px;
+      text-shadow: 0 6px 30px rgba(0,0,0,0.9), 0 0 50px rgba(255,77,210,0.6);
+      margin-bottom: 24px;
       background: linear-gradient(90deg, #ff4dd2, #00ffe0, #ff4dd2);
       -webkit-background-clip: text;
       background-clip: text;
       -webkit-text-fill-color: transparent;
-      animation: neonGlow 5s ease-in-out infinite alternate;
+      animation: neonGlow 6s ease-in-out infinite alternate;
     }
     @keyframes neonGlow {
-      from { text-shadow: 0 0 30px #ff4dd2, 0 0 60px #00ffe0; }
-      to   { text-shadow: 0 0 50px #00ffe0, 0 0 80px #ff4dd2; }
+      from { text-shadow: 0 0 40px #ff4dd2, 0 0 80px #00ffe0; }
+      to   { text-shadow: 0 0 60px #00ffe0, 0 0 100px #ff4dd2; }
     }
-    .tagline { font-size: 1.8rem; margin-bottom: 24px; opacity: 0.92; text-shadow: 0 3px 12px rgba(0,0,0,0.7); }
-    .release { font-size: 2.2rem; font-weight: 900; color: #00ffe0; margin-bottom: 32px; text-shadow: 0 0 25px rgba(0,255,224,0.7); }
+    .tagline { font-size: 2rem; margin-bottom: 28px; opacity: 0.94; text-shadow: 0 4px 15px rgba(0,0,0,0.8); }
+    .release { font-size: 2.4rem; font-weight: 900; color: #00ffe0; margin-bottom: 40px; text-shadow: 0 0 30px rgba(0,255,224,0.8); }
+
+    /* Enhanced status banner */
     .status {
-      font-size: 1.4rem;
-      background: rgba(0,0,0,0.5);
-      padding: 14px 32px;
+      font-size: 1.5rem;
+      font-weight: 700;
+      background: rgba(0,0,0,0.55);
+      padding: 16px 40px;
       border-radius: 999px;
-      border: 2px solid rgba(255,77,210,0.4);
-      margin-bottom: 48px;
-      backdrop-filter: blur(10px);
-      box-shadow: 0 0 20px rgba(255,77,210,0.3);
+      border: 2px solid rgba(0,255,224,0.5);
+      margin: 0 auto 40px;
+      backdrop-filter: blur(12px) saturate(1.5);
+      box-shadow: 0 0 30px rgba(0,255,224,0.5), inset 0 0 20px rgba(255,255,255,0.1);
+      max-width: fit-content;
+      transition: all 0.4s;
     }
-    .countdown {
+    .status:hover {
+      transform: scale(1.03);
+      box-shadow: 0 0 50px rgba(255,77,210,0.6);
+    }
+
+    /* Frosted countdown - big, segmented, frost-white with neon glow */
+    .countdown-container {
+      margin: 40px 0 60px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+    .countdown-label {
       font-size: 1.6rem;
-      margin: 32px 0 48px;
-      color: #ff4dd2;
+      opacity: 0.9;
       text-shadow: 0 0 15px #ff4dd2;
     }
+    .countdown {
+      display: flex;
+      gap: 20px;
+      font-size: clamp(2.5rem, 8vw, 5rem);
+      font-weight: 900;
+      color: transparent;
+      background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,255,255,0.75));
+      -webkit-background-clip: text;
+      background-clip: text;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      padding: 20px 40px;
+      border-radius: 24px;
+      border: 2px solid rgba(255,255,255,0.3);
+      box-shadow: inset 0 0 30px rgba(0,0,0,0.4), 0 0 60px rgba(0,255,224,0.5);
+      animation: pulse 4s infinite alternate;
+    }
+    .countdown-segment {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: 120px;
+    }
+    .countdown-value {
+      font-size: 1.4em;
+      text-shadow: 0 0 25px #00ffe0, 0 0 40px #ff4dd2;
+    }
+    .countdown-unit {
+      font-size: 0.5em;
+      opacity: 0.85;
+      margin-top: 8px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+    @keyframes pulse {
+      from { box-shadow: 0 0 40px rgba(0,255,224,0.4); }
+      to   { box-shadow: 0 0 80px rgba(255,77,210,0.6); }
+    }
+
     .btn-group {
       display: flex;
       flex-direction: column;
@@ -130,36 +186,37 @@
     .action-btn i { font-size: 2rem; }
     .note {
       font-size: 1.2rem;
-      max-width: 700px;
+      max-width: 800px;
       opacity: 0.85;
-      line-height: 1.6;
+      line-height: 1.7;
       margin: 40px auto;
     }
     .trailer {
       margin: 60px 0;
       width: 100%;
-      max-width: 900px;
+      max-width: 960px;
       aspect-ratio: 16/9;
-      border-radius: 16px;
+      border-radius: 20px;
       overflow: hidden;
-      box-shadow: 0 0 40px rgba(0,255,224,0.4);
+      box-shadow: 0 0 50px rgba(0,255,224,0.5);
     }
     footer {
       margin-top: auto;
-      padding: 50px 20px;
+      padding: 60px 20px;
       text-align: center;
       font-size: 0.95rem;
       opacity: 0.75;
-      border-top: 1px solid rgba(255,255,255,0.1);
+      border-top: 1px solid rgba(255,255,255,0.15);
     }
     @media (max-width: 768px) {
-      h1 { font-size: 4.5rem; }
+      h1 { font-size: 5rem; }
+      .countdown { font-size: 3rem; padding: 16px 30px; gap: 12px; }
+      .countdown-segment { min-width: 90px; }
       .action-btn { font-size: 1.3rem; padding: 18px 40px; }
-      .btn-group { gap: 20px; }
     }
     @media (max-width: 480px) {
-      header { gap: 10px; padding: 8px 14px; flex-wrap: wrap; justify-content: center; }
-      .nav-btn { font-size: 0.85rem; padding: 8px 12px; }
+      .countdown { flex-wrap: wrap; gap: 16px; font-size: 2.2rem; }
+      header { gap: 10px; padding: 8px 14px; }
     }
   </style>
 </head>
@@ -179,8 +236,32 @@
       <h1>GTA VI</h1>
       <p class="tagline">Leonida awaits. Vice City reborn. The biggest, most immersive GTA yet.</p>
       <div class="release">November 19, 2026</div>
+
+      <!-- Enhanced status banner -->
       <div class="status">Pre-orders coming soon – Wishlist now to get notified!</div>
-      <div class="countdown" id="countdown">Time until release: calculating...</div>
+
+      <!-- Frosted countdown -->
+      <div class="countdown-container">
+        <div class="countdown-label">TIME UNTIL RELEASE</div>
+        <div class="countdown" id="countdown">
+          <div class="countdown-segment">
+            <span class="countdown-value" id="days">000</span>
+            <span class="countdown-unit">Days</span>
+          </div>
+          <div class="countdown-segment">
+            <span class="countdown-value" id="hours">00</span>
+            <span class="countdown-unit">Hours</span>
+          </div>
+          <div class="countdown-segment">
+            <span class="countdown-value" id="minutes">00</span>
+            <span class="countdown-unit">Minutes</span>
+          </div>
+          <div class="countdown-segment">
+            <span class="countdown-value" id="seconds">00</span>
+            <span class="countdown-unit">Seconds</span>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="btn-group">
@@ -192,11 +273,10 @@
       </a>
     </div>
 
-    <p class="note">Rockstar Games has not opened pre-orders yet (as of January 2026). Wishlisting on official stores ensures you get alerts when pre-orders, editions, and bonuses go live. Expected price: ~$70–$80 standard edition. Stay tuned for trailers, collector's editions, and more!</p>
+    <p class="note">Pre-orders are not yet open (as of January 2026). Wishlisting on official stores gets you notifications when pre-orders launch, along with editions and bonuses. Release confirmed: November 19, 2026. Expected standard price ~$70–$80. Stay locked for more trailers and reveals!</p>
 
-    <!-- Latest trailer embed (update src with newest official trailer when desired) -->
     <div class="trailer">
-      <iframe width="100%" height="100%" src="https://www.youtube.com/embed/..." title="GTA VI Trailer" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      <iframe width="100%" height="100%" src="https://www.youtube.com/embed/..." title="GTA VI Official Trailer" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     </div>
 
   </main>
@@ -206,21 +286,30 @@
   </footer>
 
   <script>
-    // Simple countdown to Nov 19, 2026
+    // Enhanced countdown with seconds + segmented display
     const releaseDate = new Date('2026-11-19T00:00:00Z').getTime();
+
     function updateCountdown() {
       const now = new Date().getTime();
-      const diff = releaseDate - now;
+      let diff = releaseDate - now;
+
       if (diff <= 0) {
-        document.getElementById('countdown').innerHTML = 'Available Now!';
+        document.getElementById('countdown').innerHTML = '<span style="font-size:2rem;color:#00ffe0;">AVAILABLE NOW!</span>';
         return;
       }
+
       const days = Math.floor(diff / (1000 * 60 * 60 * 24));
       const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
       const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-      document.getElementById('countdown').innerHTML = `Time until release: ${days}d ${hours}h ${minutes}m`;
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+      document.getElementById('days').textContent = days.toString().padStart(3, '0');
+      document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+      document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+      document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
     }
-    setInterval(updateCountdown, 60000); // Update every minute
+
+    setInterval(updateCountdown, 1000); // Update every second for smooth countdown
     updateCountdown();
   </script>
 
