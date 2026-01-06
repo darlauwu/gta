@@ -1,322 +1,252 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>VI | Map</title>
-  <link rel="icon" href="gta/npc/lucia.jpg" type="image/jpg">
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body { height: 100%; overflow: hidden; }
-    body {
-      font-family: 'Orbitron', sans-serif;
-      background:
-        linear-gradient(135deg, rgba(255,77,210,0.12), rgba(0,255,224,0.06)),
-        url('gta/others.jpg') center/cover no-repeat fixed;
-      background-blend-mode: overlay;
-      color: #fff;
-      display: flex;
-      flex-direction: column;
-    }
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>VI | Home</title>
 
-    /* Dark Overlay – ON by default */
-    body.dark-overlay::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.35);
-      z-index: 1;
-      pointer-events: none;
-    }
+<link rel="icon" href="gta/npc/lucia.jpg">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
 
-    /* High Contrast – ON by default */
-    body.high-contrast {
-      filter: contrast(1.25) brightness(1.12);
-    }
-    body.high-contrast .embed-title,
-    body.high-contrast .nav-btn {
-      text-shadow: 0 0 8px rgba(0,0,0,0.9);
-    }
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;overflow:hidden}
 
-    /* Reduce Animations – ON by default */
-    body.reduce-animations * {
-      transition: none !important;
-      animation: none !important;
-    }
+body{
+  font-family:'Orbitron',sans-serif;
+  background:url('gta/jason.jpg') center/cover no-repeat fixed;
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
 
-    /* Navbar – transparent frosted glass style (matches home page and original intent) */
-    header {
-      position: fixed;
-      top: 16px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 100;
-      display: flex;
-      gap: 6px;
-      padding: 6px 14px;
-      border-radius: 999px;
-      backdrop-filter: blur(12px) saturate(1.2);
-      -webkit-backdrop-filter: blur(12px) saturate(1.2);
-      background: rgba(0, 0, 0, 0.35);          /* semi-transparent dark */
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
-    }
+/* HEADER */
+header{
+  position:fixed;
+  top:18px;
+  left:50%;
+  transform:translateX(-50%);
+  z-index:50;
+  display:flex;
+  gap:12px;
+  padding:8px 14px;
+  border-radius:999px;
+  background:rgba(0,0,0,.25);
+  box-shadow:0 6px 18px rgba(0,0,0,.35);
+}
 
-    .nav-btn {
-      padding: 8px 18px;
-      border-radius: 999px;
-      color: #fff;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 14px;
-      background: transparent;
-      transition: background 0.2s ease;
-      white-space: nowrap;
-    }
+.nav-btn,.launch-btn{
+  padding:10px 22px;
+  border-radius:999px;
+  color:#fff;
+  font-weight:700;
+  text-decoration:none;
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.18);
+  backdrop-filter:blur(12px);
+  box-shadow:
+    inset 0 1.2px 1.5px rgba(255,255,255,.4),
+    0 6px 18px rgba(0,0,0,.35);
+  transition:.25s ease;
+}
 
-    .nav-btn:hover {
-      background: rgba(255,255,255,0.15);
-    }
+/* NEON HOVER */
+.nav-btn:hover,
+.launch-btn:hover{
+  background:rgba(255,255,255,.14);
+  transform:scale(1.06);
+  box-shadow:
+    inset 0 1.5px 2px rgba(255,255,255,.45),
+    0 0 22px rgba(255,77,210,.6),
+    0 0 44px rgba(77,210,255,.35);
+}
 
-    .nav-btn.active {
-      background: rgba(255,255,255,0.28);
-      font-weight: 800;
-    }
+/* COUNTDOWN CARD */
+.countdown-wrap{
+  backdrop-filter:blur(6px);
+  border-radius:24px;
+  padding:40px 48px;
+  text-align:center;
+  box-shadow:0 20px 60px rgba(0,0,0,.8);
+  background:rgba(0,0,0,.3);
+  width:clamp(320px,70vw,980px);
+}
 
-    /* Page layout */
-    .page {
-      position: relative;
-      z-index: 10;
-      flex: 1;
-      margin: 80px 20px 20px;
-      display: flex;
-      flex-direction: column;
-    }
+.title{font-size:50px;font-weight:900}
+.subtitle{opacity:.85;margin:18px 0}
 
-    .embed-card {
-      flex: 1;
-      border-radius: 20px;
-      overflow: hidden;
-      background: rgba(0,0,0,0.35);
-      border: 1px solid rgba(255,255,255,0.08);
-      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-      display: flex;
-      flex-direction: column;
-      backdrop-filter: blur(6px);
-    }
+.clock{
+  display:flex;
+  gap:18px;
+  justify-content:center;
+  flex-wrap:wrap;
+}
 
-    .embed-header {
-      padding: 16px 24px;
-      background: rgba(0,0,0,0.3);
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-    }
+.unit{
+  min-width:88px;
+  padding:18px;
+  border-radius:14px;
+  background:rgba(0,0,0,.5);
+  border:1px solid rgba(255,255,255,.9);
+}
 
-    .embed-title {
-      font-size: 22px;
-      font-weight: 800;
-      color: #fff;
-    }
+.num{font-size:45px;font-weight:900}
+.label{text-transform:uppercase}
 
-    .embed-frame {
-      flex: 1;
-      border: 0;
-      width: 100%;
-      background: #0a0a0a;
-    }
+/* LAUNCH BUTTONS */
+.launch-buttons{
+  display:none;
+  margin-top:28px;
+  gap:18px;
+  justify-content:center;
+  flex-wrap:wrap;
+}
 
-    /* Settings button & menu */
-    #settings-btn {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      width: 54px;
-      height: 54px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.12);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255,255,255,0.2);
-      color: #fff;
-      font-size: 24px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-      z-index: 999;
-      transition: all 0.3s ease;
-    }
+/* PULSE GLOW */
+@keyframes pulse{
+  0%{box-shadow:0 0 12px rgba(255,77,210,.35)}
+  50%{box-shadow:0 0 28px rgba(255,77,210,.75)}
+  100%{box-shadow:0 0 12px rgba(255,77,210,.35)}
+}
+.launch-btn{animation:pulse 2.4s infinite}
 
-    #settings-btn:hover {
-      transform: scale(1.1);
-      background: rgba(255,255,255,0.2);
-    }
+/* TEST */
+.test-launch{
+  margin-top:18px;
+  font-size:13px;
+  opacity:.7;
+  cursor:pointer;
+  text-decoration:underline;
+}
 
-    #settings-menu {
-      position: fixed;
-      bottom: 90px;
-      right: 20px;
-      width: 280px;
-      max-height: 65vh;
-      overflow-y: auto;
-      background: rgba(255,255,255,0.12);
-      backdrop-filter: blur(15px);
-      border: 1px solid rgba(255,255,255,0.18);
-      border-radius: 16px;
-      padding: 16px 20px;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-      z-index: 998;
-      transform: translateY(20px) scale(0.95);
-      opacity: 0;
-      pointer-events: none;
-      transition: all 0.35s ease;
-    }
+/* CONFETTI */
+.confetti{
+  position:fixed;
+  top:-10px;
+  width:8px;
+  height:14px;
+  animation:fall linear forwards;
+  z-index:9999;
+}
+@keyframes fall{
+  to{transform:translateY(110vh) rotate(720deg);opacity:0}
+}
 
-    #settings-menu.visible {
-      transform: translateY(0) scale(1);
-      opacity: 1;
-      pointer-events: auto;
-    }
-
-    .setting-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px 0;
-      border-bottom: 1px solid rgba(255,255,255,0.12);
-      font-size: 14px;
-    }
-    .setting-item:last-child { border-bottom: none; }
-
-    .setting-label { color: #fff; font-weight: 500; }
-
-    .toggle {
-      position: relative;
-      width: 44px;
-      height: 22px;
-    }
-    .toggle input { opacity: 0; width: 0; height: 0; }
-    .slider {
-      position: absolute;
-      inset: 0;
-      background: #555;
-      border-radius: 22px;
-      transition: 0.4s;
-    }
-    .slider:before {
-      position: absolute;
-      content: "";
-      height: 18px;
-      width: 18px;
-      left: 2px;
-      bottom: 2px;
-      background: #fff;
-      border-radius: 50%;
-      transition: 0.4s;
-    }
-    input:checked + .slider { background: #2196F3; }
-    input:checked + .slider:before { transform: translateX(22px); }
-
-    select, input[type="range"] {
-      background: rgba(255,255,255,0.1);
-      color: #fff;
-      border: 1px solid rgba(255,255,255,0.2);
-      border-radius: 6px;
-      padding: 4px 8px;
-      accent-color: #2196F3;
-    }
-    input[type="range"] { width: 110px; }
-
-    @media (max-width: 768px) {
-      header { padding: 6px 10px; gap: 4px; top: 12px; flex-wrap: wrap; justify-content: center; }
-      .nav-btn { padding: 6px 12px; font-size: 13px; }
-      .page { margin: 70px 12px 12px; }
-      .embed-header { padding: 12px 16px; }
-      .embed-title { font-size: 18px; }
-      #settings-menu { width: 90%; right: 5%; }
-    }
-  </style>
+/* TRAILER MODAL */
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.85);
+  backdrop-filter:blur(10px);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:99999;
+}
+.modal iframe{
+  width:80vw;
+  height:45vw;
+  max-width:960px;
+  max-height:540px;
+  border-radius:20px;
+  box-shadow:0 0 60px rgba(255,77,210,.6);
+}
+.modal.active{display:flex}
+</style>
 </head>
-<body class="dark-overlay high-contrast reduce-animations">
 
-  <header>
-    <a href="index" class="nav-btn">Home</a>
-    <a href="map" class="nav-btn active">Map</a>
-    <a href="characters" class="nav-btn">Characters</a>
-    <a href="places" class="nav-btn">Places</a>
-    <a href="screenshots" class="nav-btn">Screenshots</a>
-    <a href="trailers" class="nav-btn">Trailers</a>
-  </header>
+<body>
 
-  <div class="page">
-    <div class="embed-card">
-      <div class="embed-header">
-        <div class="embed-title">Grand Theft Auto VI Map</div>
-      </div>
-      <iframe id="embedFrame" class="embed-frame"
-        src="https://map.stateofleonida.net/"
-        allowfullscreen
-        sandbox="allow-same-origin allow-scripts allow-forms allow-popups">
-      </iframe>
-    </div>
+<header>
+  <a href="index" class="nav-btn">Home</a>
+  <a href="map" class="nav-btn">Map</a>
+  <a href="characters" class="nav-btn">Characters</a>
+  <a href="places" class="nav-btn">Places</a>
+  <a href="screenshots" class="nav-btn">Screenshots</a>
+  <a href="#" class="nav-btn" onclick="openTrailer()">Trailers</a>
+</header>
+
+<section class="countdown-wrap">
+  <h1 class="title">Grand Theft Auto VI</h1>
+  <div class="subtitle">Release countdown — November 19th, 2026</div>
+
+  <div class="clock">
+    <div class="unit"><div class="num" id="days">0</div><div class="label">Days</div></div>
+    <div class="unit"><div class="num" id="hours">0</div><div class="label">Hours</div></div>
+    <div class="unit"><div class="num" id="minutes">0</div><div class="label">Minutes</div></div>
+    <div class="unit"><div class="num" id="seconds">0</div><div class="label">Seconds</div></div>
   </div>
 
-  <!-- Settings Button -->
-  <button id="settings-btn">⚙</button>
-
-  <!-- Settings Menu -->
-  <div id="settings-menu">
-    <div class="setting-item">
-      <span class="setting-label">Dark Overlay</span>
-      <label class="toggle">
-        <input type="checkbox" id="toggle-overlay" checked>
-        <span class="slider"></span>
-      </label>
-    </div>
-    <div class="setting-item">
-      <span class="setting-label">High Contrast</span>
-      <label class="toggle">
-        <input type="checkbox" id="toggle-contrast" checked>
-        <span class="slider"></span>
-      </label>
-    </div>
-    <div class="setting-item">
-      <span class="setting-label">Reduce Animations</span>
-      <label class="toggle">
-        <input type="checkbox" id="toggle-motion" checked>
-        <span class="slider"></span>
-      </label>
-    </div>
+  <div class="launch-buttons" id="launchButtons">
+    <a href="https://www.rockstargames.com" class="launch-btn" onclick="clickSound()">Pre-Order</a>
+    <a href="map" class="launch-btn" onclick="clickSound()">Map</a>
+    <a href="#" class="launch-btn" onclick="clickSound();openTrailer()">Trailers</a>
   </div>
 
-  <script>
-    // Settings menu toggle
-    const btn = document.getElementById('settings-btn');
-    const menu = document.getElementById('settings-menu');
+  <div class="test-launch" onclick="forceLaunch()">Test launch mode</div>
+</section>
 
-    btn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      menu.classList.toggle('visible');
-    });
+<!-- TRAILER MODAL -->
+<div class="modal" id="trailerModal" onclick="closeTrailer()">
+  <iframe src="https://www.youtube.com/embed/QdBZY2fkU-0?autoplay=1&mute=1"
+    allow="autoplay; fullscreen"></iframe>
+</div>
 
-    document.addEventListener('click', (e) => {
-      if (!menu.contains(e.target) && !btn.contains(e.target)) {
-        menu.classList.remove('visible');
-      }
-    });
+<audio id="click">
+  <source src="https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3">
+</audio>
 
-    // Toggle functionality
-    document.getElementById('toggle-overlay').addEventListener('change', e => {
-      document.body.classList.toggle('dark-overlay', e.target.checked);
-    });
+<script>
+const target=new Date('2026-11-19T00:00:00');
+let launched=false;
 
-    document.getElementById('toggle-contrast').addEventListener('change', e => {
-      document.body.classList.toggle('high-contrast', e.target.checked);
-    });
+function pad(n){return String(n).padStart(2,'0')}
+function clickSound(){document.getElementById('click').play()}
 
-    document.getElementById('toggle-motion').addEventListener('change', e => {
-      document.body.classList.toggle('reduce-animations', e.target.checked);
-    });
-  </script>
+function celebrate(){
+  for(let i=0;i<120;i++){
+    const c=document.createElement('div');
+    c.className='confetti';
+    c.style.left=Math.random()*100+'vw';
+    c.style.background=`hsl(${Math.random()*360},90%,60%)`;
+    c.style.animationDuration=2+Math.random()*2+'s';
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(),4000);
+  }
+}
+
+function launchMode(){
+  if(launched)return;
+  launched=true;
+  document.querySelector('.clock').style.display='none';
+  launchButtons.style.display='flex';
+  document.querySelector('.subtitle').textContent='Now Available';
+  celebrate();
+}
+
+function update(){
+  let diff=Math.floor((target-new Date())/1000);
+  if(diff<=0){launchMode();return}
+  days.textContent=Math.floor(diff/86400);
+  hours.textContent=pad(Math.floor(diff%86400/3600));
+  minutes.textContent=pad(Math.floor(diff%3600/60));
+  seconds.textContent=pad(diff%60);
+}
+
+function forceLaunch(){launchMode()}
+
+function openTrailer(){
+  document.getElementById('trailerModal').classList.add('active');
+}
+function closeTrailer(){
+  trailerModal.classList.remove('active');
+}
+
+update();
+setInterval(update,1000);
+</script>
+
 </body>
 </html>
+
