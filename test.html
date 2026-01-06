@@ -4,6 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>VI | Home</title>
+
 <link rel="icon" href="gta/npc/lucia.jpg" type="image/jpg">
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
 
@@ -20,126 +21,132 @@ body{
   justify-content:center;
 }
 
-/* =========================
-   FLAT NEUTRAL GTA NAVBAR
-   NO COLOR • NO CONTRAST
-   ========================= */
-
-header {
-  position: fixed;
-  top: 18px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 9999;
-
-  display: flex;
-  gap: 12px;
-  padding: 8px 14px;
-  border-radius: 999px;
-
-  background: rgba(0, 0, 0, 0.28);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-
-  border: 1px solid rgba(255, 255, 255, 0.06);
+/* Header */
+header{
+  position:fixed;
+  top:18px;
+  left:50%;
+  transform:translateX(-50%);
+  z-index:50;
+  display:flex;
+  gap:12px;
+  padding:8px 14px;
+  border-radius:999px;
+  background:rgba(0,0,0,0.25);
+  box-shadow:0 6px 18px rgba(0,0,0,0.35);
 }
 
-/* NAV BUTTONS */
-.nav-btn {
-  padding: 9px 18px;
-  border-radius: 999px;
-
-  font-family: 'Orbitron', sans-serif;
-  font-size: 0.94rem;
-  font-weight: 500;
-  letter-spacing: 0.25px;
-
-  color: rgba(255,255,255,0.85);
-  text-decoration: none;
-  white-space: nowrap;
-
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.05);
-
-  transition: background 0.2s ease, transform 0.2s ease;
+.nav-btn{
+  padding:9px 17px;
+  border-radius:999px;
+  color:#fff;
+  font-weight:600;
+  text-decoration:none;
+  background:rgba(255,255,255,0.08);
+  border:1px solid rgba(255,255,255,0.18);
+  transition:.25s;
+}
+.nav-btn:hover{
+  background:rgba(255,255,255,0.14);
+  transform:scale(1.05);
 }
 
-/* VERY SUBTLE HOVER */
-.nav-btn:hover {
-  background: rgba(255,255,255,0.09);
-  transform: translateY(-1px);
-}
-
-/* PRESS */
-.nav-btn:active {
-  transform: scale(0.98);
-}
-
-
-/* Launch Panel */
-.launch-wrap{
+/* Countdown Card */
+.countdown-wrap{
   backdrop-filter:blur(6px);
   border-radius:24px;
-  padding:46px 52px;
+  padding:40px 48px;
   text-align:center;
-  box-shadow:0 20px 60px rgba(0,0,0,0.8);
-  border:1px solid rgba(255,255,255,0.06);
-  background:rgba(0,0,0,0.32);
-  max-width:900px;
-  width:clamp(320px,70vw,900px);
+  box-shadow:0 20px 60px rgba(0,0,0,.8);
+  background:rgba(0,0,0,.3);
+  width:clamp(320px,70vw,980px);
 }
 
 .title{
-  font-size:52px;
+  font-size:50px;
   font-weight:900;
-  margin-bottom:10px;
-}
-
-.release-badge{
-  display:inline-block;
-  margin-bottom:18px;
-  padding:6px 18px;
-  border-radius:999px;
-  font-size:14px;
-  letter-spacing:2px;
-  font-weight:800;
-  color:#000;
-  background:linear-gradient(90deg,#00ffaa,#7affd6);
+  margin-bottom:8px;
 }
 
 .subtitle{
+  color:rgba(255,255,255,.85);
+  margin-bottom:22px;
   font-size:18px;
-  color:rgba(255,255,255,0.85);
-  margin-bottom:34px;
 }
 
-/* Actions */
-.actions{
+.clock{
   display:flex;
   gap:18px;
   justify-content:center;
   flex-wrap:wrap;
 }
 
-.action-btn{
-  padding:14px 28px;
+.unit{
+  min-width:88px;
+  padding:18px 16px;
+  border-radius:14px;
+  background:rgba(0,0,0,.5);
+  border:1px solid rgba(255,255,255,.9);
+}
+
+.num{
+  font-size:45px;
+  font-weight:900;
+}
+
+.label{
+  font-size:20px;
+  margin-top:6px;
+  text-transform:uppercase;
+}
+
+/* Launch Buttons */
+.launch-buttons{
+  display:none;
+  margin-top:28px;
+  gap:18px;
+  justify-content:center;
+  flex-wrap:wrap;
+}
+
+.launch-btn{
+  padding:14px 26px;
   border-radius:999px;
   font-weight:800;
+  color:#fff;
   text-decoration:none;
-  color:#000;
-  background:linear-gradient(90deg,#ff4dd2,#ff99e6);
-  box-shadow:0 10px 30px rgba(0,0,0,0.45);
+  background:linear-gradient(135deg,rgba(255,77,210,.45),rgba(122,77,255,.45));
+  border:1px solid rgba(255,255,255,.35);
   transition:.25s;
 }
-
-.action-btn.secondary{
-  background:rgba(255,255,255,0.12);
-  color:#fff;
-  border:1px solid rgba(255,255,255,0.25);
+.launch-btn:hover{
+  transform:translateY(-3px) scale(1.05);
+  box-shadow:0 0 30px rgba(255,77,210,.6);
 }
 
-.action-btn:hover{
-  transform:translateY(-2px) scale(1.05);
+/* Test */
+.test-launch{
+  margin-top:18px;
+  font-size:13px;
+  opacity:.7;
+  cursor:pointer;
+  text-decoration:underline;
+}
+
+/* Confetti */
+.confetti{
+  position:fixed;
+  top:-10px;
+  width:8px;
+  height:14px;
+  animation:fall linear forwards;
+  z-index:9999;
+}
+@keyframes fall{
+  to{
+    transform:translateY(110vh) rotate(720deg);
+    opacity:0;
+  }
 }
 </style>
 </head>
@@ -155,21 +162,68 @@ header {
   <a href="trailers" class="nav-btn">Trailers</a>
 </header>
 
-<section class="launch-wrap">
+<section class="countdown-wrap">
   <h1 class="title">Grand Theft Auto VI</h1>
+  <div class="subtitle">Release countdown — November 19th, 2026</div>
 
-  <div class="release-badge">OUT NOW</div>
-
-  <div class="subtitle">
-    Vice City is open. The next era of Grand Theft Auto has begun.
+  <div class="clock">
+    <div class="unit"><div class="num" id="days">0</div><div class="label">Days</div></div>
+    <div class="unit"><div class="num" id="hours">0</div><div class="label">Hours</div></div>
+    <div class="unit"><div class="num" id="minutes">0</div><div class="label">Minutes</div></div>
+    <div class="unit"><div class="num" id="seconds">0</div><div class="label">Seconds</div></div>
   </div>
 
-  <div class="actions">
-    <a href="#" class="action-btn secondary">Play Now</a>
-    <a href="trailers" class="action-btn secondary">Watch Trailer</a>
-    <a href="map" class="action-btn secondary">Explore Map</a>
+  <div class="launch-buttons" id="launchButtons">
+    <a href="https://www.rockstargames.com" class="launch-btn">Pre-Order</a>
+    <a href="map" class="launch-btn">Map</a>
+    <a href="trailers" class="launch-btn">Trailers</a>
   </div>
+
+  <div class="test-launch" onclick="forceLaunch()">Test launch mode</div>
 </section>
+
+<script>
+const target = new Date('2026-11-19T00:00:00');
+let launched=false;
+
+function pad(n){return String(n).padStart(2,'0')}
+
+function celebrate(){
+  for(let i=0;i<120;i++){
+    const c=document.createElement('div');
+    c.className='confetti';
+    c.style.left=Math.random()*100+'vw';
+    c.style.background=`hsl(${Math.random()*360},90%,60%)`;
+    c.style.animationDuration=2+Math.random()*2+'s';
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(),4000);
+  }
+}
+
+function launchMode(){
+  if(launched)return;
+  launched=true;
+  document.querySelector('.clock').style.display='none';
+  document.getElementById('launchButtons').style.display='flex';
+  document.querySelector('.subtitle').textContent='Now Available';
+  celebrate();
+}
+
+function update(){
+  const now=new Date();
+  let diff=Math.floor((target-now)/1000);
+  if(diff<=0){launchMode();return;}
+  days.textContent=Math.floor(diff/86400);
+  hours.textContent=pad(Math.floor(diff%86400/3600));
+  minutes.textContent=pad(Math.floor(diff%3600/60));
+  seconds.textContent=pad(diff%60);
+}
+
+function forceLaunch(){launchMode()}
+
+update();
+setInterval(update,1000);
+</script>
 
 </body>
 </html>
