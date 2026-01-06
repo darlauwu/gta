@@ -3,12 +3,10 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Wishlist Grand Theft Auto VI - Coming November 19, 2026 to PS5 & Xbox Series X|S. Get ready for Vice City in Leonida." />
+  <meta name="description" content="Wishlist GTA VI now – releasing November 19, 2026 on PS5 & Xbox Series X|S. Vice City returns in Rockstar's biggest open world yet." />
   <title>Darla | GTA VI Wishlist</title>
   <link rel="icon" href="gta/kitty.jpg" type="image/jpg">
-  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
-  <!-- Font Awesome -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
   <style>
     * { margin:0; padding:0; box-sizing:border-box; }
@@ -16,13 +14,12 @@
     body {
       font-family: 'Orbitron', sans-serif;
       background:
-        linear-gradient(135deg, rgba(255,77,210,0.18), rgba(0,255,224,0.12)),
+        linear-gradient(135deg, rgba(255,77,210,0.22), rgba(0,255,224,0.15)),
         url('gta/jason.jpg') center/cover no-repeat fixed;
       background-blend-mode: overlay;
       color: #fff;
       overflow-x: hidden;
     }
-
     header {
       position: fixed;
       top: 16px;
@@ -30,16 +27,15 @@
       transform: translateX(-50%);
       z-index: 100;
       display: flex;
-      gap: 14px;
+      flex-wrap: wrap;
+      gap: 12px;
       padding: 10px 18px;
       border-radius: 999px;
-      backdrop-filter: blur(16px) saturate(1.3);
-      -webkit-backdrop-filter: blur(16px) saturate(1.3);
-      background: rgba(0,0,0,0.35);
-      border: 1px solid rgba(255,255,255,0.08);
-      box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+      backdrop-filter: blur(16px) saturate(1.4);
+      background: rgba(0,0,0,0.4);
+      border: 1px solid rgba(255,255,255,0.12);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.45);
     }
-
     .nav-btn {
       padding: 10px 16px;
       border-radius: 999px;
@@ -47,17 +43,15 @@
       color: #fff;
       font-weight: 700;
       font-size: 0.95rem;
-      background: linear-gradient(90deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
-      border: 1px solid rgba(255,255,255,0.1);
+      background: linear-gradient(90deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+      border: 1px solid rgba(255,255,255,0.12);
       transition: all 0.3s ease;
     }
-
     .nav-btn:hover, .nav-btn.active {
-      background: rgba(255,77,210,0.2);
-      box-shadow: 0 0 16px rgba(255,77,210,0.3);
-      transform: scale(1.05);
+      background: rgba(255,77,210,0.25);
+      box-shadow: 0 0 20px rgba(255,77,210,0.4);
+      transform: scale(1.06);
     }
-
     main {
       min-height: 100vh;
       display: flex;
@@ -65,132 +59,107 @@
       align-items: center;
       justify-content: center;
       text-align: center;
-      padding: 120px 20px 60px;
-      position: relative;
+      padding: 140px 20px 80px;
     }
-
     .hero {
-      max-width: 900px;
+      max-width: 1000px;
       margin: 0 auto 60px;
     }
-
     h1 {
-      font-size: clamp(3.2rem, 8vw, 5.5rem);
+      font-size: clamp(4rem, 10vw, 7rem);
       font-weight: 900;
-      letter-spacing: 4px;
-      text-shadow: 0 4px 20px rgba(0,0,0,0.8), 0 0 30px rgba(255,77,210,0.4);
-      margin-bottom: 16px;
+      letter-spacing: 6px;
+      text-shadow: 0 6px 30px rgba(0,0,0,0.9), 0 0 40px rgba(255,77,210,0.5);
+      margin-bottom: 20px;
       background: linear-gradient(90deg, #ff4dd2, #00ffe0, #ff4dd2);
       -webkit-background-clip: text;
+      background-clip: text;
       -webkit-text-fill-color: transparent;
-      animation: glow 4s ease-in-out infinite alternate;
+      animation: neonGlow 5s ease-in-out infinite alternate;
     }
-
-    @keyframes glow {
-      from { text-shadow: 0 0 20px rgba(255,77,210,0.5); }
-      to   { text-shadow: 0 0 40px rgba(0,255,224,0.7); }
+    @keyframes neonGlow {
+      from { text-shadow: 0 0 30px #ff4dd2, 0 0 60px #00ffe0; }
+      to   { text-shadow: 0 0 50px #00ffe0, 0 0 80px #ff4dd2; }
     }
-
-    .tagline {
-      font-size: 1.5rem;
-      margin-bottom: 32px;
-      opacity: 0.9;
-      text-shadow: 0 2px 10px rgba(0,0,0,0.6);
-    }
-
-    .release-date {
-      font-size: 1.8rem;
-      font-weight: 700;
-      color: #00ffe0;
-      margin-bottom: 48px;
-      text-shadow: 0 0 20px rgba(0,255,224,0.6);
-    }
-
+    .tagline { font-size: 1.8rem; margin-bottom: 24px; opacity: 0.92; text-shadow: 0 3px 12px rgba(0,0,0,0.7); }
+    .release { font-size: 2.2rem; font-weight: 900; color: #00ffe0; margin-bottom: 32px; text-shadow: 0 0 25px rgba(0,255,224,0.7); }
     .status {
-      font-size: 1.3rem;
-      background: rgba(0,0,0,0.4);
-      padding: 12px 28px;
+      font-size: 1.4rem;
+      background: rgba(0,0,0,0.5);
+      padding: 14px 32px;
       border-radius: 999px;
-      border: 1px solid rgba(255,77,210,0.3);
+      border: 2px solid rgba(255,77,210,0.4);
       margin-bottom: 48px;
-      backdrop-filter: blur(8px);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 0 20px rgba(255,77,210,0.3);
     }
-
+    .countdown {
+      font-size: 1.6rem;
+      margin: 32px 0 48px;
+      color: #ff4dd2;
+      text-shadow: 0 0 15px #ff4dd2;
+    }
     .btn-group {
       display: flex;
       flex-direction: column;
-      gap: 24px;
+      gap: 28px;
       align-items: center;
-      margin: 40px 0;
+      margin: 40px 0 60px;
     }
-
-    .preorder-btn {
+    .action-btn {
       display: inline-flex;
       align-items: center;
-      gap: 14px;
-      padding: 18px 40px;
+      gap: 16px;
+      padding: 20px 48px;
       border-radius: 999px;
       text-decoration: none;
       font-weight: 900;
-      font-size: 1.4rem;
-      background: linear-gradient(135deg, rgba(255,77,210,0.25), rgba(0,255,224,0.15));
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 2px solid rgba(255,255,255,0.15);
+      font-size: 1.5rem;
+      background: linear-gradient(135deg, rgba(255,77,210,0.35), rgba(0,255,224,0.25));
+      backdrop-filter: blur(14px);
+      border: 2px solid rgba(255,255,255,0.2);
       color: #fff;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.5), inset 0 0 20px rgba(255,255,255,0.05);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.6), inset 0 0 25px rgba(255,255,255,0.08);
       transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
-
-    .preorder-btn:hover {
-      transform: translateY(-6px) scale(1.06);
-      box-shadow: 0 0 40px rgba(255,77,210,0.6), 0 20px 40px rgba(0,0,0,0.4);
-      background: linear-gradient(135deg, rgba(255,77,210,0.4), rgba(0,255,224,0.3));
+    .action-btn:hover {
+      transform: translateY(-8px) scale(1.08);
+      box-shadow: 0 0 50px rgba(255,77,210,0.7), 0 25px 50px rgba(0,0,0,0.5);
+      background: linear-gradient(135deg, rgba(255,77,210,0.5), rgba(0,255,224,0.4));
     }
-
-    .preorder-btn.disabled {
-      opacity: 0.7;
-      cursor: not-allowed;
-      transform: none;
-      box-shadow: none;
-    }
-
-    .icon { font-size: 1.8rem; }
-
-    .teaser {
-      margin: 60px 0;
-      max-width: 800px;
-    }
-
-    .teaser h2 {
-      font-size: 2.2rem;
-      margin-bottom: 24px;
-      color: #ff4dd2;
-    }
-
-    .teaser p {
+    .action-btn i { font-size: 2rem; }
+    .note {
       font-size: 1.2rem;
-      line-height: 1.7;
-      opacity: 0.9;
+      max-width: 700px;
+      opacity: 0.85;
+      line-height: 1.6;
+      margin: 40px auto;
     }
-
+    .trailer {
+      margin: 60px 0;
+      width: 100%;
+      max-width: 900px;
+      aspect-ratio: 16/9;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 0 40px rgba(0,255,224,0.4);
+    }
     footer {
       margin-top: auto;
-      padding: 40px 20px;
+      padding: 50px 20px;
       text-align: center;
-      font-size: 0.9rem;
-      opacity: 0.7;
+      font-size: 0.95rem;
+      opacity: 0.75;
+      border-top: 1px solid rgba(255,255,255,0.1);
     }
-
     @media (max-width: 768px) {
-      h1 { font-size: 3.8rem; }
-      .preorder-btn { font-size: 1.2rem; padding: 16px 32px; }
-      .btn-group { gap: 18px; }
+      h1 { font-size: 4.5rem; }
+      .action-btn { font-size: 1.3rem; padding: 18px 40px; }
+      .btn-group { gap: 20px; }
     }
-
     @media (max-width: 480px) {
-      header { gap: 8px; padding: 8px 12px; }
-      .nav-btn { padding: 8px 12px; font-size: 0.85rem; }
+      header { gap: 10px; padding: 8px 14px; flex-wrap: wrap; justify-content: center; }
+      .nav-btn { font-size: 0.85rem; padding: 8px 12px; }
     }
   </style>
 </head>
@@ -208,34 +177,52 @@
   <main>
     <div class="hero">
       <h1>GTA VI</h1>
-      <p class="tagline">Vice City. Leonida. The wait is almost over.</p>
-      <div class="release-date">November 19, 2026</div>
-      <div class="status">Pre-orders not yet open — Wishlist now on PS5 & Xbox</div>
+      <p class="tagline">Leonida awaits. Vice City reborn. The biggest, most immersive GTA yet.</p>
+      <div class="release">November 19, 2026</div>
+      <div class="status">Pre-orders coming soon – Wishlist now to get notified!</div>
+      <div class="countdown" id="countdown">Time until release: calculating...</div>
     </div>
 
     <div class="btn-group">
-      <a href="https://www.xbox.com/en-US/games/store/grand-theft-auto-vi/9NL3WWNZLZZN" class="preorder-btn" target="_blank" rel="noopener">
-        <i class="fa-brands fa-xbox icon"></i> Wishlist on Xbox Series X|S
+      <a href="https://www.playstation.com/en-us/games/grand-theft-auto-vi/" class="action-btn" target="_blank" rel="noopener">
+        <i class="fa-brands fa-playstation"></i> Wishlist on PS5
       </a>
-      <a href="https://www.playstation.com/en-us/games/grand-theft-auto-vi/" class="preorder-btn" target="_blank" rel="noopener">
-        <i class="fa-brands fa-playstation icon"></i> Wishlist on PlayStation 5
+      <a href="https://www.xbox.com/en-US/games/store/grand-theft-auto-vi/9NL3WWNZLZZN" class="action-btn" target="_blank" rel="noopener">
+        <i class="fa-brands fa-xbox"></i> Wishlist on Xbox Series X|S
       </a>
-      <!-- Optional: Rockstar link when available -->
-      <!-- <a href="https://www.rockstargames.com/VI" class="preorder-btn"><i class="fas fa-globe icon"></i> Official Site</a> -->
     </div>
 
-    <section class="teaser">
-      <h2>Coming November 19, 2026</h2>
-      <p>Jason and Lucia are ready to take on Leonida — from neon-drenched Vice City to the swamps and beyond. Rockstar's most ambitious open-world yet. Pre-orders expected soon — stay tuned for trailers, editions, and bonuses.</p>
-      <!-- You can embed latest trailer here when available -->
-      <!-- <div style="margin:40px 0;"><iframe width="100%" height="450" src="https://www.youtube.com/embed/..." frameborder="0" allowfullscreen></iframe></div> -->
-    </section>
+    <p class="note">Rockstar Games has not opened pre-orders yet (as of January 2026). Wishlisting on official stores ensures you get alerts when pre-orders, editions, and bonuses go live. Expected price: ~$70–$80 standard edition. Stay tuned for trailers, collector's editions, and more!</p>
+
+    <!-- Latest trailer embed (update src with newest official trailer when desired) -->
+    <div class="trailer">
+      <iframe width="100%" height="100%" src="https://www.youtube.com/embed/..." title="GTA VI Trailer" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
 
   </main>
 
   <footer>
-    © Darla Fan Site • Not affiliated with Rockstar Games • All rights reserved
+    © Darla Fan Site • Unofficial – Not affiliated with Rockstar Games or Take-Two • All rights reserved
   </footer>
+
+  <script>
+    // Simple countdown to Nov 19, 2026
+    const releaseDate = new Date('2026-11-19T00:00:00Z').getTime();
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const diff = releaseDate - now;
+      if (diff <= 0) {
+        document.getElementById('countdown').innerHTML = 'Available Now!';
+        return;
+      }
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      document.getElementById('countdown').innerHTML = `Time until release: ${days}d ${hours}h ${minutes}m`;
+    }
+    setInterval(updateCountdown, 60000); // Update every minute
+    updateCountdown();
+  </script>
 
 </body>
 </html>
