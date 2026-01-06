@@ -1,270 +1,241 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Pre-Order | GTA VI</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Wishlist Grand Theft Auto VI - Coming November 19, 2026 to PS5 & Xbox Series X|S. Get ready for Vice City in Leonida." />
+  <title>Darla | GTA VI Wishlist</title>
+  <link rel="icon" href="gta/kitty.jpg" type="image/jpg">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html, body { height:100%; scroll-behavior: smooth; }
+    body {
+      font-family: 'Orbitron', sans-serif;
+      background:
+        linear-gradient(135deg, rgba(255,77,210,0.18), rgba(0,255,224,0.12)),
+        url('gta/jason.jpg') center/cover no-repeat fixed;
+      background-blend-mode: overlay;
+      color: #fff;
+      overflow-x: hidden;
+    }
 
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&display=swap" rel="stylesheet">
+    header {
+      position: fixed;
+      top: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 100;
+      display: flex;
+      gap: 14px;
+      padding: 10px 18px;
+      border-radius: 999px;
+      backdrop-filter: blur(16px) saturate(1.3);
+      -webkit-backdrop-filter: blur(16px) saturate(1.3);
+      background: rgba(0,0,0,0.35);
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+    }
 
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{
-  font-family:'Orbitron',sans-serif;
-  background:url('gta/jason.jpg') center/cover no-repeat fixed;
-  color:#fff;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
+    .nav-btn {
+      padding: 10px 16px;
+      border-radius: 999px;
+      text-decoration: none;
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.95rem;
+      background: linear-gradient(90deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: all 0.3s ease;
+    }
 
-/* ================= NAVBAR (YOUR STYLE) ================= */
+    .nav-btn:hover, .nav-btn.active {
+      background: rgba(255,77,210,0.2);
+      box-shadow: 0 0 16px rgba(255,77,210,0.3);
+      transform: scale(1.05);
+    }
 
-header{
-  position:fixed;
-  top:18px;
-  left:50%;
-  transform:translateX(-50%);
-  z-index:50;
-  display:flex;
-  gap:12px;
-  padding:8px 14px;
-  border-radius:999px;
-  background:rgba(0,0,0,0.25);
-  box-shadow:0 6px 18px rgba(0,0,0,0.35);
-}
+    main {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 120px 20px 60px;
+      position: relative;
+    }
 
-header:hover{
-  box-shadow:0 12px 40px rgba(255,77,210,0.35);
-}
+    .hero {
+      max-width: 900px;
+      margin: 0 auto 60px;
+    }
 
-.nav-btn{
-  padding:9px 17px;
-  border-radius:999px;
-  color:#fff;
-  font-weight:600;
-  text-decoration:none;
-  background:rgba(255,255,255,0.08);
-  border:1px solid rgba(255,255,255,0.18);
-  box-shadow:
-    inset 0 1.2px 1.5px rgba(255,255,255,0.4),
-    0 4px 18px rgba(0,0,0,0.3);
-  transition:.25s;
-}
+    h1 {
+      font-size: clamp(3.2rem, 8vw, 5.5rem);
+      font-weight: 900;
+      letter-spacing: 4px;
+      text-shadow: 0 4px 20px rgba(0,0,0,0.8), 0 0 30px rgba(255,77,210,0.4);
+      margin-bottom: 16px;
+      background: linear-gradient(90deg, #ff4dd2, #00ffe0, #ff4dd2);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: glow 4s ease-in-out infinite alternate;
+    }
 
-.nav-btn:hover{
-  background:rgba(255,255,255,0.14);
-  transform:scale(1.05);
-}
+    @keyframes glow {
+      from { text-shadow: 0 0 20px rgba(255,77,210,0.5); }
+      to   { text-shadow: 0 0 40px rgba(0,255,224,0.7); }
+    }
 
-/* ================= PAGE ================= */
+    .tagline {
+      font-size: 1.5rem;
+      margin-bottom: 32px;
+      opacity: 0.9;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.6);
+    }
 
-.page{
-  max-width:1300px;
-  margin:0 auto;
-  padding:140px 20px 80px;
-  text-align:center;
-}
+    .release-date {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #00ffe0;
+      margin-bottom: 48px;
+      text-shadow: 0 0 20px rgba(0,255,224,0.6);
+    }
 
-h1{
-  font-size:52px;
-  margin-bottom:12px;
-}
+    .status {
+      font-size: 1.3rem;
+      background: rgba(0,0,0,0.4);
+      padding: 12px 28px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,77,210,0.3);
+      margin-bottom: 48px;
+      backdrop-filter: blur(8px);
+    }
 
-.subtitle{
-  opacity:.75;
-  margin-bottom:60px;
-}
+    .btn-group {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      align-items: center;
+      margin: 40px 0;
+    }
 
-/* ================= PREORDER CARDS ================= */
+    .preorder-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      padding: 18px 40px;
+      border-radius: 999px;
+      text-decoration: none;
+      font-weight: 900;
+      font-size: 1.4rem;
+      background: linear-gradient(135deg, rgba(255,77,210,0.25), rgba(0,255,224,0.15));
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 2px solid rgba(255,255,255,0.15);
+      color: #fff;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.5), inset 0 0 20px rgba(255,255,255,0.05);
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
 
-.cards{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-  gap:28px;
-}
+    .preorder-btn:hover {
+      transform: translateY(-6px) scale(1.06);
+      box-shadow: 0 0 40px rgba(255,77,210,0.6), 0 20px 40px rgba(0,0,0,0.4);
+      background: linear-gradient(135deg, rgba(255,77,210,0.4), rgba(0,255,224,0.3));
+    }
 
-.card{
-  position:relative;
-  height:420px;
-  border-radius:26px;
-  overflow:hidden;
-  border:1px solid rgba(255,255,255,0.12);
-  transition:.35s;
-}
+    .preorder-btn.disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
 
-.card:hover{
-  transform:translateY(-8px);
-}
+    .icon { font-size: 1.8rem; }
 
-/* background image */
-.card-bg{
-  position:absolute;
-  inset:0;
-  background-size:cover;
-  background-position:center;
-  filter:brightness(0.55);
-}
+    .teaser {
+      margin: 60px 0;
+      max-width: 800px;
+    }
 
-/* dark overlay */
-.card::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:linear-gradient(to top,rgba(0,0,0,0.9),rgba(0,0,0,0.2));
-}
+    .teaser h2 {
+      font-size: 2.2rem;
+      margin-bottom: 24px;
+      color: #ff4dd2;
+    }
 
-/* content */
-.card-content{
-  position:absolute;
-  inset:0;
-  z-index:2;
-  padding:28px;
-  display:flex;
-  flex-direction:column;
-  justify-content:flex-end;
-}
+    .teaser p {
+      font-size: 1.2rem;
+      line-height: 1.7;
+      opacity: 0.9;
+    }
 
-.edition{
-  font-size:22px;
-  font-weight:800;
-}
+    footer {
+      margin-top: auto;
+      padding: 40px 20px;
+      text-align: center;
+      font-size: 0.9rem;
+      opacity: 0.7;
+    }
 
-.price{
-  font-size:34px;
-  font-weight:800;
-  margin:6px 0 12px;
-}
+    @media (max-width: 768px) {
+      h1 { font-size: 3.8rem; }
+      .preorder-btn { font-size: 1.2rem; padding: 16px 32px; }
+      .btn-group { gap: 18px; }
+    }
 
-.features{
-  font-size:14px;
-  line-height:1.6;
-  opacity:.9;
-}
-
-.buy-btn{
-  margin-top:18px;
-  padding:14px;
-  border-radius:999px;
-  text-align:center;
-  text-decoration:none;
-  color:#fff;
-  background:rgba(255,255,255,0.14);
-  border:1px solid rgba(255,255,255,0.25);
-  font-weight:700;
-  transition:.25s;
-}
-
-.buy-btn:hover{
-  background:rgba(255,255,255,0.28);
-}
-
-/* ================= PLATFORM ================= */
-
-.platforms{
-  margin-top:70px;
-}
-
-.platforms h2{
-  margin-bottom:18px;
-}
-
-.platform-buttons{
-  display:flex;
-  justify-content:center;
-  gap:14px;
-  flex-wrap:wrap;
-}
-
-.platform{
-  padding:12px 22px;
-  border-radius:999px;
-  background:rgba(255,255,255,0.08);
-  border:1px solid rgba(255,255,255,0.2);
-}
-
-/* ================= FOOTER ================= */
-
-.note{
-  margin-top:60px;
-  font-size:13px;
-  opacity:.6;
-}
-</style>
+    @media (max-width: 480px) {
+      header { gap: 8px; padding: 8px 12px; }
+      .nav-btn { padding: 8px 12px; font-size: 0.85rem; }
+    }
+  </style>
 </head>
-
 <body>
 
-<header>
-  <a href="index" class="nav-btn">Home</a>
-  <a href="map" class="nav-btn">Map</a>
-  <a href="characters" class="nav-btn">Characters</a>
-  <a href="places" class="nav-btn">Places</a>
-  <a href="screenshots" class="nav-btn">Screenshots</a>
-  <a href="trailers" class="nav-btn">Trailers</a>
-</header>
+  <header>
+    <a href="index" class="nav-btn">Home</a>
+    <a href="map" class="nav-btn">Map</a>
+    <a href="characters" class="nav-btn">Characters</a>
+    <a href="places" class="nav-btn">Places</a>
+    <a href="preorder" class="nav-btn active">Wishlist</a>
+    <a href="trailers" class="nav-btn">Trailers</a>
+  </header>
 
-<div class="page">
-  <h1>Pre-Order Grand Theft Auto VI</h1>
-  <div class="subtitle">Choose your edition. Vice City awaits.</div>
-
-  <div class="cards">
-
-    <!-- STANDARD -->
-    <div class="card">
-      <div class="card-bg" style="background-image:url('gta/preorders/standard.jpg')"></div>
-      <div class="card-content">
-        <div class="edition">Standard Edition</div>
-        <div class="price">$69.99</div>
-        <div class="features">
-          • Base Game<br>
-          • Story Mode<br>
-          • GTA Online Access
-        </div>
-        <a href="#" class="buy-btn">Pre-Order</a>
-      </div>
+  <main>
+    <div class="hero">
+      <h1>GTA VI</h1>
+      <p class="tagline">Vice City. Leonida. The wait is almost over.</p>
+      <div class="release-date">November 19, 2026</div>
+      <div class="status">Pre-orders not yet open — Wishlist now on PS5 & Xbox</div>
     </div>
 
-    <!-- DELUXE -->
-    <div class="card">
-      <div class="card-bg" style="background-image:url('gta/preorders/deluxe.jpg')"></div>
-      <div class="card-content">
-        <div class="edition">Deluxe Edition</div>
-        <div class="price">$89.99</div>
-        <div class="features">
-          • Bonus Vehicles<br>
-          • Exclusive Weapons<br>
-          • GTA$ Starter Pack
-        </div>
-        <a href="#" class="buy-btn">Pre-Order</a>
-      </div>
+    <div class="btn-group">
+      <a href="https://www.xbox.com/en-US/games/store/grand-theft-auto-vi/9NL3WWNZLZZN" class="preorder-btn" target="_blank" rel="noopener">
+        <i class="fa-brands fa-xbox icon"></i> Wishlist on Xbox Series X|S
+      </a>
+      <a href="https://www.playstation.com/en-us/games/grand-theft-auto-vi/" class="preorder-btn" target="_blank" rel="noopener">
+        <i class="fa-brands fa-playstation icon"></i> Wishlist on PlayStation 5
+      </a>
+      <!-- Optional: Rockstar link when available -->
+      <!-- <a href="https://www.rockstargames.com/VI" class="preorder-btn"><i class="fas fa-globe icon"></i> Official Site</a> -->
     </div>
 
-    <!-- ULTIMATE -->
-    <div class="card">
-      <div class="card-bg" style="background-image:url('gta/preorders/ultimate.jpg')"></div>
-      <div class="card-content">
-        <div class="edition">Ultimate Edition</div>
-        <div class="price">$109.99</div>
-        <div class="features">
-          • Early Online Access<br>
-          • Exclusive Properties<br>
-          • Collector Cosmetics
-        </div>
-        <a href="#" class="buy-btn">Pre-Order</a>
-      </div>
-    </div>
+    <section class="teaser">
+      <h2>Coming November 19, 2026</h2>
+      <p>Jason and Lucia are ready to take on Leonida — from neon-drenched Vice City to the swamps and beyond. Rockstar's most ambitious open-world yet. Pre-orders expected soon — stay tuned for trailers, editions, and bonuses.</p>
+      <!-- You can embed latest trailer here when available -->
+      <!-- <div style="margin:40px 0;"><iframe width="100%" height="450" src="https://www.youtube.com/embed/..." frameborder="0" allowfullscreen></iframe></div> -->
+    </section>
 
-  </div>
+  </main>
 
-  <div class="platforms">
-    <h2>Available On</h2>
-    <div class="platform-buttons">
-      <div class="platform">PlayStation 5</div>
-      <div class="platform">Xbox Series X|S</div>
-      <div class="platform">PC (Later)</div>
-    </div>
-  </div>
+  <footer>
+    © Darla Fan Site • Not affiliated with Rockstar Games • All rights reserved
+  </footer>
+
 </body>
 </html>
-
