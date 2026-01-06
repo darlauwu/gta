@@ -36,6 +36,10 @@ header{
   box-shadow:0 6px 18px rgba(0,0,0,0.35);
 }
 
+header:hover{
+  box-shadow:0 12px 40px rgba(255,77,210,0.35);
+}
+
 .nav-btn{
   padding:9px 17px;
   border-radius:999px;
@@ -44,8 +48,12 @@ header{
   text-decoration:none;
   background:rgba(255,255,255,0.08);
   border:1px solid rgba(255,255,255,0.18);
+  box-shadow:
+    inset 0 1.2px 1.5px rgba(255,255,255,0.4),
+    0 4px 18px rgba(0,0,0,0.3);
   transition:.25s;
 }
+
 .nav-btn:hover{
   background:rgba(255,255,255,0.14);
   transform:scale(1.05);
@@ -100,7 +108,7 @@ header{
   text-transform:uppercase;
 }
 
-/* Launch Buttons */
+/* Launch Buttons (GLASS STYLE MATCHING HEADER) */
 .launch-buttons{
   display:none;
   margin-top:28px;
@@ -112,16 +120,29 @@ header{
 .launch-btn{
   padding:14px 26px;
   border-radius:999px;
-  font-weight:800;
   color:#fff;
+  font-weight:700;
   text-decoration:none;
-  background:linear-gradient(135deg,rgba(255,77,210,.45),rgba(122,77,255,.45));
-  border:1px solid rgba(255,255,255,.35);
-  transition:.25s;
+
+  background:rgba(255,255,255,0.08);
+  border:1px solid rgba(255,255,255,0.18);
+
+  box-shadow:
+    inset 0 1.2px 1.5px rgba(255,255,255,0.4),
+    0 6px 18px rgba(0,0,0,0.35);
+
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+
+  transition:.25s ease;
 }
+
 .launch-btn:hover{
-  transform:translateY(-3px) scale(1.05);
-  box-shadow:0 0 30px rgba(255,77,210,.6);
+  background:rgba(255,255,255,0.14);
+  transform:translateY(-2px) scale(1.06);
+  box-shadow:
+    inset 0 1.2px 1.5px rgba(255,255,255,0.45),
+    0 0 22px rgba(255,77,210,0.45);
 }
 
 /* Test */
@@ -142,6 +163,7 @@ header{
   animation:fall linear forwards;
   z-index:9999;
 }
+
 @keyframes fall{
   to{
     transform:translateY(110vh) rotate(720deg);
